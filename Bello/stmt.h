@@ -1,0 +1,616 @@
+#pragma once
+
+#include <stdio.h>
+#include <malloc.h>
+#include "y.tab.h"
+#include "dftn.h"
+#include "expt.h"
+
+
+//语句系列函数，参数为语句的内容部分，如创建if语句结构体的bldIfStmt函数的参数exp为if的条件表达式，stmt参数为if的条件为真执行的语句块
+struct StmtStrc* bldExpStmt(struct ExpStrc* exp);
+struct StmtStrc* bldIfStmt(struct ExpStrc* exp, struct StmtStrc* stmt);
+struct StmtStrc* bldIfElsStmt(struct ExpStrc* exp, struct StmtStrc* stmt, struct StmtStrc* elsStmt);
+struct StmtStrc* bldForStmt(struct StmtStrc* intl, struct StmtStrc* exp, struct StmtStrc* itr, struct StmtStrc* stmt);
+struct StmtStrc* bldWhlStmt(struct StmtStrc* exp, struct StmtStrc* stmt);
+struct StmtStrc* bldDoWhlStmt(struct StmtStrc* exp, struct StmtStrc* stmt);
+struct StmtStrc* bldStmtBlk();
+struct StmtStrc* stmtBlkAdd(struct StmtStrc* stmtBlk, struct StmtStrc* stmt);
+struct StmtStrc* bldBrkStmt(struct ExpStrc* exp);
+struct StmtStrc* bldCntnStmt(struct ExpStrc* exp);
+struct StmtStrc* bldFcnStmt(struct FcnStrc* fcn);
+struct StmtStrc* bldRtnStmt(struct ExpStrc* exp);
+struct StmtStrc* bldVarStmt(struct AsgnLstStrc* asgnLst);
+struct StmtStrc* bldNllStmt();
+
+
+struct StmtRsltStrc* exctStmt(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct StmtStrc* stmt);
+
+struct StmtStrc* bldExpStmt(struct ExpStrc* exp)
+{
+	struct StmtStrc* rslt = new StmtStrc;
+
+	rslt->typ = EXPRESSION_STATEMENT;
+
+	rslt->stmt.expStmt = new ExpStmtStrc;
+
+	rslt->stmt.expStmt->exp = exp;
+
+	return rslt;
+}
+
+
+struct StmtStrc* bldIfStmt(struct ExpStrc* exp, struct StmtStrc* stmt)
+{
+	struct StmtStrc* rslt = new StmtStrc;
+
+	rslt->typ = IF_STATEMENT;
+
+	rslt->stmt.ifStmt = new IfStmtStrc;
+
+	rslt->stmt.ifStmt->exp = exp;
+	rslt->stmt.ifStmt->stmt = stmt;
+
+	return rslt;
+}
+
+struct StmtStrc* bldIfElsStmt(struct ExpStrc* exp, struct StmtStrc* stmt, struct StmtStrc* elsStmt)
+{
+	struct StmtStrc* rslt = new StmtStrc;
+
+	rslt->typ = IF_ELSE_STATEMENT;
+
+	rslt->stmt.ifElsStmt = new IfElsStmtStrc;
+
+	rslt->stmt.ifElsStmt->exp = exp;
+	rslt->stmt.ifElsStmt->stmt = stmt;
+	rslt->stmt.ifElsStmt->elsStmt = elsStmt;
+
+	return rslt;
+}
+
+struct StmtStrc* bldForStmt(struct StmtStrc* intl, struct StmtStrc* exp, struct StmtStrc* itr, struct StmtStrc* stmt)
+{
+	struct StmtStrc* rslt = new StmtStrc;
+
+	rslt->typ = FOR_STATEMENT;
+
+	rslt->stmt.forStmt = new ForStmtStrc;
+
+	rslt->stmt.forStmt->intl = intl;
+	rslt->stmt.forStmt->exp = exp;
+	rslt->stmt.forStmt->itr = itr;
+	rslt->stmt.forStmt->stmt = stmt;
+
+	return rslt;
+}
+
+struct StmtStrc* bldWhlStmt(struct StmtStrc* exp, struct StmtStrc* stmt)
+{
+	struct StmtStrc* rslt = new StmtStrc;
+
+	rslt->typ = WHILE_STATEMENT;
+
+	rslt->stmt.whlStmt = new WhlStmtStrc;
+
+	rslt->stmt.whlStmt->exp = exp;
+	rslt->stmt.whlStmt->stmt = stmt;
+
+	return rslt;
+}
+
+struct StmtStrc* bldDoWhlStmt(struct StmtStrc* exp, struct StmtStrc* stmt)
+{
+	struct StmtStrc* rslt = new StmtStrc;
+
+	rslt->typ = DO_WHILE_STATEMENT;
+
+	rslt->stmt.doWhlStmt = new DoWhlStmtStrc;
+
+	rslt->stmt.doWhlStmt->exp = exp;
+	rslt->stmt.doWhlStmt->stmt = stmt;
+
+	return rslt;
+}
+
+struct StmtStrc* bldStmtBlk()
+{
+	struct StmtStrc* rslt = new StmtStrc;
+
+	rslt->typ = STATEMENT_BLOCK;
+
+	rslt->stmt.stmtBlk = new StmtBlkStrc;
+
+	rslt->stmt.stmtBlk->stmtCnt = -1;
+	rslt->stmt.stmtBlk->stmtSz = 10;
+
+	rslt->stmt.stmtBlk->stmtArr = (struct StmtStrc**)malloc(sizeof(struct StmtStrc*) * rslt->stmt.stmtBlk->stmtSz);
+
+	return rslt;
+}
+
+struct StmtStrc* stmtBlkAdd(struct StmtStrc* stmtBlk, struct StmtStrc* stmt)
+{
+	stmtBlk->stmt.stmtBlk->stmtCnt++;
+
+	if (stmtBlk->stmt.stmtBlk->stmtCnt == stmtBlk->stmt.stmtBlk->stmtSz)
+	{
+		stmtBlk->stmt.stmtBlk->stmtSz *= 2;
+
+		stmtBlk->stmt.stmtBlk->stmtArr = (struct StmtStrc**)realloc(stmtBlk->stmt.stmtBlk->stmtArr,
+			sizeof(struct StmtStrc*) * stmtBlk->stmt.stmtBlk->stmtSz);
+	}
+
+	stmtBlk->stmt.stmtBlk->stmtArr[stmtBlk->stmt.stmtBlk->stmtCnt] = stmt;
+
+	return stmtBlk;
+}
+
+struct StmtStrc* bldBrkStmt(struct ExpStrc* exp)
+{
+	struct StmtStrc* rslt = new StmtStrc;
+
+	rslt->typ = BREAK_STATEMENT;
+
+	rslt->stmt.brkStmt = new BrkStmtStrc;
+
+	rslt->stmt.brkStmt->exp = exp;
+
+	return rslt;
+}
+
+struct StmtStrc* bldCntnStmt(struct ExpStrc* exp)
+{
+	struct StmtStrc* rslt = new StmtStrc;
+
+	rslt->typ = CONTINUE_STATEMENT;
+
+	rslt->stmt.cntnStmt = new CntnStmtStrc;
+
+	rslt->stmt.cntnStmt->exp = exp;
+
+	return rslt;
+}
+
+struct StmtStrc* bldFcnStmt(struct FcnStrc* fcn)
+{
+	struct StmtStrc* rslt = new StmtStrc;
+
+	rslt->typ = FUNCTION_DEFINE_STATEMENT;
+
+	rslt->stmt.fcnStmt = new FcnStmtStrc;
+
+	rslt->stmt.fcnStmt->fcn = fcn;
+
+	return rslt;
+}
+
+struct StmtStrc* bldRtnStmt(struct ExpStrc* exp)
+{
+	struct StmtStrc* rslt = new StmtStrc;
+
+	rslt->typ = RETURN_STATEMENT;
+
+	rslt->stmt.rtnStmt = new RtnStmtStrc;
+
+	if (exp == NULL)
+	{
+		rslt->stmt.rtnStmt->blnRslt = 0;
+		rslt->stmt.rtnStmt->exp = NULL;
+	}
+	else
+	{
+		rslt->stmt.rtnStmt->blnRslt = 1;
+		rslt->stmt.rtnStmt->exp = exp;
+	}
+
+	return rslt;
+}
+
+struct StmtStrc* bldVarStmt(struct AsgnLstStrc* asgnLst)
+{
+	struct StmtStrc* rslt = new StmtStrc;
+
+	rslt->typ = VAR_STATEMENT;
+
+	rslt->stmt.varStmt = new VarStmtStrc;
+
+	rslt->stmt.varStmt->asgnLst = asgnLst;
+
+	return rslt;
+
+}
+
+struct StmtStrc* bldNllStmt()
+{
+	struct StmtStrc* rslt = new StmtStrc;
+
+	rslt->typ = NULL_STATEMENT;
+
+	return rslt;
+}
+
+
+struct StmtRsltStrc* exctStmt(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct StmtStrc* stmt)
+{
+	struct StmtRsltStrc* rslt = new StmtRsltStrc;
+
+	rslt->typ = NORMAL_RESULT;
+
+	struct StmtRsltStrc* stt;
+
+	try
+	{
+
+		if (stmt->typ == EXPRESSION_STATEMENT)
+		{
+			struct CnstStrc* rsltExp;
+
+			rsltExp = clcExp(glbEnvr, fcnEnvr, stmt->stmt.expStmt->exp);
+
+			// if (stmt->stmt.expStmt->exp->typ == CONST_EXPRESSION || stmt->stmt.expStmt->exp->typ == VARIABLE_EXPRESSION || 
+			//     stmt->stmt.expStmt->exp->typ == BINARY_EXPRESSION || stmt->stmt.expStmt->exp->typ == UNARY_EXPRESSION ||
+			//     stmt->stmt.expStmt->exp->typ == FUNCTION_EXPRESSION || stmt->stmt.expStmt->exp->typ == LVALUE_EXPRESSION )
+			// {
+			//     prtlnCnst(rsltExp);
+			// }
+		}
+
+		if (stmt->typ == VAR_STATEMENT)
+		{
+			struct VrbStrc* vrb;
+
+			int i;
+
+			for (i = 0; i < stmt->stmt.varStmt->asgnLst->asgnCnt; i++)
+			{
+				struct CnstStrc* rslt;
+				struct VrbExpStrc* vrbExp;
+
+				vrbExp = stmt->stmt.varStmt->asgnLst->asgnArr[i]->exp.asgnExp->lvl->exp.lvlExp->vrb->exp.vrbExp;
+
+				if ((vrb = getEnvrVrb(fcnEnvr, vrbExp)) == NULL)
+				{
+					vrb = addVrb(fcnEnvr, vrbExp);
+				}
+				else
+				{
+					throw new ExVrbRdfn();
+				}
+
+				if (stmt->stmt.varStmt->asgnLst->asgnArr[i]->exp.asgnExp->exp->typ != NULL_EXPRESSION)
+				{
+					rslt = clcExp(glbEnvr, fcnEnvr, stmt->stmt.varStmt->asgnLst->asgnArr[i]->exp.asgnExp->exp);
+					asgnVrb(vrb, rslt);
+				}
+				else
+				{
+					asgnVrb(vrb, bldNllCnst());
+					//rslt = bldNllCnst();
+
+				}
+			}
+
+
+			return rslt;
+		}
+
+		if (stmt->typ == IF_STATEMENT)
+		{
+			//prtCnst(clcExp(stmt->stmt.ifStmt->exp)); 
+			if ((clcExp(glbEnvr, fcnEnvr, stmt->stmt.ifStmt->exp)->vl.intVl) != 0)
+			{
+				rslt = exctStmt(glbEnvr, fcnEnvr, stmt->stmt.ifStmt->stmt);
+			}
+		}
+
+		if (stmt->typ == IF_ELSE_STATEMENT)
+		{
+			//prtCnst(clcExp(stmt->stmt.ifStmt->exp)); 
+			if ((clcExp(glbEnvr, fcnEnvr, stmt->stmt.ifStmt->exp)->vl.intVl) != 0)
+			{
+				rslt = exctStmt(glbEnvr, fcnEnvr, stmt->stmt.ifElsStmt->stmt);
+			}
+			else
+			{
+				rslt = exctStmt(glbEnvr, fcnEnvr, stmt->stmt.ifElsStmt->elsStmt);
+			}
+		}
+
+		if (stmt->typ == FOR_STATEMENT)
+		{
+			rslt = exctStmt(glbEnvr, fcnEnvr, stmt->stmt.forStmt->intl);
+
+			while ((clcExp(glbEnvr, fcnEnvr, stmt->stmt.forStmt->exp->stmt.expStmt->exp)->vl.intVl) != 0)
+			{
+				//上一次循环中使用了continue语句
+				if (rslt->typ == CONTINUE_RESULT)
+				{
+					rslt->rslt.cntnRslt->cntnCnt--;
+
+					if (rslt->rslt.cntnRslt->cntnCnt == 0)
+					{
+						rslt->typ = NORMAL_RESULT;
+					}
+
+					exctStmt(glbEnvr, fcnEnvr, stmt->stmt.forStmt->itr);
+
+					continue;
+				}
+
+				rslt = exctStmt(glbEnvr, fcnEnvr, stmt->stmt.forStmt->stmt);
+
+				if (rslt->typ == RETURN_RESULT)
+				{
+					break;
+				}
+
+				if (rslt->typ == BREAK_RESULT)
+				{
+					rslt->rslt.brkRslt->brkCnt--;
+
+					if (rslt->rslt.brkRslt->brkCnt == 0)
+					{
+						rslt->typ = NORMAL_RESULT;
+					}
+
+					break;
+				}
+
+				if (rslt->typ == CONTINUE_RESULT)
+				{
+					rslt->rslt.cntnRslt->cntnCnt--;
+
+					if (rslt->rslt.cntnRslt->cntnCnt == 0)
+					{
+						rslt->typ = NORMAL_RESULT;
+					}
+
+					exctStmt(glbEnvr, fcnEnvr, stmt->stmt.forStmt->itr);
+
+					continue;
+				}
+
+				exctStmt(glbEnvr, fcnEnvr, stmt->stmt.forStmt->itr);
+
+
+			}
+
+			//continue语句对本层循环有效
+			if (rslt->typ == CONTINUE_RESULT)
+			{
+				rslt->rslt.cntnRslt->cntnCnt = 0;
+				rslt->typ = NORMAL_RESULT;
+
+			}
+		}
+
+		if (stmt->typ == WHILE_STATEMENT)
+		{
+			while (clcExp(glbEnvr, fcnEnvr, stmt->stmt.whlStmt->exp->stmt.expStmt->exp)->vl.intVl != 0)
+			{
+				if (rslt->typ == CONTINUE_RESULT)
+				{
+					rslt->rslt.cntnRslt->cntnCnt--;
+
+					if (rslt->rslt.cntnRslt->cntnCnt == 0)
+					{
+						rslt->typ = NORMAL_RESULT;
+					}
+
+					continue;
+				}
+
+				rslt = exctStmt(glbEnvr, fcnEnvr, stmt->stmt.whlStmt->stmt);
+
+				if (rslt->typ == RETURN_RESULT)
+				{
+					break;
+				}
+
+				if (rslt->typ == BREAK_RESULT)
+				{
+					rslt->rslt.brkRslt->brkCnt--;
+					if (rslt->rslt.brkRslt->brkCnt == 0)
+					{
+						rslt->typ = NORMAL_RESULT;
+					}
+
+					break;
+				}
+
+				if (rslt->typ == CONTINUE_RESULT)
+				{
+					//printf("while continue #2: %d\n",rslt->rslt.cntnRslt->cntnCnt);
+					rslt->rslt.cntnRslt->cntnCnt--;
+
+					if (rslt->rslt.cntnRslt->cntnCnt == 0)
+					{
+						rslt->typ = NORMAL_RESULT;
+					}
+
+					continue;
+				}
+			}
+
+			if (rslt->typ == CONTINUE_RESULT)
+			{
+				rslt->rslt.cntnRslt->cntnCnt = 0;
+				rslt->typ = NORMAL_RESULT;
+			}
+		}
+
+		if (stmt->typ == DO_WHILE_STATEMENT)
+		{
+			do
+			{
+				if (rslt->typ == CONTINUE_RESULT)
+				{
+					rslt->rslt.cntnRslt->cntnCnt--;
+
+					if (rslt->rslt.cntnRslt->cntnCnt == 0)
+					{
+						rslt->typ = NORMAL_RESULT;
+					}
+
+					continue;
+				}
+
+				rslt = exctStmt(glbEnvr, fcnEnvr, stmt->stmt.doWhlStmt->stmt);
+
+				if (rslt->typ == RETURN_RESULT)
+				{
+					break;
+				}
+
+				if (rslt->typ == BREAK_RESULT)
+				{
+					rslt->rslt.brkRslt->brkCnt--;
+
+					if (rslt->rslt.brkRslt->brkCnt == 0)
+					{
+						rslt->typ = NORMAL_RESULT;
+					}
+
+					break;
+				}
+
+				if (rslt->typ == CONTINUE_RESULT)
+				{
+					rslt->rslt.cntnRslt->cntnCnt--;
+
+					if (rslt->rslt.cntnRslt->cntnCnt == 0)
+					{
+						rslt->typ = NORMAL_RESULT;
+					}
+
+					continue;
+				}
+			} while (clcExp(glbEnvr, fcnEnvr, stmt->stmt.doWhlStmt->exp->stmt.expStmt->exp)->vl.intVl != 0);
+
+			if (rslt->typ == CONTINUE_RESULT)
+			{
+				rslt->rslt.cntnRslt->cntnCnt = 0;
+				rslt->typ = NORMAL_RESULT;
+			}
+
+		}
+
+		if (stmt->typ == STATEMENT_BLOCK)
+		{
+			int i;
+
+			for (i = 0; i <= stmt->stmt.stmtBlk->stmtCnt; i++)
+			{
+				rslt = exctStmt(glbEnvr, fcnEnvr, stmt->stmt.stmtBlk->stmtArr[i]);
+
+				if (rslt->typ == RETURN_RESULT)
+				{
+					break;
+				}
+
+				if (rslt->typ == BREAK_RESULT || rslt->typ == CONTINUE_RESULT)
+				{
+					break;
+				}
+			}
+		}
+
+		if (stmt->typ == BREAK_STATEMENT)
+		{
+			rslt->typ = BREAK_RESULT;
+
+			rslt->rslt.brkRslt = (struct BrkRsltStrc*)malloc(sizeof(struct BrkRsltStrc));
+
+			rslt->rslt.brkRslt->brkCnt = clcExp(glbEnvr, fcnEnvr, stmt->stmt.brkStmt->exp)->vl.intVl;
+		}
+
+		if (stmt->typ == CONTINUE_STATEMENT)
+		{
+			rslt->typ = CONTINUE_RESULT;
+
+			rslt->rslt.cntnRslt = (struct CntnRsltStrc*)malloc(sizeof(struct CntnRsltStrc));
+
+			rslt->rslt.cntnRslt->cntnCnt = clcExp(glbEnvr, fcnEnvr, stmt->stmt.cntnStmt->exp)->vl.intVl;
+		}
+
+		if (stmt->typ == FUNCTION_DEFINE_STATEMENT)
+		{
+			if (getFcn(glbEnvr, fcnEnvr, bldFcnExp(stmt->stmt.fcnStmt->fcn->nm, NULL)->exp.fcnExp) != NULL)
+			{
+				throw new ExFcnRdfn;
+			}
+
+			if (getVrb(glbEnvr, fcnEnvr, bldVrbExp(stmt->stmt.fcnStmt->fcn->nm)->exp.vrbExp) != NULL)
+			{
+				throw new ExAlrdDfnAsVrb;
+			}
+
+			addFcn(fcnEnvr, stmt->stmt.fcnStmt->fcn);
+		}
+
+		if (stmt->typ == RETURN_STATEMENT)
+		{
+
+			rslt->typ = RETURN_RESULT;
+
+			rslt->rslt.rtnRslt = (struct RtnRsltStrc*)malloc(sizeof(struct RtnRsltStrc));
+
+			rslt->rslt.rtnRslt->blnRslt = stmt->stmt.rtnStmt->blnRslt;
+
+			if (rslt->rslt.rtnRslt->blnRslt == 1)
+			{
+				rslt->rslt.rtnRslt->rslt = clcExp(glbEnvr, fcnEnvr, stmt->stmt.rtnStmt->exp);
+			}
+
+		}
+
+	}
+	catch (ExVrbNotFnd* ex)
+	{
+		printf("Error: Variable not found.\n");
+	}
+	catch (ExVrbRdfn* ex)
+	{
+		printf("Error: Variable can't be redefined.");
+	}
+	catch (ExWrgOprndTyp* ex)
+	{
+		printf("Error: Operands not supported for the operation.\n");
+	}
+	catch (ExFcnNotFnd* ex)
+	{
+		printf("Error: Function not found.\n");
+	}
+	catch (ExFcnTooMnyArg* ex)
+	{
+		printf("Error: Too many arguments for calling the function.\n");
+	}
+	catch (ExFcnTooFewArg* ex)
+	{
+		printf("Error: Too few arguments for calling the function.\n");
+	}
+	catch (ExFcnRdfn* ex)
+	{
+		printf("Error: Function redefined.\n");
+	}
+	catch (ExAlrdDfnAsVrb* ex)
+	{
+		printf("Error: The name of the function has been defined as a variable.\n");
+	}
+	catch (ExAlrdDfnAsFctn* ex)
+	{
+		printf("Error: The name of the variable has been defined as a function.\n");
+	}
+	catch (ExNotAvlbArr* ex)
+	{
+		printf("Error: The variable isn't a available array.\n");
+	}
+	catch (ExIdxOutArrRng* ex)
+	{
+		printf("Error: The index given is out of range of the array.\n");
+	}
+
+
+	return rslt;
+}

@@ -1,0 +1,14 @@
+a=1;
+b=1;
+
+println(a);
+
+while (b<200)
+{
+    println(b);
+
+    tmp=a+b;
+    a=b;
+    b=tmp;
+ 
+}

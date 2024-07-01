@@ -1,0 +1,46 @@
+n=5;
+
+//arr=newArray(n);
+
+//for (i=0;i<n;i++)
+//{
+//    arr[i]=readInt();
+//}
+
+arr=[5, 3, 1, 4,2];
+
+function selectionSort(a, lnth)
+{
+    var tmp;
+
+    var tmpPnt;
+
+    tmpPnt=0;
+
+    var i,j;
+
+    println("sort\n");
+
+    for (i=0;i<lnth;i++)
+    {
+        tmpPnt=i;
+        for (j=i;j<lnth;j++)
+        {
+            if (a[j]<a[tmpPnt])
+            {
+                tmpPnt=j;
+            }
+        }
+
+        tmp=a[tmpPnt];
+        a[tmpPnt]=a[i];
+        a[i]=tmp;
+
+    }
+}
+
+println("start sorting");
+
+selectionSort(arr,n);
+
+print(arr);
