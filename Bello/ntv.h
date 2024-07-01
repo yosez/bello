@@ -46,7 +46,7 @@ struct CnstStrc* rdFltFcn(struct EnvrStrc* envr, int argCnt, struct CnstStrc** a
 		throw new ExFcnTooMnyArg;
 	}
 
-	float f;
+	float f; //
 
 	fscanf(stdin, "%f", &f);
 
