@@ -534,7 +534,7 @@ struct StmtRsltStrc* exctStmt(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr
 			rslt->rslt.cntnRslt->cntnCnt = clcExp(glbEnvr, fcnEnvr, stmt->stmt.cntnStmt->exp)->vl.intVl;
 		}
 
-		if (stmt->typ == FUNCTION_DEFINE_STATEMENT)
+		if (stmt->typ == FUNCTION_DEFINE_STATEMENT)//
 		{
 			if (getFcn(glbEnvr, fcnEnvr, bldFcnExp(stmt->stmt.fcnStmt->fcn->nm, NULL)->exp.fcnExp) != NULL)
 			{
