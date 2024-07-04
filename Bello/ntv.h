@@ -7,20 +7,20 @@
 #include "cnst.h"
 
 
-struct CnstStrc* rdIntFcn(struct EnvrStrc* envr, int argCnt, struct CnstStrc** argArr);
-struct CnstStrc* rdFltFcn(struct EnvrStrc* envr, int argCnt, struct CnstStrc** argArr);
-struct CnstStrc* rdBlnFcn(struct EnvrStrc* envr, int argCnt, struct CnstStrc** argArr);
-struct CnstStrc* rdFcn(struct EnvrStrc* envr, int argCnt, struct CnstStrc** argArr);
-struct CnstStrc* rdlnFcn(struct EnvrStrc* envr, int argCnt, struct CnstStrc** argArr);
-struct CnstStrc* prtFcn(struct EnvrStrc* envr, int argCnt, struct CnstStrc** argArr);
-struct CnstStrc* prtlnFcn(struct EnvrStrc* envr, int argCnt, struct CnstStrc** argArr);
-struct CnstStrc* newArrFcn(struct EnvrStrc* envr, int argCnt, struct CnstStrc** argArr);
-struct CnstStrc* flOpn(struct EnvrStrc* envr, int argCnt, struct CnstStrc** argArr);
+struct CnstStrc* rdIntFcn(struct EnvrStrc* envr, int argCnt, vector<CnstStrc*> argArr);
+struct CnstStrc* rdFltFcn(struct EnvrStrc* envr, int argCnt, vector <CnstStrc*> argArr);
+struct CnstStrc* rdBlnFcn(struct EnvrStrc* envr, int argCnt, vector <CnstStrc*> argArr);
+struct CnstStrc* rdFcn(struct EnvrStrc* envr, int argCnt, vector <CnstStrc*> argArr);
+struct CnstStrc* rdlnFcn(struct EnvrStrc* envr, int argCnt, vector <CnstStrc*> argArr);
+struct CnstStrc* prtFcn(struct EnvrStrc* envr, int argCnt, vector <CnstStrc*> argArr);
+struct CnstStrc* prtlnFcn(struct EnvrStrc* envr, int argCnt, vector <CnstStrc*> argArr);
+struct CnstStrc* newArrFcn(struct EnvrStrc* envr, int argCnt, vector <CnstStrc*> argArr);
+struct CnstStrc* flOpn(struct EnvrStrc* envr, int argCnt, vector <CnstStrc*> argArr);
 
 
 
 
-struct CnstStrc* rdIntFcn(struct EnvrStrc* envr, int argCnt, struct CnstStrc** argArr)
+struct CnstStrc* rdIntFcn(struct EnvrStrc* envr, int argCnt, vector <CnstStrc*> argArr)
 {
 	if (argCnt != 0)
 	{
@@ -39,14 +39,14 @@ struct CnstStrc* rdIntFcn(struct EnvrStrc* envr, int argCnt, struct CnstStrc** a
 }
 
 
-struct CnstStrc* rdFltFcn(struct EnvrStrc* envr, int argCnt, struct CnstStrc** argArr)
+struct CnstStrc* rdFltFcn(struct EnvrStrc* envr, int argCnt, vector <CnstStrc*> argArr)
 {
 	if (argCnt != 0)
 	{
 		throw new ExFcnTooMnyArg;
 	}
 
-	float f; //
+	float f;
 
 	fscanf(stdin, "%f", &f);
 
@@ -57,7 +57,7 @@ struct CnstStrc* rdFltFcn(struct EnvrStrc* envr, int argCnt, struct CnstStrc** a
 	return rslt;
 }
 
-struct CnstStrc* rdBlnFcn(struct EnvrStrc* envr, int argCnt, struct CnstStrc** argArr)
+struct CnstStrc* rdBlnFcn(struct EnvrStrc* envr, int argCnt, vector <CnstStrc*> argArr)
 {
 	if (argCnt != 0)
 	{
@@ -82,7 +82,7 @@ struct CnstStrc* rdBlnFcn(struct EnvrStrc* envr, int argCnt, struct CnstStrc** a
 	return rslt;
 }
 
-struct CnstStrc* rdFcn(struct EnvrStrc* envr, int argCnt, struct CnstStrc** argArr)
+struct CnstStrc* rdFcn(struct EnvrStrc* envr, int argCnt, vector <CnstStrc*> argArr)
 {
 	if (argCnt != 0)
 	{
@@ -100,7 +100,7 @@ struct CnstStrc* rdFcn(struct EnvrStrc* envr, int argCnt, struct CnstStrc** argA
 	return rslt;
 }
 
-struct CnstStrc* rdlnFcn(struct EnvrStrc* envr, int argCnt, struct CnstStrc** argArr)
+struct CnstStrc* rdlnFcn(struct EnvrStrc* envr, int argCnt, vector <CnstStrc*> argArr)
 {
 	if (argCnt != 0)
 	{
@@ -118,7 +118,7 @@ struct CnstStrc* rdlnFcn(struct EnvrStrc* envr, int argCnt, struct CnstStrc** ar
 	return rslt;
 }
 
-struct CnstStrc* prtFcn(struct EnvrStrc* envr, int argCnt, struct CnstStrc** argArr)
+struct CnstStrc* prtFcn(struct EnvrStrc* envr, int argCnt, vector <CnstStrc*> argArr)
 {
 	if (argCnt != 1)
 	{
@@ -130,7 +130,7 @@ struct CnstStrc* prtFcn(struct EnvrStrc* envr, int argCnt, struct CnstStrc** arg
 	return NULL;
 }
 
-struct CnstStrc* prtlnFcn(struct EnvrStrc* envr, int argCnt, struct CnstStrc** argArr)
+struct CnstStrc* prtlnFcn(struct EnvrStrc* envr, int argCnt, vector <CnstStrc*> argArr)
 {
 	if (argCnt != 1)
 	{
@@ -142,28 +142,30 @@ struct CnstStrc* prtlnFcn(struct EnvrStrc* envr, int argCnt, struct CnstStrc** a
 	return NULL;
 }
 
-struct CnstStrc* newArrFcn(struct EnvrStrc* envr, int argCnt, struct CnstStrc** argArr)
+struct CnstStrc* newArrFcn(struct EnvrStrc* envr, int argCnt, vector <CnstStrc*> argArr)
 {
 	struct CnstStrc* rslt = new CnstStrc;
 
 	rslt->CnstTyp = ARRAY_VALUE;
 
-	rslt->vl.arr = (struct ArrStrc*)malloc(sizeof(struct ArrStrc*));
+	//rslt->vl.arr = (struct ArrStrc*)malloc(sizeof(struct ArrStrc*));
+	rslt->vl.arr = new ArrStrc;
 
 	int elmtCnt;
 
 	elmtCnt = argArr[0]->vl.intVl;
 
-	rslt->vl.arr->elmtSz = elmtCnt + 0x10;
-	rslt->vl.arr->elmtCnt = elmtCnt;
+	//rslt->vl.arr->elmtSz = elmtCnt + 0x10;
+	//rslt->vl.arr->elmtCnt = elmtCnt;
 
-	rslt->vl.arr->elmtArr = (struct CnstStrc**)malloc(sizeof(struct CnstStrc*) * rslt->vl.arr->elmtSz);
+	//rslt->vl.arr->elmtArr = (struct CnstStrc**)malloc(sizeof(struct CnstStrc*) * rslt->vl.arr->elmtSz);
 
 	int i;
 
 	for (i = 0; i < elmtCnt; i++)
 	{
-		rslt->vl.arr->elmtArr[i] = bldNllCnst();
+		//rslt->vl.arr->elmtArr[i] = bldNllCnst();
+		rslt->vl.arr->elmtArr.push_back(bldNllCnst());
 	}
 
 	return rslt;

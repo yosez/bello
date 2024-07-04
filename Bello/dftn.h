@@ -1,6 +1,11 @@
 #pragma once
 
 #include <stdio.h>
+#include <vector>
+#include <string>
+
+
+using namespace std;
 
 struct VrbStrc;
 struct VrbExpStrc;
@@ -37,169 +42,186 @@ struct ElmtAsgnExpStrc;
 struct NtvFcnStrc;
 struct VarStmtStrc;
 
-typedef struct CnstStrc *ntvFcnDfn(struct EnvrStrc* envr, int prmCnt, struct CnstStrc **prmArr);
+typedef struct CnstStrc* ntvFcnDfn(struct EnvrStrc* envr, int prmCnt, vector <CnstStrc*> prmArr);
 
 
-struct EnvrStrc *glbEnvr;
+struct EnvrStrc* glbEnvr;
 
 
 union VlUnn
 {
-    int bln;
-    float flt;
-    int intVl;
-    char *str;
-    struct ArrStrc *arr;
+	int bln;
+	float flt;
+	int intVl;
+	string str;
+	struct ArrStrc* arr;
+
+public:
+	VlUnn()
+	{
+	}
+
+	~VlUnn()
+	{
+	}
 };
 
 enum ExpTyp
 {
-    CONST_EXPRESSION=1,
-    VARIABLE_EXPRESSION,
-    BINARY_EXPRESSION,
-    ASSIGN_EXPRESSION,
-    UNARY_EXPRESSION,
-    FUNCTION_EXPRESSION,
-    VARIABLE_DEFINE_EXPRESSION,
-    GLOBAL_ASSIGN_EXPRESSION,
-    LOCAL_ASSIGN_EXPRESSION,
-    NULL_EXPRESSION,
-    READ_EXPRESSION,
-    ARRAY_EXPRESSION,
-    ARRAY_EVALUATE_EXPRESSION,
-    ELEMENT_ASSIGN_EXPRESSION,
-    NEW_ARRAY_EXPRESSION,
-    LVALUE_EXPRESSION
+	CONST_EXPRESSION = 1,
+	VARIABLE_EXPRESSION,
+	BINARY_EXPRESSION,
+	ASSIGN_EXPRESSION,
+	UNARY_EXPRESSION,
+	FUNCTION_EXPRESSION,
+	VARIABLE_DEFINE_EXPRESSION,
+	GLOBAL_ASSIGN_EXPRESSION,
+	LOCAL_ASSIGN_EXPRESSION,
+	NULL_EXPRESSION,
+	READ_EXPRESSION,
+	ARRAY_EXPRESSION,
+	ARRAY_EVALUATE_EXPRESSION,
+	ELEMENT_ASSIGN_EXPRESSION,
+	NEW_ARRAY_EXPRESSION,
+	LVALUE_EXPRESSION
 };
 
 enum VrbTyp
 {
-    INT=1,
-    FLOAT,
-    BOOLEAN,
-    STRING,
-    NULL_TYPE,
-    ARRAY
+	INT = 1,
+	FLOAT,
+	BOOLEAN,
+	STRING,
+	NULL_TYPE,
+	ARRAY
 };
 
 
 enum Unrtyp
 {
-    PREFIX_INCREMENT=1,
-    PREFIX_DECREMENT,
-    SUFFIX_INCREMENT,
-    SUFFIX_DECREMENT
+	PREFIX_INCREMENT = 1,
+	PREFIX_DECREMENT,
+	SUFFIX_INCREMENT,
+	SUFFIX_DECREMENT
 };
 
 enum StmtTyp
 {
-    PRINT_STATEMENT=1,
-    EXPRESSION_STATEMENT,
-    IF_STATEMENT,
-    IF_ELSE_STATEMENT,
-    FOR_STATEMENT,
-    WHILE_STATEMENT,
-    DO_WHILE_STATEMENT,
-    STATEMENT_BLOCK,
-    BREAK_STATEMENT,
-    CONTINUE_STATEMENT,
-    FUNCTION_DEFINE_STATEMENT,
-    RETURN_STATEMENT,
-    VAR_STATEMENT,
-    NULL_STATEMENT
+	PRINT_STATEMENT = 1,
+	EXPRESSION_STATEMENT,
+	IF_STATEMENT,
+	IF_ELSE_STATEMENT,
+	FOR_STATEMENT,
+	WHILE_STATEMENT,
+	DO_WHILE_STATEMENT,
+	STATEMENT_BLOCK,
+	BREAK_STATEMENT,
+	CONTINUE_STATEMENT,
+	FUNCTION_DEFINE_STATEMENT,
+	RETURN_STATEMENT,
+	VAR_STATEMENT,
+	NULL_STATEMENT
 };
 
 enum StmtRsltTyp
 {
-    NORMAL_RESULT=1,
-    BREAK_RESULT,
-    CONTINUE_RESULT,
-    RETURN_RESULT
+	NORMAL_RESULT = 1,
+	BREAK_RESULT,
+	CONTINUE_RESULT,
+	RETURN_RESULT
 };
 
 
 struct VrbStrc
 {
-    char *nm;
-    int typ;
-    union VlUnn vl;
+	string nm;
+	int typ;
+	union VlUnn vl;
+
+	//public:
+	//	VrbStrc();
 };
 
 struct VrbExpStrc
 {
-    char *nm;
+	string nm;
 };
 
 struct CnstStrc
 {
-    int CnstTyp;
-    union VlUnn vl;
+	int CnstTyp;
+	union VlUnn vl;
+
+public:
+	CnstStrc()
+	{
+	}
 };
 
 struct AsgnExpStrc
 {
-    struct ExpStrc* lvl;
-    struct ExpStrc* exp;
+	struct ExpStrc* lvl;
+	struct ExpStrc* exp;
 };
 
 struct BnrExpStrc
 {
-    int oprTyp;
-    struct ExpStrc *lftExp,*rghtExp;
+	int oprTyp;
+	struct ExpStrc* lftExp, * rghtExp;
 };
 
 struct UnrExpStrc
 {
-    int oprTyp;
-    struct ExpStrc *exp;
+	int oprTyp;
+	struct ExpStrc* exp;
 };
 
 struct FcnExpStrc
 {
-    char *nm;
+	string nm;
 
-    struct ArgLstStrc *argLst;
+	struct ArgLstStrc* argLst;
 };
 
 
 struct GlbAsgnExpStrc
 {
-    struct AsgnLstStrc* asgnLst;
+	struct AsgnLstStrc* asgnLst;
 };
 
 struct LclAsgnExpStrc
 {
-    struct AsgnLstStrc* asgnLst;
+	struct AsgnLstStrc* asgnLst;
 };
 
 //read函数结构体
 struct RdExpStrc
 {
-    int typ;
+	int typ;
 };
 
 //数组定义结构体
 struct ArrExpStrc
 {
-    struct ElmtLstStrc* elmtLst;
+	struct ElmtLstStrc* elmtLst;
 };
 
 //数组取用结构体
 struct ArrEvlExpStrc
 {
-    // 0: 标识符数组变量 1: 数组表达式
-    int blnArr;
+	// 0: 标识符数组变量 1: 数组表达式
+	int blnArr;
 
-    struct ExpStrc *arr;
+	struct ExpStrc* arr;
 
-    struct EvlLstStrc * evlLst;
+	struct EvlLstStrc* evlLst;
 };
 
 struct LvlExpStrc
 {
-    int hasEvlLst;
-    struct ExpStrc *vrb;
-    struct EvlLstStrc *evlLst;
+	int hasEvlLst;
+	struct ExpStrc* vrb;
+	struct EvlLstStrc* evlLst;
 };
 
 // struct ArrEvlExpStrc
@@ -214,178 +236,178 @@ struct LvlExpStrc
 
 struct NewArrExpStrc
 {
-    struct ExpStrc* cnt;
+	struct ExpStrc* cnt;
 };
 
 //数组元素赋值表达式结构体
 struct ElmtAsgnExpStrc
 {
-    struct ExpStrc* arr;
+	struct ExpStrc* arr;
 
-    struct PstnLstStrc* pstnLst;
+	struct PstnLstStrc* pstnLst;
 
-    struct ExpStrc* vl;
+	struct ExpStrc* vl;
 };
 
 struct ExpStrc
 {
-    int typ;
-    union
-    {
-        struct CnstStrc *cnst;
-        struct VrbExpStrc *vrbExp;
-        struct BnrExpStrc *bnrExp;
-        struct UnrExpStrc *unrExp;
-        struct AsgnExpStrc *asgnExp;
-        struct FcnExpStrc *fcnExp;
-        struct GlbAsgnExpStrc *glbAsgnExp;
-        struct LclAsgnExpStrc *lclAsgnExp;
-        struct RdExpStrc *rdExp;
-        struct ArrExpStrc * arrExp;
-        struct ArrEvlExpStrc *arrEvlExp;
-        struct ElmtAsgnExpStrc *elmtAsgnExp;
-        struct NewArrExpStrc *newArrExp;
-        struct LvlExpStrc *lvlExp;
-    } exp;
+	int typ;
+	union
+	{
+		struct CnstStrc* cnst;
+		struct VrbExpStrc* vrbExp;
+		struct BnrExpStrc* bnrExp;
+		struct UnrExpStrc* unrExp;
+		struct AsgnExpStrc* asgnExp;
+		struct FcnExpStrc* fcnExp;
+		struct GlbAsgnExpStrc* glbAsgnExp;
+		struct LclAsgnExpStrc* lclAsgnExp;
+		struct RdExpStrc* rdExp;
+		struct ArrExpStrc* arrExp;
+		struct ArrEvlExpStrc* arrEvlExp;
+		struct ElmtAsgnExpStrc* elmtAsgnExp;
+		struct NewArrExpStrc* newArrExp;
+		struct LvlExpStrc* lvlExp;
+	} exp;
 };
 
 struct ExpStmtStrc
 {
-    struct ExpStrc* exp;
+	struct ExpStrc* exp;
 };
 
 struct PrtStmtStrc
 {
-    int typ;
-    struct ExpStrc* exp;
+	int typ;
+	struct ExpStrc* exp;
 };
 
 struct IfStmtStrc
 {
-    struct ExpStrc *exp;
-    struct StmtStrc *stmt;
+	struct ExpStrc* exp;
+	struct StmtStrc* stmt;
 };
 
 struct IfElsStmtStrc
 {
-    struct ExpStrc *exp;
-    struct StmtStrc *stmt;
-    struct StmtStrc *elsStmt;
+	struct ExpStrc* exp;
+	struct StmtStrc* stmt;
+	struct StmtStrc* elsStmt;
 };
 
 struct ForStmtStrc
 {
-    struct StmtStrc *intl;
-    struct StmtStrc *exp;
-    struct StmtStrc *itr;
-    struct StmtStrc *stmt;
+	struct StmtStrc* intl;
+	struct StmtStrc* exp;
+	struct StmtStrc* itr;
+	struct StmtStrc* stmt;
 };
 
 struct WhlStmtStrc
 {
-    struct StmtStrc *exp;
-    struct StmtStrc *stmt;
+	struct StmtStrc* exp;
+	struct StmtStrc* stmt;
 };
 
 struct DoWhlStmtStrc
 {
-    struct StmtStrc *exp;
-    struct StmtStrc *stmt;
+	struct StmtStrc* exp;
+	struct StmtStrc* stmt;
 };
 
 struct BrkStmtStrc
 {
-    struct ExpStrc *exp;
+	struct ExpStrc* exp;
 };
 
 struct CntnStmtStrc
 {
-    struct ExpStrc *exp;
+	struct ExpStrc* exp;
 };
 
 struct FcnStmtStrc
 {
-    struct FcnStrc* fcn;
+	struct FcnStrc* fcn;
 };
 
 struct StmtBlkStrc
 {
-    int stmtSz; // stmtArr数组的大小
-    int stmtCnt; // stmtArr数组最后一个元素的序号
-    struct StmtStrc **stmtArr;
+	//int stmtSz; // stmtArr数组的大小
+	//int stmtCnt; // stmtArr数组最后一个元素的序号
+	vector<StmtStrc*> stmtArr;
 };
 
 struct RtnStmtStrc
 {
-    int blnRslt;
-    struct ExpStrc *exp;
+	int blnRslt;
+	struct ExpStrc* exp;
 };
 
 struct VarStmtStrc
 {
-    struct AsgnLstStrc* asgnLst;
+	struct AsgnLstStrc* asgnLst;
 };
 
 struct StmtStrc
 {
-    int typ;
-    union
-    {
-        struct ExpStmtStrc * expStmt;
-        struct IfStmtStrc * ifStmt;
-        struct IfElsStmtStrc * ifElsStmt;
-        struct ForStmtStrc * forStmt;
-        struct WhlStmtStrc * whlStmt;
-        struct DoWhlStmtStrc * doWhlStmt;
-        struct BrkStmtStrc * brkStmt;
-        struct CntnStmtStrc * cntnStmt;
-        struct PrtStmtStrc * prtStmt;
-        struct StmtBlkStrc * stmtBlk;
-        struct FcnStmtStrc * fcnStmt;
-        struct RtnStmtStrc * rtnStmt;
-        struct VarStmtStrc* varStmt;
-    } stmt;
+	int typ;
+	union
+	{
+		struct ExpStmtStrc* expStmt;
+		struct IfStmtStrc* ifStmt;
+		struct IfElsStmtStrc* ifElsStmt;
+		struct ForStmtStrc* forStmt;
+		struct WhlStmtStrc* whlStmt;
+		struct DoWhlStmtStrc* doWhlStmt;
+		struct BrkStmtStrc* brkStmt;
+		struct CntnStmtStrc* cntnStmt;
+		struct PrtStmtStrc* prtStmt;
+		struct StmtBlkStrc* stmtBlk;
+		struct FcnStmtStrc* fcnStmt;
+		struct RtnStmtStrc* rtnStmt;
+		struct VarStmtStrc* varStmt;
+	} stmt;
 };
 
 //return语句返回类型结构体
 struct RtnRsltStrc
 {
-    int blnRslt;
-    struct CnstStrc *rslt;
+	int blnRslt;
+	struct CnstStrc* rslt;
 };
 
 //break语句返回类型结构体
 struct BrkRsltStrc
 {
-    int brkCnt;
+	int brkCnt;
 };
 
 //continue语句返回类型结构体
 struct CntnRsltStrc
 {
-    int cntnCnt;
+	int cntnCnt;
 };
 
 //语句返回类型结构体
 struct StmtRsltStrc
 {
-    int typ;
-    union 
-    {
-        struct RtnRsltStrc* rtnRslt;
-        struct BrkRsltStrc* brkRslt;
-        struct CntnRsltStrc* cntnRslt;
-    }rslt;
-    
+	int typ;
+	union
+	{
+		struct RtnRsltStrc* rtnRslt;
+		struct BrkRsltStrc* brkRslt;
+		struct CntnRsltStrc* cntnRslt;
+	}rslt;
+
 };
 
 //函数信息结构体
 struct FcnStrc
 {
-    char *nm;
-    struct EnvrStrc *envr;
-    struct PrmLstStrc *prmLst;
-    struct StmtStrc *stmt;
+	string nm;
+	struct EnvrStrc* envr;
+	struct PrmLstStrc* prmLst;
+	struct StmtStrc* stmt;
 };
 
 
@@ -393,64 +415,65 @@ struct FcnStrc
 
 struct EnvrStrc
 {
-    int vrbSz,vrbCnt;
-    struct VrbStrc **vrbArr;
+	//int vrbSz, vrbCnt;
+	vector<VrbStrc*> vrbArr;
 
-    int fcnSz,fcnCnt;
-    struct FcnStrc **fcnArr;
+	//int fcnSz, fcnCnt;
+	vector<FcnStrc*> fcnArr;
 
-    int ntvFcnSz, ntvFcnCnt;
-    struct NtvFcnStrc **ntvFcnArr;
+	//int ntvFcnSz, ntvFcnCnt;
+	vector<NtvFcnStrc*> ntvFcnArr;
 };
 
 //数组结构体
 struct ArrStrc
 {
-    int elmtSz;
-    int elmtCnt;
+	//int elmtSz;
+	//int elmtCnt;
 
-    struct CnstStrc ** elmtArr;
+	vector<CnstStrc*> elmtArr;
 };
 
 //数组元素列表
 struct ElmtLstStrc
 {
-    int elmtSz;
-    int elmtCnt;
+	//int elmtSz;
+	//int elmtCnt;
 
-    struct ExpStrc **elmtArr;
+	vector<ExpStrc*> elmtArr;
 };
 
 //数组定位列表
 struct PstnLstStrc
 {
-    int pstnSz;
-    int pstnCnt;
+	//int pstnSz;
+	//int pstnCnt;
 
-    struct ExpStrc** pstnArr;
+	vector<ExpStrc*> pstnArr;
 };
 
 //数组评估列表
 struct EvlLstStrc
 {
-    int evlSz;
-    int evlCnt;
+	//int evlSz;
+	int evlCnt;
 
-    int *blnSlc;
+	//int* blnSlc;
+	vector<int> blnSlc;
 
-    struct ExpStrc** pstnArr;
-    struct ExpStrc** strtArr;
-    struct ExpStrc** endArr;
-    struct ExpStrc** stpArr;
+	vector<ExpStrc*> pstnArr;
+	vector<ExpStrc*> strtArr;
+	vector<ExpStrc*> endArr;
+	vector<ExpStrc*> stpArr;
 };
 
 //函数形参列表
 struct PrmLstStrc
 {
-    int prmSz;
-    int prmCnt;
+	//int prmSz;
+	//int prmCnt;
 
-    struct ExpStrc **prmArr;
+	vector<ExpStrc*> prmArr;
 
 };
 
@@ -458,24 +481,24 @@ struct PrmLstStrc
 //函数实参列表
 struct ArgLstStrc
 {
-    int argSz;
-    int argCnt;
+	//int argSz;
+	//int argCnt;
 
-    struct ExpStrc **argArr;
+	vector <ExpStrc*> argArr;
 };
 
 //赋值列表
 struct AsgnLstStrc
 {
-    int asgnSz;
-    int asgnCnt;
+	//int asgnSz;
+	//int asgnCnt;
 
-    struct ExpStrc **asgnArr;
+	vector<ExpStrc*> asgnArr;
 };
 
 struct NtvFcnStrc
 {
-    char *fcnNm;
-    int prmCnt;
-    ntvFcnDfn* fcn;
+	string fcnNm;
+	int prmCnt;
+	ntvFcnDfn* fcn;
 };

@@ -16,7 +16,10 @@ struct ExpStrc* bldLvlExp(struct ExpStrc* vrb);
 int asgnVrb(struct VrbStrc* vrb, struct CnstStrc* vl)
 {
 	vrb->typ = vl->CnstTyp;
-	vrb->vl = vl->vl;
+
+	//vrb->vl = vl->vl;
+	memset(&(vrb->vl), 0, sizeof(VlUnn));
+	memcpy(&(vrb->vl), &(vl->vl), sizeof(VlUnn));
 
 	return 0;
 }
@@ -28,17 +31,32 @@ struct CnstStrc* bldCnstFrmVrb(struct VrbStrc* vrb)
 
 	rslt->CnstTyp = vrb->typ;
 
-	rslt->vl = vrb->vl;
+	//rslt->vl = vrb->vl;
+	memset(&(rslt->vl), 0, sizeof(VlUnn));
+	memcpy(&(rslt->vl), &(vrb->vl), sizeof(VlUnn));
 
 	return rslt;
 }
 
-struct VrbStrc* bldVrb(char* nm)
+//struct VrbStrc* bldVrb(char* nm)
+//{
+//	struct VrbStrc* rslt = new VrbStrc;
+//
+//	rslt->nm = (char*)malloc(0x100);
+//	strcpy(rslt->nm, nm);
+//
+//	rslt->typ = -1;
+//
+//	return rslt;
+//}
+
+struct VrbStrc* bldVrb(string nm)
 {
 	struct VrbStrc* rslt = new VrbStrc;
 
-	rslt->nm = (char*)malloc(0x100);
-	strcpy(rslt->nm, nm);
+	//rslt->nm = (char*)malloc(0x100);
+	//strcpy(rslt->nm, nm);
+	rslt->nm = nm;
 
 	rslt->typ = -1;
 
@@ -50,25 +68,27 @@ struct AsgnLstStrc* bldAsgnLst()
 {
 	struct AsgnLstStrc* rslt = new AsgnLstStrc;
 
-	rslt->asgnSz = 10;
-	rslt->asgnCnt = 0;
+	//rslt->asgnSz = 10;
+	//rslt->asgnCnt = 0;
 
-	rslt->asgnArr = (struct ExpStrc**)malloc(sizeof(struct ExpStrc*) * rslt->asgnSz);
+	//rslt->asgnArr = (struct ExpStrc**)malloc(sizeof(struct ExpStrc*) * rslt->asgnSz);
 
 	return rslt;
 }
 
 int asgnLstAdd(struct AsgnLstStrc* asgnLst, struct ExpStrc* vrb, struct ExpStrc* exp)
 {
-	if (asgnLst->asgnCnt == asgnLst->asgnSz)
-	{
-		asgnLst->asgnSz *= 2;
-		asgnLst->asgnArr = (struct ExpStrc**)realloc(asgnLst->asgnArr, sizeof(struct ExpStrc*) * asgnLst->asgnSz);
-	}
+	//if (asgnLst->asgnCnt == asgnLst->asgnSz)
+	//{
+	//	asgnLst->asgnSz *= 2;
+	//	asgnLst->asgnArr = (struct ExpStrc**)realloc(asgnLst->asgnArr, sizeof(struct ExpStrc*) * asgnLst->asgnSz);
+	//}
 
-	asgnLst->asgnArr[asgnLst->asgnCnt] = bldAsgnExp(bldLvlExp(vrb), exp);
+	//asgnLst->asgnArr[asgnLst->asgnCnt] = bldAsgnExp(bldLvlExp(vrb), exp);
 
-	asgnLst->asgnCnt++;
+	//asgnLst->asgnCnt++;
+
+	asgnLst->asgnArr.push_back(bldAsgnExp(bldLvlExp(vrb), exp));
 
 	return 0;
 }

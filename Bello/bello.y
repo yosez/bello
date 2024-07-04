@@ -62,7 +62,7 @@
     struct EvlLstStrc *evlLst;
 
     char *idtf;
-
+    //string idtf;
 }
 
 %token <intVl> INT_VALUE

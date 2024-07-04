@@ -32,9 +32,11 @@ struct ExpStrc* bldCnstStrExp(char* strVl);
 struct ExpStrc* bldCnstNllExp();
 struct ExpStrc* bldAsgnExp(struct ExpStrc* lvl, struct ExpStrc* exp);
 struct ExpStrc* bldVrbExp(char* idtf);
+//struct ExpStrc* bldVrbExp(string idtf);
 struct ExpStrc* bldBnrExp(int opr, struct ExpStrc* lftExp, struct ExpStrc* rghtExp);
 struct ExpStrc* bldUnrExp(int opr, struct ExpStrc* exp);
 struct ExpStrc* bldFcnExp(char* nm, struct ArgLstStrc* argLst);
+//struct ExpStrc* bldFcnExp(string nm, struct ArgLstStrc* argLst);
 struct ExpStrc* bldGlbAsgnExp(struct AsgnLstStrc* asgnLst);
 struct ExpStrc* bldLclAsgnExp(struct AsgnLstStrc* asgnLst);
 struct ExpStrc* bldRdExp(int typ);
@@ -146,7 +148,8 @@ struct ExpStrc* bldAsgnExp(struct ExpStrc* lvl, struct ExpStrc* exp)
 
 	rslt->typ = ASSIGN_EXPRESSION;
 
-	rslt->exp.asgnExp = (struct AsgnExpStrc*)malloc(sizeof(struct AsgnExpStrc));
+	//rslt->exp.asgnExp = (struct AsgnExpStrc*)malloc(sizeof(struct AsgnExpStrc));
+	rslt->exp.asgnExp = new AsgnExpStrc;
 	rslt->exp.asgnExp->lvl = lvl;
 	rslt->exp.asgnExp->exp = exp;
 
@@ -172,7 +175,8 @@ struct ExpStrc* bldGlbAsgnExp(struct AsgnLstStrc* asgnLst)
 
 	rslt->typ = GLOBAL_ASSIGN_EXPRESSION;
 
-	rslt->exp.glbAsgnExp = (struct GlbAsgnExpStrc*)malloc(sizeof(struct GlbAsgnExpStrc));
+	//rslt->exp.glbAsgnExp = (struct GlbAsgnExpStrc*)malloc(sizeof(struct GlbAsgnExpStrc));
+	rslt->exp.glbAsgnExp = new GlbAsgnExpStrc;
 
 	rslt->exp.glbAsgnExp->asgnLst = asgnLst;
 
@@ -185,7 +189,8 @@ struct ExpStrc* bldLclAsgnExp(struct AsgnLstStrc* asgnLst)
 
 	rslt->typ = LOCAL_ASSIGN_EXPRESSION;
 
-	rslt->exp.lclAsgnExp = (struct LclAsgnExpStrc*)malloc(sizeof(struct LclAsgnExpStrc));
+	//rslt->exp.lclAsgnExp = (struct LclAsgnExpStrc*)malloc(sizeof(struct LclAsgnExpStrc));
+	rslt->exp.lclAsgnExp = new LclAsgnExpStrc;
 
 	rslt->exp.lclAsgnExp->asgnLst = asgnLst;
 
@@ -213,7 +218,8 @@ struct ExpStrc* bldRdExp(int typ)
 
 	rslt->typ = READ_EXPRESSION;
 
-	rslt->exp.rdExp = (struct RdExpStrc*)malloc(sizeof(struct RdExpStrc));
+	//rslt->exp.rdExp = (struct RdExpStrc*)malloc(sizeof(struct RdExpStrc));
+	rslt->exp.rdExp = new RdExpStrc;
 
 	rslt->exp.rdExp->typ = typ;
 
@@ -226,8 +232,8 @@ struct ExpStrc* bldArrExp(struct ElmtLstStrc* elmtLst)
 
 	rslt->typ = ARRAY_EXPRESSION;
 
-	rslt->exp.arrExp = (struct ArrExpStrc*)malloc(sizeof(struct ArrExpStrc));
-
+	//rslt->exp.arrExp = (struct ArrExpStrc*)malloc(sizeof(struct ArrExpStrc));
+	rslt->exp.arrExp = new ArrExpStrc;
 	rslt->exp.arrExp->elmtLst = elmtLst;
 
 	return rslt;
@@ -239,7 +245,8 @@ struct ExpStrc* bldArrEvlExp(struct ExpStrc* vrb, struct EvlLstStrc* evlLst)
 
 	rslt->typ = ARRAY_EVALUATE_EXPRESSION;
 
-	rslt->exp.arrEvlExp = (struct ArrEvlExpStrc*)malloc(sizeof(struct ArrEvlExpStrc));
+	//rslt->exp.arrEvlExp = (struct ArrEvlExpStrc*)malloc(sizeof(struct ArrEvlExpStrc));
+	rslt->exp.arrEvlExp = new ArrEvlExpStrc;
 
 	rslt->exp.arrEvlExp->blnArr = 0;
 
@@ -256,7 +263,8 @@ struct ExpStrc* bldLvlExp(struct ExpStrc* vrb)
 
 	rslt->typ = LVALUE_EXPRESSION;
 
-	rslt->exp.lvlExp = (struct LvlExpStrc*)malloc(sizeof(struct LvlExpStrc));
+	//rslt->exp.lvlExp = (struct LvlExpStrc*)malloc(sizeof(struct LvlExpStrc));
+	rslt->exp.lvlExp = new LvlExpStrc;
 
 	rslt->exp.lvlExp->vrb = vrb;
 
@@ -285,7 +293,8 @@ struct ExpStrc* bldElmtAsgnExp(struct ExpStrc* arr, struct PstnLstStrc* pstnLst,
 
 	rslt->typ = ELEMENT_ASSIGN_EXPRESSION;
 
-	rslt->exp.elmtAsgnExp = (struct ElmtAsgnExpStrc*)malloc(sizeof(struct ElmtAsgnExpStrc));
+	//rslt->exp.elmtAsgnExp = (struct ElmtAsgnExpStrc*)malloc(sizeof(struct ElmtAsgnExpStrc));
+	rslt->exp.elmtAsgnExp = new ElmtAsgnExpStrc;
 
 	rslt->exp.elmtAsgnExp->arr = arr;
 	rslt->exp.elmtAsgnExp->pstnLst = pstnLst;
@@ -301,19 +310,33 @@ struct ExpStrc* bldNewArrExp(struct ExpStrc* cnt)
 
 	rslt->typ = NEW_ARRAY_EXPRESSION;
 
-	rslt->exp.newArrExp = (struct NewArrExpStrc*)malloc(sizeof(struct NewArrExpStrc));
+	//rslt->exp.newArrExp = (struct NewArrExpStrc*)malloc(sizeof(struct NewArrExpStrc));
+	rslt->exp.newArrExp = new NewArrExpStrc;
 
 	rslt->exp.newArrExp->cnt = cnt;
 
 	return rslt;
 }
 
+//struct ExpStrc* bldVrbExp(char* nm)
+//{
+//	struct ExpStrc* exp = new ExpStrc;
+//
+//	exp->typ = VARIABLE_EXPRESSION;
+//	exp->exp.vrbExp = (struct VrbExpStrc*)malloc(sizeof(struct VrbExpStrc));
+//
+//	exp->exp.vrbExp->nm = nm;
+//
+//	return exp;
+//}
+
 struct ExpStrc* bldVrbExp(char* nm)
 {
 	struct ExpStrc* exp = new ExpStrc;
 
 	exp->typ = VARIABLE_EXPRESSION;
-	exp->exp.vrbExp = (struct VrbExpStrc*)malloc(sizeof(struct VrbExpStrc));
+	exp->exp.vrbExp = new VrbExpStrc;
+	//(struct VrbExpStrc*)malloc(sizeof(struct VrbExpStrc));
 
 	exp->exp.vrbExp->nm = nm;
 
@@ -326,7 +349,8 @@ struct ExpStrc* bldBnrExp(int opr, struct ExpStrc* lftExp, struct ExpStrc* rghtE
 
 	exp->typ = BINARY_EXPRESSION;
 
-	exp->exp.bnrExp = (struct BnrExpStrc*)malloc(sizeof(struct BnrExpStrc));
+	//exp->exp.bnrExp = (struct BnrExpStrc*)malloc(sizeof(struct BnrExpStrc));
+	exp->exp.bnrExp = new BnrExpStrc;
 
 	exp->exp.bnrExp->lftExp = lftExp;
 	exp->exp.bnrExp->rghtExp = rghtExp;
@@ -341,7 +365,8 @@ struct ExpStrc* bldUnrExp(int opr, struct ExpStrc* exp)
 
 	rslt->typ = UNARY_EXPRESSION;
 
-	rslt->exp.unrExp = (struct UnrExpStrc*)malloc(sizeof(struct UnrExpStrc));
+	//rslt->exp.unrExp = (struct UnrExpStrc*)malloc(sizeof(struct UnrExpStrc));
+	rslt->exp.unrExp = new UnrExpStrc; 
 
 	rslt->exp.unrExp->exp = exp;
 	rslt->exp.unrExp->oprTyp = opr;
@@ -349,16 +374,32 @@ struct ExpStrc* bldUnrExp(int opr, struct ExpStrc* exp)
 	return rslt;
 }
 
+//struct ExpStrc* bldFcnExp(char* nm, struct ArgLstStrc* argLst)
+//{
+//	struct ExpStrc* rslt = new ExpStrc;
+//
+//	rslt->typ = FUNCTION_EXPRESSION;
+//
+//	rslt->exp.fcnExp = (struct FcnExpStrc*)malloc(sizeof(struct FcnExpStrc));
+//
+//	rslt->exp.fcnExp->nm = nm;
+//	//strcpy(rslt->exp.fcnExp->nm, nm);
+//
+//	rslt->exp.fcnExp->argLst = argLst;
+//
+//	return rslt;
+//
+//}
+
 struct ExpStrc* bldFcnExp(char* nm, struct ArgLstStrc* argLst)
 {
 	struct ExpStrc* rslt = new ExpStrc;
 
 	rslt->typ = FUNCTION_EXPRESSION;
 
-	rslt->exp.fcnExp = (struct FcnExpStrc*)malloc(sizeof(struct FcnExpStrc));
+	rslt->exp.fcnExp = new FcnExpStrc;
 
-	rslt->exp.fcnExp->nm = (char*)malloc(0x100);
-	strcpy(rslt->exp.fcnExp->nm, nm);
+	rslt->exp.fcnExp->nm = nm;
 
 	rslt->exp.fcnExp->argLst = argLst;
 
@@ -395,84 +436,99 @@ struct CnstStrc* clcBnrExpAdd(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr
 		rslt = bldFltCnst(lftCnst->vl.flt + rghtCnst->vl.intVl);
 	}
 
-	char* str;
+	string str;
 
 	if (lftCnst->CnstTyp == STRING_VALUE && rghtCnst->CnstTyp == STRING_VALUE)
 	{
+		str = lftCnst->vl.str + rghtCnst->vl.str;
+		//str = (char*)malloc(strlen(lftCnst->vl.str) + strlen(rghtCnst->vl.str) + 0x10);
+		//memset(str, 0, sizeof(str));
 
-		str = (char*)malloc(strlen(lftCnst->vl.str) + strlen(rghtCnst->vl.str) + 0x10);
-		memset(str, 0, sizeof(str));
-
-		strcpy(str, lftCnst->vl.str);
-		strcat(str, rghtCnst->vl.str);
+		//strcpy(str, lftCnst->vl.str);
+		//strcat(str, rghtCnst->vl.str);
 
 		rslt = bldStrCnst(str);
 	}
 
 	if (lftCnst->CnstTyp == STRING_VALUE && rghtCnst->CnstTyp == INT_VALUE)
 	{
-		char* strInt;
-		strInt = (char*)malloc(0x10);
-		memset(strInt, 0, sizeof(strInt));
+		//char* strInt;
+		//strInt = (char*)malloc(0x10);
+		//memset(strInt, 0, sizeof(strInt));
 
-		sprintf(strInt, "%d", rghtCnst->vl.intVl);
+		//sprintf(strInt, "%d", rghtCnst->vl.intVl);
 
-		str = (char*)malloc(strlen(lftCnst->vl.str) + strlen(strInt) + 0x10);
-		memset(str, 0, sizeof(str));
+		//str = (char*)malloc(strlen(lftCnst->vl.str) + strlen(strInt) + 0x10);
+		//memset(str, 0, sizeof(str));
 
-		strcpy(str, lftCnst->vl.str);
-		strcat(str, strInt);
+		//strcpy(str, lftCnst->vl.str);
+		//strcat(str, strInt);
+
+		str = lftCnst->vl.str;
+		str += to_string(rghtCnst->vl.intVl);
+		//str += strInt;
 
 		rslt = bldStrCnst(str);
 	}
 
 	if (lftCnst->CnstTyp == INT_VALUE && rghtCnst->CnstTyp == STRING_VALUE)
 	{
-		char* strInt;
-		strInt = (char*)malloc(0x10);
-		memset(strInt, 0, sizeof(strInt));
+		//char* strInt;
+		//strInt = (char*)malloc(0x10);
+		//memset(strInt, 0, sizeof(strInt));
 
-		sprintf(strInt, "%d", lftCnst->vl.intVl);
+		//sprintf(strInt, "%d", lftCnst->vl.intVl);
 
-		str = (char*)malloc(strlen(strInt) + strlen(rghtCnst->vl.str) + 0x10);
-		memset(str, 0, sizeof(str));
+		//str = (char*)malloc(strlen(strInt) + strlen(rghtCnst->vl.str) + 0x10);
+		//memset(str, 0, sizeof(str));
 
-		strcpy(str, strInt);
-		strcat(str, rghtCnst->vl.str);
+		//strcpy(str, strInt);
+		//strcat(str, rghtCnst->vl.str);
+
+		//str = strInt;
+
+		str = to_string(lftCnst->vl.intVl);
+		str += rghtCnst->vl.str;
 
 		rslt = bldStrCnst(str);
 	}
 
 	if (lftCnst->CnstTyp == STRING_VALUE && rghtCnst->CnstTyp == FLOAT_VALUE)
 	{
-		char* strFlt;
-		strFlt = (char*)malloc(0x10);
-		memset(strFlt, 0, sizeof(strFlt));
+		//char* strFlt;
+		//strFlt = (char*)malloc(0x10);
+		//memset(strFlt, 0, sizeof(strFlt));
 
-		sprintf(strFlt, "%f", rghtCnst->vl.flt);
+		//sprintf(strFlt, "%f", rghtCnst->vl.flt);
 
-		str = (char*)malloc(strlen(lftCnst->vl.str) + strlen(strFlt) + 0x10);
-		memset(str, 0, sizeof(str));
+		//str = (char*)malloc(strlen(lftCnst->vl.str) + strlen(strFlt) + 0x10);
+		//memset(str, 0, sizeof(str));
 
-		strcpy(str, lftCnst->vl.str);
-		strcat(str, strFlt);
+		//strcpy(str, lftCnst->vl.str);
+		//strcat(str, strFlt);
+
+		str = lftCnst->vl.str;
+		str += to_string(rghtCnst->vl.flt);
 
 		rslt = bldStrCnst(str);
 	}
 
 	if (lftCnst->CnstTyp == FLOAT_VALUE && rghtCnst->CnstTyp == STRING_VALUE)
 	{
-		char* strFlt;
-		strFlt = (char*)malloc(0x10);
-		memset(strFlt, 0, sizeof(strFlt));
+		//char* strFlt;
+		//strFlt = (char*)malloc(0x10);
+		//memset(strFlt, 0, sizeof(strFlt));
 
-		sprintf(strFlt, "%f", lftCnst->vl.flt);
+		//sprintf(strFlt, "%f", lftCnst->vl.flt);
 
-		str = (char*)malloc(strlen(strFlt) + strlen(rghtCnst->vl.str) + 0x10);
-		memset(str, 0, sizeof(str));
+		//str = (char*)malloc(strlen(strFlt) + strlen(rghtCnst->vl.str) + 0x10);
+		//memset(str, 0, sizeof(str));
 
-		strcpy(str, strFlt);
-		strcat(str, rghtCnst->vl.str);
+		//strcpy(str, strFlt);
+		//strcat(str, rghtCnst->vl.str);
+
+		str = to_string(lftCnst->vl.flt);
+		str += rghtCnst->vl.str;
 
 		rslt = bldStrCnst(str);
 	}
@@ -480,20 +536,23 @@ struct CnstStrc* clcBnrExpAdd(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr
 	if (lftCnst->CnstTyp == STRING_VALUE && rghtCnst->CnstTyp == BOOLEAN_VALUE)
 	{
 
-		str = (char*)malloc(strlen(lftCnst->vl.str) + 0x10);
-		memset(str, 0, sizeof(str));
+		//str = (char*)malloc(strlen(lftCnst->vl.str) + 0x10);
+		//memset(str, 0, sizeof(str));
 
-		strcpy(str, lftCnst->vl.str);
+		//strcpy(str, lftCnst->vl.str);
 
-		if (rghtCnst->vl.bln == 0)
-		{
-			strcat(str, "false");
-		}
-		else
-		{
-			strcat(str, "true");
-		}
+		//if (rghtCnst->vl.bln == 0)
+		//{
+		//	strcat(str, "false");
+		//}
+		//else
+		//{
+		//	strcat(str, "true");
+		//}
 
+		str = lftCnst->vl.str;
+
+		str += rghtCnst->vl.bln == 0 ? "false" : "true";
 
 		rslt = bldStrCnst(str);
 	}
@@ -501,19 +560,23 @@ struct CnstStrc* clcBnrExpAdd(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr
 	if (lftCnst->CnstTyp == BOOLEAN_VALUE && rghtCnst->CnstTyp == STRING_VALUE)
 	{
 
-		str = (char*)malloc(strlen(rghtCnst->vl.str) + 0x10);
-		memset(str, 0, sizeof(str));
+		//str = (char*)malloc(strlen(rghtCnst->vl.str) + 0x10);
+		//memset(str, 0, sizeof(str));
 
-		if (lftCnst->vl.bln == 0)
-		{
-			strcpy(str, "false");
-		}
-		else
-		{
-			strcpy(str, "true");
-		}
+		//if (lftCnst->vl.bln == 0)
+		//{
+		//	strcpy(str, "false");
+		//}
+		//else
+		//{
+		//	strcpy(str, "true");
+		//}
 
-		strcat(str, rghtCnst->vl.str);
+		//strcat(str, rghtCnst->vl.str);
+
+		str = lftCnst->vl.bln == 0 ? "false" : "true";
+
+		str += rghtCnst->vl.str;
 
 		rslt = bldStrCnst(str);
 	}
@@ -669,7 +732,8 @@ struct CnstStrc* clcBnrExpEq(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr,
 
 	if (lftCnst->CnstTyp == STRING_VALUE && rghtCnst->CnstTyp == STRING_VALUE)
 	{
-		rslt = bldBlnCnst(strcmp(lftCnst->vl.str, rghtCnst->vl.str) == 0);
+		//rslt = bldBlnCnst(strcmp(lftCnst->vl.str, rghtCnst->vl.str) == 0);
+		rslt = bldBlnCnst(lftCnst->vl.str.compare(rghtCnst->vl.str) == 0);
 	}
 
 	if (rslt == NULL)
@@ -707,7 +771,8 @@ struct CnstStrc* clcBnrExpNe(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr,
 
 	if (lftCnst->CnstTyp == STRING_VALUE && rghtCnst->CnstTyp == STRING_VALUE)
 	{
-		rslt = bldBlnCnst(strcmp(lftCnst->vl.str, rghtCnst->vl.str) != 0);
+		//rslt = bldBlnCnst(strcmp(lftCnst->vl.str, rghtCnst->vl.str) != 0);
+		rslt = bldBlnCnst(lftCnst->vl.str.compare(rghtCnst->vl.str) != 0);
 	}
 
 	if (rslt == NULL)
@@ -745,7 +810,7 @@ struct CnstStrc* clcBnrExpGt(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr,
 
 	if (lftCnst->CnstTyp == STRING_VALUE && rghtCnst->CnstTyp == STRING_VALUE)
 	{
-		rslt = bldBlnCnst(strcmp(lftCnst->vl.str, rghtCnst->vl.str) > 0);
+		rslt = bldBlnCnst(strcmp(lftCnst->vl.str.c_str(), rghtCnst->vl.str.c_str()) > 0);
 	}
 
 	if (rslt == NULL)
@@ -782,7 +847,8 @@ struct CnstStrc* clcBnrExpGe(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr,
 	}
 	if (lftCnst->CnstTyp == STRING_VALUE && rghtCnst->CnstTyp == STRING_VALUE)
 	{
-		rslt = bldBlnCnst(strcmp(lftCnst->vl.str, rghtCnst->vl.str) >= 0);
+		//rslt = bldBlnCnst(strcmp(lftCnst->vl.str, rghtCnst->vl.str) >= 0);
+		rslt = bldBlnCnst(lftCnst->vl.str.compare(rghtCnst->vl.str) >= 0);
 	}
 
 	if (rslt == NULL)
@@ -821,7 +887,8 @@ struct CnstStrc* clcBnrExpLt(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr,
 	}
 	if (lftCnst->CnstTyp == STRING_VALUE && rghtCnst->CnstTyp == STRING_VALUE)
 	{
-		rslt = bldBlnCnst(strcmp(lftCnst->vl.str, rghtCnst->vl.str) < 0);
+		//rslt = bldBlnCnst(strcmp(lftCnst->vl.str.c_str(), rghtCnst->vl.str.c_str()) < 0);
+		rslt = bldBlnCnst(lftCnst->vl.str.compare(rghtCnst->vl.str) < 0);
 	}
 
 	if (rslt == NULL)
@@ -858,7 +925,8 @@ struct CnstStrc* clcBnrExpLe(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr,
 	}
 	if (lftCnst->CnstTyp == STRING_VALUE && rghtCnst->CnstTyp == STRING_VALUE)
 	{
-		rslt = bldBlnCnst(strcmp(lftCnst->vl.str, rghtCnst->vl.str) <= 0);
+		//rslt = bldBlnCnst(strcmp(lftCnst->vl.str.c_str(), rghtCnst->vl.str.c_str()) <= 0);
+		rslt = bldBlnCnst(lftCnst->vl.str.compare(rghtCnst->vl.str) <= 0);
 	}
 
 	if (rslt == NULL)
@@ -1432,9 +1500,10 @@ struct CnstStrc* clcUnrExpNot(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr
 	}
 	else if (cnst->CnstTyp == STRING_VALUE)
 	{
-		if (cnst->vl.str != NULL)
+		//if (cnst->vl.str != NULL)
+		if (cnst->vl.str.empty() == false)
 		{
-			rslt = bldBlnCnst(strcmp(cnst->vl.str, "") == 0);
+			rslt = bldBlnCnst(strcmp(cnst->vl.str.c_str(), "") == 0);
 		}
 		else
 		{
@@ -1444,7 +1513,7 @@ struct CnstStrc* clcUnrExpNot(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr
 	}
 	else if (cnst->CnstTyp == ARRAY_VALUE)
 	{
-		if (cnst->vl.arr->elmtCnt == 0)
+		if (cnst->vl.arr->elmtArr.size() == 0)
 		{
 			rslt = bldBlnCnst(1);
 		}
@@ -1633,22 +1702,24 @@ struct CnstStrc* clcFcnExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, s
 		int argCnt = 0, argSz;
 
 		//如果函数参数个数不正确
-		if (exp->argLst->argCnt > ntvFcn->prmCnt)
+		if (exp->argLst->argArr.size() > ntvFcn->prmCnt)
 		{
 			throw new ExFcnTooMnyArg;
 		}
-		else if (exp->argLst->argCnt < ntvFcn->prmCnt)
+		else if (exp->argLst->argArr.size() < ntvFcn->prmCnt)
 		{
 			throw new ExFcnTooFewArg;
 		}
 
-		struct CnstStrc** argArr = (struct CnstStrc**)malloc(sizeof(struct CnstStrc*) * ntvFcn->prmCnt);
+		//struct CnstStrc** argArr = (struct CnstStrc**)malloc(sizeof(struct CnstStrc*) * ntvFcn->prmCnt);
+		vector< CnstStrc*> argArr;
 
-		for (i = 0; i < exp->argLst->argCnt; i++)
+		for (i = 0; i < exp->argLst->argArr.size(); i++)
 		{
 			arg = clcExp(glbEnvr, fcnEnvr, exp->argLst->argArr[i]);
 
-			argArr[i] = arg;
+			//argArr[i] = arg;
+			argArr.push_back(arg);
 		}
 
 		rslt = ntvFcn->fcn(glbEnvr, ntvFcn->prmCnt, argArr);
@@ -1669,18 +1740,18 @@ struct CnstStrc* clcFcnExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, s
 		int argCnt = 0, argSz;
 
 		//如果函数参数个数不正确
-		if (exp->argLst->argCnt > fcn->prmLst->prmCnt)
+		if (exp->argLst->argArr.size() > fcn->prmLst->prmArr.size())
 		{
 			throw new ExFcnTooMnyArg;
 		}
-		else if (exp->argLst->argCnt < fcn->prmLst->prmCnt)
+		else if (exp->argLst->argArr.size() < fcn->prmLst->prmArr.size())
 		{
 			throw new ExFcnTooFewArg;
 		}
 
 		struct VrbStrc* vrb;
 
-		for (i = 0; i < exp->argLst->argCnt; i++)
+		for (i = 0; i < exp->argLst->argArr.size(); i++)
 		{
 			arg = clcExp(glbEnvr, fcnEnvr, exp->argLst->argArr[i]);
 
@@ -1821,7 +1892,7 @@ struct CnstStrc* clcLclAsgnExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnv
 
 	int i;
 
-	for (i = 0; i < exp->asgnLst->asgnCnt; i++)
+	for (i = 0; i < exp->asgnLst->asgnArr.size(); i++)
 	{
 		struct VrbExpStrc* vrbExp;
 
@@ -1896,7 +1967,7 @@ struct CnstStrc* clcAsgnExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, 
 
 			pstn = clcExp(glbEnvr, fcnEnvr, exp->lvl->exp.lvlExp->evlLst->pstnArr[i])->vl.intVl;
 
-			if (pstn >= arrTmp->vl.arr->elmtCnt)
+			if (pstn >= arrTmp->vl.arr->elmtArr.size())
 			{
 				throw new ExIdxOutArrRng;
 			}
@@ -1906,7 +1977,7 @@ struct CnstStrc* clcAsgnExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, 
 
 		pstn = clcExp(glbEnvr, fcnEnvr, exp->lvl->exp.lvlExp->evlLst->pstnArr[lyr - 1])->vl.intVl;
 
-		if (pstn >= arrTmp->vl.arr->elmtCnt)
+		if (pstn >= arrTmp->vl.arr->elmtArr.size())
 		{
 			throw new ExIdxOutArrRng;
 		}
@@ -1926,20 +1997,22 @@ struct CnstStrc* clcArrExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, s
 
 	int elmtCnt;
 
-	rslt->vl.arr = (struct ArrStrc*)malloc(sizeof(struct ArrStrc));
+	//rslt->vl.arr = (struct ArrStrc*)malloc(sizeof(struct ArrStrc));
+	rslt->vl.arr = new ArrStrc;
 
-	rslt->vl.arr->elmtSz = exp->elmtLst->elmtCnt + 0x10;
-	rslt->vl.arr->elmtCnt = exp->elmtLst->elmtCnt;
+	//rslt->vl.arr->elmtSz = exp->elmtLst->elmtCnt + 0x10;
+	//rslt->vl.arr->elmtCnt = exp->elmtLst->elmtCnt;
 
-	rslt->vl.arr->elmtArr = (struct CnstStrc**)malloc(sizeof(struct CnstStrc*) * rslt->vl.arr->elmtSz);
+	//rslt->vl.arr->elmtArr = (struct CnstStrc**)malloc(sizeof(struct CnstStrc*) * rslt->vl.arr->elmtSz);
 
 	int i;
 
-	elmtCnt = rslt->vl.arr->elmtCnt;
+	elmtCnt = rslt->vl.arr->elmtArr.size();
 
 	for (i = 0; i < elmtCnt; i++)
 	{
-		rslt->vl.arr->elmtArr[i] = clcExp(glbEnvr, fcnEnvr, exp->elmtLst->elmtArr[i]);
+		//rslt->vl.arr->elmtArr[i] = clcExp(glbEnvr, fcnEnvr, exp->elmtLst->elmtArr[i]);
+		rslt->vl.arr->elmtArr.push_back(clcExp(glbEnvr, fcnEnvr, exp->elmtLst->elmtArr[i]));
 		//printf("Array[%d]: ",i);
 
 	}
@@ -1955,22 +2028,24 @@ struct CnstStrc* clcNewArrExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr
 
 	rslt->CnstTyp = ARRAY_VALUE;
 
-	rslt->vl.arr = (struct ArrStrc*)malloc(sizeof(struct ArrStrc*));
+	//rslt->vl.arr = (struct ArrStrc*)malloc(sizeof(struct ArrStrc*));
+	rslt->vl.arr = new ArrStrc;
 
 	int elmtCnt;
 
 	elmtCnt = clcExp(glbEnvr, fcnEnvr, exp->cnt)->vl.intVl;
 
-	rslt->vl.arr->elmtSz = elmtCnt + 0x10;
-	rslt->vl.arr->elmtCnt = elmtCnt;
+	//rslt->vl.arr->elmtSz = elmtCnt + 0x10;
+	//rslt->vl.arr->elmtCnt = elmtCnt;
 
-	rslt->vl.arr->elmtArr = (struct CnstStrc**)malloc(sizeof(struct CnstStrc*) * rslt->vl.arr->elmtSz);
+	//rslt->vl.arr->elmtArr = (struct CnstStrc**)malloc(sizeof(struct CnstStrc*) * rslt->vl.arr->elmtSz);
 
 	int i;
 
 	for (i = 0; i < elmtCnt; i++)
 	{
-		rslt->vl.arr->elmtArr[i] = bldNllCnst();
+		//rslt->vl.arr->elmtArr[i] = bldNllCnst();
+		rslt->vl.arr->elmtArr.push_back(bldNllCnst());
 	}
 
 	return rslt;
@@ -2007,7 +2082,7 @@ struct CnstStrc* clcArrEvlExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr
 			//如果数组索引为负数，实际的数组索引为数组索引值（负数）加数组长度
 			if (pstn < 0)
 			{
-				pstn = arrTmp->vl.arr->elmtCnt + pstn;
+				pstn = arrTmp->vl.arr->elmtArr.size() + pstn;
 			}
 
 			arrTmp = arrTmp->vl.arr->elmtArr[pstn];
@@ -2023,12 +2098,12 @@ struct CnstStrc* clcArrEvlExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr
 
 			if (strt < 0)
 			{
-				strt = arrTmp->vl.arr->elmtCnt + strt;
+				strt = arrTmp->vl.arr->elmtArr.size() + strt;
 			}
 
 			if (end < 0)
 			{
-				end = arrTmp->vl.arr->elmtCnt + end;
+				end = arrTmp->vl.arr->elmtArr.size() + end;
 			}
 
 			if (strt <= end && stp > 0)
@@ -2076,7 +2151,7 @@ struct CnstStrc* clcElmtAsgnExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEn
 
 	int lyr;
 
-	lyr = exp->pstnLst->pstnCnt;
+	lyr = exp->pstnLst->pstnArr.size();
 
 	int i;
 
@@ -2153,10 +2228,12 @@ struct CnstStrc* clcLvlExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, s
 				//如果数组索引为负数，实际的数组索引为数组索引值（负数）加数组长度
 				if (pstn < 0)
 				{
-					pstn = arrTmp->vl.arr->elmtCnt + pstn;
+					//pstn = arrTmp->vl.arr->elmtCnt + pstn;
+					pstn = arrTmp->vl.arr->elmtArr.size() + pstn;
 				}
 
-				if (pstn >= arrTmp->vl.arr->elmtCnt)
+				//if (pstn >= arrTmp->vl.arr->elmtCnt)
+				if (pstn >= arrTmp->vl.arr->elmtArr.size())
 				{
 					throw new ExIdxOutArrRng;
 				}
@@ -2174,20 +2251,20 @@ struct CnstStrc* clcLvlExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, s
 
 				if (strt < 0)
 				{
-					strt = arrTmp->vl.arr->elmtCnt + strt;
+					strt = arrTmp->vl.arr->elmtArr.size() + strt;
 				}
 
 				if (end < 0)
 				{
-					end = arrTmp->vl.arr->elmtCnt + end;
+					end = arrTmp->vl.arr->elmtArr.size() + end;
 				}
 
-				if (strt >= arrTmp->vl.arr->elmtCnt)
+				if (strt >= arrTmp->vl.arr->elmtArr.size())
 				{
 					throw new ExIdxOutArrRng;
 				}
 
-				if (end >= arrTmp->vl.arr->elmtCnt)
+				if (end >= arrTmp->vl.arr->elmtArr.size())
 				{
 					throw new ExIdxOutArrRng;
 				}
@@ -2254,7 +2331,7 @@ struct CnstStrc* clcExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, stru
 	if (exp->typ == ASSIGN_EXPRESSION)
 	{
 		//如果已经注册为函数名则抛出异常
-		if (getFcn(glbEnvr, fcnEnvr, bldFcnExp(exp->exp.asgnExp->lvl->exp.lvlExp->vrb->exp.vrbExp->nm, NULL)->exp.fcnExp) != NULL)
+		if (getFcn(glbEnvr, fcnEnvr, bldFcnExp((char *)(exp->exp.asgnExp->lvl->exp.lvlExp->vrb->exp.vrbExp->nm.c_str()), NULL)->exp.fcnExp) != NULL)
 		{
 			throw new ExAlrdDfnAsFctn;
 		}

@@ -9,6 +9,8 @@
 // #define DFTN_H
 // #endif
 
+extern struct CnstStrc;
+
 
 struct CnstStrc* bldIntCnst(int vl)
 {
@@ -53,6 +55,16 @@ struct CnstStrc* bldStrCnst(char* vl)
 	struct CnstStrc* rslt = new CnstStrc;
 
 	rslt->CnstTyp = STRING_VALUE;
+	rslt->vl.str = string(vl);
+
+	return rslt;
+}
+
+struct CnstStrc* bldStrCnst(string vl)
+{
+	struct CnstStrc* rslt = new CnstStrc;
+
+	rslt->CnstTyp = STRING_VALUE;
 	rslt->vl.str = vl;
 
 	return rslt;
@@ -82,7 +94,9 @@ struct CnstStrc* bldCnstCpy(struct CnstStrc* cnst)
 	struct CnstStrc* rslt = new CnstStrc;
 
 	rslt->CnstTyp = cnst->CnstTyp;
-	rslt->vl = cnst->vl;
+	//rslt->vl = cnst->vl;
+	memset(&(rslt->vl), 0, sizeof(VlUnn));
+	memcpy(&(rslt->vl), &(cnst->vl), sizeof(VlUnn));
 
 	return rslt;
 }
@@ -128,11 +142,11 @@ int prtCnst(struct CnstStrc* cnst)
 	{
 		printf("[");
 		int i;
-		for (i = 0; i < cnst->vl.arr->elmtCnt; i++)
+		for (i = 0; i < cnst->vl.arr->elmtArr.size(); i++)
 		{
 			prtCnst(cnst->vl.arr->elmtArr[i]);
 
-			if (i != cnst->vl.arr->elmtCnt - 1)
+			if (i != cnst->vl.arr->elmtArr.size() - 1)
 			{
 				printf(", ");
 			}
@@ -194,11 +208,12 @@ int prtlnCnst(struct CnstStrc* cnst)
 
 		printf("[");
 		int i;
-		for (i = 0; i < cnst->vl.arr->elmtCnt; i++)
+		//for (i = 0; i < cnst->vl.arr->elmtCnt; i++)
+		for (i = 0; i < cnst->vl.arr->elmtArr.size(); i++)
 		{
 			prtCnst(cnst->vl.arr->elmtArr[i]);
 
-			if (i != cnst->vl.arr->elmtCnt - 1)
+			if (i != cnst->vl.arr->elmtArr.size() - 1)
 			{
 				printf(", ");
 			}

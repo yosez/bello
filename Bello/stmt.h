@@ -121,27 +121,29 @@ struct StmtStrc* bldStmtBlk()
 
 	rslt->stmt.stmtBlk = new StmtBlkStrc;
 
-	rslt->stmt.stmtBlk->stmtCnt = -1;
-	rslt->stmt.stmtBlk->stmtSz = 10;
+	//rslt->stmt.stmtBlk->stmtCnt = -1;
+	//rslt->stmt.stmtBlk->stmtSz = 10;
 
-	rslt->stmt.stmtBlk->stmtArr = (struct StmtStrc**)malloc(sizeof(struct StmtStrc*) * rslt->stmt.stmtBlk->stmtSz);
+	//rslt->stmt.stmtBlk->stmtArr = (struct StmtStrc**)malloc(sizeof(struct StmtStrc*) * rslt->stmt.stmtBlk->stmtSz);
 
 	return rslt;
 }
 
 struct StmtStrc* stmtBlkAdd(struct StmtStrc* stmtBlk, struct StmtStrc* stmt)
 {
-	stmtBlk->stmt.stmtBlk->stmtCnt++;
+	//stmtBlk->stmt.stmtBlk->stmtCnt++;
 
-	if (stmtBlk->stmt.stmtBlk->stmtCnt == stmtBlk->stmt.stmtBlk->stmtSz)
-	{
-		stmtBlk->stmt.stmtBlk->stmtSz *= 2;
+	//if (stmtBlk->stmt.stmtBlk->stmtCnt == stmtBlk->stmt.stmtBlk->stmtSz)
+	//{
+	//	stmtBlk->stmt.stmtBlk->stmtSz *= 2;
 
-		stmtBlk->stmt.stmtBlk->stmtArr = (struct StmtStrc**)realloc(stmtBlk->stmt.stmtBlk->stmtArr,
-			sizeof(struct StmtStrc*) * stmtBlk->stmt.stmtBlk->stmtSz);
-	}
+	//	stmtBlk->stmt.stmtBlk->stmtArr = (struct StmtStrc**)realloc(stmtBlk->stmt.stmtBlk->stmtArr,
+	//		sizeof(struct StmtStrc*) * stmtBlk->stmt.stmtBlk->stmtSz);
+	//}
 
-	stmtBlk->stmt.stmtBlk->stmtArr[stmtBlk->stmt.stmtBlk->stmtCnt] = stmt;
+	//stmtBlk->stmt.stmtBlk->stmtArr[stmtBlk->stmt.stmtBlk->stmtCnt] = stmt;
+
+	stmtBlk->stmt.stmtBlk->stmtArr.push_back(stmt);
 
 	return stmtBlk;
 }
@@ -262,7 +264,7 @@ struct StmtRsltStrc* exctStmt(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr
 
 			int i;
 
-			for (i = 0; i < stmt->stmt.varStmt->asgnLst->asgnCnt; i++)
+			for (i = 0; i < stmt->stmt.varStmt->asgnLst->asgnArr.size(); i++)
 			{
 				struct CnstStrc* rslt;
 				struct VrbExpStrc* vrbExp;
@@ -500,7 +502,7 @@ struct StmtRsltStrc* exctStmt(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr
 		{
 			int i;
 
-			for (i = 0; i <= stmt->stmt.stmtBlk->stmtCnt; i++)
+			for (i = 0; i <= stmt->stmt.stmtBlk->stmtArr.size(); i++)
 			{
 				rslt = exctStmt(glbEnvr, fcnEnvr, stmt->stmt.stmtBlk->stmtArr[i]);
 
@@ -534,14 +536,14 @@ struct StmtRsltStrc* exctStmt(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr
 			rslt->rslt.cntnRslt->cntnCnt = clcExp(glbEnvr, fcnEnvr, stmt->stmt.cntnStmt->exp)->vl.intVl;
 		}
 
-		if (stmt->typ == FUNCTION_DEFINE_STATEMENT)//
+		if (stmt->typ == FUNCTION_DEFINE_STATEMENT)
 		{
-			if (getFcn(glbEnvr, fcnEnvr, bldFcnExp(stmt->stmt.fcnStmt->fcn->nm, NULL)->exp.fcnExp) != NULL)
+			if (getFcn(glbEnvr, fcnEnvr, bldFcnExp((char*)(stmt->stmt.fcnStmt->fcn->nm.c_str()), NULL)->exp.fcnExp) != NULL)
 			{
 				throw new ExFcnRdfn;
 			}
 
-			if (getVrb(glbEnvr, fcnEnvr, bldVrbExp(stmt->stmt.fcnStmt->fcn->nm)->exp.vrbExp) != NULL)
+			if (getVrb(glbEnvr, fcnEnvr, bldVrbExp((char*)(stmt->stmt.fcnStmt->fcn->nm.c_str()))->exp.vrbExp) != NULL)
 			{
 				throw new ExAlrdDfnAsVrb;
 			}

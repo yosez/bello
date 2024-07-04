@@ -4,6 +4,7 @@
 
     #include <stdio.h>
     #include <stdlib.h>
+    #include <string>
     #include "y.tab.h"
     // #ifndef Y_TAB_C
     // #define Y_TAB_C
@@ -11,6 +12,8 @@
     #ifndef DFTN_H
     #define DFTN_H
     #endif
+
+    using namespace std;
 
     extern void yyerror(const char *s,...);
     
@@ -112,6 +115,7 @@
                                 yylval.idtf=(char *)malloc(0x100);
                                 memset(yylval.idtf,0,sizeof(yylval.idtf));
                                 strcpy(yylval.idtf, yytext);
+                                //yylval.idtf = string(yytext);
                                 
                                 return IDENTIFER; 
                             }
