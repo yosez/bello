@@ -53,6 +53,7 @@ union VlUnn
 	int bln;
 	float flt;
 	int intVl;
+	//string *str;
 	string str;
 	struct ArrStrc* arr;
 
@@ -437,9 +438,6 @@ struct ArrStrc
 //数组元素列表
 struct ElmtLstStrc
 {
-	//int elmtSz;
-	//int elmtCnt;
-
 	vector<ExpStrc*> elmtArr;
 };
 

@@ -9,63 +9,40 @@
 // #define EXP_H
 // #endif
 
+//此部分引入的变量及函数可以删除
 extern struct ExpStrc* bldCnstIntExp(int intVl);
+extern struct CnstStrc* clcExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct ExpStrc* exp);
+extern struct EnvrStrc* glbEnvr;
 
 struct ElmtLstStrc* bldElmtLst()
 {
-	//struct ElmtLstStrc* rslt = (struct ElmtLstStrc*)malloc(sizeof(struct ElmtLstStrc));
 	struct ElmtLstStrc* rslt = new ElmtLstStrc;
-
-	//rslt->elmtSz = 10;
-	//rslt->elmtCnt = 0;
-
-	//rslt->elmtArr = (struct ExpStrc**)malloc(sizeof(struct ExpStrc*) * rslt->elmtSz);
 
 	return rslt;
 }
 
 int elmtLstAdd(struct ElmtLstStrc* elmtLst, struct ExpStrc* exp)
 {
-	//if (elmtLst->elmtCnt == elmtLst->elmtSz)
-	//{
-	//	elmtLst->elmtSz *= 2;
-	//	elmtLst->elmtArr = (struct ExpStrc**)realloc(elmtLst->elmtArr, sizeof(struct ExpStrc*) * elmtLst->elmtSz);
-	//}
-
-	//elmtLst->elmtArr[elmtLst->elmtCnt] = exp;
-
-	//elmtLst->elmtCnt++;
 
 	elmtLst->elmtArr.push_back(exp);
+
+	//printf("exp: %d\n", clcExp(glbEnvr, glbEnvr, exp)->vl.intVl);
 
 	return 0;
 }
 
 struct PstnLstStrc* bldPstnLst()
 {
-	//struct PstnLstStrc* rslt = (struct PstnLstStrc*)malloc(sizeof(struct PstnLstStrc));
+
 	struct PstnLstStrc* rslt = new PstnLstStrc;
 
-	//rslt->pstnSz = 10;
-	//rslt->pstnCnt = 0;
-
-	//rslt->pstnArr = (struct ExpStrc**)malloc(sizeof(struct ExpStrc*) * rslt->pstnSz);
 
 	return rslt;
 }
 
 int pstnLstAdd(struct PstnLstStrc* pstnLst, struct ExpStrc* exp)
 {
-	//if (pstnLst->pstnCnt == pstnLst->pstnSz)
-	//{
-	//	pstnLst->pstnSz *= 2;
 
-	//	pstnLst->pstnArr = (struct ExpStrc**)realloc(pstnLst->pstnArr, sizeof(struct ExpStrc*) * pstnLst->pstnSz);
-	//}
-
-	//pstnLst->pstnArr[pstnLst->pstnCnt] = exp;
-
-	//pstnLst->pstnCnt++;
 
 	pstnLst->pstnArr.push_back(exp);
 
@@ -74,28 +51,15 @@ int pstnLstAdd(struct PstnLstStrc* pstnLst, struct ExpStrc* exp)
 
 int intlArr(struct ArrStrc** arr)
 {
-	//(*arr) = (struct ArrStrc*)malloc(sizeof(struct ArrStrc));
-	(*arr) = new ArrStrc;
-	//(*arr)->elmtCnt = 0;
-	//(*arr)->elmtSz = 10;
 
-	//(*arr)->elmtArr = (struct CnstStrc**)malloc(sizeof(struct CnstStrc*) * (*arr)->elmtSz);
+	(*arr) = new ArrStrc;
 
 	return 0;
 }
 
 int addElmt(struct ArrStrc* arr, struct CnstStrc* elmt)
 {
-	//if (arr->elmtCnt == arr->elmtSz)
-	//{
-	//	arr->elmtSz *= 2;
 
-	//	arr->elmtArr = (struct CnstStrc**)realloc(arr->elmtArr, sizeof(struct CnstStrc*) * arr->elmtSz);
-	//}
-
-	//arr->elmtArr[arr->elmtCnt] = elmt;
-
-	//arr->elmtCnt++;
 
 	arr->elmtArr.push_back(elmt);
 
@@ -104,17 +68,8 @@ int addElmt(struct ArrStrc* arr, struct CnstStrc* elmt)
 
 struct EvlLstStrc* bldEvlLst()
 {
-	//struct EvlLstStrc* rslt = (struct EvlLstStrc*)malloc(sizeof(struct EvlLstStrc));
+
 	struct EvlLstStrc* rslt = new EvlLstStrc;
-
-	//rslt->evlSz = 10;
-	//rslt->evlCnt = 0;
-
-	//rslt->blnSlc = (int*)malloc(sizeof(bool) * rslt->evlSz);
-	//rslt->pstnArr = (struct ExpStrc**)malloc(sizeof(struct ExpStrc*) * rslt->evlSz);
-	//rslt->strtArr = (struct ExpStrc**)malloc(sizeof(struct ExpStrc*) * rslt->evlSz);
-	//rslt->endArr = (struct ExpStrc**)malloc(sizeof(struct ExpStrc*) * rslt->evlSz);
-	//rslt->stpArr = (struct ExpStrc**)malloc(sizeof(struct ExpStrc*) * rslt->evlSz);
 
 	return rslt;
 }

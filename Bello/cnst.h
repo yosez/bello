@@ -56,16 +56,21 @@ struct CnstStrc* bldStrCnst(char* vl)
 
 	rslt->CnstTyp = STRING_VALUE;
 	rslt->vl.str = string(vl);
+	//rslt->vl.str = new string(vl);
+	//printf("bldStrCnst: %s | %s\n", vl, rslt->vl.str.c_str());
 
 	return rslt;
 }
 
-struct CnstStrc* bldStrCnst(string vl)
+struct CnstStrc* bldStrCnstByStr(string vl)
 {
 	struct CnstStrc* rslt = new CnstStrc;
 
 	rslt->CnstTyp = STRING_VALUE;
-	rslt->vl.str = vl;
+	//rslt->vl.str = new string(vl);
+	rslt->vl.str = string(vl);
+
+	printf("cnst str: %s\n", rslt->vl.str.c_str());
 
 	return rslt;
 }
@@ -130,7 +135,7 @@ int prtCnst(struct CnstStrc* cnst)
 	}
 	case STRING_VALUE:
 	{
-		printf("%s", cnst->vl.str);
+		printf("%s", cnst->vl.str.c_str());
 		break;
 	}
 	case NULL_VALUE:
@@ -190,7 +195,7 @@ int prtlnCnst(struct CnstStrc* cnst)
 	}
 	case STRING_VALUE:
 	{
-		printf("%s\n", cnst->vl.str);
+		printf("%s\n", cnst->vl.str.c_str());
 		break;
 	}
 	case NULL_VALUE:

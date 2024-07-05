@@ -129,6 +129,9 @@ struct ExpStrc* bldCnstStrExp(char* strVl)
 	exp->typ = CONST_EXPRESSION;
 	exp->exp.cnst = bldStrCnst(strVl);
 
+	
+	//prtCnst(exp->exp.cnst);
+
 	return exp;
 }
 
@@ -232,7 +235,6 @@ struct ExpStrc* bldArrExp(struct ElmtLstStrc* elmtLst)
 
 	rslt->typ = ARRAY_EXPRESSION;
 
-	//rslt->exp.arrExp = (struct ArrExpStrc*)malloc(sizeof(struct ArrExpStrc));
 	rslt->exp.arrExp = new ArrExpStrc;
 	rslt->exp.arrExp->elmtLst = elmtLst;
 
@@ -366,7 +368,7 @@ struct ExpStrc* bldUnrExp(int opr, struct ExpStrc* exp)
 	rslt->typ = UNARY_EXPRESSION;
 
 	//rslt->exp.unrExp = (struct UnrExpStrc*)malloc(sizeof(struct UnrExpStrc));
-	rslt->exp.unrExp = new UnrExpStrc; 
+	rslt->exp.unrExp = new UnrExpStrc;
 
 	rslt->exp.unrExp->exp = exp;
 	rslt->exp.unrExp->oprTyp = opr;
@@ -447,28 +449,21 @@ struct CnstStrc* clcBnrExpAdd(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr
 		//strcpy(str, lftCnst->vl.str);
 		//strcat(str, rghtCnst->vl.str);
 
-		rslt = bldStrCnst(str);
+		rslt = bldStrCnstByStr(str);
 	}
 
 	if (lftCnst->CnstTyp == STRING_VALUE && rghtCnst->CnstTyp == INT_VALUE)
 	{
-		//char* strInt;
-		//strInt = (char*)malloc(0x10);
-		//memset(strInt, 0, sizeof(strInt));
 
-		//sprintf(strInt, "%d", rghtCnst->vl.intVl);
-
-		//str = (char*)malloc(strlen(lftCnst->vl.str) + strlen(strInt) + 0x10);
-		//memset(str, 0, sizeof(str));
-
-		//strcpy(str, lftCnst->vl.str);
-		//strcat(str, strInt);
 
 		str = lftCnst->vl.str;
+
+		printf("str lft: %s ", str.c_str());
 		str += to_string(rghtCnst->vl.intVl);
 		//str += strInt;
+		printf("str: %s ", str.c_str());
 
-		rslt = bldStrCnst(str);
+		rslt = bldStrCnstByStr(str);
 	}
 
 	if (lftCnst->CnstTyp == INT_VALUE && rghtCnst->CnstTyp == STRING_VALUE)
@@ -490,7 +485,7 @@ struct CnstStrc* clcBnrExpAdd(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr
 		str = to_string(lftCnst->vl.intVl);
 		str += rghtCnst->vl.str;
 
-		rslt = bldStrCnst(str);
+		rslt = bldStrCnstByStr(str);
 	}
 
 	if (lftCnst->CnstTyp == STRING_VALUE && rghtCnst->CnstTyp == FLOAT_VALUE)
@@ -510,7 +505,7 @@ struct CnstStrc* clcBnrExpAdd(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr
 		str = lftCnst->vl.str;
 		str += to_string(rghtCnst->vl.flt);
 
-		rslt = bldStrCnst(str);
+		rslt = bldStrCnstByStr(str);
 	}
 
 	if (lftCnst->CnstTyp == FLOAT_VALUE && rghtCnst->CnstTyp == STRING_VALUE)
@@ -530,7 +525,7 @@ struct CnstStrc* clcBnrExpAdd(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr
 		str = to_string(lftCnst->vl.flt);
 		str += rghtCnst->vl.str;
 
-		rslt = bldStrCnst(str);
+		rslt = bldStrCnstByStr(str);
 	}
 
 	if (lftCnst->CnstTyp == STRING_VALUE && rghtCnst->CnstTyp == BOOLEAN_VALUE)
@@ -554,7 +549,7 @@ struct CnstStrc* clcBnrExpAdd(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr
 
 		str += rghtCnst->vl.bln == 0 ? "false" : "true";
 
-		rslt = bldStrCnst(str);
+		rslt = bldStrCnstByStr(str);
 	}
 
 	if (lftCnst->CnstTyp == BOOLEAN_VALUE && rghtCnst->CnstTyp == STRING_VALUE)
@@ -578,7 +573,7 @@ struct CnstStrc* clcBnrExpAdd(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr
 
 		str += rghtCnst->vl.str;
 
-		rslt = bldStrCnst(str);
+		rslt = bldStrCnstByStr(str);
 	}
 
 	if (rslt == NULL)
@@ -1997,27 +1992,22 @@ struct CnstStrc* clcArrExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, s
 
 	int elmtCnt;
 
-	//rslt->vl.arr = (struct ArrStrc*)malloc(sizeof(struct ArrStrc));
 	rslt->vl.arr = new ArrStrc;
-
-	//rslt->vl.arr->elmtSz = exp->elmtLst->elmtCnt + 0x10;
-	//rslt->vl.arr->elmtCnt = exp->elmtLst->elmtCnt;
-
-	//rslt->vl.arr->elmtArr = (struct CnstStrc**)malloc(sizeof(struct CnstStrc*) * rslt->vl.arr->elmtSz);
 
 	int i;
 
-	elmtCnt = rslt->vl.arr->elmtArr.size();
+	elmtCnt = exp->elmtLst->elmtArr.size();
+
+	//printf("arr: %d:", elmtCnt);
 
 	for (i = 0; i < elmtCnt; i++)
 	{
 		//rslt->vl.arr->elmtArr[i] = clcExp(glbEnvr, fcnEnvr, exp->elmtLst->elmtArr[i]);
 		rslt->vl.arr->elmtArr.push_back(clcExp(glbEnvr, fcnEnvr, exp->elmtLst->elmtArr[i]));
-		//printf("Array[%d]: ",i);
 
+		//printf("%d, ", rslt->vl.arr->elmtArr.back()->vl.intVl);
 	}
 
-	//prtCnst(rslt);
 
 	return rslt;
 }
@@ -2306,6 +2296,8 @@ struct CnstStrc* clcExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, stru
 	if (exp->typ == CONST_EXPRESSION)
 	{
 		rslt = exp->exp.cnst;
+
+		//printf("cnst: %d\n", exp->exp.cnst->vl.intVl);
 	}
 
 	if (exp->typ == VARIABLE_EXPRESSION)
@@ -2331,7 +2323,7 @@ struct CnstStrc* clcExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, stru
 	if (exp->typ == ASSIGN_EXPRESSION)
 	{
 		//如果已经注册为函数名则抛出异常
-		if (getFcn(glbEnvr, fcnEnvr, bldFcnExp((char *)(exp->exp.asgnExp->lvl->exp.lvlExp->vrb->exp.vrbExp->nm.c_str()), NULL)->exp.fcnExp) != NULL)
+		if (getFcn(glbEnvr, fcnEnvr, bldFcnExp((char*)(exp->exp.asgnExp->lvl->exp.lvlExp->vrb->exp.vrbExp->nm.c_str()), NULL)->exp.fcnExp) != NULL)
 		{
 			throw new ExAlrdDfnAsFctn;
 		}
@@ -2362,7 +2354,7 @@ struct CnstStrc* clcExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, stru
 
 	if (exp->typ == ARRAY_EXPRESSION)
 	{
-		//printf("Calculate array expression #0\n");
+		printf("Calculate array expression #0\n");
 		rslt = clcArrExp(glbEnvr, fcnEnvr, exp->exp.arrExp);
 		//printf("Calculate array expression #1\n");
 	}

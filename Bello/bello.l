@@ -100,7 +100,7 @@
 <COMMENT_2>"*/"             { BEGIN stt; }
 <COMMENT_2>(.|[\n])         {}
 "\""                        { strtStr(); stt=YY_START; BEGIN STRING; }
-<STRING>[^\\\"\r\n]         { strAdd(yytext); }
+<STRING>[^\\\"\r\n\t\v\b\f] { strAdd(yytext); }
 <STRING>"\\n"               { strAdd("\n"); }
 <STRING>"\\r"               { strAdd("\r"); }
 <STRING>"\\t"               { strAdd("\t"); }
