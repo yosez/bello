@@ -208,7 +208,7 @@ union YYSTYPE
     struct AsgnLstStrc *asgnLst;
     struct ElmtLstStrc *elmtLst;
     struct PstnLstStrc *pstnLst;
-    struct EvlLstStrc *evlLst;
+    struct AcsLstStrc *evlLst;
 
     char *idtf;
     //string idtf;

@@ -59,7 +59,7 @@
     struct AsgnLstStrc *asgnLst;
     struct ElmtLstStrc *elmtLst;
     struct PstnLstStrc *pstnLst;
-    struct EvlLstStrc *evlLst;
+    struct AcsLstStrc *evlLst;
 
     char *idtf;
     //string idtf;
@@ -271,27 +271,6 @@ lvalue_expression
         bldLvlExpAdd($1, $2); 
     }
     
-/* read_expression
-    : READ_INT LEFT_PAREN RIGHT_PAREN
-    {
-        $$ = bldRdExp(READ_INT);
-    }
-    | READ_FLOAT LEFT_PAREN RIGHT_PAREN
-    {
-        $$ = bldRdExp(READ_FLOAT);
-    }
-    | READ LEFT_PAREN RIGHT_PAREN
-    {
-        $$ = bldRdExp(READ);
-    }
-    | READ_BOOL LEFT_PAREN RIGHT_PAREN
-    {
-        $$ = bldRdExp(READ_BOOL);
-    }
-    | READ_LINE LEFT_PAREN RIGHT_PAREN
-    {
-        $$ = bldRdExp(READ_LINE);
-    } */
 
 array_expression
     : LEFT_QUAD element_list RIGHT_QUAD
@@ -378,113 +357,113 @@ argument_list
 evaluate_list
     : LEFT_QUAD expression RIGHT_QUAD
     {
-        $$ = bldEvlLst();
-        evlLstElmtAdd($$, $2);
+        $$ = bldAcsLst();
+        acsLstIdxAdd($$, $2);
     }
     | LEFT_QUAD expression COLON expression RIGHT_QUAD  //[i:j]
     {
-        $$= bldEvlLst();
-        evlLstSlcAdd($$, $2, $4, bldCnstIntExp(1));
+        $$= bldAcsLst();
+        acsLstSlcAdd($$, $2, $4, bldCnstIntExp(1));
     }
     | LEFT_QUAD expression COLON expression COLON RIGHT_QUAD  //[i:j:]
     {
-        $$= bldEvlLst();
-        evlLstSlcAdd($$, $2, $4, bldCnstIntExp(1));
+        $$= bldAcsLst();
+        acsLstSlcAdd($$, $2, $4, bldCnstIntExp(1));
     }
     | LEFT_QUAD expression COLON expression COLON expression RIGHT_QUAD //[i:j:k]
     {
-        $$= bldEvlLst();
-        evlLstSlcAdd($$, $2, $4, $6);
+        $$= bldAcsLst();
+        acsLstSlcAdd($$, $2, $4, $6);
     }
     | LEFT_QUAD expression COLON RIGHT_QUAD       //[i:]
     {
-        $$= bldEvlLst();
-        evlLstSlcAdd($$, $2, bldCnstIntExp(-1), bldCnstIntExp(1));
+        $$= bldAcsLst();
+        acsLstSlcAdd($$, $2, bldCnstIntExp(-1), bldCnstIntExp(1));
     }
     | LEFT_QUAD expression COLON COLON RIGHT_QUAD       //[i::]
     {
-        $$= bldEvlLst();
-        evlLstSlcAdd($$, $2, bldCnstIntExp(-1), bldCnstIntExp(1));
+        $$= bldAcsLst();
+        acsLstSlcAdd($$, $2, bldCnstIntExp(-1), bldCnstIntExp(1));
     }
     | LEFT_QUAD expression COLON COLON expression RIGHT_QUAD        //[i::k]
     {
-        $$= bldEvlLst();
-        evlLstSlcAdd($$, $2, bldCnstIntExp(-1), $5);
+        $$= bldAcsLst();
+        acsLstSlcAdd($$, $2, bldCnstIntExp(-1), $5);
     }
     | LEFT_QUAD COLON expression RIGHT_QUAD       //[:j]
     {
-        $$= bldEvlLst();
-        evlLstSlcAdd($$, bldCnstIntExp(0), $3, bldCnstIntExp(1));
+        $$= bldAcsLst();
+        acsLstSlcAdd($$, bldCnstIntExp(0), $3, bldCnstIntExp(1));
     }
     | LEFT_QUAD COLON expression COLON RIGHT_QUAD       //[:j:]
     {
-        $$= bldEvlLst();
-        evlLstSlcAdd($$, bldCnstIntExp(0), $3, bldCnstIntExp(1));
+        $$= bldAcsLst();
+        acsLstSlcAdd($$, bldCnstIntExp(0), $3, bldCnstIntExp(1));
     }
     | LEFT_QUAD COLON expression COLON expression RIGHT_QUAD        //[:j:k]
     {
-        $$= bldEvlLst();
-        evlLstSlcAdd($$, bldCnstIntExp(0), $3, $5);
+        $$= bldAcsLst();
+        acsLstSlcAdd($$, bldCnstIntExp(0), $3, $5);
     }
     | LEFT_QUAD COLON COLON RIGHT_QUAD      //[::]
     {
-        $$= bldEvlLst();
-        evlLstSlcAdd($$, bldCnstIntExp(0), bldCnstIntExp(-1), bldCnstIntExp(1));
+        $$= bldAcsLst();
+        acsLstSlcAdd($$, bldCnstIntExp(0), bldCnstIntExp(-1), bldCnstIntExp(1));
     }
     | evaluate_list LEFT_QUAD expression RIGHT_QUAD
     {
         $$=$1;
-        evlLstElmtAdd($$,$3);
+        acsLstIdxAdd($$,$3);
     }
     | evaluate_list LEFT_QUAD expression COLON expression RIGHT_QUAD  //[i:j]
     {
         $$=$1;
-        evlLstSlcAdd($$, $3, $5, bldCnstIntExp(1));
+        acsLstSlcAdd($$, $3, $5, bldCnstIntExp(1));
     }
     | evaluate_list LEFT_QUAD expression COLON expression COLON RIGHT_QUAD  //[i:j:]
     {
         $$=$1;
-        evlLstSlcAdd($$, $3, $5, bldCnstIntExp(1));
+        acsLstSlcAdd($$, $3, $5, bldCnstIntExp(1));
     }
     | evaluate_list LEFT_QUAD expression COLON expression COLON expression RIGHT_QUAD //[i:j:k]
     {
         $$=$1;
-        evlLstSlcAdd($$, $3, $5, $7);
+        acsLstSlcAdd($$, $3, $5, $7);
     }
     | evaluate_list LEFT_QUAD expression COLON RIGHT_QUAD       //[i:]
     {
         $$=$1;
-        evlLstSlcAdd($$, $3, bldCnstIntExp(-1), bldCnstIntExp(1));
+        acsLstSlcAdd($$, $3, bldCnstIntExp(-1), bldCnstIntExp(1));
     }
     | evaluate_list LEFT_QUAD expression COLON COLON RIGHT_QUAD       //[i::]
     {
         $$=$1;
-        evlLstSlcAdd($$, $3, bldCnstIntExp(-1), bldCnstIntExp(1));
+        acsLstSlcAdd($$, $3, bldCnstIntExp(-1), bldCnstIntExp(1));
     }
     | evaluate_list LEFT_QUAD expression COLON COLON expression RIGHT_QUAD        //[i::k]
     {
         $$=$1;
-        evlLstSlcAdd($$, $3, bldCnstIntExp(-1), $6);
+        acsLstSlcAdd($$, $3, bldCnstIntExp(-1), $6);
     }
     | evaluate_list LEFT_QUAD COLON expression RIGHT_QUAD       //[:j]
     {
         $$=$1;
-        evlLstSlcAdd($$, bldCnstIntExp(0), $4, bldCnstIntExp(1));
+        acsLstSlcAdd($$, bldCnstIntExp(0), $4, bldCnstIntExp(1));
     }
     | evaluate_list LEFT_QUAD COLON expression COLON RIGHT_QUAD       //[:j:]
     {
         $$=$1;
-        evlLstSlcAdd($$, bldCnstIntExp(0), $4, bldCnstIntExp(1));
+        acsLstSlcAdd($$, bldCnstIntExp(0), $4, bldCnstIntExp(1));
     }
     | evaluate_list LEFT_QUAD COLON expression COLON expression RIGHT_QUAD        //[:j:k]
     {
         $$=$1;
-        evlLstSlcAdd($$, bldCnstIntExp(0), $4, $6);
+        acsLstSlcAdd($$, bldCnstIntExp(0), $4, $6);
     }
     | evaluate_list LEFT_QUAD COLON COLON RIGHT_QUAD      //[::]
     {
         $$=$1;
-        evlLstSlcAdd($$, bldCnstIntExp(0), bldCnstIntExp(-1), bldCnstIntExp(1));
+        acsLstSlcAdd($$, bldCnstIntExp(0), bldCnstIntExp(-1), bldCnstIntExp(1));
     }
 
 

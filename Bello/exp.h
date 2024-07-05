@@ -41,9 +41,9 @@ struct ExpStrc* bldGlbAsgnExp(struct AsgnLstStrc* asgnLst);
 struct ExpStrc* bldLclAsgnExp(struct AsgnLstStrc* asgnLst);
 struct ExpStrc* bldRdExp(int typ);
 struct ExpStrc* bldArrExp(struct ElmtLstStrc* elmtLst);
-struct ExpStrc* bldArrEvlExp(struct ExpStrc* vrb, struct EvlLstStrc* evlLst);
+//struct ExpStrc* bldArrEvlExp(struct ExpStrc* vrb, struct AcsLstStrc* evlLst);
 struct ExpStrc* bldLvlExp(struct ExpStrc* vrb);
-struct ExpStrc* bldLvlExpAdd(struct ExpStrc* lvl, struct EvlLstStrc* evlLst);
+struct ExpStrc* bldLvlExpAdd(struct ExpStrc* lvl, struct AcsLstStrc* evlLst);
 struct ExpStrc* bldElmtAsgnExp(struct ExpStrc* arr, struct PstnLstStrc* pstnLst, struct ExpStrc* vl);
 struct ExpStrc* bldNewArrExp(struct ExpStrc* cnt);
 struct CnstStrc* clcBnrExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct BnrExpStrc* exp);
@@ -129,7 +129,7 @@ struct ExpStrc* bldCnstStrExp(char* strVl)
 	exp->typ = CONST_EXPRESSION;
 	exp->exp.cnst = bldStrCnst(strVl);
 
-	
+
 	//prtCnst(exp->exp.cnst);
 
 	return exp;
@@ -241,23 +241,23 @@ struct ExpStrc* bldArrExp(struct ElmtLstStrc* elmtLst)
 	return rslt;
 }
 
-struct ExpStrc* bldArrEvlExp(struct ExpStrc* vrb, struct EvlLstStrc* evlLst)
-{
-	struct ExpStrc* rslt = new ExpStrc;
-
-	rslt->typ = ARRAY_EVALUATE_EXPRESSION;
-
-	//rslt->exp.arrEvlExp = (struct ArrEvlExpStrc*)malloc(sizeof(struct ArrEvlExpStrc));
-	rslt->exp.arrEvlExp = new ArrEvlExpStrc;
-
-	rslt->exp.arrEvlExp->blnArr = 0;
-
-	rslt->exp.arrEvlExp->arr = vrb;
-
-	rslt->exp.arrEvlExp->evlLst = evlLst;
-
-	return rslt;
-}
+//struct ExpStrc* bldArrEvlExp(struct ExpStrc* vrb, struct AcsLstStrc* evlLst)
+//{
+//	struct ExpStrc* rslt = new ExpStrc;
+//
+//	rslt->typ = ARRAY_EVALUATE_EXPRESSION;
+//
+//	//rslt->exp.arrEvlExp = (struct ArrEvlExpStrc*)malloc(sizeof(struct ArrEvlExpStrc));
+//	rslt->exp.arrEvlExp = new ArrEvlExpStrc;
+//
+//	rslt->exp.arrEvlExp->blnArr = 0;
+//
+//	rslt->exp.arrEvlExp->arr = vrb;
+//
+//	rslt->exp.arrEvlExp->evlLst = evlLst;
+//
+//	return rslt;
+//}
 
 struct ExpStrc* bldLvlExp(struct ExpStrc* vrb)
 {
@@ -265,25 +265,24 @@ struct ExpStrc* bldLvlExp(struct ExpStrc* vrb)
 
 	rslt->typ = LVALUE_EXPRESSION;
 
-	//rslt->exp.lvlExp = (struct LvlExpStrc*)malloc(sizeof(struct LvlExpStrc));
 	rslt->exp.lvlExp = new LvlExpStrc;
 
 	rslt->exp.lvlExp->vrb = vrb;
 
-	rslt->exp.lvlExp->hasEvlLst = 0;
-	rslt->exp.lvlExp->evlLst = NULL;
+	rslt->exp.lvlExp->hasAcsLst = 0;
+	rslt->exp.lvlExp->acs = NULL;
 
 	return rslt;
 }
 
-struct ExpStrc* bldLvlExpAdd(struct ExpStrc* lvl, struct EvlLstStrc* evlLst)
+struct ExpStrc* bldLvlExpAdd(struct ExpStrc* lvl, struct AcsLstStrc* evlLst)
 {
 
-	lvl->exp.lvlExp->evlLst = evlLst;
+	lvl->exp.lvlExp->acs = evlLst;
 
 	if (evlLst != NULL)
 	{
-		lvl->exp.lvlExp->hasEvlLst = 1;
+		lvl->exp.lvlExp->hasAcsLst = 1;
 	}
 
 	return lvl;
@@ -1186,7 +1185,7 @@ struct CnstStrc* clcUnrExpPfxInc(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnE
 		throw new ExVrbNotFnd;
 	}
 
-	if (lvl->hasEvlLst == 0)
+	if (lvl->hasAcsLst == 0)
 	{
 		if (vrb->typ == INT_VALUE)
 		{
@@ -1214,17 +1213,22 @@ struct CnstStrc* clcUnrExpPfxInc(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnE
 
 		int lyr;
 
-		lyr = exp->exp->exp.lvlExp->evlLst->evlCnt;
+		int nbr;
+
+		lyr = exp->exp->exp.lvlExp->acs->acsLst.size();
 
 		int i;
 
-		for (i = 0; i < lyr - 1; i++)
+		for (i = 0; i < lyr; i++)
 		{
-			pstn = clcExp(glbEnvr, fcnEnvr, exp->exp->exp.lvlExp->evlLst->pstnArr[i])->vl.intVl;
-			arrPrnt = arrPrnt->elmtArr[pstn]->vl.arr;
+			pstn = clcExp(glbEnvr, fcnEnvr, exp->exp->exp.lvlExp->acs->acsLst[i]->pstn)->vl.intVl;
+
+			if (i < lyr - 1)
+			{
+				arrPrnt = arrPrnt->elmtArr[pstn]->vl.arr;
+			}
 		}
 
-		pstn = clcExp(glbEnvr, fcnEnvr, exp->exp->exp.lvlExp->evlLst->pstnArr[lyr - 1])->vl.intVl;
 
 		if (arrPrnt->elmtArr[pstn]->CnstTyp == INT_VALUE)
 		{
@@ -1261,7 +1265,7 @@ struct CnstStrc* clcUnrExpPfxDec(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnE
 		throw new ExVrbNotFnd;
 	}
 
-	if (lvl->hasEvlLst == 0)
+	if (lvl->hasAcsLst == 0)
 	{
 		if (vrb->typ == INT_VALUE)
 		{
@@ -1289,17 +1293,20 @@ struct CnstStrc* clcUnrExpPfxDec(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnE
 
 		int lyr;
 
-		lyr = exp->exp->exp.lvlExp->evlLst->evlCnt;
+		lyr = exp->exp->exp.lvlExp->acs->acsLst.size();
 
 		int i;
 
-		for (i = 0; i < lyr - 1; i++)
+		//按层级定位数组中元素的位置，直至arrPrnt定位到包含元素的最内层的数组
+		for (i = 0; i < lyr; i++)
 		{
-			pstn = clcExp(glbEnvr, fcnEnvr, exp->exp->exp.lvlExp->evlLst->pstnArr[i])->vl.intVl;
-			arrPrnt = arrPrnt->elmtArr[pstn]->vl.arr;
-		}
+			pstn = clcExp(glbEnvr, fcnEnvr, exp->exp->exp.lvlExp->acs->acsLst[i]->pstn)->vl.intVl;
 
-		pstn = clcExp(glbEnvr, fcnEnvr, exp->exp->exp.lvlExp->evlLst->pstnArr[lyr - 1])->vl.intVl;
+			if (i < lyr - 1)
+			{
+				arrPrnt = arrPrnt->elmtArr[pstn]->vl.arr;
+			}
+		}
 
 		if (arrPrnt->elmtArr[pstn]->CnstTyp == INT_VALUE)
 		{
@@ -1336,7 +1343,7 @@ struct CnstStrc* clcUnrExpSfxInc(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnE
 		throw new ExVrbNotFnd;
 	}
 
-	if (lvl->hasEvlLst == 0)
+	if (lvl->hasAcsLst == 0)
 	{
 		if (vrb->typ == INT_VALUE)
 		{
@@ -1367,17 +1374,19 @@ struct CnstStrc* clcUnrExpSfxInc(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnE
 
 		int lyr;
 
-		lyr = exp->exp->exp.lvlExp->evlLst->evlCnt;
+		lyr = exp->exp->exp.lvlExp->acs->acsLst.size();
 
 		int i;
 
-		for (i = 0; i < lyr - 1; i++)
+		for (i = 0; i < lyr; i++)
 		{
-			pstn = clcExp(glbEnvr, fcnEnvr, exp->exp->exp.lvlExp->evlLst->pstnArr[i])->vl.intVl;
-			arrPrnt = arrPrnt->elmtArr[pstn]->vl.arr;
-		}
+			pstn = clcExp(glbEnvr, fcnEnvr, exp->exp->exp.lvlExp->acs->acsLst[i]->pstn)->vl.intVl;
+			if (i < lyr - 1)
+			{
+				arrPrnt = arrPrnt->elmtArr[pstn]->vl.arr;
+			}
 
-		pstn = clcExp(glbEnvr, fcnEnvr, exp->exp->exp.lvlExp->evlLst->pstnArr[lyr - 1])->vl.intVl;
+		}
 
 		if (arrPrnt->elmtArr[pstn]->CnstTyp == INT_VALUE)
 		{
@@ -1416,7 +1425,7 @@ struct CnstStrc* clcUnrExpSfxDec(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnE
 		throw new ExVrbNotFnd;
 	}
 
-	if (lvl->hasEvlLst == 0)
+	if (lvl->hasAcsLst == 0)
 	{
 		if (vrb->typ == INT_VALUE)
 		{
@@ -1447,17 +1456,18 @@ struct CnstStrc* clcUnrExpSfxDec(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnE
 
 		int lyr;
 
-		lyr = exp->exp->exp.lvlExp->evlLst->evlCnt;
+		lyr = exp->exp->exp.lvlExp->acs->acsLst.size();
 
 		int i;
 
-		for (i = 0; i < lyr - 1; i++)
+		for (i = 0; i < lyr; i++)
 		{
-			pstn = clcExp(glbEnvr, fcnEnvr, exp->exp->exp.lvlExp->evlLst->pstnArr[i])->vl.intVl;
-			arrPrnt = arrPrnt->elmtArr[pstn]->vl.arr;
+			pstn = clcExp(glbEnvr, fcnEnvr, exp->exp->exp.lvlExp->acs->acsLst[i]->pstn)->vl.intVl;
+			if (i < lyr - 1)
+			{
+				arrPrnt = arrPrnt->elmtArr[pstn]->vl.arr;
+			}
 		}
-
-		pstn = clcExp(glbEnvr, fcnEnvr, exp->exp->exp.lvlExp->evlLst->pstnArr[lyr - 1])->vl.intVl;
 
 		if (arrPrnt->elmtArr[pstn]->CnstTyp == INT_VALUE)
 		{
@@ -1933,7 +1943,7 @@ struct CnstStrc* clcAsgnExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, 
 
 	vrb = getVrb(glbEnvr, fcnEnvr, exp->lvl->exp.lvlExp->vrb->exp.vrbExp);
 
-	if (lvl->hasEvlLst == 0)
+	if (lvl->hasAcsLst == 0)
 	{
 		asgnVrb(vrb, rslt);
 	}
@@ -1949,28 +1959,30 @@ struct CnstStrc* clcAsgnExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, 
 
 		int lyr;
 
-		lyr = exp->lvl->exp.lvlExp->evlLst->evlCnt;
+		lyr = exp->lvl->exp.lvlExp->acs->acsLst.size();
 
 		int i;
 
-		for (i = 0; i < lyr - 1; i++)
+		for (i = 0; i < lyr; i++)
 		{
 			if (arrTmp->CnstTyp != ARRAY_VALUE)
 			{
 				throw new ExNotAvlbArr;
 			}
 
-			pstn = clcExp(glbEnvr, fcnEnvr, exp->lvl->exp.lvlExp->evlLst->pstnArr[i])->vl.intVl;
+			pstn = clcExp(glbEnvr, fcnEnvr, exp->lvl->exp.lvlExp->acs->acsLst[i]->pstn)->vl.intVl;
 
 			if (pstn >= arrTmp->vl.arr->elmtArr.size())
 			{
 				throw new ExIdxOutArrRng;
 			}
 
-			arrTmp = arrTmp->vl.arr->elmtArr[pstn];
-		}
+			if (i < lyr - 1)
+			{
+				arrTmp = arrTmp->vl.arr->elmtArr[pstn];
+			}
 
-		pstn = clcExp(glbEnvr, fcnEnvr, exp->lvl->exp.lvlExp->evlLst->pstnArr[lyr - 1])->vl.intVl;
+		}
 
 		if (pstn >= arrTmp->vl.arr->elmtArr.size())
 		{
@@ -2041,89 +2053,89 @@ struct CnstStrc* clcNewArrExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr
 	return rslt;
 }
 
-struct CnstStrc* clcArrEvlExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct ArrEvlExpStrc* exp)
-{
-	struct CnstStrc* rslt = new CnstStrc;
-
-	int pstn;
-
-	struct VrbStrc* arr;
-	struct CnstStrc* arrTmp, * arrTmp2;
-
-	struct ArrStrc* arrNew;
-
-
-	arr = getVrb(glbEnvr, fcnEnvr, exp->arr->exp.vrbExp);
-
-	int i;
-	int j;
-
-	int strt, end, stp;
-
-	//arrTmp用于迭代取数组的值
-	arrTmp = bldCnstFrmVrb(arr);
-
-	for (i = 0; i < exp->evlLst->evlCnt; i++)
-	{
-		if (exp->evlLst->blnSlc[i] == 0)
-		{
-			pstn = clcExp(glbEnvr, fcnEnvr, exp->evlLst->pstnArr[i])->vl.intVl;
-
-			//如果数组索引为负数，实际的数组索引为数组索引值（负数）加数组长度
-			if (pstn < 0)
-			{
-				pstn = arrTmp->vl.arr->elmtArr.size() + pstn;
-			}
-
-			arrTmp = arrTmp->vl.arr->elmtArr[pstn];
-		}
-
-		if (exp->evlLst->blnSlc[i] != 0)
-		{
-			intlArr(&arrNew);
-
-			strt = clcExp(glbEnvr, fcnEnvr, exp->evlLst->strtArr[i])->vl.intVl;
-			end = clcExp(glbEnvr, fcnEnvr, exp->evlLst->endArr[i])->vl.intVl;
-			stp = clcExp(glbEnvr, fcnEnvr, exp->evlLst->stpArr[i])->vl.intVl;
-
-			if (strt < 0)
-			{
-				strt = arrTmp->vl.arr->elmtArr.size() + strt;
-			}
-
-			if (end < 0)
-			{
-				end = arrTmp->vl.arr->elmtArr.size() + end;
-			}
-
-			if (strt <= end && stp > 0)
-			{
-				for (j = strt; j <= end; j += stp)
-				{
-					addElmt(arrNew, arrTmp->vl.arr->elmtArr[j]);
-				}
-			}
-
-			if (strt > end && stp < 0)
-			{
-				for (j = strt; j >= end; j += stp)
-				{
-					addElmt(arrNew, arrTmp->vl.arr->elmtArr[j]);
-				}
-			}
-
-
-			arrTmp = bldArrCnst(arrNew);
-		}
-
-	}
-
-	//获得得取值结果应该是值，不是引用
-	rslt = bldCnstCpy(arrTmp);
-
-	return rslt;
-
-}
+//struct CnstStrc* clcArrEvlExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct ArrEvlExpStrc* exp)
+//{
+//	struct CnstStrc* rslt = new CnstStrc;
+//
+//	int pstn;
+//
+//	struct VrbStrc* arr;
+//	struct CnstStrc* arrTmp, * arrTmp2;
+//
+//	struct ArrStrc* arrNew;
+//
+//
+//	arr = getVrb(glbEnvr, fcnEnvr, exp->arr->exp.vrbExp);
+//
+//	int i;
+//	int j;
+//
+//	int strt, end, stp;
+//
+//	//arrTmp用于迭代取数组的值
+//	arrTmp = bldCnstFrmVrb(arr);
+//
+//	for (i = 0; i < exp->evlLst->evlCnt; i++)
+//	{
+//		if (exp->evlLst->blnSlc[i] == 0)
+//		{
+//			pstn = clcExp(glbEnvr, fcnEnvr, exp->evlLst->pstnArr[i])->vl.intVl;
+//
+//			//如果数组索引为负数，实际的数组索引为数组索引值（负数）加数组长度
+//			if (pstn < 0)
+//			{
+//				pstn = arrTmp->vl.arr->elmtArr.size() + pstn;
+//			}
+//
+//			arrTmp = arrTmp->vl.arr->elmtArr[pstn];
+//		}
+//
+//		if (exp->evlLst->blnSlc[i] != 0)
+//		{
+//			intlArr(&arrNew);
+//
+//			strt = clcExp(glbEnvr, fcnEnvr, exp->evlLst->strtArr[i])->vl.intVl;
+//			end = clcExp(glbEnvr, fcnEnvr, exp->evlLst->endArr[i])->vl.intVl;
+//			stp = clcExp(glbEnvr, fcnEnvr, exp->evlLst->stpArr[i])->vl.intVl;
+//
+//			if (strt < 0)
+//			{
+//				strt = arrTmp->vl.arr->elmtArr.size() + strt;
+//			}
+//
+//			if (end < 0)
+//			{
+//				end = arrTmp->vl.arr->elmtArr.size() + end;
+//			}
+//
+//			if (strt <= end && stp > 0)
+//			{
+//				for (j = strt; j <= end; j += stp)
+//				{
+//					addElmt(arrNew, arrTmp->vl.arr->elmtArr[j]);
+//				}
+//			}
+//
+//			if (strt > end && stp < 0)
+//			{
+//				for (j = strt; j >= end; j += stp)
+//				{
+//					addElmt(arrNew, arrTmp->vl.arr->elmtArr[j]);
+//				}
+//			}
+//
+//
+//			arrTmp = bldArrCnst(arrNew);
+//		}
+//
+//	}
+//
+//	//获得得取值结果应该是值，不是引用
+//	rslt = bldCnstCpy(arrTmp);
+//
+//	return rslt;
+//
+//}
 
 struct CnstStrc* clcElmtAsgnExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct ElmtAsgnExpStrc* exp)
 {
@@ -2181,7 +2193,7 @@ struct CnstStrc* clcLvlExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, s
 	//printf("Get lvalue vrb: %08h\n", (int)lvl);
 
 	//如果是变量名的情况
-	if (exp->hasEvlLst == 0)
+	if (exp->hasAcsLst == 0)
 	{
 		rslt = bldCnstFrmVrb(lvl);
 	}
@@ -2203,7 +2215,9 @@ struct CnstStrc* clcLvlExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, s
 		//arrTmp用于迭代取数组的值
 		arrTmp = bldCnstFrmVrb(lvl);
 
-		for (i = 0; i < exp->evlLst->evlCnt; i++)
+		int lyr = exp->acs->acsLst.size();
+
+		for (i = 0; i < lyr; i++)
 		{
 			//检查是否是有效的数组
 			if (arrTmp->CnstTyp != ARRAY_VALUE)
@@ -2211,33 +2225,41 @@ struct CnstStrc* clcLvlExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, s
 				throw new ExNotAvlbArr;
 			}
 
-			if (exp->evlLst->blnSlc[i] == 0)
+			//该层为数组索引的情况
+			if (exp->acs->acsLst[i]->blnSlc == 0)
 			{
-				pstn = clcExp(glbEnvr, fcnEnvr, exp->evlLst->pstnArr[i])->vl.intVl;
+				pstn = clcExp(glbEnvr, fcnEnvr, exp->acs->acsLst[i]->pstn)->vl.intVl;
 
 				//如果数组索引为负数，实际的数组索引为数组索引值（负数）加数组长度
 				if (pstn < 0)
 				{
-					//pstn = arrTmp->vl.arr->elmtCnt + pstn;
 					pstn = arrTmp->vl.arr->elmtArr.size() + pstn;
 				}
 
-				//if (pstn >= arrTmp->vl.arr->elmtCnt)
 				if (pstn >= arrTmp->vl.arr->elmtArr.size())
 				{
 					throw new ExIdxOutArrRng;
 				}
 
 				arrTmp = arrTmp->vl.arr->elmtArr[pstn];
+				//if (i < lyr - 1)
+				//{
+				//	arrTmp = arrTmp->vl.arr->elmtArr[pstn];
+				//}
+				//else
+				//{
+				//	rslt = bldCnstCpy(arrTmp->vl.arr->elmtArr[pstn]);
+				//	return rslt;
+				//}
 			}
 
-			if (exp->evlLst->blnSlc[i] != 0)
+			if (exp->acs->acsLst[i]->blnSlc != 0)
 			{
 				intlArr(&arrNew);
 
-				strt = clcExp(glbEnvr, fcnEnvr, exp->evlLst->strtArr[i])->vl.intVl;
-				end = clcExp(glbEnvr, fcnEnvr, exp->evlLst->endArr[i])->vl.intVl;
-				stp = clcExp(glbEnvr, fcnEnvr, exp->evlLst->stpArr[i])->vl.intVl;
+				strt = clcExp(glbEnvr, fcnEnvr, exp->acs->acsLst[i]->strt)->vl.intVl;
+				end = clcExp(glbEnvr, fcnEnvr, exp->acs->acsLst[i]->end)->vl.intVl;
+				stp = clcExp(glbEnvr, fcnEnvr, exp->acs->acsLst[i]->stp)->vl.intVl;
 
 				if (strt < 0)
 				{
@@ -2274,7 +2296,6 @@ struct CnstStrc* clcLvlExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, s
 						addElmt(arrNew, arrTmp->vl.arr->elmtArr[j]);
 					}
 				}
-
 
 				arrTmp = bldArrCnst(arrNew);
 			}
@@ -2359,10 +2380,10 @@ struct CnstStrc* clcExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, stru
 		//printf("Calculate array expression #1\n");
 	}
 
-	if (exp->typ == ARRAY_EVALUATE_EXPRESSION)
-	{
-		rslt = clcArrEvlExp(glbEnvr, fcnEnvr, exp->exp.arrEvlExp);
-	}
+	//if (exp->typ == ARRAY_EVALUATE_EXPRESSION)
+	//{
+	//	rslt = clcArrEvlExp(glbEnvr, fcnEnvr, exp->exp.arrEvlExp);
+	//}
 
 	if (exp->typ == ELEMENT_ASSIGN_EXPRESSION)
 	{

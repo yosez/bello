@@ -66,15 +66,15 @@ int addElmt(struct ArrStrc* arr, struct CnstStrc* elmt)
 	return 0;
 }
 
-struct EvlLstStrc* bldEvlLst()
+struct AcsLstStrc* bldAcsLst()
 {
 
-	struct EvlLstStrc* rslt = new EvlLstStrc;
+	struct AcsLstStrc* rslt = new AcsLstStrc;
 
 	return rslt;
 }
 
-int evlLstElmtAdd(struct EvlLstStrc* evlLst, struct ExpStrc* exp)
+int acsLstIdxAdd(struct AcsLstStrc* evlLst, struct ExpStrc* exp)
 {
 	//if (evlLst->evlCnt == evlLst->evlSz)
 	//{
@@ -90,21 +90,25 @@ int evlLstElmtAdd(struct EvlLstStrc* evlLst, struct ExpStrc* exp)
 
 
 	//evlLst->blnSlc[evlLst->evlCnt] = false;
-	evlLst->blnSlc.push_back(false);
+	AcsStrc* acs = new AcsStrc;
+	acs->blnSlc = false;
+	acs->pstn = exp;
 
-	//evlLst->pstnArr[evlLst->evlCnt] = exp;
-	evlLst->pstnArr.push_back(exp);
+	evlLst->acsLst.push_back(acs);
 
-	evlLst->strtArr.push_back(NULL);
-	evlLst->endArr.push_back(NULL);
-	evlLst->stpArr.push_back(NULL);
+	////evlLst->pstnArr[evlLst->evlCnt] = exp;
+	//evlLst->pstnArr.push_back(exp);
 
-	evlLst->evlCnt++;
+	//evlLst->strtArr.push_back(NULL);
+	//evlLst->endArr.push_back(NULL);
+	//evlLst->stpArr.push_back(NULL);
+
+	//evlLst->evlCnt++;
 
 	return 0;
 }
 
-int evlLstSlcAdd(struct EvlLstStrc* evlLst, struct ExpStrc* strt, struct ExpStrc* end, struct ExpStrc* stp)
+int acsLstSlcAdd(struct AcsLstStrc* acsLst, struct ExpStrc* strt, struct ExpStrc* end, struct ExpStrc* stp)
 {
 	//if (evlLst->evlCnt == evlLst->evlSz)
 	//{
@@ -119,19 +123,27 @@ int evlLstSlcAdd(struct EvlLstStrc* evlLst, struct ExpStrc* strt, struct ExpStrc
 	//}
 
 	//evlLst->blnSlc[evlLst->evlCnt] = true;
-	evlLst->blnSlc.push_back(true);
+	//evlLst->blnSlc.push_back(true);
 
-	//evlLst->strtArr[evlLst->evlCnt] = strt;
-	//evlLst->endArr[evlLst->evlCnt] = end;
-	//evlLst->stpArr[evlLst->evlCnt] = stp;	
-	
-	evlLst->pstnArr.push_back(NULL);
+	////evlLst->strtArr[evlLst->evlCnt] = strt;
+	////evlLst->endArr[evlLst->evlCnt] = end;
+	////evlLst->stpArr[evlLst->evlCnt] = stp;	
+	//
+	//evlLst->pstnArr.push_back(NULL);
 
-	evlLst->strtArr.push_back(strt);
-	evlLst->endArr.push_back(end);
-	evlLst->stpArr.push_back(stp);
+	//evlLst->strtArr.push_back(strt);
+	//evlLst->endArr.push_back(end);
+	//evlLst->stpArr.push_back(stp);
 
-	evlLst->evlCnt++;
+	//evlLst->evlCnt++;
+	AcsStrc* acs = new AcsStrc;
+
+	acs->blnSlc = true;
+	acs->strt = strt;
+	acs->end = end;
+	acs->stp = stp;
+
+	acsLst->acsLst.push_back(acs);
 
 	return 0;
 }

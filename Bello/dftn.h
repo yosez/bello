@@ -215,14 +215,14 @@ struct ArrEvlExpStrc
 
 	struct ExpStrc* arr;
 
-	struct EvlLstStrc* evlLst;
+	struct AcsLstStrc* evlLst;
 };
 
 struct LvlExpStrc
 {
-	int hasEvlLst;
+	int hasAcsLst;
 	struct ExpStrc* vrb;
-	struct EvlLstStrc* evlLst;
+	struct AcsLstStrc* acs;
 };
 
 // struct ArrEvlExpStrc
@@ -450,19 +450,26 @@ struct PstnLstStrc
 	vector<ExpStrc*> pstnArr;
 };
 
-//数组评估列表
-struct EvlLstStrc
+/// <summary>
+/// 数组引用的结构体，引用方式可以是直接指定索引数值或者提供切片
+/// </summary>
+struct AcsStrc
 {
-	//int evlSz;
-	int evlCnt;
+	// 1 数组取值为切片 0 数组取值为指定元素
+	int blnSlc;
 
-	//int* blnSlc;
-	vector<int> blnSlc;
+	ExpStrc* pstn;
+	ExpStrc* strt;
+	ExpStrc* end;
+	ExpStrc* stp;
+};
 
-	vector<ExpStrc*> pstnArr;
-	vector<ExpStrc*> strtArr;
-	vector<ExpStrc*> endArr;
-	vector<ExpStrc*> stpArr;
+//数组评估列表，acsLst中的每个元素是指某一层的访问索引或切片
+struct AcsLstStrc
+{
+
+	vector<AcsStrc*> acsLst;
+
 };
 
 //函数形参列表

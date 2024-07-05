@@ -269,7 +269,7 @@ int intlGlbEnvr(struct EnvrStrc** envr)
 	addNtvFcn((*envr), string("println"), prtlnFcn, 1);
 	addNtvFcn((*envr), string("newArray"), newArrFcn, 1);
 
-	void* h = getNtvFcn(*envr, bldFcnExp((char*)"print", new ArgLstStrc)->exp.fcnExp);
+	//void* h = getNtvFcn(*envr, bldFcnExp((char*)"print", new ArgLstStrc)->exp.fcnExp);
 
 	//printf("h: %08x\n", h);
 
