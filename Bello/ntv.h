@@ -155,11 +155,6 @@ struct CnstStrc* newArrFcn(struct EnvrStrc* envr, int argCnt, vector <CnstStrc*>
 
 	elmtCnt = argArr[0]->vl.intVl;
 
-	//rslt->vl.arr->elmtSz = elmtCnt + 0x10;
-	//rslt->vl.arr->elmtCnt = elmtCnt;
-
-	//rslt->vl.arr->elmtArr = (struct CnstStrc**)malloc(sizeof(struct CnstStrc*) * rslt->vl.arr->elmtSz);
-
 	int i;
 
 	for (i = 0; i < elmtCnt; i++)

@@ -56,8 +56,6 @@ struct CnstStrc* bldStrCnst(char* vl)
 
 	rslt->CnstTyp = STRING_VALUE;
 	rslt->vl.str = string(vl);
-	//rslt->vl.str = new string(vl);
-	//printf("bldStrCnst: %s | %s\n", vl, rslt->vl.str.c_str());
 
 	return rslt;
 }
@@ -70,7 +68,7 @@ struct CnstStrc* bldStrCnstByStr(string vl)
 	//rslt->vl.str = new string(vl);
 	rslt->vl.str = string(vl);
 
-	printf("cnst str: %s\n", rslt->vl.str.c_str());
+	//printf("cnst str: %s\n", rslt->vl.str.c_str());
 
 	return rslt;
 }
@@ -205,15 +203,10 @@ int prtlnCnst(struct CnstStrc* cnst)
 	}
 	case ARRAY_VALUE:
 	{
-		// int i;
-		// for (i=0;i<cnst->vl.arr->elmtCnt;i++)
-		// {
-		//     prtCnst(cnst->vl.arr->elmtArr[i]);
-		// }
 
 		printf("[");
 		int i;
-		//for (i = 0; i < cnst->vl.arr->elmtCnt; i++)
+
 		for (i = 0; i < cnst->vl.arr->elmtArr.size(); i++)
 		{
 			prtCnst(cnst->vl.arr->elmtArr[i]);

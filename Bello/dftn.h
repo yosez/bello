@@ -333,8 +333,6 @@ struct FcnStmtStrc
 
 struct StmtBlkStrc
 {
-	//int stmtSz; // stmtArr数组的大小
-	//int stmtCnt; // stmtArr数组最后一个元素的序号
 	vector<StmtStrc*> stmtArr;
 };
 

@@ -32,16 +32,13 @@ struct ExpStrc* bldCnstStrExp(char* strVl);
 struct ExpStrc* bldCnstNllExp();
 struct ExpStrc* bldAsgnExp(struct ExpStrc* lvl, struct ExpStrc* exp);
 struct ExpStrc* bldVrbExp(char* idtf);
-//struct ExpStrc* bldVrbExp(string idtf);
 struct ExpStrc* bldBnrExp(int opr, struct ExpStrc* lftExp, struct ExpStrc* rghtExp);
 struct ExpStrc* bldUnrExp(int opr, struct ExpStrc* exp);
 struct ExpStrc* bldFcnExp(char* nm, struct ArgLstStrc* argLst);
-//struct ExpStrc* bldFcnExp(string nm, struct ArgLstStrc* argLst);
 struct ExpStrc* bldGlbAsgnExp(struct AsgnLstStrc* asgnLst);
 struct ExpStrc* bldLclAsgnExp(struct AsgnLstStrc* asgnLst);
 struct ExpStrc* bldRdExp(int typ);
 struct ExpStrc* bldArrExp(struct ElmtLstStrc* elmtLst);
-//struct ExpStrc* bldArrEvlExp(struct ExpStrc* vrb, struct AcsLstStrc* evlLst);
 struct ExpStrc* bldLvlExp(struct ExpStrc* vrb);
 struct ExpStrc* bldLvlExpAdd(struct ExpStrc* lvl, struct AcsLstStrc* evlLst);
 struct ExpStrc* bldElmtAsgnExp(struct ExpStrc* arr, struct PstnLstStrc* pstnLst, struct ExpStrc* vl);
@@ -151,7 +148,6 @@ struct ExpStrc* bldAsgnExp(struct ExpStrc* lvl, struct ExpStrc* exp)
 
 	rslt->typ = ASSIGN_EXPRESSION;
 
-	//rslt->exp.asgnExp = (struct AsgnExpStrc*)malloc(sizeof(struct AsgnExpStrc));
 	rslt->exp.asgnExp = new AsgnExpStrc;
 	rslt->exp.asgnExp->lvl = lvl;
 	rslt->exp.asgnExp->exp = exp;
@@ -159,26 +155,12 @@ struct ExpStrc* bldAsgnExp(struct ExpStrc* lvl, struct ExpStrc* exp)
 	return rslt;
 }
 
-// struct ExpStrc *bldVrbDfnExp(struct VrbLstStrc *vrbLst)
-// {
-//     struct ExpStrc *rslt= (struct ExpStrc *)malloc(sizeof(struct ExpStrc ));
-
-//     rslt->typ=VARIABLE_DEFINE_EXPRESSION;
-
-//     rslt->exp.vrbDfnExp=(struct VrbDfnExpStrc *)malloc(sizeof(struct VrbDfnExpStrc));
-
-//     rslt->exp.vrbDfnExp->vrbLst=vrbLst;
-
-//     return rslt;
-// }
-
 struct ExpStrc* bldGlbAsgnExp(struct AsgnLstStrc* asgnLst)
 {
 	struct ExpStrc* rslt = new ExpStrc;
 
 	rslt->typ = GLOBAL_ASSIGN_EXPRESSION;
 
-	//rslt->exp.glbAsgnExp = (struct GlbAsgnExpStrc*)malloc(sizeof(struct GlbAsgnExpStrc));
 	rslt->exp.glbAsgnExp = new GlbAsgnExpStrc;
 
 	rslt->exp.glbAsgnExp->asgnLst = asgnLst;
@@ -192,7 +174,6 @@ struct ExpStrc* bldLclAsgnExp(struct AsgnLstStrc* asgnLst)
 
 	rslt->typ = LOCAL_ASSIGN_EXPRESSION;
 
-	//rslt->exp.lclAsgnExp = (struct LclAsgnExpStrc*)malloc(sizeof(struct LclAsgnExpStrc));
 	rslt->exp.lclAsgnExp = new LclAsgnExpStrc;
 
 	rslt->exp.lclAsgnExp->asgnLst = asgnLst;
@@ -200,34 +181,19 @@ struct ExpStrc* bldLclAsgnExp(struct AsgnLstStrc* asgnLst)
 	return rslt;
 }
 
-// struct ExpStrc *bldRdExp(int typ, struct ExpStrc * vrb)
-// {
-//     struct ExpStrc *rslt= (struct ExpStrc *)malloc(sizeof(struct ExpStrc ));
 
-//     rslt->typ=READ_EXPRESSION;
-
-//     rslt->exp.rdExpStrc=(struct RdExpStrc *)malloc(sizeof(struct RdExpStrc));
-
-//     rslt->exp.rdExpStrc->typ= typ;
-
-//     rslt->exp.rdExpStrc->vrb= vrb;
-
-//     return rslt;
-// }
-
-struct ExpStrc* bldRdExp(int typ)
-{
-	struct ExpStrc* rslt = new ExpStrc;
-
-	rslt->typ = READ_EXPRESSION;
-
-	//rslt->exp.rdExp = (struct RdExpStrc*)malloc(sizeof(struct RdExpStrc));
-	rslt->exp.rdExp = new RdExpStrc;
-
-	rslt->exp.rdExp->typ = typ;
-
-	return rslt;
-}
+//struct ExpStrc* bldRdExp(int typ)
+//{
+//	struct ExpStrc* rslt = new ExpStrc;
+//
+//	rslt->typ = READ_EXPRESSION;
+//
+//	rslt->exp.rdExp = new RdExpStrc;
+//
+//	rslt->exp.rdExp->typ = typ;
+//
+//	return rslt;
+//}
 
 struct ExpStrc* bldArrExp(struct ElmtLstStrc* elmtLst)
 {
@@ -294,7 +260,6 @@ struct ExpStrc* bldElmtAsgnExp(struct ExpStrc* arr, struct PstnLstStrc* pstnLst,
 
 	rslt->typ = ELEMENT_ASSIGN_EXPRESSION;
 
-	//rslt->exp.elmtAsgnExp = (struct ElmtAsgnExpStrc*)malloc(sizeof(struct ElmtAsgnExpStrc));
 	rslt->exp.elmtAsgnExp = new ElmtAsgnExpStrc;
 
 	rslt->exp.elmtAsgnExp->arr = arr;
@@ -311,7 +276,6 @@ struct ExpStrc* bldNewArrExp(struct ExpStrc* cnt)
 
 	rslt->typ = NEW_ARRAY_EXPRESSION;
 
-	//rslt->exp.newArrExp = (struct NewArrExpStrc*)malloc(sizeof(struct NewArrExpStrc));
 	rslt->exp.newArrExp = new NewArrExpStrc;
 
 	rslt->exp.newArrExp->cnt = cnt;
@@ -319,17 +283,6 @@ struct ExpStrc* bldNewArrExp(struct ExpStrc* cnt)
 	return rslt;
 }
 
-//struct ExpStrc* bldVrbExp(char* nm)
-//{
-//	struct ExpStrc* exp = new ExpStrc;
-//
-//	exp->typ = VARIABLE_EXPRESSION;
-//	exp->exp.vrbExp = (struct VrbExpStrc*)malloc(sizeof(struct VrbExpStrc));
-//
-//	exp->exp.vrbExp->nm = nm;
-//
-//	return exp;
-//}
 
 struct ExpStrc* bldVrbExp(char* nm)
 {
@@ -350,7 +303,6 @@ struct ExpStrc* bldBnrExp(int opr, struct ExpStrc* lftExp, struct ExpStrc* rghtE
 
 	exp->typ = BINARY_EXPRESSION;
 
-	//exp->exp.bnrExp = (struct BnrExpStrc*)malloc(sizeof(struct BnrExpStrc));
 	exp->exp.bnrExp = new BnrExpStrc;
 
 	exp->exp.bnrExp->lftExp = lftExp;
@@ -366,7 +318,6 @@ struct ExpStrc* bldUnrExp(int opr, struct ExpStrc* exp)
 
 	rslt->typ = UNARY_EXPRESSION;
 
-	//rslt->exp.unrExp = (struct UnrExpStrc*)malloc(sizeof(struct UnrExpStrc));
 	rslt->exp.unrExp = new UnrExpStrc;
 
 	rslt->exp.unrExp->exp = exp;
@@ -375,22 +326,7 @@ struct ExpStrc* bldUnrExp(int opr, struct ExpStrc* exp)
 	return rslt;
 }
 
-//struct ExpStrc* bldFcnExp(char* nm, struct ArgLstStrc* argLst)
-//{
-//	struct ExpStrc* rslt = new ExpStrc;
-//
-//	rslt->typ = FUNCTION_EXPRESSION;
-//
-//	rslt->exp.fcnExp = (struct FcnExpStrc*)malloc(sizeof(struct FcnExpStrc));
-//
-//	rslt->exp.fcnExp->nm = nm;
-//	//strcpy(rslt->exp.fcnExp->nm, nm);
-//
-//	rslt->exp.fcnExp->argLst = argLst;
-//
-//	return rslt;
-//
-//}
+
 
 struct ExpStrc* bldFcnExp(char* nm, struct ArgLstStrc* argLst)
 {
@@ -442,11 +378,6 @@ struct CnstStrc* clcBnrExpAdd(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr
 	if (lftCnst->CnstTyp == STRING_VALUE && rghtCnst->CnstTyp == STRING_VALUE)
 	{
 		str = lftCnst->vl.str + rghtCnst->vl.str;
-		//str = (char*)malloc(strlen(lftCnst->vl.str) + strlen(rghtCnst->vl.str) + 0x10);
-		//memset(str, 0, sizeof(str));
-
-		//strcpy(str, lftCnst->vl.str);
-		//strcat(str, rghtCnst->vl.str);
 
 		rslt = bldStrCnstByStr(str);
 	}
@@ -457,10 +388,10 @@ struct CnstStrc* clcBnrExpAdd(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr
 
 		str = lftCnst->vl.str;
 
-		printf("str lft: %s ", str.c_str());
+		//printf("str lft: %s ", str.c_str());
 		str += to_string(rghtCnst->vl.intVl);
 		//str += strInt;
-		printf("str: %s ", str.c_str());
+		//printf("str: %s ", str.c_str());
 
 		rslt = bldStrCnstByStr(str);
 	}
@@ -2375,7 +2306,7 @@ struct CnstStrc* clcExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, stru
 
 	if (exp->typ == ARRAY_EXPRESSION)
 	{
-		printf("Calculate array expression #0\n");
+		//printf("Calculate array expression #0\n");
 		rslt = clcArrExp(glbEnvr, fcnEnvr, exp->exp.arrExp);
 		//printf("Calculate array expression #1\n");
 	}

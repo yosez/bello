@@ -121,27 +121,11 @@ struct StmtStrc* bldStmtBlk()
 
 	rslt->stmt.stmtBlk = new StmtBlkStrc;
 
-	//rslt->stmt.stmtBlk->stmtCnt = -1;
-	//rslt->stmt.stmtBlk->stmtSz = 10;
-
-	//rslt->stmt.stmtBlk->stmtArr = (struct StmtStrc**)malloc(sizeof(struct StmtStrc*) * rslt->stmt.stmtBlk->stmtSz);
-
 	return rslt;
 }
 
 struct StmtStrc* stmtBlkAdd(struct StmtStrc* stmtBlk, struct StmtStrc* stmt)
 {
-	//stmtBlk->stmt.stmtBlk->stmtCnt++;
-
-	//if (stmtBlk->stmt.stmtBlk->stmtCnt == stmtBlk->stmt.stmtBlk->stmtSz)
-	//{
-	//	stmtBlk->stmt.stmtBlk->stmtSz *= 2;
-
-	//	stmtBlk->stmt.stmtBlk->stmtArr = (struct StmtStrc**)realloc(stmtBlk->stmt.stmtBlk->stmtArr,
-	//		sizeof(struct StmtStrc*) * stmtBlk->stmt.stmtBlk->stmtSz);
-	//}
-
-	//stmtBlk->stmt.stmtBlk->stmtArr[stmtBlk->stmt.stmtBlk->stmtCnt] = stmt;
 
 	stmtBlk->stmt.stmtBlk->stmtArr.push_back(stmt);
 
@@ -502,7 +486,7 @@ struct StmtRsltStrc* exctStmt(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr
 		{
 			int i;
 
-			for (i = 0; i <= stmt->stmt.stmtBlk->stmtArr.size(); i++)
+			for (i = 0; i < stmt->stmt.stmtBlk->stmtArr.size(); i++)
 			{
 				rslt = exctStmt(glbEnvr, fcnEnvr, stmt->stmt.stmtBlk->stmtArr[i]);
 
@@ -522,7 +506,7 @@ struct StmtRsltStrc* exctStmt(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr
 		{
 			rslt->typ = BREAK_RESULT;
 
-			rslt->rslt.brkRslt = (struct BrkRsltStrc*)malloc(sizeof(struct BrkRsltStrc));
+			rslt->rslt.brkRslt = new BrkRsltStrc;
 
 			rslt->rslt.brkRslt->brkCnt = clcExp(glbEnvr, fcnEnvr, stmt->stmt.brkStmt->exp)->vl.intVl;
 		}
@@ -531,7 +515,7 @@ struct StmtRsltStrc* exctStmt(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr
 		{
 			rslt->typ = CONTINUE_RESULT;
 
-			rslt->rslt.cntnRslt = (struct CntnRsltStrc*)malloc(sizeof(struct CntnRsltStrc));
+			rslt->rslt.cntnRslt = new CntnRsltStrc;
 
 			rslt->rslt.cntnRslt->cntnCnt = clcExp(glbEnvr, fcnEnvr, stmt->stmt.cntnStmt->exp)->vl.intVl;
 		}
@@ -556,7 +540,7 @@ struct StmtRsltStrc* exctStmt(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr
 
 			rslt->typ = RETURN_RESULT;
 
-			rslt->rslt.rtnRslt = (struct RtnRsltStrc*)malloc(sizeof(struct RtnRsltStrc));
+			rslt->rslt.rtnRslt = new RtnRsltStrc;
 
 			rslt->rslt.rtnRslt->blnRslt = stmt->stmt.rtnStmt->blnRslt;
 
