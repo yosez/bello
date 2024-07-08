@@ -48,23 +48,6 @@ extern struct CnstStrc* newArrFcn(struct EnvrStrc* envr, int argCnt, vector <Cns
 struct VrbStrc* addVrb(struct EnvrStrc* envr, struct VrbExpStrc* vrbExp)
 {
 
-	//if (getEnvrVrb(envr,vrbExp)!=NULL)
-	//{
-	//    return getEnvrVrb(envr,vrbExp);
-	//}
-
-
-	//if (envr->vrbCnt == envr->vrbSz)
-	//{
-	//    envr->vrbSz*=2;
-
-	//    envr->vrbArr=(struct VrbStrc**)realloc(envr->vrbArr, sizeof(struct VrbStrc*)*envr->vrbSz);
-	//}
-
-	//envr->vrbArr[envr->vrbCnt]=bldVrb(vrbExp->nm);
-
-	//envr->vrbCnt++;
-
 	envr->vrbArr.push_back(bldVrb(vrbExp->nm));
 
 	//return envr->vrbArr[envr->vrbCnt - 1];
@@ -79,10 +62,6 @@ struct VrbStrc* getEnvrVrb(struct EnvrStrc* envr, struct VrbExpStrc* vrbExp)
 	//for (i = 0; i < envr->vrbCnt; i++)
 	for (i = 0; i < envr->vrbArr.size(); i++)
 	{
-		//if (strcmp(vrbExp->nm, envr->vrbArr[i]->nm)==0)
-		//{
-		//    return envr->vrbArr[i];
-		//}
 
 		if (vrbExp->nm == envr->vrbArr[i]->nm)
 		{
@@ -120,16 +99,6 @@ int prtEnvrVrb(struct EnvrStrc* envr)
 
 int addFcn(struct EnvrStrc* envr, struct FcnStrc* fcn)
 {
-	//if (envr->fcnCnt == envr->fcnSz)
-	//{
-	//    envr->fcnSz*=2;
-
-	//    envr->fcnArr=(struct FcnStrc **)realloc(envr->fcnArr, sizeof(struct FcnStrc *)* envr->fcnSz);
-	//}
-
-	//envr->fcnArr[envr->fcnCnt]=fcn;
-
-	//envr->fcnCnt++;
 
 	envr->fcnArr.push_back(fcn);
 

@@ -290,7 +290,6 @@ struct ExpStrc* bldVrbExp(char* nm)
 
 	exp->typ = VARIABLE_EXPRESSION;
 	exp->exp.vrbExp = new VrbExpStrc;
-	//(struct VrbExpStrc*)malloc(sizeof(struct VrbExpStrc));
 
 	exp->exp.vrbExp->nm = nm;
 

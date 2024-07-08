@@ -76,66 +76,18 @@ struct AcsLstStrc* bldAcsLst()
 
 int acsLstIdxAdd(struct AcsLstStrc* evlLst, struct ExpStrc* exp)
 {
-	//if (evlLst->evlCnt == evlLst->evlSz)
-	//{
-	//	evlLst->evlSz *= 2;
-
-	//	evlLst->blnSlc = (int*)realloc(evlLst->blnSlc, sizeof(bool) * evlLst->evlSz);
-
-	//	evlLst->pstnArr = (struct ExpStrc**)realloc(evlLst->pstnArr, sizeof(struct ExpStrc*) * evlLst->evlSz);
-	//	evlLst->strtArr = (struct ExpStrc**)realloc(evlLst->strtArr, sizeof(struct ExpStrc*) * evlLst->evlSz);
-	//	evlLst->endArr = (struct ExpStrc**)realloc(evlLst->endArr, sizeof(struct ExpStrc*) * evlLst->evlSz);
-	//	evlLst->stpArr = (struct ExpStrc**)realloc(evlLst->stpArr, sizeof(struct ExpStrc*) * evlLst->evlSz);
-	//}
-
-
-	//evlLst->blnSlc[evlLst->evlCnt] = false;
 	AcsStrc* acs = new AcsStrc;
 	acs->blnSlc = false;
 	acs->pstn = exp;
 
 	evlLst->acsLst.push_back(acs);
 
-	////evlLst->pstnArr[evlLst->evlCnt] = exp;
-	//evlLst->pstnArr.push_back(exp);
-
-	//evlLst->strtArr.push_back(NULL);
-	//evlLst->endArr.push_back(NULL);
-	//evlLst->stpArr.push_back(NULL);
-
-	//evlLst->evlCnt++;
-
 	return 0;
 }
 
 int acsLstSlcAdd(struct AcsLstStrc* acsLst, struct ExpStrc* strt, struct ExpStrc* end, struct ExpStrc* stp)
 {
-	//if (evlLst->evlCnt == evlLst->evlSz)
-	//{
-	//	evlLst->evlSz *= 2;
 
-	//	evlLst->blnSlc = (int*)realloc(evlLst->blnSlc, sizeof(bool*) * evlLst->evlSz);
-
-	//	evlLst->pstnArr = (struct ExpStrc**)realloc(evlLst->pstnArr, sizeof(struct ExpStrc*) * evlLst->evlSz);
-	//	evlLst->strtArr = (struct ExpStrc**)realloc(evlLst->strtArr, sizeof(struct ExpStrc*) * evlLst->evlSz);
-	//	evlLst->endArr = (struct ExpStrc**)realloc(evlLst->endArr, sizeof(struct ExpStrc*) * evlLst->evlSz);
-	//	evlLst->stpArr = (struct ExpStrc**)realloc(evlLst->stpArr, sizeof(struct ExpStrc*) * evlLst->evlSz);
-	//}
-
-	//evlLst->blnSlc[evlLst->evlCnt] = true;
-	//evlLst->blnSlc.push_back(true);
-
-	////evlLst->strtArr[evlLst->evlCnt] = strt;
-	////evlLst->endArr[evlLst->evlCnt] = end;
-	////evlLst->stpArr[evlLst->evlCnt] = stp;	
-	//
-	//evlLst->pstnArr.push_back(NULL);
-
-	//evlLst->strtArr.push_back(strt);
-	//evlLst->endArr.push_back(end);
-	//evlLst->stpArr.push_back(stp);
-
-	//evlLst->evlCnt++;
 	AcsStrc* acs = new AcsStrc;
 
 	acs->blnSlc = true;
