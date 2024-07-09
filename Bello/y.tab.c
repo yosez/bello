@@ -1793,7 +1793,7 @@ yyreduce:
 #line 141 "bello.y"
     { 
         //printf("statement type: %d\n",$<stmt>0->typ); 
-        exctStmt(glbEnvr, glbEnvr, (yyvsp[0].stmt)); 
+        exctStmt(envr, (yyvsp[0].stmt)); 
     }
 #line 1799 "y.tab.c"
     break;
@@ -2834,7 +2834,11 @@ int main(int argc, char * argv[])
 
     //创建全局环境
 
-    intlGlbEnvr(&glbEnvr);
+    //struct EnvrStrc* glbEnvr = new EnvrStrc;
+
+    //envr.push_back(glbEnvr);
+
+    initGlbEnvr(envr);
 
     //可以提供代码文件供读取
 

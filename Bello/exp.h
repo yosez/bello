@@ -23,7 +23,7 @@
 #include "err.h"
 #include "expt.h"
 
-extern struct StmtRsltStrc* exctStmt(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct StmtStrc* stmt);
+extern struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt);
 
 struct ExpStrc* bldCnstIntExp(int intVl);
 struct ExpStrc* bldCnstFltExp(float fltVl);
@@ -36,54 +36,54 @@ struct ExpStrc* bldBnrExp(int opr, struct ExpStrc* lftExp, struct ExpStrc* rghtE
 struct ExpStrc* bldUnrExp(int opr, struct ExpStrc* exp);
 struct ExpStrc* bldFcnExp(char* nm, struct ArgLstStrc* argLst);
 struct ExpStrc* bldGlbAsgnExp(struct AsgnLstStrc* asgnLst);
-struct ExpStrc* bldLclAsgnExp(struct AsgnLstStrc* asgnLst);
+//struct ExpStrc* bldLclAsgnExp(struct AsgnLstStrc* asgnLst);
 struct ExpStrc* bldRdExp(int typ);
 struct ExpStrc* bldArrExp(struct ElmtLstStrc* elmtLst);
 struct ExpStrc* bldLvlExp(struct ExpStrc* vrb);
 struct ExpStrc* bldLvlExpAdd(struct ExpStrc* lvl, struct AcsLstStrc* evlLst);
 struct ExpStrc* bldElmtAsgnExp(struct ExpStrc* arr, struct PstnLstStrc* pstnLst, struct ExpStrc* vl);
 struct ExpStrc* bldNewArrExp(struct ExpStrc* cnt);
-struct CnstStrc* clcBnrExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct BnrExpStrc* exp);
-struct CnstStrc* clcBnrExpAdd(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct BnrExpStrc* exp);
-struct CnstStrc* clcBnrExpSub(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct BnrExpStrc* exp);
-struct CnstStrc* clcBnrExpMul(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct BnrExpStrc* exp);
-struct CnstStrc* clcBnrExpDiv(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct BnrExpStrc* exp);
-struct CnstStrc* clcBnrExpAnd(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct BnrExpStrc* exp);
-struct CnstStrc* clcBnrExpOr(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct BnrExpStrc* exp);
-struct CnstStrc* clcBnrExpEq(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct BnrExpStrc* exp);
-struct CnstStrc* clcBnrExpNe(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct BnrExpStrc* exp);
-struct CnstStrc* clcBnrExpGt(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct BnrExpStrc* exp);
-struct CnstStrc* clcBnrExpGe(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct BnrExpStrc* exp);
-struct CnstStrc* clcBnrExpLt(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct BnrExpStrc* exp);
-struct CnstStrc* clcBnrExpLe(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct BnrExpStrc* exp);
-struct CnstStrc* clcBnrExpBitAnd(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct BnrExpStrc* exp);
-struct CnstStrc* clcBnrExpBitOr(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct BnrExpStrc* exp);
-struct CnstStrc* clcBnrExpBitXor(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct BnrExpStrc* exp);
-struct CnstStrc* clcAsgnExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct AsgnExpStrc* exp);
-struct CnstStrc* clcLclAsgnExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct LclAsgnExpStrc* exp);
-struct CnstStrc* clcGlbAsgnExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct GlbAsgnExpStrc* exp);
-struct CnstStrc* clcUnrExpPfxInc(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct UnrExpStrc* exp);
-struct CnstStrc* clcUnrExpPfxDec(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct UnrExpStrc* exp);
-struct CnstStrc* clcUnrExpSfxInc(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct UnrExpStrc* exp);
-struct CnstStrc* clcUnrExpSfxDec(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct UnrExpStrc* exp);
-struct CnstStrc* clcUnrExpNot(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct UnrExpStrc* exp);
-struct CnstStrc* clcUnrExpBitNot(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct UnrExpStrc* exp);
-struct CnstStrc* clcUnrExpSub(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct UnrExpStrc* exp);
-struct CnstStrc* clcUnrExpAdd(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct UnrExpStrc* exp);
-struct CnstStrc* clcUnrExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct UnrExpStrc* exp);
-struct CnstStrc* clcFcnExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct FcnExpStrc* exp);
-struct CnstStrc* clcRdIntExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct RdExpStrc* exp);
-struct CnstStrc* clcRdFltExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct RdExpStrc* exp);
-struct CnstStrc* clcRdBlnExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct RdExpStrc* exp);
-struct CnstStrc* clcRdStrExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct RdExpStrc* exp);
-struct CnstStrc* clcRdLnExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct RdExpStrc* exp);
-struct CnstStrc* clcRdExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct RdExpStrc* exp);
-struct CnstStrc* clcArrExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct ArrExpStrc* exp);
-struct CnstStrc* clcNewArrExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct NewArrExpStrc* exp);
-struct CnstStrc* clcArrEvlExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct ArrEvlExpStrc* exp);
-struct CnstStrc* clcElmtAsgnExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct ElmtAsgnExpStrc* exp);
-struct CnstStrc* clcLvlExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct LvlExpStrc* exp);
-struct CnstStrc* clcExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct ExpStrc* exp);
+struct CnstStrc* clcBnrExp(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp);
+struct CnstStrc* clcBnrExpAdd(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp);
+struct CnstStrc* clcBnrExpSub(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp);
+struct CnstStrc* clcBnrExpMul(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp);
+struct CnstStrc* clcBnrExpDiv(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp);
+struct CnstStrc* clcBnrExpAnd(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp);
+struct CnstStrc* clcBnrExpOr(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp);
+struct CnstStrc* clcBnrExpEq(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp);
+struct CnstStrc* clcBnrExpNe(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp);
+struct CnstStrc* clcBnrExpGt(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp);
+struct CnstStrc* clcBnrExpGe(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp);
+struct CnstStrc* clcBnrExpLt(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp);
+struct CnstStrc* clcBnrExpLe(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp);
+struct CnstStrc* clcBnrExpBitAnd(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp);
+struct CnstStrc* clcBnrExpBitOr(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp);
+struct CnstStrc* clcBnrExpBitXor(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp);
+struct CnstStrc* clcAsgnExp(vector<EnvrStrc*>& envr, struct AsgnExpStrc* exp);
+//struct CnstStrc* clcLclAsgnExp(vector<EnvrStrc*>& envr, struct LclAsgnExpStrc* exp);
+struct CnstStrc* clcGlbAsgnExp(vector<EnvrStrc*>& envr, struct GlbAsgnExpStrc* exp);
+struct CnstStrc* clcUnrExpPfxInc(vector<EnvrStrc*>& envr, struct UnrExpStrc* exp);
+struct CnstStrc* clcUnrExpPfxDec(vector<EnvrStrc*>& envr, struct UnrExpStrc* exp);
+struct CnstStrc* clcUnrExpSfxInc(vector<EnvrStrc*>& envr, struct UnrExpStrc* exp);
+struct CnstStrc* clcUnrExpSfxDec(vector<EnvrStrc*>& envr, struct UnrExpStrc* exp);
+struct CnstStrc* clcUnrExpNot(vector<EnvrStrc*>& envr, struct UnrExpStrc* exp);
+struct CnstStrc* clcUnrExpBitNot(vector<EnvrStrc*>& envr, struct UnrExpStrc* exp);
+struct CnstStrc* clcUnrExpSub(vector<EnvrStrc*>& envr, struct UnrExpStrc* exp);
+struct CnstStrc* clcUnrExpAdd(vector<EnvrStrc*>& envr, struct UnrExpStrc* exp);
+struct CnstStrc* clcUnrExp(vector<EnvrStrc*>& envr, struct UnrExpStrc* exp);
+struct CnstStrc* clcFcnExp(vector<EnvrStrc*>& envr, struct FcnExpStrc* exp);
+struct CnstStrc* clcRdIntExp(vector<EnvrStrc*>& envr, struct RdExpStrc* exp);
+struct CnstStrc* clcRdFltExp(vector<EnvrStrc*>& envr, struct RdExpStrc* exp);
+struct CnstStrc* clcRdBlnExp(vector<EnvrStrc*>& envr, struct RdExpStrc* exp);
+struct CnstStrc* clcRdStrExp(vector<EnvrStrc*>& envr, struct RdExpStrc* exp);
+struct CnstStrc* clcRdLnExp(vector<EnvrStrc*>& envr, struct RdExpStrc* exp);
+struct CnstStrc* clcRdExp(vector<EnvrStrc*>& envr, struct RdExpStrc* exp);
+struct CnstStrc* clcArrExp(vector<EnvrStrc*>& envr, struct ArrExpStrc* exp);
+struct CnstStrc* clcNewArrExp(vector<EnvrStrc*>& envr, struct NewArrExpStrc* exp);
+struct CnstStrc* clcArrEvlExp(vector<EnvrStrc*>& envr, struct ArrEvlExpStrc* exp);
+struct CnstStrc* clcElmtAsgnExp(vector<EnvrStrc*>& envr, struct ElmtAsgnExpStrc* exp);
+struct CnstStrc* clcLvlExp(vector<EnvrStrc*>& envr, struct LvlExpStrc* exp);
+struct CnstStrc* clcExp(vector<EnvrStrc*>& envr, struct ExpStrc* exp);
 
 
 struct ExpStrc* bldCnstIntExp(int intVl)
@@ -168,18 +168,18 @@ struct ExpStrc* bldGlbAsgnExp(struct AsgnLstStrc* asgnLst)
 	return rslt;
 }
 
-struct ExpStrc* bldLclAsgnExp(struct AsgnLstStrc* asgnLst)
-{
-	struct ExpStrc* rslt = new ExpStrc;
-
-	rslt->typ = LOCAL_ASSIGN_EXPRESSION;
-
-	rslt->exp.lclAsgnExp = new LclAsgnExpStrc;
-
-	rslt->exp.lclAsgnExp->asgnLst = asgnLst;
-
-	return rslt;
-}
+//struct ExpStrc* bldLclAsgnExp(struct AsgnLstStrc* asgnLst)
+//{
+//	struct ExpStrc* rslt = new ExpStrc;
+//
+//	rslt->typ = LOCAL_ASSIGN_EXPRESSION;
+//
+//	rslt->exp.lclAsgnExp = new LclAsgnExpStrc;
+//
+//	rslt->exp.lclAsgnExp->asgnLst = asgnLst;
+//
+//	return rslt;
+//}
 
 
 //struct ExpStrc* bldRdExp(int typ)
@@ -352,10 +352,10 @@ struct ExpStrc* bldNllExp()
 	return rslt;
 }
 
-struct CnstStrc* clcBnrExpAdd(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct BnrExpStrc* exp)
+struct CnstStrc* clcBnrExpAdd(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp)
 {
-	struct CnstStrc* lftCnst = clcExp(glbEnvr, fcnEnvr, exp->lftExp);
-	struct CnstStrc* rghtCnst = clcExp(glbEnvr, fcnEnvr, exp->rghtExp);
+	struct CnstStrc* lftCnst = clcExp(envr, exp->lftExp);
+	struct CnstStrc* rghtCnst = clcExp(envr, exp->rghtExp);
 
 	struct CnstStrc* rslt = NULL;
 
@@ -419,17 +419,6 @@ struct CnstStrc* clcBnrExpAdd(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr
 
 	if (lftCnst->CnstTyp == STRING_VALUE && rghtCnst->CnstTyp == FLOAT_VALUE)
 	{
-		//char* strFlt;
-		//strFlt = (char*)malloc(0x10);
-		//memset(strFlt, 0, sizeof(strFlt));
-
-		//sprintf(strFlt, "%f", rghtCnst->vl.flt);
-
-		//str = (char*)malloc(strlen(lftCnst->vl.str) + strlen(strFlt) + 0x10);
-		//memset(str, 0, sizeof(str));
-
-		//strcpy(str, lftCnst->vl.str);
-		//strcat(str, strFlt);
 
 		str = lftCnst->vl.str;
 		str += to_string(rghtCnst->vl.flt);
@@ -439,17 +428,6 @@ struct CnstStrc* clcBnrExpAdd(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr
 
 	if (lftCnst->CnstTyp == FLOAT_VALUE && rghtCnst->CnstTyp == STRING_VALUE)
 	{
-		//char* strFlt;
-		//strFlt = (char*)malloc(0x10);
-		//memset(strFlt, 0, sizeof(strFlt));
-
-		//sprintf(strFlt, "%f", lftCnst->vl.flt);
-
-		//str = (char*)malloc(strlen(strFlt) + strlen(rghtCnst->vl.str) + 0x10);
-		//memset(str, 0, sizeof(str));
-
-		//strcpy(str, strFlt);
-		//strcat(str, rghtCnst->vl.str);
 
 		str = to_string(lftCnst->vl.flt);
 		str += rghtCnst->vl.str;
@@ -460,20 +438,6 @@ struct CnstStrc* clcBnrExpAdd(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr
 	if (lftCnst->CnstTyp == STRING_VALUE && rghtCnst->CnstTyp == BOOLEAN_VALUE)
 	{
 
-		//str = (char*)malloc(strlen(lftCnst->vl.str) + 0x10);
-		//memset(str, 0, sizeof(str));
-
-		//strcpy(str, lftCnst->vl.str);
-
-		//if (rghtCnst->vl.bln == 0)
-		//{
-		//	strcat(str, "false");
-		//}
-		//else
-		//{
-		//	strcat(str, "true");
-		//}
-
 		str = lftCnst->vl.str;
 
 		str += rghtCnst->vl.bln == 0 ? "false" : "true";
@@ -483,20 +447,6 @@ struct CnstStrc* clcBnrExpAdd(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr
 
 	if (lftCnst->CnstTyp == BOOLEAN_VALUE && rghtCnst->CnstTyp == STRING_VALUE)
 	{
-
-		//str = (char*)malloc(strlen(rghtCnst->vl.str) + 0x10);
-		//memset(str, 0, sizeof(str));
-
-		//if (lftCnst->vl.bln == 0)
-		//{
-		//	strcpy(str, "false");
-		//}
-		//else
-		//{
-		//	strcpy(str, "true");
-		//}
-
-		//strcat(str, rghtCnst->vl.str);
 
 		str = lftCnst->vl.bln == 0 ? "false" : "true";
 
@@ -514,10 +464,10 @@ struct CnstStrc* clcBnrExpAdd(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr
 
 }
 
-struct CnstStrc* clcBnrExpSub(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct BnrExpStrc* exp)
+struct CnstStrc* clcBnrExpSub(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp)
 {
-	struct CnstStrc* lftCnst = clcExp(glbEnvr, fcnEnvr, exp->lftExp);
-	struct CnstStrc* rghtCnst = clcExp(glbEnvr, fcnEnvr, exp->rghtExp);
+	struct CnstStrc* lftCnst = clcExp(envr, exp->lftExp);
+	struct CnstStrc* rghtCnst = clcExp(envr, exp->rghtExp);
 
 	struct CnstStrc* rslt = NULL;
 
@@ -543,10 +493,10 @@ struct CnstStrc* clcBnrExpSub(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr
 
 }
 
-struct CnstStrc* clcBnrExpMul(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct BnrExpStrc* exp)
+struct CnstStrc* clcBnrExpMul(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp)
 {
-	struct CnstStrc* lftCnst = clcExp(glbEnvr, fcnEnvr, exp->lftExp);
-	struct CnstStrc* rghtCnst = clcExp(glbEnvr, fcnEnvr, exp->rghtExp);
+	struct CnstStrc* lftCnst = clcExp(envr, exp->lftExp);
+	struct CnstStrc* rghtCnst = clcExp(envr, exp->rghtExp);
 
 	struct CnstStrc* rslt = NULL;
 
@@ -572,10 +522,10 @@ struct CnstStrc* clcBnrExpMul(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr
 
 }
 
-struct CnstStrc* clcBnrExpDiv(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct BnrExpStrc* exp)
+struct CnstStrc* clcBnrExpDiv(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp)
 {
-	struct CnstStrc* lftCnst = clcExp(glbEnvr, fcnEnvr, exp->lftExp);
-	struct CnstStrc* rghtCnst = clcExp(glbEnvr, fcnEnvr, exp->rghtExp);
+	struct CnstStrc* lftCnst = clcExp(envr, exp->lftExp);
+	struct CnstStrc* rghtCnst = clcExp(envr, exp->rghtExp);
 
 	struct CnstStrc* rslt = NULL;
 
@@ -601,10 +551,10 @@ struct CnstStrc* clcBnrExpDiv(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr
 
 }
 
-struct CnstStrc* clcBnrExpMod(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct BnrExpStrc* exp)
+struct CnstStrc* clcBnrExpMod(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp)
 {
-	struct CnstStrc* lftCnst = clcExp(glbEnvr, fcnEnvr, exp->lftExp);
-	struct CnstStrc* rghtCnst = clcExp(glbEnvr, fcnEnvr, exp->rghtExp);
+	struct CnstStrc* lftCnst = clcExp(envr, exp->lftExp);
+	struct CnstStrc* rghtCnst = clcExp(envr, exp->rghtExp);
 
 	struct CnstStrc* rslt = NULL;
 
@@ -630,10 +580,10 @@ struct CnstStrc* clcBnrExpMod(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr
 
 }
 
-struct CnstStrc* clcBnrExpEq(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct BnrExpStrc* exp)
+struct CnstStrc* clcBnrExpEq(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp)
 {
-	struct CnstStrc* lftCnst = clcExp(glbEnvr, fcnEnvr, exp->lftExp);
-	struct CnstStrc* rghtCnst = clcExp(glbEnvr, fcnEnvr, exp->rghtExp);
+	struct CnstStrc* lftCnst = clcExp(envr, exp->lftExp);
+	struct CnstStrc* rghtCnst = clcExp(envr, exp->rghtExp);
 
 	struct CnstStrc* rslt = NULL;
 
@@ -669,10 +619,10 @@ struct CnstStrc* clcBnrExpEq(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr,
 
 }
 
-struct CnstStrc* clcBnrExpNe(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct BnrExpStrc* exp)
+struct CnstStrc* clcBnrExpNe(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp)
 {
-	struct CnstStrc* lftCnst = clcExp(glbEnvr, fcnEnvr, exp->lftExp);
-	struct CnstStrc* rghtCnst = clcExp(glbEnvr, fcnEnvr, exp->rghtExp);
+	struct CnstStrc* lftCnst = clcExp(envr, exp->lftExp);
+	struct CnstStrc* rghtCnst = clcExp(envr, exp->rghtExp);
 
 	struct CnstStrc* rslt = NULL;
 
@@ -708,10 +658,10 @@ struct CnstStrc* clcBnrExpNe(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr,
 
 }
 
-struct CnstStrc* clcBnrExpGt(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct BnrExpStrc* exp)
+struct CnstStrc* clcBnrExpGt(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp)
 {
-	struct CnstStrc* lftCnst = clcExp(glbEnvr, fcnEnvr, exp->lftExp);
-	struct CnstStrc* rghtCnst = clcExp(glbEnvr, fcnEnvr, exp->rghtExp);
+	struct CnstStrc* lftCnst = clcExp(envr, exp->lftExp);
+	struct CnstStrc* rghtCnst = clcExp(envr, exp->rghtExp);
 
 	struct CnstStrc* rslt = NULL;
 
@@ -746,10 +696,10 @@ struct CnstStrc* clcBnrExpGt(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr,
 
 }
 
-struct CnstStrc* clcBnrExpGe(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct BnrExpStrc* exp)
+struct CnstStrc* clcBnrExpGe(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp)
 {
-	struct CnstStrc* lftCnst = clcExp(glbEnvr, fcnEnvr, exp->lftExp);
-	struct CnstStrc* rghtCnst = clcExp(glbEnvr, fcnEnvr, exp->rghtExp);
+	struct CnstStrc* lftCnst = clcExp(envr, exp->lftExp);
+	struct CnstStrc* rghtCnst = clcExp(envr, exp->rghtExp);
 
 	struct CnstStrc* rslt = NULL;
 
@@ -786,10 +736,10 @@ struct CnstStrc* clcBnrExpGe(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr,
 
 
 
-struct CnstStrc* clcBnrExpLt(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct BnrExpStrc* exp)
+struct CnstStrc* clcBnrExpLt(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp)
 {
-	struct CnstStrc* lftCnst = clcExp(glbEnvr, fcnEnvr, exp->lftExp);
-	struct CnstStrc* rghtCnst = clcExp(glbEnvr, fcnEnvr, exp->rghtExp);
+	struct CnstStrc* lftCnst = clcExp(envr, exp->lftExp);
+	struct CnstStrc* rghtCnst = clcExp(envr, exp->rghtExp);
 
 	struct CnstStrc* rslt = NULL;
 
@@ -824,10 +774,10 @@ struct CnstStrc* clcBnrExpLt(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr,
 
 }
 
-struct CnstStrc* clcBnrExpLe(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct BnrExpStrc* exp)
+struct CnstStrc* clcBnrExpLe(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp)
 {
-	struct CnstStrc* lftCnst = clcExp(glbEnvr, fcnEnvr, exp->lftExp);
-	struct CnstStrc* rghtCnst = clcExp(glbEnvr, fcnEnvr, exp->rghtExp);
+	struct CnstStrc* lftCnst = clcExp(envr, exp->lftExp);
+	struct CnstStrc* rghtCnst = clcExp(envr, exp->rghtExp);
 
 	struct CnstStrc* rslt = NULL;
 
@@ -862,10 +812,10 @@ struct CnstStrc* clcBnrExpLe(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr,
 
 }
 
-struct CnstStrc* clcBnrExpBitAnd(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct BnrExpStrc* exp)
+struct CnstStrc* clcBnrExpBitAnd(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp)
 {
-	struct CnstStrc* lftCnst = clcExp(glbEnvr, fcnEnvr, exp->lftExp);
-	struct CnstStrc* rghtCnst = clcExp(glbEnvr, fcnEnvr, exp->rghtExp);
+	struct CnstStrc* lftCnst = clcExp(envr, exp->lftExp);
+	struct CnstStrc* rghtCnst = clcExp(envr, exp->rghtExp);
 
 	struct CnstStrc* rslt = NULL;
 
@@ -883,10 +833,10 @@ struct CnstStrc* clcBnrExpBitAnd(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnE
 	return rslt;
 }
 
-struct CnstStrc* clcBnrExpBitOr(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct BnrExpStrc* exp)
+struct CnstStrc* clcBnrExpBitOr(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp)
 {
-	struct CnstStrc* lftCnst = clcExp(glbEnvr, fcnEnvr, exp->lftExp);
-	struct CnstStrc* rghtCnst = clcExp(glbEnvr, fcnEnvr, exp->rghtExp);
+	struct CnstStrc* lftCnst = clcExp(envr, exp->lftExp);
+	struct CnstStrc* rghtCnst = clcExp(envr, exp->rghtExp);
 
 	struct CnstStrc* rslt = NULL;
 
@@ -904,10 +854,10 @@ struct CnstStrc* clcBnrExpBitOr(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEn
 	return rslt;
 }
 
-struct CnstStrc* clcBnrExpBitXor(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct BnrExpStrc* exp)
+struct CnstStrc* clcBnrExpBitXor(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp)
 {
-	struct CnstStrc* lftCnst = clcExp(glbEnvr, fcnEnvr, exp->lftExp);
-	struct CnstStrc* rghtCnst = clcExp(glbEnvr, fcnEnvr, exp->rghtExp);
+	struct CnstStrc* lftCnst = clcExp(envr, exp->lftExp);
+	struct CnstStrc* rghtCnst = clcExp(envr, exp->rghtExp);
 
 	struct CnstStrc* rslt = NULL;
 
@@ -926,10 +876,10 @@ struct CnstStrc* clcBnrExpBitXor(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnE
 }
 
 
-struct CnstStrc* clcBnrExpAnd(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct BnrExpStrc* exp)
+struct CnstStrc* clcBnrExpAnd(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp)
 {
-	struct CnstStrc* lftCnst = clcExp(glbEnvr, fcnEnvr, exp->lftExp);
-	struct CnstStrc* rghtCnst = clcExp(glbEnvr, fcnEnvr, exp->rghtExp);
+	struct CnstStrc* lftCnst = clcExp(envr, exp->lftExp);
+	struct CnstStrc* rghtCnst = clcExp(envr, exp->rghtExp);
 
 	struct CnstStrc* rslt = NULL;
 
@@ -964,10 +914,10 @@ struct CnstStrc* clcBnrExpAnd(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr
 
 }
 
-struct CnstStrc* clcBnrExpOr(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct BnrExpStrc* exp)
+struct CnstStrc* clcBnrExpOr(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp)
 {
-	struct CnstStrc* lftCnst = clcExp(glbEnvr, fcnEnvr, exp->lftExp);
-	struct CnstStrc* rghtCnst = clcExp(glbEnvr, fcnEnvr, exp->rghtExp);
+	struct CnstStrc* lftCnst = clcExp(envr, exp->lftExp);
+	struct CnstStrc* rghtCnst = clcExp(envr, exp->rghtExp);
 
 	struct CnstStrc* rslt = NULL;
 
@@ -1004,7 +954,7 @@ struct CnstStrc* clcBnrExpOr(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr,
 
 
 
-struct CnstStrc* clcBnrExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct BnrExpStrc* exp)
+struct CnstStrc* clcBnrExp(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp)
 {
 	struct CnstStrc* rslt;
 
@@ -1013,84 +963,84 @@ struct CnstStrc* clcBnrExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, s
 		//处理相同类型及不同类型变量之间的运算
 	case ADD:
 	{
-		rslt = clcBnrExpAdd(glbEnvr, fcnEnvr, exp);
+		rslt = clcBnrExpAdd(envr, exp);
 
 		break;
 	}
 	case SUB:
 	{
-		rslt = clcBnrExpSub(glbEnvr, fcnEnvr, exp);
+		rslt = clcBnrExpSub(envr, exp);
 
 		break;
 	}
 	case MUL:
 	{
-		rslt = clcBnrExpMul(glbEnvr, fcnEnvr, exp);
+		rslt = clcBnrExpMul(envr, exp);
 		break;
 	}
 	case DIV:
 	{
-		rslt = clcBnrExpDiv(glbEnvr, fcnEnvr, exp);
+		rslt = clcBnrExpDiv(envr, exp);
 		break;
 	}
 	case MOD:
 	{
-		rslt = clcBnrExpMod(glbEnvr, fcnEnvr, exp);
+		rslt = clcBnrExpMod(envr, exp);
 		break;
 	}
 	case EQ:
 	{
-		rslt = clcBnrExpEq(glbEnvr, fcnEnvr, exp);
+		rslt = clcBnrExpEq(envr, exp);
 		break;
 	}
 	case NE:
 	{
-		rslt = clcBnrExpNe(glbEnvr, fcnEnvr, exp);
+		rslt = clcBnrExpNe(envr, exp);
 		break;
 	}
 	case GT:
 	{
-		rslt = clcBnrExpGt(glbEnvr, fcnEnvr, exp);
+		rslt = clcBnrExpGt(envr, exp);
 		break;
 	}
 	case GE:
 	{
-		rslt = clcBnrExpGe(glbEnvr, fcnEnvr, exp);
+		rslt = clcBnrExpGe(envr, exp);
 		break;
 	}
 	case LT:
 	{
-		rslt = clcBnrExpLt(glbEnvr, fcnEnvr, exp);
+		rslt = clcBnrExpLt(envr, exp);
 		break;
 	}
 	case LE:
 	{
-		rslt = clcBnrExpLe(glbEnvr, fcnEnvr, exp);
+		rslt = clcBnrExpLe(envr, exp);
 		break;
 	}
 	case AND:
 	{
-		rslt = clcBnrExpAnd(glbEnvr, fcnEnvr, exp);
+		rslt = clcBnrExpAnd(envr, exp);
 		break;
 	}
 	case OR:
 	{
-		rslt = clcBnrExpOr(glbEnvr, fcnEnvr, exp);
+		rslt = clcBnrExpOr(envr, exp);
 		break;
 	}
 	case BIT_AND:
 	{
-		rslt = clcBnrExpBitAnd(glbEnvr, fcnEnvr, exp);
+		rslt = clcBnrExpBitAnd(envr, exp);
 		break;
 	}
 	case BIT_OR:
 	{
-		rslt = clcBnrExpBitOr(glbEnvr, fcnEnvr, exp);
+		rslt = clcBnrExpBitOr(envr, exp);
 		break;
 	}
 	case BIT_XOR:
 	{
-		rslt = clcBnrExpBitXor(glbEnvr, fcnEnvr, exp);
+		rslt = clcBnrExpBitXor(envr, exp);
 	}
 
 	}
@@ -1098,7 +1048,7 @@ struct CnstStrc* clcBnrExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, s
 	return rslt;
 }
 
-struct CnstStrc* clcUnrExpPfxInc(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct UnrExpStrc* exp)
+struct CnstStrc* clcUnrExpPfxInc(vector<EnvrStrc*>& envr, struct UnrExpStrc* exp)
 {
 	struct CnstStrc* rslt = new CnstStrc;
 
@@ -1108,7 +1058,7 @@ struct CnstStrc* clcUnrExpPfxInc(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnE
 
 	struct VrbStrc* vrb;
 
-	vrb = getVrb(glbEnvr, fcnEnvr, lvl->vrb->exp.vrbExp);
+	vrb = getVrb(envr, lvl->vrb->exp.vrbExp);
 
 	if (vrb == NULL)
 	{
@@ -1151,7 +1101,7 @@ struct CnstStrc* clcUnrExpPfxInc(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnE
 
 		for (i = 0; i < lyr; i++)
 		{
-			pstn = clcExp(glbEnvr, fcnEnvr, exp->exp->exp.lvlExp->acs->acsLst[i]->pstn)->vl.intVl;
+			pstn = clcExp(envr, exp->exp->exp.lvlExp->acs->acsLst[i]->pstn)->vl.intVl;
 
 			if (i < lyr - 1)
 			{
@@ -1178,7 +1128,7 @@ struct CnstStrc* clcUnrExpPfxInc(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnE
 	return rslt;
 }
 
-struct CnstStrc* clcUnrExpPfxDec(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct UnrExpStrc* exp)
+struct CnstStrc* clcUnrExpPfxDec(vector<EnvrStrc*>& envr, struct UnrExpStrc* exp)
 {
 	struct VrbStrc* vrb;
 
@@ -1188,7 +1138,7 @@ struct CnstStrc* clcUnrExpPfxDec(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnE
 
 	lvl = exp->exp->exp.lvlExp;
 
-	vrb = getVrb(glbEnvr, fcnEnvr, lvl->vrb->exp.vrbExp);
+	vrb = getVrb(envr, lvl->vrb->exp.vrbExp);
 
 	if (vrb == NULL)
 	{
@@ -1230,7 +1180,7 @@ struct CnstStrc* clcUnrExpPfxDec(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnE
 		//按层级定位数组中元素的位置，直至arrPrnt定位到包含元素的最内层的数组
 		for (i = 0; i < lyr; i++)
 		{
-			pstn = clcExp(glbEnvr, fcnEnvr, exp->exp->exp.lvlExp->acs->acsLst[i]->pstn)->vl.intVl;
+			pstn = clcExp(envr, exp->exp->exp.lvlExp->acs->acsLst[i]->pstn)->vl.intVl;
 
 			if (i < lyr - 1)
 			{
@@ -1256,7 +1206,7 @@ struct CnstStrc* clcUnrExpPfxDec(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnE
 	return rslt;
 }
 
-struct CnstStrc* clcUnrExpSfxInc(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct UnrExpStrc* exp)
+struct CnstStrc* clcUnrExpSfxInc(vector<EnvrStrc*>& envr, struct UnrExpStrc* exp)
 {
 	struct VrbStrc* vrb;
 
@@ -1266,7 +1216,7 @@ struct CnstStrc* clcUnrExpSfxInc(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnE
 
 	lvl = exp->exp->exp.lvlExp;
 
-	vrb = getVrb(glbEnvr, fcnEnvr, lvl->vrb->exp.vrbExp);
+	vrb = getVrb(envr, lvl->vrb->exp.vrbExp);
 
 	if (vrb == NULL)
 	{
@@ -1310,7 +1260,7 @@ struct CnstStrc* clcUnrExpSfxInc(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnE
 
 		for (i = 0; i < lyr; i++)
 		{
-			pstn = clcExp(glbEnvr, fcnEnvr, exp->exp->exp.lvlExp->acs->acsLst[i]->pstn)->vl.intVl;
+			pstn = clcExp(envr, exp->exp->exp.lvlExp->acs->acsLst[i]->pstn)->vl.intVl;
 			if (i < lyr - 1)
 			{
 				arrPrnt = arrPrnt->elmtArr[pstn]->vl.arr;
@@ -1338,7 +1288,7 @@ struct CnstStrc* clcUnrExpSfxInc(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnE
 	return rslt;
 }
 
-struct CnstStrc* clcUnrExpSfxDec(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct UnrExpStrc* exp)
+struct CnstStrc* clcUnrExpSfxDec(vector<EnvrStrc*>& envr, struct UnrExpStrc* exp)
 {
 	struct VrbStrc* vrb;
 
@@ -1348,7 +1298,7 @@ struct CnstStrc* clcUnrExpSfxDec(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnE
 
 	lvl = exp->exp->exp.lvlExp;
 
-	vrb = getVrb(glbEnvr, fcnEnvr, lvl->vrb->exp.vrbExp);
+	vrb = getVrb(envr, lvl->vrb->exp.vrbExp);
 
 	if (vrb == NULL)
 	{
@@ -1392,7 +1342,7 @@ struct CnstStrc* clcUnrExpSfxDec(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnE
 
 		for (i = 0; i < lyr; i++)
 		{
-			pstn = clcExp(glbEnvr, fcnEnvr, exp->exp->exp.lvlExp->acs->acsLst[i]->pstn)->vl.intVl;
+			pstn = clcExp(envr, exp->exp->exp.lvlExp->acs->acsLst[i]->pstn)->vl.intVl;
 			if (i < lyr - 1)
 			{
 				arrPrnt = arrPrnt->elmtArr[pstn]->vl.arr;
@@ -1419,13 +1369,13 @@ struct CnstStrc* clcUnrExpSfxDec(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnE
 	return rslt;
 }
 
-struct CnstStrc* clcUnrExpNot(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct UnrExpStrc* exp)
+struct CnstStrc* clcUnrExpNot(vector<EnvrStrc*>& envr, struct UnrExpStrc* exp)
 {
 
 	struct CnstStrc* rslt = NULL;
 
 	struct CnstStrc* cnst;
-	cnst = clcExp(glbEnvr, fcnEnvr, exp->exp);
+	cnst = clcExp(envr, exp->exp);
 
 	if (cnst->CnstTyp == INT_VALUE || cnst->CnstTyp == FLOAT_VALUE || cnst->CnstTyp == BOOLEAN_VALUE)
 	{
@@ -1466,13 +1416,13 @@ struct CnstStrc* clcUnrExpNot(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr
 	return rslt;
 }
 
-struct CnstStrc* clcUnrExpBitNot(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct UnrExpStrc* exp)
+struct CnstStrc* clcUnrExpBitNot(vector<EnvrStrc*>& envr, struct UnrExpStrc* exp)
 {
 
 	struct CnstStrc* rslt;
 
 	struct CnstStrc* cnst;
-	cnst = clcExp(glbEnvr, fcnEnvr, exp->exp);
+	cnst = clcExp(envr, exp->exp);
 
 	if (cnst->CnstTyp == INT_VALUE || cnst->CnstTyp == FLOAT_VALUE || cnst->CnstTyp == BOOLEAN_VALUE)
 	{
@@ -1511,13 +1461,13 @@ struct CnstStrc* clcUnrExpBitNot(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnE
 	return rslt;
 }
 
-struct CnstStrc* clcUnrExpSub(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct UnrExpStrc* exp)
+struct CnstStrc* clcUnrExpSub(vector<EnvrStrc*>& envr, struct UnrExpStrc* exp)
 {
 	struct CnstStrc* cnst, * rslt;
 
 	rslt = NULL;
 
-	cnst = clcExp(glbEnvr, fcnEnvr, exp->exp);
+	cnst = clcExp(envr, exp->exp);
 
 	if (cnst->CnstTyp == INT_VALUE)
 	{
@@ -1540,13 +1490,13 @@ struct CnstStrc* clcUnrExpSub(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr
 	return rslt;
 }
 
-struct CnstStrc* clcUnrExpAdd(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct UnrExpStrc* exp)
+struct CnstStrc* clcUnrExpAdd(vector<EnvrStrc*>& envr, struct UnrExpStrc* exp)
 {
 	struct CnstStrc* cnst, * rslt;
 
 	rslt = NULL;
 
-	cnst = clcExp(glbEnvr, fcnEnvr, exp->exp);
+	cnst = clcExp(envr, exp->exp);
 
 	rslt = bldCnstCpy(cnst);
 
@@ -1558,7 +1508,7 @@ struct CnstStrc* clcUnrExpAdd(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr
 	return rslt;
 }
 
-struct CnstStrc* clcUnrExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct UnrExpStrc* exp)
+struct CnstStrc* clcUnrExp(vector<EnvrStrc*>& envr, struct UnrExpStrc* exp)
 {
 	struct CnstStrc* rslt;
 
@@ -1566,42 +1516,42 @@ struct CnstStrc* clcUnrExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, s
 	{
 	case PREFIX_INCREMENT:
 	{
-		rslt = clcUnrExpPfxInc(glbEnvr, fcnEnvr, exp);
+		rslt = clcUnrExpPfxInc(envr, exp);
 		break;
 	}
 	case PREFIX_DECREMENT:
 	{
-		rslt = clcUnrExpPfxDec(glbEnvr, fcnEnvr, exp);
+		rslt = clcUnrExpPfxDec(envr, exp);
 		break;
 	}
 	case SUFFIX_INCREMENT:
 	{
-		rslt = clcUnrExpSfxInc(glbEnvr, fcnEnvr, exp);
+		rslt = clcUnrExpSfxInc(envr, exp);
 		break;
 	}
 	case SUFFIX_DECREMENT:
 	{
-		rslt = clcUnrExpSfxDec(glbEnvr, fcnEnvr, exp);
+		rslt = clcUnrExpSfxDec(envr, exp);
 		break;
 	}
 	case NOT:
 	{
-		rslt = clcUnrExpNot(glbEnvr, fcnEnvr, exp);
+		rslt = clcUnrExpNot(envr, exp);
 		break;
 	}
 	case BIT_NOT:
 	{
-		rslt = clcUnrExpBitNot(glbEnvr, fcnEnvr, exp);
+		rslt = clcUnrExpBitNot(envr, exp);
 		break;
 	}
 	case SUB:
 	{
-		rslt = clcUnrExpSub(glbEnvr, fcnEnvr, exp);
+		rslt = clcUnrExpSub(envr, exp);
 		break;
 	}
 	case ADD:
 	{
-		rslt = clcUnrExpAdd(glbEnvr, fcnEnvr, exp);
+		rslt = clcUnrExpAdd(envr, exp);
 		break;
 	}
 
@@ -1611,17 +1561,17 @@ struct CnstStrc* clcUnrExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, s
 	return rslt;
 }
 
-struct CnstStrc* clcFcnExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct FcnExpStrc* exp)
+struct CnstStrc* clcFcnExp(vector<EnvrStrc*>& envr, struct FcnExpStrc* exp)
 {
 	struct CnstStrc* rslt = new CnstStrc;
 
 	struct NtvFcnStrc* ntvFcn;
 
-	ntvFcn = getNtvFcn(glbEnvr, exp);
+	ntvFcn = getNtvFcn(envr, exp);
 
 	struct FcnStrc* fcn;
 
-	fcn = getFcn(glbEnvr, fcnEnvr, exp);
+	fcn = getFcn(envr, exp);
 
 	if (ntvFcn == NULL && fcn == NULL)
 	{
@@ -1651,21 +1601,23 @@ struct CnstStrc* clcFcnExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, s
 
 		for (i = 0; i < exp->argLst->argArr.size(); i++)
 		{
-			arg = clcExp(glbEnvr, fcnEnvr, exp->argLst->argArr[i]);
+			arg = clcExp(envr, exp->argLst->argArr[i]);
 
 			//argArr[i] = arg;
 			argArr.push_back(arg);
 		}
 
-		rslt = ntvFcn->fcn(glbEnvr, ntvFcn->prmCnt, argArr);
+		rslt = ntvFcn->fcn(envr, ntvFcn->prmCnt, argArr);
 	}
 	else if (fcn != NULL)
 	{
 		//建立函数中的EnvrStrc
 
-		struct EnvrStrc* envr;
+		struct EnvrStrc* envrFcn =new EnvrStrc(FUNCTION_ENVIRONMENT);
 
-		intlEnvr(&envr);
+		envr.push_back(envrFcn);
+
+		//intlEnvr(&envr);
 
 		//计算各个参数的值并赋值给形参
 
@@ -1688,23 +1640,25 @@ struct CnstStrc* clcFcnExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, s
 
 		for (i = 0; i < exp->argLst->argArr.size(); i++)
 		{
-			arg = clcExp(glbEnvr, fcnEnvr, exp->argLst->argArr[i]);
+			arg = clcExp(envr, exp->argLst->argArr[i]);
 
 			//vrb= addVrb(fcn->envr, fcn->prmLst->prmArr[i]->exp.vrbExp);
 
-			vrb = addVrb(envr, fcn->prmLst->prmArr[i]->exp.vrbExp);
+			vrb = addVrb(envrFcn, fcn->prmLst->prmArr[i]->exp.vrbExp);
 
 			asgnVrb(vrb, arg);
 		}
 
 		struct StmtRsltStrc* stmtRslt;
 
-		stmtRslt = exctStmt(glbEnvr, envr, fcn->stmt);
+		stmtRslt = exctStmt(envr, fcn->stmt);
 
 		if (stmtRslt->typ == RETURN_RESULT && stmtRslt->rslt.rtnRslt->blnRslt == 1)
 		{
 			rslt = stmtRslt->rslt.rtnRslt->rslt;
 		}
+
+		envr.pop_back();
 	}
 
 
@@ -1712,7 +1666,7 @@ struct CnstStrc* clcFcnExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, s
 
 }
 
-struct CnstStrc* clcRdIntExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct RdExpStrc* exp)
+struct CnstStrc* clcRdIntExp(vector<EnvrStrc*>& envr, struct RdExpStrc* exp)
 {
 	int i;
 
@@ -1725,7 +1679,7 @@ struct CnstStrc* clcRdIntExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr,
 	return rslt;
 }
 
-struct CnstStrc* clcRdFltExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct RdExpStrc* exp)
+struct CnstStrc* clcRdFltExp(vector<EnvrStrc*>& envr, struct RdExpStrc* exp)
 {
 	float f;
 
@@ -1737,7 +1691,7 @@ struct CnstStrc* clcRdFltExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr,
 
 	return rslt;
 }
-struct CnstStrc* clcRdBlnExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct RdExpStrc* exp)
+struct CnstStrc* clcRdBlnExp(vector<EnvrStrc*>& envr, struct RdExpStrc* exp)
 {
 	char* blnStr = (char*)malloc(0x10);
 
@@ -1757,7 +1711,7 @@ struct CnstStrc* clcRdBlnExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr,
 	return rslt;
 }
 
-struct CnstStrc* clcRdStrExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct RdExpStrc* exp)
+struct CnstStrc* clcRdStrExp(vector<EnvrStrc*>& envr, struct RdExpStrc* exp)
 {
 	char* str = (char*)malloc(0x1000);
 
@@ -1770,7 +1724,7 @@ struct CnstStrc* clcRdStrExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr,
 	return rslt;
 }
 
-struct CnstStrc* clcRdLnExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct RdExpStrc* exp)
+struct CnstStrc* clcRdLnExp(vector<EnvrStrc*>& envr, struct RdExpStrc* exp)
 {
 	char* str = (char*)malloc(0x1000);
 
@@ -1783,7 +1737,7 @@ struct CnstStrc* clcRdLnExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, 
 	return rslt;
 }
 
-struct CnstStrc* clcRdExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct RdExpStrc* exp)
+struct CnstStrc* clcRdExp(vector<EnvrStrc*>& envr, struct RdExpStrc* exp)
 {
 	struct CnstStrc* rslt;
 
@@ -1791,27 +1745,27 @@ struct CnstStrc* clcRdExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, st
 	{
 	case READ_INT:
 	{
-		rslt = clcRdIntExp(glbEnvr, fcnEnvr, exp);
+		rslt = clcRdIntExp(envr, exp);
 		break;
 	}
 	case READ_FLOAT:
 	{
-		rslt = clcRdFltExp(glbEnvr, fcnEnvr, exp);
+		rslt = clcRdFltExp(envr, exp);
 		break;
 	}
 	case READ:
 	{
-		rslt = clcRdStrExp(glbEnvr, fcnEnvr, exp);
+		rslt = clcRdStrExp(envr, exp);
 		break;
 	}
 	case READ_BOOL:
 	{
-		rslt = clcRdBlnExp(glbEnvr, fcnEnvr, exp);
+		rslt = clcRdBlnExp(envr, exp);
 		break;
 	}
 	case READ_LINE:
 	{
-		rslt = clcRdLnExp(glbEnvr, fcnEnvr, exp);
+		rslt = clcRdLnExp(envr, exp);
 	}
 	}
 
@@ -1820,50 +1774,50 @@ struct CnstStrc* clcRdExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, st
 
 
 
-struct CnstStrc* clcLclAsgnExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct LclAsgnExpStrc* exp)
-{
-	struct CnstStrc* rslt = NULL;
-	struct VrbStrc* vrb;
+//struct CnstStrc* clcLclAsgnExp(vector<EnvrStrc*>& envr, struct LclAsgnExpStrc* exp)
+//{
+//	struct CnstStrc* rslt = NULL;
+//	struct VrbStrc* vrb;
+//
+//	int i;
+//
+//	for (i = 0; i < exp->asgnLst->asgnArr.size(); i++)
+//	{
+//		struct VrbExpStrc* vrbExp;
+//
+//		vrbExp = exp->asgnLst->asgnArr[i]->exp.asgnExp->lvl->exp.lvlExp->vrb->exp.vrbExp;
+//
+//
+//		if ((vrb = getEnvrVrb(fcnEnvr, vrbExp)) == NULL)
+//		{
+//			vrb = addVrb(fcnEnvr, vrbExp);
+//		}
+//
+//		if (exp->asgnLst->asgnArr[i]->exp.asgnExp->exp->typ != NULL_EXPRESSION)
+//		{
+//			rslt = clcExp(envr, exp->asgnLst->asgnArr[i]->exp.asgnExp->exp);
+//			asgnVrb(vrb, rslt);
+//		}
+//		else
+//		{
+//			asgnVrb(vrb, bldNllCnst());
+//			rslt = bldNllCnst();
+//
+//		}
+//	}
+//
+//
+//	return rslt;
+//}
 
-	int i;
-
-	for (i = 0; i < exp->asgnLst->asgnArr.size(); i++)
-	{
-		struct VrbExpStrc* vrbExp;
-
-		vrbExp = exp->asgnLst->asgnArr[i]->exp.asgnExp->lvl->exp.lvlExp->vrb->exp.vrbExp;
 
 
-		if ((vrb = getEnvrVrb(fcnEnvr, vrbExp)) == NULL)
-		{
-			vrb = addVrb(fcnEnvr, vrbExp);
-		}
-
-		if (exp->asgnLst->asgnArr[i]->exp.asgnExp->exp->typ != NULL_EXPRESSION)
-		{
-			rslt = clcExp(glbEnvr, fcnEnvr, exp->asgnLst->asgnArr[i]->exp.asgnExp->exp);
-			asgnVrb(vrb, rslt);
-		}
-		else
-		{
-			asgnVrb(vrb, bldNllCnst());
-			rslt = bldNllCnst();
-
-		}
-	}
-
-
-	return rslt;
-}
-
-
-
-struct CnstStrc* clcAsgnExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct AsgnExpStrc* exp)
+struct CnstStrc* clcAsgnExp(vector<EnvrStrc*>& envr, struct AsgnExpStrc* exp)
 {
 
 	struct CnstStrc* rslt = new CnstStrc;
 
-	rslt = clcExp(glbEnvr, fcnEnvr, exp->exp);
+	rslt = clcExp(envr, exp->exp);
 
 	struct LvlExpStrc* lvl;
 
@@ -1871,7 +1825,7 @@ struct CnstStrc* clcAsgnExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, 
 
 	struct VrbStrc* vrb;
 
-	vrb = getVrb(glbEnvr, fcnEnvr, exp->lvl->exp.lvlExp->vrb->exp.vrbExp);
+	vrb = getVrb(envr, exp->lvl->exp.lvlExp->vrb->exp.vrbExp);
 
 	if (lvl->hasAcsLst == 0)
 	{
@@ -1900,7 +1854,7 @@ struct CnstStrc* clcAsgnExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, 
 				throw new ExNotAvlbArr;
 			}
 
-			pstn = clcExp(glbEnvr, fcnEnvr, exp->lvl->exp.lvlExp->acs->acsLst[i]->pstn)->vl.intVl;
+			pstn = clcExp(envr, exp->lvl->exp.lvlExp->acs->acsLst[i]->pstn)->vl.intVl;
 
 			if (pstn >= arrTmp->vl.arr->elmtArr.size())
 			{
@@ -1926,7 +1880,7 @@ struct CnstStrc* clcAsgnExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, 
 	return rslt;
 }
 
-struct CnstStrc* clcArrExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct ArrExpStrc* exp)
+struct CnstStrc* clcArrExp(vector<EnvrStrc*>& envr, struct ArrExpStrc* exp)
 {
 	struct CnstStrc* rslt = new CnstStrc;
 
@@ -1944,8 +1898,8 @@ struct CnstStrc* clcArrExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, s
 
 	for (i = 0; i < elmtCnt; i++)
 	{
-		//rslt->vl.arr->elmtArr[i] = clcExp(glbEnvr, fcnEnvr, exp->elmtLst->elmtArr[i]);
-		rslt->vl.arr->elmtArr.push_back(clcExp(glbEnvr, fcnEnvr, exp->elmtLst->elmtArr[i]));
+		//rslt->vl.arr->elmtArr[i] = clcExp(envr, exp->elmtLst->elmtArr[i]);
+		rslt->vl.arr->elmtArr.push_back(clcExp(envr, exp->elmtLst->elmtArr[i]));
 
 		//printf("%d, ", rslt->vl.arr->elmtArr.back()->vl.intVl);
 	}
@@ -1954,7 +1908,7 @@ struct CnstStrc* clcArrExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, s
 	return rslt;
 }
 
-struct CnstStrc* clcNewArrExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct NewArrExpStrc* exp)
+struct CnstStrc* clcNewArrExp(vector<EnvrStrc*>& envr, struct NewArrExpStrc* exp)
 {
 	struct CnstStrc* rslt = new CnstStrc;
 
@@ -1965,7 +1919,7 @@ struct CnstStrc* clcNewArrExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr
 
 	int elmtCnt;
 
-	elmtCnt = clcExp(glbEnvr, fcnEnvr, exp->cnt)->vl.intVl;
+	elmtCnt = clcExp(envr, exp->cnt)->vl.intVl;
 
 	//rslt->vl.arr->elmtSz = elmtCnt + 0x10;
 	//rslt->vl.arr->elmtCnt = elmtCnt;
@@ -1983,7 +1937,7 @@ struct CnstStrc* clcNewArrExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr
 	return rslt;
 }
 
-//struct CnstStrc* clcArrEvlExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct ArrEvlExpStrc* exp)
+//struct CnstStrc* clcArrEvlExp(vector<EnvrStrc*>& envr, struct ArrEvlExpStrc* exp)
 //{
 //	struct CnstStrc* rslt = new CnstStrc;
 //
@@ -1995,7 +1949,7 @@ struct CnstStrc* clcNewArrExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr
 //	struct ArrStrc* arrNew;
 //
 //
-//	arr = getVrb(glbEnvr, fcnEnvr, exp->arr->exp.vrbExp);
+//	arr = getVrb(envr, exp->arr->exp.vrbExp);
 //
 //	int i;
 //	int j;
@@ -2009,7 +1963,7 @@ struct CnstStrc* clcNewArrExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr
 //	{
 //		if (exp->evlLst->blnSlc[i] == 0)
 //		{
-//			pstn = clcExp(glbEnvr, fcnEnvr, exp->evlLst->pstnArr[i])->vl.intVl;
+//			pstn = clcExp(envr, exp->evlLst->pstnArr[i])->vl.intVl;
 //
 //			//如果数组索引为负数，实际的数组索引为数组索引值（负数）加数组长度
 //			if (pstn < 0)
@@ -2024,9 +1978,9 @@ struct CnstStrc* clcNewArrExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr
 //		{
 //			intlArr(&arrNew);
 //
-//			strt = clcExp(glbEnvr, fcnEnvr, exp->evlLst->strtArr[i])->vl.intVl;
-//			end = clcExp(glbEnvr, fcnEnvr, exp->evlLst->endArr[i])->vl.intVl;
-//			stp = clcExp(glbEnvr, fcnEnvr, exp->evlLst->stpArr[i])->vl.intVl;
+//			strt = clcExp(envr, exp->evlLst->strtArr[i])->vl.intVl;
+//			end = clcExp(envr, exp->evlLst->endArr[i])->vl.intVl;
+//			stp = clcExp(envr, exp->evlLst->stpArr[i])->vl.intVl;
 //
 //			if (strt < 0)
 //			{
@@ -2067,7 +2021,7 @@ struct CnstStrc* clcNewArrExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr
 //
 //}
 
-struct CnstStrc* clcElmtAsgnExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct ElmtAsgnExpStrc* exp)
+struct CnstStrc* clcElmtAsgnExp(vector<EnvrStrc*>& envr, struct ElmtAsgnExpStrc* exp)
 {
 	struct CnstStrc* rslt = new CnstStrc;
 
@@ -2075,7 +2029,7 @@ struct CnstStrc* clcElmtAsgnExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEn
 
 	struct VrbStrc* arr;
 
-	arr = getVrb(glbEnvr, fcnEnvr, exp->arr->exp.vrbExp);
+	arr = getVrb(envr, exp->arr->exp.vrbExp);
 
 	struct ArrStrc* arrPrnt;
 
@@ -2089,13 +2043,13 @@ struct CnstStrc* clcElmtAsgnExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEn
 
 	for (i = 0; i < lyr - 1; i++)
 	{
-		pstn = clcExp(glbEnvr, fcnEnvr, exp->pstnLst->pstnArr[i])->vl.intVl;
+		pstn = clcExp(envr, exp->pstnLst->pstnArr[i])->vl.intVl;
 		arrPrnt = arrPrnt->elmtArr[pstn]->vl.arr;
 	}
 
-	rslt = clcExp(glbEnvr, fcnEnvr, exp->vl);
+	rslt = clcExp(envr, exp->vl);
 
-	pstn = clcExp(glbEnvr, fcnEnvr, exp->pstnLst->pstnArr[lyr - 1])->vl.intVl;
+	pstn = clcExp(envr, exp->pstnLst->pstnArr[lyr - 1])->vl.intVl;
 
 	arrPrnt->elmtArr[pstn] = rslt;
 
@@ -2105,13 +2059,13 @@ struct CnstStrc* clcElmtAsgnExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEn
 }
 
 
-struct CnstStrc* clcLvlExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct LvlExpStrc* exp)
+struct CnstStrc* clcLvlExp(vector<EnvrStrc*>& envr, struct LvlExpStrc* exp)
 {
 	struct CnstStrc* rslt = new CnstStrc;
 
 	struct VrbStrc* lvl;
 
-	lvl = getVrb(glbEnvr, fcnEnvr, exp->vrb->exp.vrbExp);
+	lvl = getVrb(envr, exp->vrb->exp.vrbExp);
 
 	if (lvl == NULL)
 	{
@@ -2158,7 +2112,7 @@ struct CnstStrc* clcLvlExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, s
 			//该层为数组索引的情况
 			if (exp->acs->acsLst[i]->blnSlc == 0)
 			{
-				pstn = clcExp(glbEnvr, fcnEnvr, exp->acs->acsLst[i]->pstn)->vl.intVl;
+				pstn = clcExp(envr, exp->acs->acsLst[i]->pstn)->vl.intVl;
 
 				//如果数组索引为负数，实际的数组索引为数组索引值（负数）加数组长度
 				if (pstn < 0)
@@ -2187,9 +2141,9 @@ struct CnstStrc* clcLvlExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, s
 			{
 				intlArr(&arrNew);
 
-				strt = clcExp(glbEnvr, fcnEnvr, exp->acs->acsLst[i]->strt)->vl.intVl;
-				end = clcExp(glbEnvr, fcnEnvr, exp->acs->acsLst[i]->end)->vl.intVl;
-				stp = clcExp(glbEnvr, fcnEnvr, exp->acs->acsLst[i]->stp)->vl.intVl;
+				strt = clcExp(envr, exp->acs->acsLst[i]->strt)->vl.intVl;
+				end = clcExp(envr, exp->acs->acsLst[i]->end)->vl.intVl;
+				stp = clcExp(envr, exp->acs->acsLst[i]->stp)->vl.intVl;
 
 				if (strt < 0)
 				{
@@ -2240,7 +2194,7 @@ struct CnstStrc* clcLvlExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, s
 
 }
 
-struct CnstStrc* clcExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct ExpStrc* exp)
+struct CnstStrc* clcExp(vector<EnvrStrc*>& envr, struct ExpStrc* exp)
 {
 	struct CnstStrc* rslt = new CnstStrc;
 
@@ -2253,12 +2207,12 @@ struct CnstStrc* clcExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, stru
 
 	if (exp->typ == VARIABLE_EXPRESSION)
 	{
-		struct VrbStrc* vrb = getVrb(glbEnvr, fcnEnvr, exp->exp.vrbExp);
+		struct VrbStrc* vrb = getVrb(envr, exp->exp.vrbExp);
 
 		//如果变量没有注册过，则注册变量并赋值为null
 		if (vrb == NULL)
 		{
-			vrb = addVrb(glbEnvr, exp->exp.vrbExp);
+			vrb = addVrb(envr[envr.size()-1], exp->exp.vrbExp);
 			asgnVrb(vrb, bldNllCnst());
 		}
 
@@ -2268,69 +2222,159 @@ struct CnstStrc* clcExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, stru
 
 	if (exp->typ == BINARY_EXPRESSION)
 	{
-		rslt = clcBnrExp(glbEnvr, fcnEnvr, exp->exp.bnrExp);
+		rslt = clcBnrExp(envr, exp->exp.bnrExp);
 	}
 
 	if (exp->typ == ASSIGN_EXPRESSION)
 	{
 		//如果已经注册为函数名则抛出异常
-		if (getFcn(glbEnvr, fcnEnvr, bldFcnExp((char*)(exp->exp.asgnExp->lvl->exp.lvlExp->vrb->exp.vrbExp->nm.c_str()), NULL)->exp.fcnExp) != NULL)
+		if (getFcn(envr, bldFcnExp((char*)(exp->exp.asgnExp->lvl->exp.lvlExp->vrb->exp.vrbExp->nm.c_str()), NULL)->exp.fcnExp) != NULL)
 		{
 			throw new ExAlrdDfnAsFctn;
 		}
 
-		addVrb(glbEnvr, exp->exp.asgnExp->lvl->exp.lvlExp->vrb->exp.vrbExp);
-		rslt = clcAsgnExp(glbEnvr, fcnEnvr, exp->exp.asgnExp);
+		addVrb(envr[envr.size()-1], exp->exp.asgnExp->lvl->exp.lvlExp->vrb->exp.vrbExp);
+		rslt = clcAsgnExp(envr, exp->exp.asgnExp);
 	}
 
 	if (exp->typ == UNARY_EXPRESSION)
 	{
-		rslt = clcUnrExp(glbEnvr, fcnEnvr, exp->exp.unrExp);
+		rslt = clcUnrExp(envr, exp->exp.unrExp);
 	}
 
 	if (exp->typ == FUNCTION_EXPRESSION)
 	{
-		rslt = clcFcnExp(glbEnvr, fcnEnvr, exp->exp.fcnExp);
+		rslt = clcFcnExp(envr, exp->exp.fcnExp);
 	}
 
-	if (exp->typ == LOCAL_ASSIGN_EXPRESSION)
-	{
-		rslt = clcLclAsgnExp(glbEnvr, fcnEnvr, exp->exp.lclAsgnExp);
-	}
+	//if (exp->typ == LOCAL_ASSIGN_EXPRESSION)
+	//{
+	//	rslt = clcLclAsgnExp(envr, exp->exp.lclAsgnExp);
+	//}
 
 	if (exp->typ == READ_EXPRESSION)
 	{
-		rslt = clcRdExp(glbEnvr, fcnEnvr, exp->exp.rdExp);
+		rslt = clcRdExp(envr, exp->exp.rdExp);
 	}
 
 	if (exp->typ == ARRAY_EXPRESSION)
 	{
 		//printf("Calculate array expression #0\n");
-		rslt = clcArrExp(glbEnvr, fcnEnvr, exp->exp.arrExp);
+		rslt = clcArrExp(envr, exp->exp.arrExp);
 		//printf("Calculate array expression #1\n");
 	}
 
 	//if (exp->typ == ARRAY_EVALUATE_EXPRESSION)
 	//{
-	//	rslt = clcArrEvlExp(glbEnvr, fcnEnvr, exp->exp.arrEvlExp);
+	//	rslt = clcArrEvlExp(envr, exp->exp.arrEvlExp);
 	//}
 
 	if (exp->typ == ELEMENT_ASSIGN_EXPRESSION)
 	{
-		rslt = clcElmtAsgnExp(glbEnvr, fcnEnvr, exp->exp.elmtAsgnExp);
+		rslt = clcElmtAsgnExp(envr, exp->exp.elmtAsgnExp);
 	}
 
 	if (exp->typ == NEW_ARRAY_EXPRESSION)
 	{
-		rslt = clcNewArrExp(glbEnvr, fcnEnvr, exp->exp.newArrExp);
+		rslt = clcNewArrExp(envr, exp->exp.newArrExp);
 	}
 
 	if (exp->typ == LVALUE_EXPRESSION)
 	{
-		rslt = clcLvlExp(glbEnvr, fcnEnvr, exp->exp.lvlExp);
+		rslt = clcLvlExp(envr, exp->exp.lvlExp);
 	}
 
 	return rslt;
 }
+
+
+//struct CnstStrc* clcExp(vector<EnvrStrc*>& envr, struct ExpStrc* exp)
+//{
+//	struct CnstStrc* rslt = new CnstStrc;
+//
+//	if (exp->typ == CONST_EXPRESSION)
+//	{
+//		rslt = exp->exp.cnst;
+//
+//		//printf("cnst: %d\n", exp->exp.cnst->vl.intVl);
+//	}
+//
+//	if (exp->typ == VARIABLE_EXPRESSION)
+//	{
+//		struct VrbStrc* vrb = getVrb(envr, exp->exp.vrbExp);
+//
+//		//如果变量没有注册过，则注册变量并赋值为null
+//		if (vrb == NULL)
+//		{
+//			vrb = addVrb(glbEnvr, exp->exp.vrbExp);
+//			asgnVrb(vrb, bldNllCnst());
+//		}
+//
+//		rslt = bldCnstFrmVrb(vrb);
+//		//printf("Calculate variable expression #1\n");
+//	}
+//
+//	if (exp->typ == BINARY_EXPRESSION)
+//	{
+//		rslt = clcBnrExp(envr, exp->exp.bnrExp);
+//	}
+//
+//	if (exp->typ == ASSIGN_EXPRESSION)
+//	{
+//		//如果已经注册为函数名则抛出异常
+//		if (getFcn(envr, bldFcnExp((char*)(exp->exp.asgnExp->lvl->exp.lvlExp->vrb->exp.vrbExp->nm.c_str()), NULL)->exp.fcnExp) != NULL)
+//		{
+//			throw new ExAlrdDfnAsFctn;
+//		}
+//
+//		addVrb(glbEnvr, exp->exp.asgnExp->lvl->exp.lvlExp->vrb->exp.vrbExp);
+//		rslt = clcAsgnExp(envr, exp->exp.asgnExp);
+//	}
+//
+//	if (exp->typ == UNARY_EXPRESSION)
+//	{
+//		rslt = clcUnrExp(envr, exp->exp.unrExp);
+//	}
+//
+//	if (exp->typ == FUNCTION_EXPRESSION)
+//	{
+//		rslt = clcFcnExp(envr, exp->exp.fcnExp);
+//	}
+//
+//	if (exp->typ == LOCAL_ASSIGN_EXPRESSION)
+//	{
+//		rslt = clcLclAsgnExp(envr, exp->exp.lclAsgnExp);
+//	}
+//
+//	if (exp->typ == READ_EXPRESSION)
+//	{
+//		rslt = clcRdExp(envr, exp->exp.rdExp);
+//	}
+//
+//	if (exp->typ == ARRAY_EXPRESSION)
+//	{
+//		//printf("Calculate array expression #0\n");
+//		rslt = clcArrExp(envr, exp->exp.arrExp);
+//		//printf("Calculate array expression #1\n");
+//	}
+//
+//	if (exp->typ == ELEMENT_ASSIGN_EXPRESSION)
+//	{
+//		rslt = clcElmtAsgnExp(envr, exp->exp.elmtAsgnExp);
+//	}
+//
+//	if (exp->typ == NEW_ARRAY_EXPRESSION)
+//	{
+//		rslt = clcNewArrExp(envr, exp->exp.newArrExp);
+//	}
+//
+//	if (exp->typ == LVALUE_EXPRESSION)
+//	{
+//		rslt = clcLvlExp(envr, exp->exp.lvlExp);
+//	}
+//
+//	return rslt;
+//}
+
 
 //#endif 

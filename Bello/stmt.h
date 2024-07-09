@@ -217,7 +217,7 @@ struct StmtStrc* bldNllStmt()
 }
 
 
-struct StmtRsltStrc* exctStmt(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct StmtStrc* stmt)
+struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 {
 	struct StmtRsltStrc* rslt = new StmtRsltStrc;
 
@@ -232,7 +232,7 @@ struct StmtRsltStrc* exctStmt(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr
 		{
 			struct CnstStrc* rsltExp;
 
-			rsltExp = clcExp(glbEnvr, fcnEnvr, stmt->stmt.expStmt->exp);
+			rsltExp = clcExp(envr, stmt->stmt.expStmt->exp);
 
 			// if (stmt->stmt.expStmt->exp->typ == CONST_EXPRESSION || stmt->stmt.expStmt->exp->typ == VARIABLE_EXPRESSION || 
 			//     stmt->stmt.expStmt->exp->typ == BINARY_EXPRESSION || stmt->stmt.expStmt->exp->typ == UNARY_EXPRESSION ||
@@ -255,9 +255,9 @@ struct StmtRsltStrc* exctStmt(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr
 
 				vrbExp = stmt->stmt.varStmt->asgnLst->asgnArr[i]->exp.asgnExp->lvl->exp.lvlExp->vrb->exp.vrbExp;
 
-				if ((vrb = getEnvrVrb(fcnEnvr, vrbExp)) == NULL)
+				if ((vrb = getVrb(envr, vrbExp)) == NULL)
 				{
-					vrb = addVrb(fcnEnvr, vrbExp);
+					vrb = addVrb(envr[envr.size()-1], vrbExp);
 				}
 				else
 				{
@@ -266,7 +266,7 @@ struct StmtRsltStrc* exctStmt(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr
 
 				if (stmt->stmt.varStmt->asgnLst->asgnArr[i]->exp.asgnExp->exp->typ != NULL_EXPRESSION)
 				{
-					rslt = clcExp(glbEnvr, fcnEnvr, stmt->stmt.varStmt->asgnLst->asgnArr[i]->exp.asgnExp->exp);
+					rslt = clcExp(envr, stmt->stmt.varStmt->asgnLst->asgnArr[i]->exp.asgnExp->exp);
 					asgnVrb(vrb, rslt);
 				}
 				else
@@ -283,31 +283,46 @@ struct StmtRsltStrc* exctStmt(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr
 
 		if (stmt->typ == IF_STATEMENT)
 		{
-			//prtCnst(clcExp(stmt->stmt.ifStmt->exp)); 
-			if ((clcExp(glbEnvr, fcnEnvr, stmt->stmt.ifStmt->exp)->vl.intVl) != 0)
+			//int envrLyr = envr.size();
+			envr.push_back(new EnvrStrc(STATEMENT_ENVIRONMENT));
+
+			//if ((clcExp(envr, stmt->stmt.ifStmt->exp)->vl.intVl) != 0)
+			if ((clcExp(envr, stmt->stmt.ifStmt->exp)->vl.intVl) != 0)
 			{
-				rslt = exctStmt(glbEnvr, fcnEnvr, stmt->stmt.ifStmt->stmt);
+				rslt = exctStmt(envr, stmt->stmt.ifStmt->stmt);
 			}
+
+			//删除创建的环境
+			envr.pop_back();
+
 		}
 
 		if (stmt->typ == IF_ELSE_STATEMENT)
 		{
 			//prtCnst(clcExp(stmt->stmt.ifStmt->exp)); 
-			if ((clcExp(glbEnvr, fcnEnvr, stmt->stmt.ifStmt->exp)->vl.intVl) != 0)
+
+			//envr.push_back(new EnvrStrc(STATEMENT_ENVIRONMENT));
+
+			if ((clcExp(envr, stmt->stmt.ifStmt->exp)->vl.intVl) != 0)
 			{
-				rslt = exctStmt(glbEnvr, fcnEnvr, stmt->stmt.ifElsStmt->stmt);
+				rslt = exctStmt(envr, stmt->stmt.ifElsStmt->stmt);
 			}
 			else
 			{
-				rslt = exctStmt(glbEnvr, fcnEnvr, stmt->stmt.ifElsStmt->elsStmt);
+				rslt = exctStmt(envr, stmt->stmt.ifElsStmt->elsStmt);
 			}
+
+			//删除创建的环境
+			//envr.pop_back();
 		}
 
 		if (stmt->typ == FOR_STATEMENT)
 		{
-			rslt = exctStmt(glbEnvr, fcnEnvr, stmt->stmt.forStmt->intl);
+			//envr.push_back(new EnvrStrc(STATEMENT_ENVIRONMENT));
 
-			while ((clcExp(glbEnvr, fcnEnvr, stmt->stmt.forStmt->exp->stmt.expStmt->exp)->vl.intVl) != 0)
+			rslt = exctStmt(envr, stmt->stmt.forStmt->intl);
+
+			while ((clcExp(envr, stmt->stmt.forStmt->exp->stmt.expStmt->exp)->vl.intVl) != 0)
 			{
 				//上一次循环中使用了continue语句
 				if (rslt->typ == CONTINUE_RESULT)
@@ -319,12 +334,12 @@ struct StmtRsltStrc* exctStmt(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr
 						rslt->typ = NORMAL_RESULT;
 					}
 
-					exctStmt(glbEnvr, fcnEnvr, stmt->stmt.forStmt->itr);
+					exctStmt(envr, stmt->stmt.forStmt->itr);
 
 					continue;
 				}
 
-				rslt = exctStmt(glbEnvr, fcnEnvr, stmt->stmt.forStmt->stmt);
+				rslt = exctStmt(envr, stmt->stmt.forStmt->stmt);
 
 				if (rslt->typ == RETURN_RESULT)
 				{
@@ -352,12 +367,12 @@ struct StmtRsltStrc* exctStmt(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr
 						rslt->typ = NORMAL_RESULT;
 					}
 
-					exctStmt(glbEnvr, fcnEnvr, stmt->stmt.forStmt->itr);
+					exctStmt(envr, stmt->stmt.forStmt->itr);
 
 					continue;
 				}
 
-				exctStmt(glbEnvr, fcnEnvr, stmt->stmt.forStmt->itr);
+				exctStmt(envr, stmt->stmt.forStmt->itr);
 
 
 			}
@@ -369,11 +384,13 @@ struct StmtRsltStrc* exctStmt(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr
 				rslt->typ = NORMAL_RESULT;
 
 			}
+
+			//envr.pop_back();
 		}
 
 		if (stmt->typ == WHILE_STATEMENT)
 		{
-			while (clcExp(glbEnvr, fcnEnvr, stmt->stmt.whlStmt->exp->stmt.expStmt->exp)->vl.intVl != 0)
+			while (clcExp(envr, stmt->stmt.whlStmt->exp->stmt.expStmt->exp)->vl.intVl != 0)
 			{
 				if (rslt->typ == CONTINUE_RESULT)
 				{
@@ -387,7 +404,7 @@ struct StmtRsltStrc* exctStmt(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr
 					continue;
 				}
 
-				rslt = exctStmt(glbEnvr, fcnEnvr, stmt->stmt.whlStmt->stmt);
+				rslt = exctStmt(envr, stmt->stmt.whlStmt->stmt);
 
 				if (rslt->typ == RETURN_RESULT)
 				{
@@ -442,7 +459,7 @@ struct StmtRsltStrc* exctStmt(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr
 					continue;
 				}
 
-				rslt = exctStmt(glbEnvr, fcnEnvr, stmt->stmt.doWhlStmt->stmt);
+				rslt = exctStmt(envr, stmt->stmt.doWhlStmt->stmt);
 
 				if (rslt->typ == RETURN_RESULT)
 				{
@@ -472,7 +489,7 @@ struct StmtRsltStrc* exctStmt(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr
 
 					continue;
 				}
-			} while (clcExp(glbEnvr, fcnEnvr, stmt->stmt.doWhlStmt->exp->stmt.expStmt->exp)->vl.intVl != 0);
+			} while (clcExp(envr, stmt->stmt.doWhlStmt->exp->stmt.expStmt->exp)->vl.intVl != 0);
 
 			if (rslt->typ == CONTINUE_RESULT)
 			{
@@ -484,11 +501,13 @@ struct StmtRsltStrc* exctStmt(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr
 
 		if (stmt->typ == STATEMENT_BLOCK)
 		{
+			envr.push_back(new EnvrStrc(STATEMENT_BLOCK_ENVIRONMENT));
+
 			int i;
 
 			for (i = 0; i < stmt->stmt.stmtBlk->stmtArr.size(); i++)
 			{
-				rslt = exctStmt(glbEnvr, fcnEnvr, stmt->stmt.stmtBlk->stmtArr[i]);
+				rslt = exctStmt(envr, stmt->stmt.stmtBlk->stmtArr[i]);
 
 				if (rslt->typ == RETURN_RESULT)
 				{
@@ -500,6 +519,8 @@ struct StmtRsltStrc* exctStmt(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr
 					break;
 				}
 			}
+
+			envr.pop_back();
 		}
 
 		if (stmt->typ == BREAK_STATEMENT)
@@ -508,7 +529,7 @@ struct StmtRsltStrc* exctStmt(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr
 
 			rslt->rslt.brkRslt = new BrkRsltStrc;
 
-			rslt->rslt.brkRslt->brkCnt = clcExp(glbEnvr, fcnEnvr, stmt->stmt.brkStmt->exp)->vl.intVl;
+			rslt->rslt.brkRslt->brkCnt = clcExp(envr, stmt->stmt.brkStmt->exp)->vl.intVl;
 		}
 
 		if (stmt->typ == CONTINUE_STATEMENT)
@@ -517,22 +538,22 @@ struct StmtRsltStrc* exctStmt(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr
 
 			rslt->rslt.cntnRslt = new CntnRsltStrc;
 
-			rslt->rslt.cntnRslt->cntnCnt = clcExp(glbEnvr, fcnEnvr, stmt->stmt.cntnStmt->exp)->vl.intVl;
+			rslt->rslt.cntnRslt->cntnCnt = clcExp(envr, stmt->stmt.cntnStmt->exp)->vl.intVl;
 		}
 
 		if (stmt->typ == FUNCTION_DEFINE_STATEMENT)
 		{
-			if (getFcn(glbEnvr, fcnEnvr, bldFcnExp((char*)(stmt->stmt.fcnStmt->fcn->nm.c_str()), NULL)->exp.fcnExp) != NULL)
+			if (getFcn(envr, bldFcnExp((char*)(stmt->stmt.fcnStmt->fcn->nm.c_str()), NULL)->exp.fcnExp) != NULL)
 			{
 				throw new ExFcnRdfn;
 			}
 
-			if (getVrb(glbEnvr, fcnEnvr, bldVrbExp((char*)(stmt->stmt.fcnStmt->fcn->nm.c_str()))->exp.vrbExp) != NULL)
+			if (getVrb(envr, bldVrbExp((char*)(stmt->stmt.fcnStmt->fcn->nm.c_str()))->exp.vrbExp) != NULL)
 			{
 				throw new ExAlrdDfnAsVrb;
 			}
 
-			addFcn(fcnEnvr, stmt->stmt.fcnStmt->fcn);
+			addFcn(envr[envr.size()-1], stmt->stmt.fcnStmt->fcn);
 		}
 
 		if (stmt->typ == RETURN_STATEMENT)
@@ -546,7 +567,7 @@ struct StmtRsltStrc* exctStmt(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr
 
 			if (rslt->rslt.rtnRslt->blnRslt == 1)
 			{
-				rslt->rslt.rtnRslt->rslt = clcExp(glbEnvr, fcnEnvr, stmt->stmt.rtnStmt->exp);
+				rslt->rslt.rtnRslt->rslt = clcExp(envr, stmt->stmt.rtnStmt->exp);
 			}
 
 		}

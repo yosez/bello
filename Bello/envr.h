@@ -15,6 +15,8 @@
 #define EXP_H        
 #endif              
 
+//typedef struct CnstStrc* ntvFcnDfn(vector<EnvrStrc*>& envr, int prmCnt, vector <CnstStrc*> prmArr);
+
 extern struct ExpStrc* bldFcnExp(char* nm, struct ArgLstStrc* argLst);
 
 struct VrbStrc* addVrb(struct EnvrStrc* envr, struct VrbExpStrc* vrbExp);
@@ -26,22 +28,22 @@ int addFcn(struct EnvrStrc* envr, struct FcnStrc* fcn);
 struct FcnStrc* getEnvrFcn(struct EnvrStrc* envr, struct FcnExpStrc* fcnExp);
 struct FcnStrc* getFcn(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct FcnExpStrc* fcnExp);
 
-//int addNtvFcn(struct EnvrStrc *envr, char * fcnNm, ntvFcnDfn* fcn, int prmCnt);
+//int addNtvFcn(vector<EnvrStrc*>& envr, string fcnNm, ntvFcnDfn* fcn, int prmCnt);
 int addNtvFcn(struct EnvrStrc* envr, string fcnNm, ntvFcnDfn* fcn, int prmCnt);
 struct NtvFcnStrc* getNtvFcn(struct EnvrStrc* envr, struct FcnExpStrc* fcn);
-//struct NtvFcnStrc* getNtvFcn(struct EnvrStrc *envr, char *fcnNm);
 
 int prtEnvrFcn(struct EnvrStrc* envr);
 int intlEnvr(struct EnvrStrc** envr);
+int initGlbEnvr(vector<EnvrStrc*>& envr);
 
-extern struct CnstStrc* rdIntFcn(struct EnvrStrc* envr, int argCnt, vector <CnstStrc*> argArr);
-extern struct CnstStrc* rdFltFcn(struct EnvrStrc* envr, int argCnt, vector <CnstStrc*> argArr);
-extern struct CnstStrc* rdBlnFcn(struct EnvrStrc* envr, int argCnt, vector <CnstStrc*> argArr);
-extern struct CnstStrc* rdFcn(struct EnvrStrc* envr, int argCnt, vector <CnstStrc*> argArr);
-extern struct CnstStrc* rdlnFcn(struct EnvrStrc* envr, int argCnt, vector <CnstStrc*> argArr);
-extern struct CnstStrc* prtFcn(struct EnvrStrc* envr, int argCnt, vector <CnstStrc*> argArr);
-extern struct CnstStrc* prtlnFcn(struct EnvrStrc* envr, int argCnt, vector <CnstStrc*> argArr);
-extern struct CnstStrc* newArrFcn(struct EnvrStrc* envr, int argCnt, vector <CnstStrc*> argArr);
+extern struct CnstStrc* rdIntFcn(vector<EnvrStrc*>& envr, int argCnt, vector <CnstStrc*> argArr);
+extern struct CnstStrc* rdFltFcn(vector<EnvrStrc*>& envr, int argCnt, vector <CnstStrc*> argArr);
+extern struct CnstStrc* rdBlnFcn(vector<EnvrStrc*>& envr, int argCnt, vector <CnstStrc*> argArr);
+extern struct CnstStrc* rdFcn(vector<EnvrStrc*>& envr, int argCnt, vector <CnstStrc*> argArr);
+extern struct CnstStrc* rdlnFcn(vector<EnvrStrc*>& envr, int argCnt, vector <CnstStrc*> argArr);
+extern struct CnstStrc* prtFcn(vector<EnvrStrc*>& envr, int argCnt, vector <CnstStrc*> argArr);
+extern struct CnstStrc* prtlnFcn(vector<EnvrStrc*>& envr, int argCnt, vector <CnstStrc*> argArr);
+extern struct CnstStrc* newArrFcn(vector<EnvrStrc*>& envr, int argCnt, vector <CnstStrc*> argArr);
 
 
 
@@ -80,6 +82,76 @@ struct VrbStrc* getVrb(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struc
 
 	return vrb;
 }
+
+struct VrbStrc* getVrb(vector<EnvrStrc*>& envr, struct VrbExpStrc* vrbExp)
+{
+	struct VrbStrc* vrb = NULL;
+
+	int lyrNbr = envr.size();
+
+	int lyr = envr.size() - 1;
+
+	EnvrStrc* tmp;
+
+	int lyrBfrFcn = 0;
+
+	//从最内1层环境向外找到第1个函数环境
+	while (true)
+	{
+		tmp = envr[lyr];
+
+		vrb = getEnvrVrb(tmp, vrbExp);
+
+		if (vrb != NULL)
+		{
+			return vrb;
+		}
+
+		if (envr[lyr]->typ == FUNCTION_ENVIRONMENT)
+		{
+			break;
+		}
+
+		if (envr[lyr]->typ == TOP_LEVEL_ENVIRONMENT)
+		{
+			return NULL;
+		}
+
+		lyr--;
+	}
+
+	//从外向内找到第1个函数环境之前的环境
+	while (lyrBfrFcn + 1 < lyr && envr[lyrBfrFcn + 1]->typ != FUNCTION_ENVIRONMENT)
+	{
+		lyrBfrFcn++;
+	}
+
+	lyr = lyrBfrFcn;
+
+	//从外向内的第1个函数环境之前的环境向外找到顶层空间环境
+	while (true)
+	{
+		tmp = envr[lyr];
+
+		vrb = getEnvrVrb(tmp, vrbExp);
+
+		if (vrb != NULL)
+		{
+			return vrb;
+		}
+
+		if (lyr == 0)
+		{
+			return NULL;
+		}
+
+		lyr--;
+	}
+
+	return vrb;
+}
+
+
 
 
 int prtEnvrVrb(struct EnvrStrc* envr)
@@ -126,6 +198,63 @@ struct FcnStrc* getFcn(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struc
 	struct FcnStrc* fcn = NULL;
 
 	fcn = getEnvrFcn(fcnEnvr, fcnExp) != NULL ? getEnvrFcn(fcnEnvr, fcnExp) : getEnvrFcn(glbEnvr, fcnExp);
+
+	return fcn;
+}
+
+struct FcnStrc* getFcn(vector<EnvrStrc*> envr, struct FcnExpStrc* fcnExp)
+{
+	struct FcnStrc* fcn = NULL;
+	
+	int lyr = envr.size() - 1;
+
+	while (true)
+	{
+		fcn = getEnvrFcn(envr[lyr], fcnExp);
+
+		if (fcn != NULL)
+		{
+			return fcn;
+		}
+
+		if (lyr == 0)
+		{
+			return NULL;
+		}
+
+		if (envr[lyr]->typ == FUNCTION_ENVIRONMENT)
+		{
+			break;
+		}
+
+		lyr--;
+	}
+
+	int lyrBfrFcn = 0;
+
+	while (lyrBfrFcn < lyr && envr[lyrBfrFcn]->typ!=FUNCTION_ENVIRONMENT)
+	{
+		lyrBfrFcn++;
+	}
+
+	lyr = lyrBfrFcn;
+
+	while (true)
+	{
+		fcn = getEnvrFcn(envr[lyr], fcnExp);
+
+		if (fcn != NULL)
+		{
+			return fcn;
+		}
+
+		if (lyr == 0)
+		{
+			return NULL;
+		}
+
+		lyr--;
+	}
 
 	return fcn;
 }
@@ -185,6 +314,28 @@ struct NtvFcnStrc* getNtvFcn(struct EnvrStrc* envr, struct FcnExpStrc* fcn)
 	return NULL;
 }
 
+struct NtvFcnStrc* getNtvFcn(vector<EnvrStrc*> envr, struct FcnExpStrc* fcn)
+{
+	struct NtvFctnStrc* rslt = NULL;
+
+	int i;
+
+	//printf("ntvFcnCnt: %d\n", envr->ntvFcnArr.size());
+	//printf("cll fcn:%s \n", fcn->nm.c_str());
+
+	for (i = 0; i < envr[0]->ntvFcnArr.size(); i++)
+	{
+		//printf("fcn nm: %s\n", envr->ntvFcnArr[i]->fcnNm);
+
+		if (fcn->nm.compare(envr[0]->ntvFcnArr[i]->fcnNm) == 0)
+		{
+			return envr[0]->ntvFcnArr[i];
+		}
+	}
+
+	return NULL;
+}
+
 
 
 int prtEnvrFcn(struct EnvrStrc* envr)
@@ -201,59 +352,37 @@ int prtEnvrFcn(struct EnvrStrc* envr)
 	return 0;
 }
 
-int intlGlbEnvr(struct EnvrStrc** envr)
+//int initGlbEnvr(struct EnvrStrc** envr)
+//{
+//
+//	*envr = new EnvrStrc;
+//
+//	addNtvFcn((*envr), string("readInt"), rdIntFcn, 0);
+//	addNtvFcn((*envr), string("readFloat"), rdFltFcn, 0);
+//	addNtvFcn((*envr), string("readBool"), rdBlnFcn, 0);
+//	addNtvFcn((*envr), string("read"), rdFcn, 0);
+//	addNtvFcn((*envr), string("readln"), rdlnFcn, 0);
+//	addNtvFcn((*envr), string("print"), prtFcn, 1);
+//	addNtvFcn((*envr), string("println"), prtlnFcn, 1);
+//	addNtvFcn((*envr), string("newArray"), newArrFcn, 1);
+//
+//	return 0;
+//}
+
+int initGlbEnvr(vector<EnvrStrc*> &envr)
 {
 
-	//*envr = (struct EnvrStrc*)malloc(sizeof(struct EnvrStrc));
-	*envr = new EnvrStrc;
+	envr.push_back(new EnvrStrc(TOP_LEVEL_ENVIRONMENT));
+	envr[0]->typ = TOP_LEVEL_ENVIRONMENT;
 
-	//(*envr)->vrbSz=10;
-	//(*envr)->vrbCnt=0;
-	//(*envr)->vrbArr=(struct VrbStrc **)malloc(sizeof(struct VrbStrc *)*(*envr)->vrbSz);
-
-	//(*envr)->fcnSz=10;
-	//(*envr)->fcnCnt=0;
-	//(*envr)->fcnArr=(struct FcnStrc **)malloc(sizeof(struct FcnStrc*)*(*envr)->fcnSz);
-
-	//(*envr)->ntvFcnSz=10;
-	//(*envr)->ntvFcnCnt=0;
-	//(*envr)->ntvFcnArr=(struct NtvFcnStrc **)malloc(sizeof(struct NtvFcnStrc*)*(*envr)->ntvFcnSz);
-
-	//娣诲姞鍘熺敓鍑芥暟
-	//addNtvFcn((*envr), (char*)"readInt", rdIntFcn, 0);
-	//addNtvFcn((*envr), (char*)"readFloat", rdFltFcn, 0);
-	//addNtvFcn((*envr), (char*)"readBool", rdBlnFcn, 0);
-	//addNtvFcn((*envr), (char*)"read", rdFcn, 0);
-	//addNtvFcn((*envr), (char*)"readln", rdlnFcn, 0);
-	//addNtvFcn((*envr), (char*)"print", prtFcn, 1);
-	//addNtvFcn((*envr), (char*)"println", prtlnFcn, 1);
-	//addNtvFcn((*envr), (char*)"newArray", newArrFcn, 1);
-
-	addNtvFcn((*envr), string("readInt"), rdIntFcn, 0);
-	addNtvFcn((*envr), string("readFloat"), rdFltFcn, 0);
-	addNtvFcn((*envr), string("readBool"), rdBlnFcn, 0);
-	addNtvFcn((*envr), string("read"), rdFcn, 0);
-	addNtvFcn((*envr), string("readln"), rdlnFcn, 0);
-	addNtvFcn((*envr), string("print"), prtFcn, 1);
-	addNtvFcn((*envr), string("println"), prtlnFcn, 1);
-	addNtvFcn((*envr), string("newArray"), newArrFcn, 1);
-
-	//void* h = getNtvFcn(*envr, bldFcnExp((char*)"print", new ArgLstStrc)->exp.fcnExp);
-
-	//printf("h: %08x\n", h);
-
-	//娴嬭瘯鍘熺敓鍑芥暟娣诲姞浠ｇ爜
-	// int i=0;
-
-	// for (i=0;i<(*envr)->ntvFcnCnt; i++)
-	// {
-	//     printf("Function name: %s\n", (*envr)->ntvFcnArr[i]->fcnNm);
-	// }
-
-	// struct FcnExpStrc *fcn= bldFcnExp("readInt",bldArgLst())->exp.fcnExp;
-	// printf("Build readInt Expression\n");
-
-	// printf("Function found: %s\n", getNtvFcn(*envr, fcn)?"True":"False");
+	addNtvFcn(envr[0], string("readInt"), rdIntFcn, 0);
+	addNtvFcn(envr[0], string("readFloat"), rdFltFcn, 0);
+	addNtvFcn(envr[0], string("readBool"), rdBlnFcn, 0);
+	addNtvFcn(envr[0], string("read"), rdFcn, 0);
+	addNtvFcn(envr[0], string("readln"), rdlnFcn, 0);
+	addNtvFcn(envr[0], string("print"), prtFcn, 1);
+	addNtvFcn(envr[0], string("println"), prtlnFcn, 1);
+	addNtvFcn(envr[0], string("newArray"), newArrFcn, 1);
 
 	return 0;
 }

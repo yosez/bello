@@ -140,7 +140,7 @@ execute_statement
     : 
     { 
         //printf("statement type: %d\n",$<stmt>0->typ); 
-        exctStmt(glbEnvr, glbEnvr, $<stmt>0); 
+        exctStmt(envr, $<stmt>0); 
     }
     //| error { yyerrok; }
 
@@ -576,7 +576,11 @@ int main(int argc, char * argv[])
 
     //创建全局环境
 
-    intlGlbEnvr(&glbEnvr);
+    //struct EnvrStrc* glbEnvr = new EnvrStrc;
+
+    //envr.push_back(glbEnvr);
+
+    initGlbEnvr(envr);
 
     //可以提供代码文件供读取
 

@@ -12,7 +12,7 @@
 //此部分引入的变量及函数可以删除
 extern struct ExpStrc* bldCnstIntExp(int intVl);
 extern struct CnstStrc* clcExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct ExpStrc* exp);
-extern struct EnvrStrc* glbEnvr;
+//extern struct EnvrStrc* glbEnvr;
 
 struct ElmtLstStrc* bldElmtLst()
 {

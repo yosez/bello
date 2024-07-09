@@ -42,10 +42,11 @@ struct ElmtAsgnExpStrc;
 struct NtvFcnStrc;
 struct VarStmtStrc;
 
-typedef struct CnstStrc* ntvFcnDfn(struct EnvrStrc* envr, int prmCnt, vector <CnstStrc*> prmArr);
+//typedef struct CnstStrc* ntvFcnDfn(struct EnvrStrc* envr, int prmCnt, vector <CnstStrc*> prmArr);
+typedef struct CnstStrc* ntvFcnDfn(vector<EnvrStrc*>& envr, int prmCnt, vector <CnstStrc*> prmArr);
 
 
-struct EnvrStrc* glbEnvr;
+//struct EnvrStrc* glbEnvr;
 
 
 union VlUnn
@@ -130,6 +131,14 @@ enum StmtRsltTyp
 	BREAK_RESULT,
 	CONTINUE_RESULT,
 	RETURN_RESULT
+};
+
+enum EnvrTyp
+{
+	TOP_LEVEL_ENVIRONMENT,
+	FUNCTION_ENVIRONMENT,
+	STATEMENT_BLOCK_ENVIRONMENT,
+	STATEMENT_ENVIRONMENT
 };
 
 
@@ -414,6 +423,9 @@ struct FcnStrc
 
 struct EnvrStrc
 {
+
+	EnvrTyp typ;
+
 	//int vrbSz, vrbCnt;
 	vector<VrbStrc*> vrbArr;
 
@@ -422,6 +434,15 @@ struct EnvrStrc
 
 	//int ntvFcnSz, ntvFcnCnt;
 	vector<NtvFcnStrc*> ntvFcnArr;
+
+public:
+	EnvrStrc()
+	{
+	}
+	EnvrStrc(EnvrTyp typ)
+	{
+		this->typ = typ;
+	}
 };
 
 //数组结构体
@@ -505,3 +526,7 @@ struct NtvFcnStrc
 	int prmCnt;
 	ntvFcnDfn* fcn;
 };
+
+
+vector<EnvrStrc*> envr;
+
