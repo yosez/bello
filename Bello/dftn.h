@@ -122,6 +122,7 @@ enum StmtTyp
 	FUNCTION_DEFINE_STATEMENT,
 	RETURN_STATEMENT,
 	VAR_STATEMENT,
+	GLOBAL_STATEMENT,
 	NULL_STATEMENT
 };
 
@@ -356,6 +357,11 @@ struct VarStmtStrc
 	struct AsgnLstStrc* asgnLst;
 };
 
+struct GlbStmtStrc
+{
+	struct AsgnLstStrc* asgnLst;
+};
+
 struct StmtStrc
 {
 	int typ;
@@ -374,6 +380,7 @@ struct StmtStrc
 		struct FcnStmtStrc* fcnStmt;
 		struct RtnStmtStrc* rtnStmt;
 		struct VarStmtStrc* varStmt;
+		struct GlbStmtStrc* glbStmt;
 	} stmt;
 };
 
@@ -426,14 +433,14 @@ struct EnvrStrc
 
 	EnvrTyp typ;
 
-	//int vrbSz, vrbCnt;
 	vector<VrbStrc*> vrbArr;
 
-	//int fcnSz, fcnCnt;
 	vector<FcnStrc*> fcnArr;
 
-	//int ntvFcnSz, ntvFcnCnt;
 	vector<NtvFcnStrc*> ntvFcnArr;
+
+	//用于保存全局变量，只在顶层空间中有效
+	vector<VrbStrc*> glbArr;
 
 public:
 	EnvrStrc()

@@ -73,7 +73,7 @@
 %token ARRAY_VALUE
 %token <idtf> IDENTIFER
 %token ASSIGN
-%token VAR
+%token VAR GLOBAL
 %token ADD_ASSIGN SUB_ASSIGN MUL_ASSIGN DIV_ASSIGN MOD_ASSIGN
 %token PRINT PRINTLN
 %token LEFT_PAREN RIGHT_PAREN
@@ -95,7 +95,7 @@
     lvalue_operation_expression self_operation_expression lvalue_expression
     //local_assign_expression
 %type <stmt> single_statement expression_statement 
-    statement_block block_list null_statement var_statement
+    statement_block block_list null_statement var_statement global_statement
 %type <stmt> if_statement structure_statement for_statement single_statement_no_semicolon while_statement 
     do_while_statement break_statement continue_statement return_statement 
 %type <stmt> function_define_statement
@@ -156,6 +156,7 @@ single_statement
     | function_define_statement { $$=$1; }
     | null_statement SEMICOLON { $$=$1; }
     | var_statement SEMICOLON { $$ = $1; }
+    | global_statement SEMICOLON { $$ = $1; }
     | error 
     { 
         //system("pause");  
@@ -304,6 +305,8 @@ element_list
 var_statement
     : VAR assign_list { $$=bldVarStmt($2); }
 
+global_statement
+    : GLOBAL assign_list { $$=bldGlbStmt($2); }
 
 assign_list
     : IDENTIFER 

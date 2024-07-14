@@ -79,6 +79,7 @@
 "~"                         { return BIT_NOT; }
 "!"                         { return NOT; }
 "var"                       { return VAR; }
+"global"                    { return GLOBAL; }
 "if"                        { return IF; }
 "else"                      { return ELSE; }
 "for"                       { return FOR; }

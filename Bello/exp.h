@@ -2284,6 +2284,11 @@ struct CnstStrc* clcExp(vector<EnvrStrc*>& envr, struct ExpStrc* exp)
 		rslt = clcLvlExp(envr, exp->exp.lvlExp);
 	}
 
+	if (exp->typ == NULL_EXPRESSION)
+	{
+		rslt = bldNllCnst();
+	}
+
 	return rslt;
 }
 

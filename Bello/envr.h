@@ -21,7 +21,7 @@ extern struct ExpStrc* bldFcnExp(char* nm, struct ArgLstStrc* argLst);
 
 struct VrbStrc* addVrb(struct EnvrStrc* envr, struct VrbExpStrc* vrbExp);
 struct VrbStrc* getEnvrVrb(struct EnvrStrc* envr, struct VrbExpStrc* vrbExp);
-struct VrbStrc* getVrb(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct VrbExpStrc* vrbExp);
+struct VrbStrc* addVrbGlb(vector<EnvrStrc*>& envr, VrbExpStrc* vrbExp);
 int prtEnvrVrb(struct EnvrStrc* envr);
 
 int addFcn(struct EnvrStrc* envr, struct FcnStrc* fcn);
@@ -52,16 +52,21 @@ struct VrbStrc* addVrb(struct EnvrStrc* envr, struct VrbExpStrc* vrbExp)
 
 	envr->vrbArr.push_back(bldVrb(vrbExp->nm));
 
-	//return envr->vrbArr[envr->vrbCnt - 1];
 	return envr->vrbArr.back();
 
+}
+
+struct VrbStrc* addVrbGlb(vector<EnvrStrc*>& envr, VrbExpStrc* vrbExp)
+{
+	envr[0]->glbArr.push_back(bldVrb(string(vrbExp->nm)));
+
+	return envr[0]->glbArr.back();
 }
 
 struct VrbStrc* getEnvrVrb(struct EnvrStrc* envr, struct VrbExpStrc* vrbExp)
 {
 	int i;
 
-	//for (i = 0; i < envr->vrbCnt; i++)
 	for (i = 0; i < envr->vrbArr.size(); i++)
 	{
 
@@ -71,17 +76,28 @@ struct VrbStrc* getEnvrVrb(struct EnvrStrc* envr, struct VrbExpStrc* vrbExp)
 		}
 	}
 
+	if (envr->typ == TOP_LEVEL_ENVIRONMENT)
+	{
+		for (i = 0; i < envr->glbArr.size(); i++)
+		{
+			if (vrbExp->nm == envr->glbArr[i]->nm)
+			{
+				return envr->glbArr[i];
+			}
+		}
+	}
+
 	return NULL;
 
 }
 
-struct VrbStrc* getVrb(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct VrbExpStrc* vrbExp)
-{
-	struct VrbStrc* vrb = NULL;
-	vrb = getEnvrVrb(fcnEnvr, vrbExp) != NULL ? getEnvrVrb(fcnEnvr, vrbExp) : getEnvrVrb(glbEnvr, vrbExp);
-
-	return vrb;
-}
+//struct VrbStrc* getVrb(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct VrbExpStrc* vrbExp)
+//{
+//	struct VrbStrc* vrb = NULL;
+//	vrb = getEnvrVrb(fcnEnvr, vrbExp) != NULL ? getEnvrVrb(fcnEnvr, vrbExp) : getEnvrVrb(glbEnvr, vrbExp);
+//
+//	return vrb;
+//}
 
 struct VrbStrc* getVrb(vector<EnvrStrc*>& envr, struct VrbExpStrc* vrbExp)
 {

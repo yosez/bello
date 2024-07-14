@@ -21,6 +21,7 @@ struct StmtStrc* bldCntnStmt(struct ExpStrc* exp);
 struct StmtStrc* bldFcnStmt(struct FcnStrc* fcn);
 struct StmtStrc* bldRtnStmt(struct ExpStrc* exp);
 struct StmtStrc* bldVarStmt(struct AsgnLstStrc* asgnLst);
+struct StmtStrc* bldGlbStmt(AsgnLstStrc* asgnLst);
 struct StmtStrc* bldNllStmt();
 
 
@@ -207,6 +208,24 @@ struct StmtStrc* bldVarStmt(struct AsgnLstStrc* asgnLst)
 
 }
 
+struct StmtStrc* bldGlbStmt(AsgnLstStrc* asgnLst)
+{
+	printf("test\n");
+	StmtStrc* rslt = new StmtStrc;
+
+	rslt->typ = GLOBAL_STATEMENT;
+
+	rslt->stmt.glbStmt = new GlbStmtStrc;
+
+	rslt->stmt.glbStmt->asgnLst = asgnLst;
+
+	printf("test #2\n");
+
+	//printf("asgnLst: %s", rslt->stmt.glbStmt->asgnLst->asgnArr[0]->exp.lvlExp->vrb->exp.vrbExp->nm.c_str());
+
+	return rslt;
+}
+
 struct StmtStrc* bldNllStmt()
 {
 	struct StmtStrc* rslt = new StmtStrc;
@@ -276,6 +295,40 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 
 				}
 			}
+
+
+			return rslt;
+		}
+
+		if (stmt->typ == GLOBAL_STATEMENT)
+		{
+			struct VrbStrc* vrb;
+
+			//获取glb语句声明全局变量的个数
+			int lnt = stmt->stmt.glbStmt->asgnLst->asgnArr.size();
+
+			struct VrbExpStrc* glb;
+
+			//检查变量是否已经被定义过
+			for (int i = 0; i < lnt; i++)
+			{
+				glb = stmt->stmt.glbStmt->asgnLst->asgnArr[i]->exp.asgnExp->lvl->exp.lvlExp->vrb->exp.vrbExp;
+
+				vrb = getVrb(envr, glb);
+
+				if (vrb != NULL)
+				{
+					throw new ExVrbRdfn();
+				}
+
+				vrb = addVrbGlb(envr, glb);
+
+				CnstStrc* vl = clcExp(envr, stmt->stmt.glbStmt->asgnLst->asgnArr[i]->exp.asgnExp->exp);
+
+				asgnVrb(vrb, vl);
+			}
+
+			printf("glb dfnd\n");
 
 
 			return rslt;
