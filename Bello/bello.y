@@ -131,8 +131,8 @@
 %%
 
 statement
-    : single_statement execute_statement statement 
-    | statement_block execute_statement statement 
+    : statement single_statement execute_statement
+    | statement statement_block execute_statement 
     | error { yyerrok; }
     | //需要加上识别空语句，以处理输入结束的情况
 

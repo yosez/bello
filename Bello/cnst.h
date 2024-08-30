@@ -9,7 +9,7 @@
 // #define DFTN_H
 // #endif
 
-extern struct CnstStrc;
+//extern struct CnstStrc;
 
 
 struct CnstStrc* bldIntCnst(int vl)
