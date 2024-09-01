@@ -53,6 +53,8 @@
 
 %%
 
+"\t"+                       { yylval.intVl = strlen(yytext); return INDENT; }
+"\n"                        { return LF; }
 "+="                        { return ADD_ASSIGN; }
 "-="                        { return SUB_ASSIGN; }
 "*="                        { return MUL_ASSIGN; }
@@ -78,6 +80,7 @@
 "^"                         { return BIT_XOR; }
 "~"                         { return BIT_NOT; }
 "!"                         { return NOT; }
+"noop"                      { return NOP; }
 "var"                       { return VAR; }
 "global"                    { return GLOBAL; }
 "if"                        { return IF; }

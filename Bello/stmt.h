@@ -55,6 +55,20 @@ struct StmtStrc* bldIfStmt(struct ExpStrc* exp, struct StmtStrc* stmt)
 	return rslt;
 }
 
+struct StmtStrc* bldIfStmt(struct ExpStrc* exp)
+{
+	struct StmtStrc* rslt = new StmtStrc;
+
+	rslt->typ = IF_STATEMENT;
+
+	rslt->stmt.ifStmt = new IfStmtStrc;
+
+	rslt->stmt.ifStmt->exp = exp;
+	rslt->stmt.ifStmt->stmt = nullptr;
+
+	return rslt;
+}
+
 struct StmtStrc* bldIfElsStmt(struct ExpStrc* exp, struct StmtStrc* stmt, struct StmtStrc* elsStmt)
 {
 	struct StmtStrc* rslt = new StmtStrc;

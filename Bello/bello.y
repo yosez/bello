@@ -65,6 +65,9 @@
     //string idtf;
 }
 
+%token LF
+%token NOP
+%token <intVl> INDENT
 %token <intVl> INT_VALUE
 %token <blnVl> BOOLEAN_VALUE
 %token <fltVl> FLOAT_VALUE
@@ -79,6 +82,7 @@
 %token LEFT_PAREN RIGHT_PAREN
 %token LEFT_QUAD RIGHT_QUAD
 %token LEFT_BRACE RIGHT_BRACE
+%token SEMICOLON_OPTIONAL
 %token SEMICOLON COMMA COLON
 %token ADD SUB MUL DIV MOD
 %token EQ NE GT GE LT LE
@@ -131,37 +135,35 @@
 %%
 
 statement
-    : statement single_statement execute_statement
-    | statement statement_block execute_statement 
+    : statement single_statement LF execute_statement //执行顶层语句
+    | statement INDENT single_statement LF 
+    | statement LF
     | error { yyerrok; }
     | //需要加上识别空语句，以处理输入结束的情况
 
 execute_statement
     : 
     { 
-        //printf("statement type: %d\n",$<stmt>0->typ); 
-        exctStmt(envr, $<stmt>0); 
+        exctStmt(envr, $<stmt>-1); 
     }
     //| error { yyerrok; }
 
 single_statement
-    : expression_statement SEMICOLON { $$=$1; }
+    : expression_statement { $$=$1; }
     | if_statement { $$=$1; }
     | for_statement { $$=$1; }
     | while_statement { $$=$1; }
     | do_while_statement { $$=$1; }
-    | break_statement SEMICOLON{ $$=$1; }
-    | continue_statement SEMICOLON { $$=$1; }
-    | return_statement SEMICOLON { $$=$1; }
+    | break_statement { $$=$1; }
+    | continue_statement  { $$=$1; }
+    | return_statement  { $$=$1; }
     | function_define_statement { $$=$1; }
-    | null_statement SEMICOLON { $$=$1; }
-    | var_statement SEMICOLON { $$ = $1; }
-    | global_statement SEMICOLON { $$ = $1; }
+    | null_statement  { $$=$1; }
+    | var_statement  { $$ = $1; }
+    | global_statement  { $$ = $1; } 
     | error 
     { 
-        //system("pause");  
         $$=bldNllStmt(); 
-        //printf("statement error. %d : %s\n", $$->typ, yytext); 
         yyclearin; 
         yyerrok; 
     }
@@ -481,14 +483,14 @@ evaluate_list
     } */
 
 if_statement
-    : IF LEFT_PAREN expression RIGHT_PAREN structure_statement 
+    : IF LEFT_PAREN expression RIGHT_PAREN 
     {
-        $$=bldIfStmt($3,$5);
+        $$=bldIfStmt($3);
     }
-    | IF LEFT_PAREN expression RIGHT_PAREN structure_statement ELSE structure_statement 
+    /* | IF LEFT_PAREN expression RIGHT_PAREN structure_statement ELSE structure_statement 
     {
         $$=bldIfElsStmt($3, $5, $7);
-    }
+    } */
 
 for_statement
     : FOR LEFT_PAREN single_statement_no_semicolon SEMICOLON expression_statement SEMICOLON single_statement_no_semicolon RIGHT_PAREN structure_statement
