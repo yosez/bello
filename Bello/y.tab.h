@@ -113,14 +113,14 @@ extern int yydebug;
     BREAK = 314,                   /* BREAK  */
     FUNC = 315,                    /* FUNC  */
     RETURN = 316,                  /* RETURN  */
-    READ_INT = 317,                /* READ_INT  */
-    READ_FLOAT = 318,              /* READ_FLOAT  */
-    READ = 319,                    /* READ  */
-    READ_BOOL = 320,               /* READ_BOOL  */
-    READ_LINE = 321,               /* READ_LINE  */
-    NEW_ARRAY = 322,               /* NEW_ARRAY  */
-    MINUS_SIGN = 323,              /* MINUS_SIGN  */
-    PLUS_SIGN = 324                /* PLUS_SIGN  */
+    NEW_ARRAY = 317,               /* NEW_ARRAY  */
+    MINUS_SIGN = 318,              /* MINUS_SIGN  */
+    PLUS_SIGN = 319,               /* PLUS_SIGN  */
+    READ_INT = 320,                /* READ_INT  */
+    READ_FLOAT = 321,              /* READ_FLOAT  */
+    READ = 322,                    /* READ  */
+    READ_BOOL = 323,               /* READ_BOOL  */
+    READ_LINE = 324                /* READ_LINE  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -188,14 +188,14 @@ extern int yydebug;
 #define BREAK 314
 #define FUNC 315
 #define RETURN 316
-#define READ_INT 317
-#define READ_FLOAT 318
-#define READ 319
-#define READ_BOOL 320
-#define READ_LINE 321
-#define NEW_ARRAY 322
-#define MINUS_SIGN 323
-#define PLUS_SIGN 324
+#define NEW_ARRAY 317
+#define MINUS_SIGN 318
+#define PLUS_SIGN 319
+#define READ_INT 320
+#define READ_FLOAT 321
+#define READ 322
+#define READ_BOOL 323
+#define READ_LINE 324
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED

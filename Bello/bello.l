@@ -53,7 +53,19 @@
 
 %%
 
-"\t"+                       { yylval.intVl = strlen(yytext); return INDENT; }
+"\t"+                       { 
+                                // if (yyleng == 0 )
+                                // {
+                                //     yylval.intVl = 0;
+                                // }
+                                // else
+                                // {
+                                //     yylval.intVl = strlen(yytext); 
+                                // }     
+                                yylval.intVl = strlen(yytext); 
+                                //printf("\d: \s\n", yyleng, yytext);
+                                return INDENT; 
+                            }
 "\n"                        { return LF; }
 "+="                        { return ADD_ASSIGN; }
 "-="                        { return SUB_ASSIGN; }

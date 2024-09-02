@@ -100,7 +100,6 @@
 %token INCREMENT DECREMENT
 %token IF ELSE FOR WHILE DO CONTINUE BREAK
 %token FUNC RETURN
-%token READ_INT READ_FLOAT READ READ_BOOL READ_LINE
 %token NEW_ARRAY
 
 %type <exp> expression value_expression function_expression  array_expression
@@ -144,7 +143,7 @@
 %%
 
 statement
-    : statement single_statement LF check_indent build_statement execute_statement //执行顶层语句
+    : statement {$<intVl>$ = 0; } single_statement LF check_indent build_statement execute_statement //执行顶层语句
     | statement INDENT single_statement LF check_indent build_statement
     | statement LF
     | error { yyerrok; }
@@ -157,8 +156,6 @@ check_indent
            yyclearin;
            yyerrok;
         }
-
-
       }
 
 build_statement
@@ -185,6 +182,7 @@ build_statement
         }
         else if ($<intVl>-3 == lstIndt)
         {
+            printf("stk\n");
             //语句入栈
             StmtStkItmStrc * sktItm = new StmtStkItmStrc;
 
@@ -193,6 +191,8 @@ build_statement
             sktItm->alwSubStmt = chkStmtAlwSubStmt($<stmt>-2);
 
             stmtStk.push_back(sktItm);
+
+            printf("stk #2\n");
         }
         else if ($<intVl>-3 < lstIndt)
         {
@@ -239,12 +239,18 @@ build_statement
             }
         }
 
-        lstIndt = $<intVl>-2;
+        lstIndt = $<intVl>-3;
     }
 
 execute_statement
     : 
     { 
+        //只在无缩进的情况下执行语句
+        if ($<intVl>-4 != 0)
+        {
+            YYACCEPT;
+        }
+
         exctStmt(envr, $<stmt>-3); 
     }
     //| error { yyerrok; }
