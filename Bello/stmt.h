@@ -24,6 +24,8 @@ struct StmtStrc* bldVarStmt(struct AsgnLstStrc* asgnLst);
 struct StmtStrc* bldGlbStmt(AsgnLstStrc* asgnLst);
 struct StmtStrc* bldNllStmt();
 
+extern int chkStmtAlwSubStmt(struct StmtStrc* stmt);
+
 
 struct StmtRsltStrc* exctStmt(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct StmtStrc* stmt);
 
@@ -687,4 +689,26 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 
 
 	return rslt;
+}
+
+int chkStmtAlwSubStmt(struct StmtStrc* stmt)
+{
+	switch (stmt->typ)
+	{
+		case IF_STATEMENT:
+		case FOR_STATEMENT:
+		case WHILE_STATEMENT:
+		case DO_WHILE_STATEMENT:
+		case FUNCTION_DEFINE_STATEMENT:
+		case ELSE_STATEMENT:
+		{
+			return 1;
+			break;
+		}
+		default:
+		{
+			return 0;
+		}
+
+	}
 }

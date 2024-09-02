@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <vector>
 #include <string>
-
+#include <stack>
 
 using namespace std;
 
@@ -41,13 +41,12 @@ struct ArrEvlExpStrc;
 struct ElmtAsgnExpStrc;
 struct NtvFcnStrc;
 struct VarStmtStrc;
+struct StmtStkItmStrc;
 
-//typedef struct CnstStrc* ntvFcnDfn(struct EnvrStrc* envr, int prmCnt, vector <CnstStrc*> prmArr);
 typedef struct CnstStrc* ntvFcnDfn(vector<EnvrStrc*>& envr, int prmCnt, vector <CnstStrc*> prmArr);
 
 
-//struct EnvrStrc* glbEnvr;
-
+int lstIndt = 0;
 
 union VlUnn
 {
@@ -113,6 +112,7 @@ enum StmtTyp
 	EXPRESSION_STATEMENT,
 	IF_STATEMENT,
 	IF_ELSE_STATEMENT,
+	ELSE_STATEMENT,
 	FOR_STATEMENT,
 	WHILE_STATEMENT,
 	DO_WHILE_STATEMENT,
@@ -142,6 +142,17 @@ enum EnvrTyp
 	STATEMENT_ENVIRONMENT
 };
 
+
+
+struct StmtStkItmStrc
+{
+
+	int indt;
+	StmtStrc* stmt;
+	int alwSubStmt = 0;
+};
+
+std::vector<StmtStkItmStrc*> stmtStk;
 
 struct VrbStrc
 {

@@ -4,7 +4,11 @@
     #include <string.h>
     #include <stdlib.h>
     #include <stdbool.h>
-    #include "dftn.h"
+    #include <stack>
+    //#include "dftn.h"
+    #ifndef DFTN_H
+    #define DFTN_H
+    #endif
     #include "vrb.h"
     #include "cnst.h"
     #ifndef EXP_H
@@ -13,9 +17,6 @@
     #ifndef STMT_H
     #define STMT_H
     #endif
-    // #ifndef ARR_H
-    // #define ARR_H
-    // #endif
     #include "arr.h"
     #include "exp.h"
     #include "stmt.h"
@@ -39,6 +40,14 @@
     }
 
     //#define YYERROR_VERBOSE 1
+
+    extern int lstIndt;
+
+    extern struct StmtStkItemStrc;
+
+    extern std::vector<StmtStkItmStrc*> stmtStk;
+
+    extern int chkStmtAlwSubStmt(struct StmtStrc* stmt);
 
 %}
 
@@ -135,22 +144,115 @@
 %%
 
 statement
-    : statement single_statement LF execute_statement //执行顶层语句
-    | statement INDENT single_statement LF 
+    : statement single_statement LF check_indent build_statement execute_statement //执行顶层语句
+    | statement INDENT single_statement LF check_indent build_statement
     | statement LF
     | error { yyerrok; }
-    | //需要加上识别空语句，以处理输入结束的情况
+    | ; //需要加上识别空语句，以处理输入结束的情况
+
+check_indent
+    : { 
+        if (($<intVl>-2)>lstIndt+1) 
+        {
+           yyclearin;
+           yyerrok;
+        }
+
+
+      }
+
+build_statement
+    : 
+    {
+        //如果是当前句的indent == 上1句的indent + 1，则检查上1句是否有语句体，如上1句允许语句体，语句入栈
+        if ($<intVl>-3 == lstIndt + 1 )
+        {
+            if (stmtStk.back()->alwSubStmt)
+            {
+                //语句入栈
+                StmtStkItmStrc * sktItm = new StmtStkItmStrc;
+
+                sktItm->indt = $<intVl>-3;
+                sktItm->stmt = $<stmt>-2;
+                sktItm->alwSubStmt = chkStmtAlwSubStmt($<stmt>-2);
+
+                stmtStk.push_back(sktItm);
+            }
+            else
+            {
+                yyerrok;
+            }
+        }
+        else if ($<intVl>-3 == lstIndt)
+        {
+            //语句入栈
+            StmtStkItmStrc * sktItm = new StmtStkItmStrc;
+
+            sktItm->indt = $<intVl>-3;
+            sktItm->stmt = $<stmt>-2;
+            sktItm->alwSubStmt = chkStmtAlwSubStmt($<stmt>-2);
+
+            stmtStk.push_back(sktItm);
+        }
+        else if ($<intVl>-3 < lstIndt)
+        {
+            int nowIndt = $<intVl>-3;
+
+            int idx;
+
+            while (stmtStk.back()->indt < nowIndt)
+            {
+                idx = stmtStk.size()-1;
+                while (idx>0 && stmtStk.back()->indt == stmtStk.at(idx-1)->indt)
+                {
+                    idx--;
+                }
+
+                int i = idx;
+
+                StmtStrc* blk = bldStmtBlk();
+
+                while (i < stmtStk.size())
+                {
+                    stmtBlkAdd(blk, stmtStk.at(i)->stmt);
+                }
+
+                //语句出栈
+                int nbrPop = stmtStk.size() - idx;
+
+                for (i=0;i<nbrPop;i++)
+                {
+                    stmtStk.pop_back();
+                }
+
+                //将语句体附加到上1级语句中
+
+                switch(stmtStk.back()->stmt->typ)
+                {
+                    case IF_STATEMENT:
+                    {
+                        stmtStk.back()->stmt->stmt.ifStmt->stmt = blk;
+                        break;
+                    }
+                }
+
+            }
+        }
+
+        lstIndt = $<intVl>-2;
+    }
 
 execute_statement
     : 
     { 
-        exctStmt(envr, $<stmt>-1); 
+        exctStmt(envr, $<stmt>-3); 
     }
     //| error { yyerrok; }
 
 single_statement
     : expression_statement { $$=$1; }
     | if_statement { $$=$1; }
+    /*
     | for_statement { $$=$1; }
     | while_statement { $$=$1; }
     | do_while_statement { $$=$1; }
@@ -160,7 +262,7 @@ single_statement
     | function_define_statement { $$=$1; }
     | null_statement  { $$=$1; }
     | var_statement  { $$ = $1; }
-    | global_statement  { $$ = $1; } 
+    | global_statement  { $$ = $1; } */
     | error 
     { 
         $$=bldNllStmt(); 
