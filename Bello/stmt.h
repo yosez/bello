@@ -11,6 +11,7 @@
 struct StmtStrc* bldExpStmt(struct ExpStrc* exp);
 struct StmtStrc* bldIfStmt(struct ExpStrc* exp, struct StmtStrc* stmt);
 struct StmtStrc* bldIfElsStmt(struct ExpStrc* exp, struct StmtStrc* stmt, struct StmtStrc* elsStmt);
+//struct StmtStrc* bldElsStmt();
 struct StmtStrc* bldForStmt(struct StmtStrc* intl, struct StmtStrc* exp, struct StmtStrc* itr, struct StmtStrc* stmt);
 struct StmtStrc* bldWhlStmt(struct StmtStrc* exp, struct StmtStrc* stmt);
 struct StmtStrc* bldDoWhlStmt(struct StmtStrc* exp, struct StmtStrc* stmt);
@@ -23,6 +24,10 @@ struct StmtStrc* bldRtnStmt(struct ExpStrc* exp);
 struct StmtStrc* bldVarStmt(struct AsgnLstStrc* asgnLst);
 struct StmtStrc* bldGlbStmt(AsgnLstStrc* asgnLst);
 struct StmtStrc* bldNllStmt();
+
+struct StmtStrc* bldIfStmt(struct ExpStrc* exp);
+struct StmtStrc* bldForStmt(struct StmtStrc* intl, struct StmtStrc* exp, struct StmtStrc* itr);
+struct StmtStrc* bldWhlStmt(struct StmtStrc* exp);
 
 extern int chkStmtAlwSubStmt(struct StmtStrc* stmt);
 
@@ -102,6 +107,22 @@ struct StmtStrc* bldForStmt(struct StmtStrc* intl, struct StmtStrc* exp, struct 
 	return rslt;
 }
 
+struct StmtStrc* bldForStmt(struct StmtStrc* intl, struct StmtStrc* exp, struct StmtStrc* itr)
+{
+	struct StmtStrc* rslt = new StmtStrc;
+
+	rslt->typ = FOR_STATEMENT;
+
+	rslt->stmt.forStmt = new ForStmtStrc;
+
+	rslt->stmt.forStmt->intl = intl;
+	rslt->stmt.forStmt->exp = exp;
+	rslt->stmt.forStmt->itr = itr;
+	rslt->stmt.forStmt->stmt = nullptr;
+
+	return rslt;
+}
+
 struct StmtStrc* bldWhlStmt(struct StmtStrc* exp, struct StmtStrc* stmt)
 {
 	struct StmtStrc* rslt = new StmtStrc;
@@ -112,6 +133,20 @@ struct StmtStrc* bldWhlStmt(struct StmtStrc* exp, struct StmtStrc* stmt)
 
 	rslt->stmt.whlStmt->exp = exp;
 	rslt->stmt.whlStmt->stmt = stmt;
+
+	return rslt;
+}
+
+struct StmtStrc* bldWhlStmt(struct StmtStrc* exp)
+{
+	struct StmtStrc* rslt = new StmtStrc;
+
+	rslt->typ = WHILE_STATEMENT;
+
+	rslt->stmt.whlStmt = new WhlStmtStrc;
+
+	rslt->stmt.whlStmt->exp = exp;
+	rslt->stmt.whlStmt->stmt = nullptr;
 
 	return rslt;
 }

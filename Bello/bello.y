@@ -160,7 +160,8 @@ check_indent
 
 build_statement
     : 
-    {
+    {   
+        int indt = $<intVl>-3;
         //如果是当前句的indent == 上1句的indent + 1，则检查上1句是否有语句体，如上1句允许语句体，语句入栈
         if ($<intVl>-3 == lstIndt + 1 )
         {
@@ -239,26 +240,39 @@ build_statement
             }
         }
 
-        lstIndt = $<intVl>-3;
+        lstIndt = indt;
     }
 
 execute_statement
     : 
     { 
+        printf("alw sub stmt: %d\n", stmtStk.back()->alwSubStmt);
         //只在无缩进的情况下执行语句
-        if ($<intVl>-4 != 0)
+        if ($<intVl>-4 != 0 || stmtStk.back()->alwSubStmt == 1)
         {
-            YYACCEPT;
+            //YYABORT;
+        }
+        else
+        {
+            // exctStmt(envr, $<stmt>-3);
+            exctStmt(envr, stmtStk.back()->stmt);
+            stmtStk.pop_back();
         }
 
-        exctStmt(envr, $<stmt>-3); 
+        printf("exct stmt\n");
+
+        // if (stmtStk.back()->alwSubStmt == 1)
+        // {
+        //     YYABORT;            
+        // }
+
+         
     }
     //| error { yyerrok; }
 
 single_statement
     : expression_statement { $$=$1; }
     | if_statement { $$=$1; }
-    /*
     | for_statement { $$=$1; }
     | while_statement { $$=$1; }
     | do_while_statement { $$=$1; }
@@ -268,7 +282,7 @@ single_statement
     | function_define_statement { $$=$1; }
     | null_statement  { $$=$1; }
     | var_statement  { $$ = $1; }
-    | global_statement  { $$ = $1; } */
+    | global_statement  { $$ = $1; } 
     | error 
     { 
         $$=bldNllStmt(); 
@@ -594,22 +608,35 @@ if_statement
     : IF LEFT_PAREN expression RIGHT_PAREN 
     {
         $$=bldIfStmt($3);
+        printf("bld if stmt\n");
     }
     /* | IF LEFT_PAREN expression RIGHT_PAREN structure_statement ELSE structure_statement 
     {
         $$=bldIfElsStmt($3, $5, $7);
     } */
 
-for_statement
+/* for_statement
     : FOR LEFT_PAREN single_statement_no_semicolon SEMICOLON expression_statement SEMICOLON single_statement_no_semicolon RIGHT_PAREN structure_statement
     {
         $$= bldForStmt($3, $5, $7, $9);  
+    } */
+
+for_statement
+    : FOR LEFT_PAREN single_statement_no_semicolon SEMICOLON expression_statement SEMICOLON single_statement_no_semicolon RIGHT_PAREN
+    {
+        $$= bldForStmt($3, $5, $7);  
     }
 
-while_statement
+/* while_statement
     : WHILE LEFT_PAREN expression_statement RIGHT_PAREN structure_statement
     {
         $$= bldWhlStmt($3, $5);
+    } */
+
+while_statement
+    : WHILE LEFT_PAREN expression_statement RIGHT_PAREN
+    {
+        $$= bldWhlStmt($3);
     }
 
 do_while_statement
