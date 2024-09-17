@@ -304,12 +304,7 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 
 			rsltExp = clcExp(envr, stmt->stmt.expStmt->exp);
 
-			// if (stmt->stmt.expStmt->exp->typ == CONST_EXPRESSION || stmt->stmt.expStmt->exp->typ == VARIABLE_EXPRESSION || 
-			//     stmt->stmt.expStmt->exp->typ == BINARY_EXPRESSION || stmt->stmt.expStmt->exp->typ == UNARY_EXPRESSION ||
-			//     stmt->stmt.expStmt->exp->typ == FUNCTION_EXPRESSION || stmt->stmt.expStmt->exp->typ == LVALUE_EXPRESSION )
-			// {
-			//     prtlnCnst(rsltExp);
-			// }
+			//printf("clcExp(envr, stmt->stmt.expStmt->exp): %d\n", clcExp(envr, stmt->stmt.expStmt->exp)->vl.intVl);
 		}
 
 		if (stmt->typ == VAR_STATEMENT)
@@ -390,7 +385,8 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 			//int envrLyr = envr.size();
 			envr.push_back(new EnvrStrc(STATEMENT_ENVIRONMENT));
 
-			//if ((clcExp(envr, stmt->stmt.ifStmt->exp)->vl.intVl) != 0)
+			printf("clcExp(envr, stmt->stmt.ifStmt->exp)->vl.intVl: %d\n", clcExp(envr, stmt->stmt.ifStmt->exp)->vl.intVl);
+
 			if ((clcExp(envr, stmt->stmt.ifStmt->exp)->vl.intVl) != 0)
 			{
 				rslt = exctStmt(envr, stmt->stmt.ifStmt->stmt);

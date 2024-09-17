@@ -145,7 +145,7 @@
 statement
     : statement {$<intVl>$ = 0; } single_statement LF check_indent build_statement execute_statement //执行顶层语句
     | statement INDENT single_statement LF check_indent build_statement
-    | statement LF
+    | statement LF close_execute_statement 
     | error { yyerrok; }
     | ; //需要加上识别空语句，以处理输入结束的情况
 
@@ -163,27 +163,30 @@ build_statement
     {   
         int indt = $<intVl>-3;
         //如果是当前句的indent == 上1句的indent + 1，则检查上1句是否有语句体，如上1句允许语句体，语句入栈
-        if ($<intVl>-3 == lstIndt + 1 )
+
+        printf("indt: %d lstIndt: %d\n",indt, lstIndt);
+        if (indt == lstIndt + 1 )
         {
             if (stmtStk.back()->alwSubStmt)
             {
                 //语句入栈
                 StmtStkItmStrc * sktItm = new StmtStkItmStrc;
 
-                sktItm->indt = $<intVl>-3;
+                sktItm->indt = indt;
                 sktItm->stmt = $<stmt>-2;
                 sktItm->alwSubStmt = chkStmtAlwSubStmt($<stmt>-2);
 
                 stmtStk.push_back(sktItm);
+
+                printf("--->>>stmt in stk: %d\n", stmtStk.size());
             }
             else
             {
                 yyerrok;
             }
         }
-        else if ($<intVl>-3 == lstIndt)
+        else if (indt == lstIndt)
         {
-            printf("stk\n");
             //语句入栈
             StmtStkItmStrc * sktItm = new StmtStkItmStrc;
 
@@ -193,15 +196,15 @@ build_statement
 
             stmtStk.push_back(sktItm);
 
-            printf("stk #2\n");
+            printf("stk lyr: %d\n", stmtStk.size());
         }
-        else if ($<intVl>-3 < lstIndt)
+        else if (indt < lstIndt)
         {
-            int nowIndt = $<intVl>-3;
+            int nowIndt = indt;
 
             int idx;
 
-            while (stmtStk.back()->indt < nowIndt)
+            while (stmtStk.back()->indt > nowIndt)
             {
                 idx = stmtStk.size()-1;
                 while (idx>0 && stmtStk.back()->indt == stmtStk.at(idx-1)->indt)
@@ -216,6 +219,8 @@ build_statement
                 while (i < stmtStk.size())
                 {
                     stmtBlkAdd(blk, stmtStk.at(i)->stmt);
+
+                    i++;
                 }
 
                 //语句出栈
@@ -243,10 +248,99 @@ build_statement
         lstIndt = indt;
     }
 
+close_execute_statement
+    : 
+    { 
+
+        //如果存在上一条语句
+        if (stmtStk.size()>0)
+        {
+            printf("close_execute_statement\n");
+
+            if (stmtStk.back()->indt == 0 && stmtStk.back()->alwSubStmt)
+            {
+                yyclearin;
+                yyerrok;
+                
+            }
+
+            //如果上1条语句为顶级语句且不允许子语句，则无动作
+            if (stmtStk.back()->indt == 0 && stmtStk.back()->alwSubStmt==0)
+            {
+                
+            }
+
+            //如果上1条语句为子语句，则闭合上1条顶级语句
+            if (stmtStk.back()->indt>0)
+            {
+                printf("cls top lvl stmt\n");
+
+                int nowIndt = 0;
+
+                int idx;
+
+                while (stmtStk.back()->indt > nowIndt)
+                {
+                    
+
+                    idx = stmtStk.size()-1;
+
+                    while (idx>0 && stmtStk.back()->indt == stmtStk.at(idx-1)->indt)
+                    {
+                        idx--;
+                    }
+
+                    int i = idx;
+
+                    StmtStrc* blk = bldStmtBlk();
+
+                    while (i < stmtStk.size())
+                    {
+                        stmtBlkAdd(blk, stmtStk.at(i)->stmt);
+
+                        i++;
+                    }
+
+                    //语句出栈
+                    int nbrPop = stmtStk.size() - idx;
+
+                    for (i=0;i<nbrPop;i++)
+                    {
+                        stmtStk.pop_back();
+                    }
+
+                    //将语句体附加到上1级语句中
+
+                    switch(stmtStk.back()->stmt->typ)
+                    {
+                        case IF_STATEMENT:
+                        {
+                            printf("if statement\n");
+                            stmtStk.back()->stmt->stmt.ifStmt->stmt = blk;
+                            break;
+                        }
+                    }
+
+                }
+
+                //执行上一条顶级语句
+                exctStmt(envr, stmtStk.back()->stmt);
+                stmtStk.pop_back();
+
+                printf("cls stk lyr: %d\n", stmtStk.size());
+
+                lstIndt=0;
+            }
+
+        }
+
+    }
+
 execute_statement
     : 
     { 
         printf("alw sub stmt: %d\n", stmtStk.back()->alwSubStmt);
+
         //只在无缩进的情况下执行语句
         if ($<intVl>-4 != 0 || stmtStk.back()->alwSubStmt == 1)
         {
@@ -254,26 +348,40 @@ execute_statement
         }
         else
         {
-            // exctStmt(envr, $<stmt>-3);
+            exctStmt(envr, stmtStk.back()->stmt);
+            stmtStk.pop_back();
+
+            printf("exct stmt\n");
+        }
+  
+    }
+
+/* execute_last_statement
+    : 
+    { 
+        printf("execute_last_statement: %d\n", stmtStk.back()->alwSubStmt);
+
+        //只在无缩进的情况下执行语句
+        if ($<intVl>-4 != 0 || stmtStk.back()->alwSubStmt == 1)
+        {
+            //YYABORT;
+        }
+        else
+        {
             exctStmt(envr, stmtStk.back()->stmt);
             stmtStk.pop_back();
         }
 
-        printf("exct stmt\n");
-
-        // if (stmtStk.back()->alwSubStmt == 1)
-        // {
-        //     YYABORT;            
-        // }
-
+        printf("exct lst stmt\n");
          
-    }
-    //| error { yyerrok; }
+    } */
+
+
 
 single_statement
     : expression_statement { $$=$1; }
     | if_statement { $$=$1; }
-    | for_statement { $$=$1; }
+    /* | for_statement { $$=$1; }
     | while_statement { $$=$1; }
     | do_while_statement { $$=$1; }
     | break_statement { $$=$1; }
@@ -282,7 +390,7 @@ single_statement
     | function_define_statement { $$=$1; }
     | null_statement  { $$=$1; }
     | var_statement  { $$ = $1; }
-    | global_statement  { $$ = $1; } 
+    | global_statement  { $$ = $1; }  */
     | error 
     { 
         $$=bldNllStmt(); 
