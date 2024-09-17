@@ -2233,7 +2233,11 @@ struct CnstStrc* clcExp(vector<EnvrStrc*>& envr, struct ExpStrc* exp)
 			throw new ExAlrdDfnAsFctn;
 		}
 
-		addVrb(envr[envr.size()-1], exp->exp.asgnExp->lvl->exp.lvlExp->vrb->exp.vrbExp);
+		if (getVrb(envr, exp->exp.asgnExp->lvl->exp.lvlExp->vrb->exp.vrbExp) == NULL)
+		{
+			addVrb(envr[envr.size() - 1], exp->exp.asgnExp->lvl->exp.lvlExp->vrb->exp.vrbExp);
+		}
+
 		rslt = clcAsgnExp(envr, exp->exp.asgnExp);
 	}
 
