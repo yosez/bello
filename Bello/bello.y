@@ -190,7 +190,7 @@ build_statement
             //语句入栈
             StmtStkItmStrc * sktItm = new StmtStkItmStrc;
 
-            sktItm->indt = $<intVl>-3;
+            sktItm->indt = indt;
             sktItm->stmt = $<stmt>-2;
             sktItm->alwSubStmt = chkStmtAlwSubStmt($<stmt>-2);
 
@@ -238,6 +238,11 @@ build_statement
                     case IF_STATEMENT:
                     {
                         stmtStk.back()->stmt->stmt.ifStmt->stmt = blk;
+                        break;
+                    }
+                    case WHILE_STATEMENT:
+                    {
+                        stmtStk.back()->stmt->stmt.whlStmt->stmt = blk;
                         break;
                     }
                 }
@@ -319,6 +324,11 @@ close_execute_statement
                             stmtStk.back()->stmt->stmt.ifStmt->stmt = blk;
                             break;
                         }
+                        case WHILE_STATEMENT:
+                        {
+                            stmtStk.back()->stmt->stmt.whlStmt->stmt = blk;
+                            break;
+                        }
                     }
 
                 }
@@ -381,9 +391,9 @@ execute_statement
 single_statement
     : expression_statement { $$=$1; }
     | if_statement { $$=$1; }
-    /* | for_statement { $$=$1; }
+    /* | for_statement { $$=$1; } */
     | while_statement { $$=$1; }
-    | do_while_statement { $$=$1; }
+    /* | do_while_statement { $$=$1; }
     | break_statement { $$=$1; }
     | continue_statement  { $$=$1; }
     | return_statement  { $$=$1; }
