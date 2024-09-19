@@ -403,14 +403,14 @@ single_statement
     | if_statement { $$=$1; }
     | for_statement { $$=$1; } 
     | while_statement { $$=$1; }
-    /* | do_while_statement { $$=$1; }
+    /* | do_while_statement { $$=$1; } */
     | break_statement { $$=$1; }
     | continue_statement  { $$=$1; }
-    | return_statement  { $$=$1; }
+    /*| return_statement  { $$=$1; }
     | function_define_statement { $$=$1; }
-    | null_statement  { $$=$1; }
-    | var_statement  { $$ = $1; }
-    | global_statement  { $$ = $1; }  */
+    | null_statement  { $$=$1; } */
+    | var_statement  { $$ = $1;}
+    | global_statement  { $$ = $1; }  
     | error 
     { 
         $$=bldNllStmt(); 
