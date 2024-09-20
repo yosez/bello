@@ -109,7 +109,7 @@
 %type <stmt> single_statement expression_statement 
     statement_block block_list null_statement var_statement global_statement
 %type <stmt> if_statement structure_statement for_statement single_statement_no_semicolon while_statement 
-    do_while_statement break_statement continue_statement return_statement 
+    do_while_statement break_statement continue_statement return_statement nop_statement
 %type <stmt> function_define_statement
 %type <prmLst> parameter_list 
 %type <argLst> argument_list
@@ -419,6 +419,7 @@ single_statement
     /*| return_statement  { $$=$1; }
     | function_define_statement { $$=$1; }
     | null_statement  { $$=$1; } */
+    | nop_statement { $$=$1; }
     | var_statement  { $$ = $1;}
     | global_statement  { $$ = $1; }  
     | error 
@@ -441,6 +442,9 @@ single_statement_no_semicolon
 
 null_statement
     : { $$=bldNllStmt(); }
+
+nop_statement
+    : NOP { $$=bldNllStmt(); }
 
 statement_block
     : LEFT_BRACE block_list RIGHT_BRACE { $$=$2; }

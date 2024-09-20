@@ -92,7 +92,7 @@
 "^"                         { return BIT_XOR; }
 "~"                         { return BIT_NOT; }
 "!"                         { return NOT; }
-"noop"                      { return NOP; }
+"nop"                       { return NOP; }
 "var"                       { return VAR; }
 "global"                    { return GLOBAL; }
 "if"                        { return IF; }
