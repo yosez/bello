@@ -853,18 +853,18 @@ static const yytype_int8 yytranslate[] =
 static const yytype_int16 yyrline[] =
 {
        0,   146,   146,   146,   147,   148,   149,   150,   153,   163,
-     263,   361,   402,   403,   404,   405,   407,   408,   412,   413,
-     414,   424,   425,   426,   427,   428,   429,   433,   436,   437,
-     440,   445,   452,   458,   459,   460,   461,   462,   463,   466,
-     467,   470,   471,   472,   473,   474,   475,   479,   480,   481,
-     482,   485,   486,   487,   488,   489,   492,   493,   494,   495,
-     496,   497,   498,   499,   500,   501,   502,   503,   504,   505,
-     506,   507,   511,   512,   513,   514,   515,   516,   517,   520,
-     521,   529,   533,   539,   545,   550,   558,   561,   564,   569,
-     574,   579,   590,   594,   600,   605,   613,   618,   623,   628,
-     633,   638,   643,   648,   653,   658,   663,   668,   673,   678,
-     683,   688,   693,   698,   703,   708,   713,   718,   736,   753,
-     765,   771,   777,   778,   781,   782,   785,   786
+     273,   371,   412,   413,   414,   415,   417,   418,   422,   423,
+     424,   434,   435,   436,   437,   438,   439,   443,   446,   447,
+     450,   455,   462,   468,   469,   470,   471,   472,   473,   476,
+     477,   480,   481,   482,   483,   484,   485,   489,   490,   491,
+     492,   495,   496,   497,   498,   499,   502,   503,   504,   505,
+     506,   507,   508,   509,   510,   511,   512,   513,   514,   515,
+     516,   517,   521,   522,   523,   524,   525,   526,   527,   530,
+     531,   539,   543,   549,   555,   560,   568,   571,   574,   579,
+     584,   589,   600,   604,   610,   615,   623,   628,   633,   638,
+     643,   648,   653,   658,   663,   668,   673,   678,   683,   688,
+     693,   698,   703,   708,   713,   718,   723,   728,   746,   763,
+     775,   781,   787,   788,   791,   792,   795,   796
 };
 #endif
 
@@ -1879,6 +1879,7 @@ yyreduce:
 
             int idx;
 
+            //折叠输入的句子以上的缩进大于该输入的句子，结果为栈中缩进最大的句子为输入的句子及其以上同等缩进的句子
             while (stmtStk.back()->indt > nowIndt)
             {
                 idx = stmtStk.size()-1;
@@ -1928,15 +1929,24 @@ yyreduce:
                 }
 
             }
+
+            //输入的句子入栈
+
+            StmtStkItmStrc* itm =new StmtStkItmStrc;
+            itm->indt = nowIndt;
+            itm->stmt = (yyvsp[(-2) - (0)].stmt);
+            itm->alwSubStmt = chkStmtAlwSubStmt((yyvsp[(-2) - (0)].stmt));
+
+            stmtStk.push_back(itm);
         }
 
         lstIndt = indt;
     }
-#line 1936 "y.tab.c"
+#line 1946 "y.tab.c"
     break;
 
   case 10: /* close_execute_statement: %empty  */
-#line 263 "bello.y"
+#line 273 "bello.y"
     { 
 
         //如果存在上一条语句
@@ -2032,11 +2042,11 @@ yyreduce:
         }
 
     }
-#line 2036 "y.tab.c"
+#line 2046 "y.tab.c"
     break;
 
   case 11: /* execute_statement: %empty  */
-#line 361 "bello.y"
+#line 371 "bello.y"
     { 
         printf("alw sub stmt: %d\n", stmtStk.back()->alwSubStmt);
 
@@ -2054,746 +2064,746 @@ yyreduce:
         }
   
     }
-#line 2058 "y.tab.c"
+#line 2068 "y.tab.c"
     break;
 
   case 12: /* single_statement: expression_statement  */
-#line 402 "bello.y"
+#line 412 "bello.y"
                            { (yyval.stmt)=(yyvsp[0].stmt); }
-#line 2064 "y.tab.c"
+#line 2074 "y.tab.c"
     break;
 
   case 13: /* single_statement: if_statement  */
-#line 403 "bello.y"
+#line 413 "bello.y"
                    { (yyval.stmt)=(yyvsp[0].stmt); }
-#line 2070 "y.tab.c"
+#line 2080 "y.tab.c"
     break;
 
   case 14: /* single_statement: for_statement  */
-#line 404 "bello.y"
+#line 414 "bello.y"
                     { (yyval.stmt)=(yyvsp[0].stmt); }
-#line 2076 "y.tab.c"
+#line 2086 "y.tab.c"
     break;
 
   case 15: /* single_statement: while_statement  */
-#line 405 "bello.y"
+#line 415 "bello.y"
                       { (yyval.stmt)=(yyvsp[0].stmt); }
-#line 2082 "y.tab.c"
+#line 2092 "y.tab.c"
     break;
 
   case 16: /* single_statement: break_statement  */
-#line 407 "bello.y"
+#line 417 "bello.y"
                       { (yyval.stmt)=(yyvsp[0].stmt); }
-#line 2088 "y.tab.c"
+#line 2098 "y.tab.c"
     break;
 
   case 17: /* single_statement: continue_statement  */
-#line 408 "bello.y"
+#line 418 "bello.y"
                           { (yyval.stmt)=(yyvsp[0].stmt); }
-#line 2094 "y.tab.c"
+#line 2104 "y.tab.c"
     break;
 
   case 18: /* single_statement: var_statement  */
-#line 412 "bello.y"
+#line 422 "bello.y"
                      { (yyval.stmt) = (yyvsp[0].stmt);}
-#line 2100 "y.tab.c"
+#line 2110 "y.tab.c"
     break;
 
   case 19: /* single_statement: global_statement  */
-#line 413 "bello.y"
+#line 423 "bello.y"
                         { (yyval.stmt) = (yyvsp[0].stmt); }
-#line 2106 "y.tab.c"
+#line 2116 "y.tab.c"
     break;
 
   case 20: /* single_statement: error  */
-#line 415 "bello.y"
+#line 425 "bello.y"
     { 
         (yyval.stmt)=bldNllStmt(); 
         yyclearin; 
         yyerrok; 
     }
-#line 2116 "y.tab.c"
+#line 2126 "y.tab.c"
     break;
 
   case 27: /* null_statement: %empty  */
-#line 433 "bello.y"
+#line 443 "bello.y"
       { (yyval.stmt)=bldNllStmt(); }
-#line 2122 "y.tab.c"
+#line 2132 "y.tab.c"
     break;
 
   case 28: /* statement_block: LEFT_BRACE block_list RIGHT_BRACE  */
-#line 436 "bello.y"
+#line 446 "bello.y"
                                         { (yyval.stmt)=(yyvsp[-1].stmt); }
-#line 2128 "y.tab.c"
+#line 2138 "y.tab.c"
     break;
 
   case 29: /* statement_block: LEFT_BRACE RIGHT_BRACE  */
-#line 437 "bello.y"
+#line 447 "bello.y"
                              { (yyval.stmt)=bldNllStmt(); }
-#line 2134 "y.tab.c"
+#line 2144 "y.tab.c"
     break;
 
   case 30: /* block_list: single_statement  */
-#line 441 "bello.y"
+#line 451 "bello.y"
     { 
         (yyval.stmt)=bldStmtBlk(); 
         stmtBlkAdd((yyval.stmt), (yyvsp[0].stmt)); 
     }
-#line 2143 "y.tab.c"
+#line 2153 "y.tab.c"
     break;
 
   case 31: /* block_list: block_list single_statement  */
-#line 446 "bello.y"
+#line 456 "bello.y"
     {
         (yyval.stmt) = stmtBlkAdd((yyvsp[-1].stmt) ,(yyvsp[0].stmt));
     }
-#line 2151 "y.tab.c"
+#line 2161 "y.tab.c"
     break;
 
   case 32: /* expression_statement: expression  */
-#line 453 "bello.y"
+#line 463 "bello.y"
     { 
         (yyval.stmt)=bldExpStmt((yyvsp[0].exp)); 
     }
-#line 2159 "y.tab.c"
+#line 2169 "y.tab.c"
     break;
 
   case 35: /* expression: unary_expression  */
-#line 460 "bello.y"
+#line 470 "bello.y"
                        { (yyval.exp)=(yyvsp[0].exp); }
-#line 2165 "y.tab.c"
+#line 2175 "y.tab.c"
     break;
 
   case 36: /* expression: binary_expression  */
-#line 461 "bello.y"
+#line 471 "bello.y"
                         { (yyval.exp)=(yyvsp[0].exp); }
-#line 2171 "y.tab.c"
+#line 2181 "y.tab.c"
     break;
 
   case 37: /* expression: array_expression  */
-#line 462 "bello.y"
+#line 472 "bello.y"
                        { (yyval.exp)=(yyvsp[0].exp); }
-#line 2177 "y.tab.c"
+#line 2187 "y.tab.c"
     break;
 
   case 38: /* expression: new_array_expression  */
-#line 463 "bello.y"
+#line 473 "bello.y"
                            { (yyval.exp) = (yyvsp[0].exp); }
-#line 2183 "y.tab.c"
+#line 2193 "y.tab.c"
     break;
 
   case 41: /* assign_expression: lvalue_expression ASSIGN expression  */
-#line 470 "bello.y"
+#line 480 "bello.y"
                                           { (yyval.exp)=bldAsgnExp((yyvsp[-2].exp), (yyvsp[0].exp)); }
-#line 2189 "y.tab.c"
+#line 2199 "y.tab.c"
     break;
 
   case 42: /* assign_expression: lvalue_expression ADD_ASSIGN expression  */
-#line 471 "bello.y"
+#line 481 "bello.y"
                                               { (yyval.exp)=bldAsgnExp((yyvsp[-2].exp), bldBnrExp(ADD, (yyvsp[-2].exp), (yyvsp[0].exp))); }
-#line 2195 "y.tab.c"
+#line 2205 "y.tab.c"
     break;
 
   case 43: /* assign_expression: lvalue_expression SUB_ASSIGN expression  */
-#line 472 "bello.y"
+#line 482 "bello.y"
                                               { (yyval.exp)=bldAsgnExp((yyvsp[-2].exp), bldBnrExp(SUB, (yyvsp[-2].exp), (yyvsp[0].exp))); }
-#line 2201 "y.tab.c"
+#line 2211 "y.tab.c"
     break;
 
   case 44: /* assign_expression: lvalue_expression MUL_ASSIGN expression  */
-#line 473 "bello.y"
+#line 483 "bello.y"
                                               { (yyval.exp)=bldAsgnExp((yyvsp[-2].exp), bldBnrExp(MUL, (yyvsp[-2].exp), (yyvsp[0].exp))); }
-#line 2207 "y.tab.c"
+#line 2217 "y.tab.c"
     break;
 
   case 45: /* assign_expression: lvalue_expression DIV_ASSIGN expression  */
-#line 474 "bello.y"
+#line 484 "bello.y"
                                               { (yyval.exp)=bldAsgnExp((yyvsp[-2].exp), bldBnrExp(DIV, (yyvsp[-2].exp), (yyvsp[0].exp))); }
-#line 2213 "y.tab.c"
+#line 2223 "y.tab.c"
     break;
 
   case 46: /* assign_expression: lvalue_expression MOD_ASSIGN expression  */
-#line 475 "bello.y"
+#line 485 "bello.y"
                                               { (yyval.exp)=bldAsgnExp((yyvsp[-2].exp), bldBnrExp(MOD, (yyvsp[-2].exp), (yyvsp[0].exp))); }
-#line 2219 "y.tab.c"
+#line 2229 "y.tab.c"
     break;
 
   case 47: /* self_operation_expression: INCREMENT lvalue_expression  */
-#line 479 "bello.y"
+#line 489 "bello.y"
                                   { (yyval.exp)=bldUnrExp(PREFIX_INCREMENT, (yyvsp[0].exp)); }
-#line 2225 "y.tab.c"
+#line 2235 "y.tab.c"
     break;
 
   case 48: /* self_operation_expression: DECREMENT lvalue_expression  */
-#line 480 "bello.y"
+#line 490 "bello.y"
                                   { (yyval.exp)=bldUnrExp(PREFIX_DECREMENT, (yyvsp[0].exp)); }
-#line 2231 "y.tab.c"
+#line 2241 "y.tab.c"
     break;
 
   case 49: /* self_operation_expression: lvalue_expression INCREMENT  */
-#line 481 "bello.y"
+#line 491 "bello.y"
                                   { (yyval.exp)=bldUnrExp(SUFFIX_INCREMENT, (yyvsp[-1].exp)); }
-#line 2237 "y.tab.c"
+#line 2247 "y.tab.c"
     break;
 
   case 50: /* self_operation_expression: lvalue_expression DECREMENT  */
-#line 482 "bello.y"
+#line 492 "bello.y"
                                   { (yyval.exp)=bldUnrExp(SUFFIX_DECREMENT, (yyvsp[-1].exp)); }
-#line 2243 "y.tab.c"
+#line 2253 "y.tab.c"
     break;
 
   case 51: /* unary_expression: SUB expression  */
-#line 485 "bello.y"
+#line 495 "bello.y"
                                       { (yyval.exp) = bldUnrExp(SUB, (yyvsp[0].exp)); }
-#line 2249 "y.tab.c"
+#line 2259 "y.tab.c"
     break;
 
   case 52: /* unary_expression: ADD expression  */
-#line 486 "bello.y"
+#line 496 "bello.y"
                                      { (yyval.exp) = bldUnrExp(ADD, (yyvsp[0].exp)); }
-#line 2255 "y.tab.c"
+#line 2265 "y.tab.c"
     break;
 
   case 53: /* unary_expression: LEFT_PAREN expression RIGHT_PAREN  */
-#line 487 "bello.y"
+#line 497 "bello.y"
                                         { (yyval.exp)=(yyvsp[-1].exp); }
-#line 2261 "y.tab.c"
+#line 2271 "y.tab.c"
     break;
 
   case 54: /* unary_expression: NOT expression  */
-#line 488 "bello.y"
+#line 498 "bello.y"
                      { (yyval.exp)=bldUnrExp(NOT, (yyvsp[0].exp)); }
-#line 2267 "y.tab.c"
+#line 2277 "y.tab.c"
     break;
 
   case 55: /* unary_expression: BIT_NOT expression  */
-#line 489 "bello.y"
+#line 499 "bello.y"
                          { (yyval.exp)=bldUnrExp(BIT_NOT, (yyvsp[0].exp)); }
-#line 2273 "y.tab.c"
+#line 2283 "y.tab.c"
     break;
 
   case 56: /* binary_expression: expression ADD expression  */
-#line 492 "bello.y"
+#line 502 "bello.y"
                                 { (yyval.exp)=bldBnrExp(ADD, (yyvsp[-2].exp), (yyvsp[0].exp)); }
-#line 2279 "y.tab.c"
+#line 2289 "y.tab.c"
     break;
 
   case 57: /* binary_expression: expression SUB expression  */
-#line 493 "bello.y"
+#line 503 "bello.y"
                                 { (yyval.exp)=bldBnrExp(SUB, (yyvsp[-2].exp), (yyvsp[0].exp)); }
-#line 2285 "y.tab.c"
+#line 2295 "y.tab.c"
     break;
 
   case 58: /* binary_expression: expression MUL expression  */
-#line 494 "bello.y"
+#line 504 "bello.y"
                                 { (yyval.exp)=bldBnrExp(MUL, (yyvsp[-2].exp), (yyvsp[0].exp)); }
-#line 2291 "y.tab.c"
+#line 2301 "y.tab.c"
     break;
 
   case 59: /* binary_expression: expression DIV expression  */
-#line 495 "bello.y"
+#line 505 "bello.y"
                                 { (yyval.exp)=bldBnrExp(DIV, (yyvsp[-2].exp), (yyvsp[0].exp)); }
-#line 2297 "y.tab.c"
+#line 2307 "y.tab.c"
     break;
 
   case 60: /* binary_expression: expression MOD expression  */
-#line 496 "bello.y"
+#line 506 "bello.y"
                                 { (yyval.exp)=bldBnrExp(MOD, (yyvsp[-2].exp), (yyvsp[0].exp)); }
-#line 2303 "y.tab.c"
+#line 2313 "y.tab.c"
     break;
 
   case 61: /* binary_expression: expression AND expression  */
-#line 497 "bello.y"
+#line 507 "bello.y"
                                 { (yyval.exp)=bldBnrExp(AND, (yyvsp[-2].exp), (yyvsp[0].exp)); }
-#line 2309 "y.tab.c"
+#line 2319 "y.tab.c"
     break;
 
   case 62: /* binary_expression: expression OR expression  */
-#line 498 "bello.y"
+#line 508 "bello.y"
                                { (yyval.exp)=bldBnrExp(OR, (yyvsp[-2].exp), (yyvsp[0].exp)); }
-#line 2315 "y.tab.c"
+#line 2325 "y.tab.c"
     break;
 
   case 63: /* binary_expression: expression EQ expression  */
-#line 499 "bello.y"
+#line 509 "bello.y"
                                { (yyval.exp)=bldBnrExp(EQ, (yyvsp[-2].exp), (yyvsp[0].exp)); }
-#line 2321 "y.tab.c"
+#line 2331 "y.tab.c"
     break;
 
   case 64: /* binary_expression: expression NE expression  */
-#line 500 "bello.y"
+#line 510 "bello.y"
                                { (yyval.exp)=bldBnrExp(NE, (yyvsp[-2].exp), (yyvsp[0].exp)); }
-#line 2327 "y.tab.c"
+#line 2337 "y.tab.c"
     break;
 
   case 65: /* binary_expression: expression GT expression  */
-#line 501 "bello.y"
+#line 511 "bello.y"
                                { (yyval.exp)=bldBnrExp(GT, (yyvsp[-2].exp), (yyvsp[0].exp)); }
-#line 2333 "y.tab.c"
+#line 2343 "y.tab.c"
     break;
 
   case 66: /* binary_expression: expression GE expression  */
-#line 502 "bello.y"
+#line 512 "bello.y"
                                { (yyval.exp)=bldBnrExp(GE, (yyvsp[-2].exp), (yyvsp[0].exp)); }
-#line 2339 "y.tab.c"
+#line 2349 "y.tab.c"
     break;
 
   case 67: /* binary_expression: expression LT expression  */
-#line 503 "bello.y"
+#line 513 "bello.y"
                                { (yyval.exp)=bldBnrExp(LT, (yyvsp[-2].exp), (yyvsp[0].exp)); }
-#line 2345 "y.tab.c"
+#line 2355 "y.tab.c"
     break;
 
   case 68: /* binary_expression: expression LE expression  */
-#line 504 "bello.y"
+#line 514 "bello.y"
                                { (yyval.exp)=bldBnrExp(LE, (yyvsp[-2].exp), (yyvsp[0].exp)); }
-#line 2351 "y.tab.c"
+#line 2361 "y.tab.c"
     break;
 
   case 69: /* binary_expression: expression BIT_AND expression  */
-#line 505 "bello.y"
+#line 515 "bello.y"
                                     { (yyval.exp)=bldBnrExp(BIT_AND, (yyvsp[-2].exp), (yyvsp[0].exp)); }
-#line 2357 "y.tab.c"
+#line 2367 "y.tab.c"
     break;
 
   case 70: /* binary_expression: expression BIT_OR expression  */
-#line 506 "bello.y"
+#line 516 "bello.y"
                                    { (yyval.exp)=bldBnrExp(BIT_OR, (yyvsp[-2].exp), (yyvsp[0].exp)); }
-#line 2363 "y.tab.c"
+#line 2373 "y.tab.c"
     break;
 
   case 71: /* binary_expression: expression BIT_XOR expression  */
-#line 507 "bello.y"
+#line 517 "bello.y"
                                     { (yyval.exp)=bldBnrExp(BIT_XOR, (yyvsp[-2].exp), (yyvsp[0].exp)); }
-#line 2369 "y.tab.c"
+#line 2379 "y.tab.c"
     break;
 
   case 72: /* value_expression: INT_VALUE  */
-#line 511 "bello.y"
+#line 521 "bello.y"
                 { (yyval.exp)=bldCnstIntExp((yyvsp[0].intVl)); /*printf("Get data: %d\n",$1);*/ }
-#line 2375 "y.tab.c"
+#line 2385 "y.tab.c"
     break;
 
   case 73: /* value_expression: FLOAT_VALUE  */
-#line 512 "bello.y"
+#line 522 "bello.y"
                   { (yyval.exp)=bldCnstFltExp((yyvsp[0].fltVl)); }
-#line 2381 "y.tab.c"
+#line 2391 "y.tab.c"
     break;
 
   case 74: /* value_expression: BOOLEAN_VALUE  */
-#line 513 "bello.y"
+#line 523 "bello.y"
                     { (yyval.exp)=bldCnstBlnExp((yyvsp[0].blnVl)); }
-#line 2387 "y.tab.c"
+#line 2397 "y.tab.c"
     break;
 
   case 75: /* value_expression: STRING_VALUE  */
-#line 514 "bello.y"
+#line 524 "bello.y"
                    { (yyval.exp)=bldCnstStrExp((yyvsp[0].strVl)); }
-#line 2393 "y.tab.c"
+#line 2403 "y.tab.c"
     break;
 
   case 76: /* value_expression: NULL_VALUE  */
-#line 515 "bello.y"
+#line 525 "bello.y"
                  { (yyval.exp)=bldCnstNllExp(); }
-#line 2399 "y.tab.c"
+#line 2409 "y.tab.c"
     break;
 
   case 79: /* lvalue_expression: IDENTIFER  */
-#line 520 "bello.y"
+#line 530 "bello.y"
                 { (yyval.exp)= bldLvlExp(bldVrbExp((yyvsp[0].idtf))); }
-#line 2405 "y.tab.c"
+#line 2415 "y.tab.c"
     break;
 
   case 80: /* lvalue_expression: lvalue_expression evaluate_list  */
-#line 522 "bello.y"
+#line 532 "bello.y"
     { 
         (yyval.exp)=(yyvsp[-1].exp); 
         bldLvlExpAdd((yyvsp[-1].exp), (yyvsp[0].evlLst)); 
     }
-#line 2414 "y.tab.c"
+#line 2424 "y.tab.c"
     break;
 
   case 81: /* array_expression: LEFT_QUAD element_list RIGHT_QUAD  */
-#line 530 "bello.y"
+#line 540 "bello.y"
     {
         (yyval.exp)= bldArrExp((yyvsp[-1].elmtLst));
     }
-#line 2422 "y.tab.c"
+#line 2432 "y.tab.c"
     break;
 
   case 82: /* array_expression: LEFT_QUAD RIGHT_QUAD  */
-#line 534 "bello.y"
+#line 544 "bello.y"
     {
         (yyval.exp)= bldArrExp(bldElmtLst());
     }
-#line 2430 "y.tab.c"
+#line 2440 "y.tab.c"
     break;
 
   case 83: /* new_array_expression: NEW_ARRAY LEFT_PAREN expression RIGHT_PAREN  */
-#line 540 "bello.y"
+#line 550 "bello.y"
     {
         (yyval.exp) = bldNewArrExp((yyvsp[-1].exp));
     }
-#line 2438 "y.tab.c"
+#line 2448 "y.tab.c"
     break;
 
   case 84: /* element_list: expression  */
-#line 546 "bello.y"
+#line 556 "bello.y"
     { 
         (yyval.elmtLst)= bldElmtLst(); 
         elmtLstAdd((yyval.elmtLst), (yyvsp[0].exp)); 
     }
-#line 2447 "y.tab.c"
+#line 2457 "y.tab.c"
     break;
 
   case 85: /* element_list: element_list COMMA expression  */
-#line 551 "bello.y"
+#line 561 "bello.y"
     {  
         (yyval.elmtLst)=(yyvsp[-2].elmtLst);  
         elmtLstAdd((yyval.elmtLst), (yyvsp[0].exp)); 
     }
-#line 2456 "y.tab.c"
+#line 2466 "y.tab.c"
     break;
 
   case 86: /* var_statement: VAR assign_list  */
-#line 558 "bello.y"
+#line 568 "bello.y"
                       { (yyval.stmt)=bldVarStmt((yyvsp[0].asgnLst)); }
-#line 2462 "y.tab.c"
+#line 2472 "y.tab.c"
     break;
 
   case 87: /* global_statement: GLOBAL assign_list  */
-#line 561 "bello.y"
+#line 571 "bello.y"
                          { (yyval.stmt)=bldGlbStmt((yyvsp[0].asgnLst)); }
-#line 2468 "y.tab.c"
+#line 2478 "y.tab.c"
     break;
 
   case 88: /* assign_list: IDENTIFER  */
-#line 565 "bello.y"
+#line 575 "bello.y"
     {
         (yyval.asgnLst)= bldAsgnLst();
         asgnLstAdd((yyval.asgnLst), bldVrbExp((yyvsp[0].idtf)), bldNllExp());
     }
-#line 2477 "y.tab.c"
+#line 2487 "y.tab.c"
     break;
 
   case 89: /* assign_list: IDENTIFER ASSIGN expression  */
-#line 570 "bello.y"
+#line 580 "bello.y"
     {
         (yyval.asgnLst)= bldAsgnLst();
         asgnLstAdd((yyval.asgnLst), bldVrbExp((yyvsp[-2].idtf)), (yyvsp[0].exp));
     }
-#line 2486 "y.tab.c"
+#line 2496 "y.tab.c"
     break;
 
   case 90: /* assign_list: assign_list COMMA IDENTIFER  */
-#line 575 "bello.y"
+#line 585 "bello.y"
     {
         (yyval.asgnLst)=(yyvsp[-2].asgnLst);
         asgnLstAdd((yyval.asgnLst), bldVrbExp((yyvsp[0].idtf)), bldNllExp());
     }
-#line 2495 "y.tab.c"
+#line 2505 "y.tab.c"
     break;
 
   case 91: /* assign_list: assign_list COMMA IDENTIFER ASSIGN expression  */
-#line 580 "bello.y"
+#line 590 "bello.y"
     {
         (yyval.asgnLst)=(yyvsp[-4].asgnLst);
         asgnLstAdd((yyval.asgnLst), bldVrbExp((yyvsp[-2].idtf)), (yyvsp[0].exp));
     }
-#line 2504 "y.tab.c"
+#line 2514 "y.tab.c"
     break;
 
   case 92: /* function_expression: IDENTIFER LEFT_PAREN argument_list RIGHT_PAREN  */
-#line 591 "bello.y"
+#line 601 "bello.y"
     {
         (yyval.exp)=bldFcnExp((yyvsp[-3].idtf), (yyvsp[-1].argLst));
     }
-#line 2512 "y.tab.c"
+#line 2522 "y.tab.c"
     break;
 
   case 93: /* function_expression: IDENTIFER LEFT_PAREN RIGHT_PAREN  */
-#line 595 "bello.y"
+#line 605 "bello.y"
     {
         (yyval.exp)=bldFcnExp((yyvsp[-2].idtf), bldArgLst());
     }
-#line 2520 "y.tab.c"
+#line 2530 "y.tab.c"
     break;
 
   case 94: /* argument_list: expression  */
-#line 601 "bello.y"
+#line 611 "bello.y"
     {
         (yyval.argLst)=bldArgLst();
         argLstAdd((yyval.argLst), (yyvsp[0].exp));
     }
-#line 2529 "y.tab.c"
+#line 2539 "y.tab.c"
     break;
 
   case 95: /* argument_list: argument_list COMMA expression  */
-#line 606 "bello.y"
+#line 616 "bello.y"
     {
         (yyval.argLst)=(yyvsp[-2].argLst);
         argLstAdd((yyval.argLst), (yyvsp[0].exp));
     }
-#line 2538 "y.tab.c"
+#line 2548 "y.tab.c"
     break;
 
   case 96: /* evaluate_list: LEFT_QUAD expression RIGHT_QUAD  */
-#line 614 "bello.y"
+#line 624 "bello.y"
     {
         (yyval.evlLst) = bldAcsLst();
         acsLstIdxAdd((yyval.evlLst), (yyvsp[-1].exp));
     }
-#line 2547 "y.tab.c"
+#line 2557 "y.tab.c"
     break;
 
   case 97: /* evaluate_list: LEFT_QUAD expression COLON expression RIGHT_QUAD  */
-#line 619 "bello.y"
+#line 629 "bello.y"
     {
         (yyval.evlLst)= bldAcsLst();
         acsLstSlcAdd((yyval.evlLst), (yyvsp[-3].exp), (yyvsp[-1].exp), bldCnstIntExp(1));
     }
-#line 2556 "y.tab.c"
+#line 2566 "y.tab.c"
     break;
 
   case 98: /* evaluate_list: LEFT_QUAD expression COLON expression COLON RIGHT_QUAD  */
-#line 624 "bello.y"
+#line 634 "bello.y"
     {
         (yyval.evlLst)= bldAcsLst();
         acsLstSlcAdd((yyval.evlLst), (yyvsp[-4].exp), (yyvsp[-2].exp), bldCnstIntExp(1));
     }
-#line 2565 "y.tab.c"
+#line 2575 "y.tab.c"
     break;
 
   case 99: /* evaluate_list: LEFT_QUAD expression COLON expression COLON expression RIGHT_QUAD  */
-#line 629 "bello.y"
+#line 639 "bello.y"
     {
         (yyval.evlLst)= bldAcsLst();
         acsLstSlcAdd((yyval.evlLst), (yyvsp[-5].exp), (yyvsp[-3].exp), (yyvsp[-1].exp));
     }
-#line 2574 "y.tab.c"
+#line 2584 "y.tab.c"
     break;
 
   case 100: /* evaluate_list: LEFT_QUAD expression COLON RIGHT_QUAD  */
-#line 634 "bello.y"
+#line 644 "bello.y"
     {
         (yyval.evlLst)= bldAcsLst();
         acsLstSlcAdd((yyval.evlLst), (yyvsp[-2].exp), bldCnstIntExp(-1), bldCnstIntExp(1));
     }
-#line 2583 "y.tab.c"
+#line 2593 "y.tab.c"
     break;
 
   case 101: /* evaluate_list: LEFT_QUAD expression COLON COLON RIGHT_QUAD  */
-#line 639 "bello.y"
+#line 649 "bello.y"
     {
         (yyval.evlLst)= bldAcsLst();
         acsLstSlcAdd((yyval.evlLst), (yyvsp[-3].exp), bldCnstIntExp(-1), bldCnstIntExp(1));
     }
-#line 2592 "y.tab.c"
+#line 2602 "y.tab.c"
     break;
 
   case 102: /* evaluate_list: LEFT_QUAD expression COLON COLON expression RIGHT_QUAD  */
-#line 644 "bello.y"
+#line 654 "bello.y"
     {
         (yyval.evlLst)= bldAcsLst();
         acsLstSlcAdd((yyval.evlLst), (yyvsp[-4].exp), bldCnstIntExp(-1), (yyvsp[-1].exp));
     }
-#line 2601 "y.tab.c"
+#line 2611 "y.tab.c"
     break;
 
   case 103: /* evaluate_list: LEFT_QUAD COLON expression RIGHT_QUAD  */
-#line 649 "bello.y"
+#line 659 "bello.y"
     {
         (yyval.evlLst)= bldAcsLst();
         acsLstSlcAdd((yyval.evlLst), bldCnstIntExp(0), (yyvsp[-1].exp), bldCnstIntExp(1));
     }
-#line 2610 "y.tab.c"
+#line 2620 "y.tab.c"
     break;
 
   case 104: /* evaluate_list: LEFT_QUAD COLON expression COLON RIGHT_QUAD  */
-#line 654 "bello.y"
+#line 664 "bello.y"
     {
         (yyval.evlLst)= bldAcsLst();
         acsLstSlcAdd((yyval.evlLst), bldCnstIntExp(0), (yyvsp[-2].exp), bldCnstIntExp(1));
     }
-#line 2619 "y.tab.c"
+#line 2629 "y.tab.c"
     break;
 
   case 105: /* evaluate_list: LEFT_QUAD COLON expression COLON expression RIGHT_QUAD  */
-#line 659 "bello.y"
+#line 669 "bello.y"
     {
         (yyval.evlLst)= bldAcsLst();
         acsLstSlcAdd((yyval.evlLst), bldCnstIntExp(0), (yyvsp[-3].exp), (yyvsp[-1].exp));
     }
-#line 2628 "y.tab.c"
+#line 2638 "y.tab.c"
     break;
 
   case 106: /* evaluate_list: LEFT_QUAD COLON COLON RIGHT_QUAD  */
-#line 664 "bello.y"
+#line 674 "bello.y"
     {
         (yyval.evlLst)= bldAcsLst();
         acsLstSlcAdd((yyval.evlLst), bldCnstIntExp(0), bldCnstIntExp(-1), bldCnstIntExp(1));
     }
-#line 2637 "y.tab.c"
+#line 2647 "y.tab.c"
     break;
 
   case 107: /* evaluate_list: evaluate_list LEFT_QUAD expression RIGHT_QUAD  */
-#line 669 "bello.y"
+#line 679 "bello.y"
     {
         (yyval.evlLst)=(yyvsp[-3].evlLst);
         acsLstIdxAdd((yyval.evlLst),(yyvsp[-1].exp));
     }
-#line 2646 "y.tab.c"
+#line 2656 "y.tab.c"
     break;
 
   case 108: /* evaluate_list: evaluate_list LEFT_QUAD expression COLON expression RIGHT_QUAD  */
-#line 674 "bello.y"
+#line 684 "bello.y"
     {
         (yyval.evlLst)=(yyvsp[-5].evlLst);
         acsLstSlcAdd((yyval.evlLst), (yyvsp[-3].exp), (yyvsp[-1].exp), bldCnstIntExp(1));
     }
-#line 2655 "y.tab.c"
+#line 2665 "y.tab.c"
     break;
 
   case 109: /* evaluate_list: evaluate_list LEFT_QUAD expression COLON expression COLON RIGHT_QUAD  */
-#line 679 "bello.y"
+#line 689 "bello.y"
     {
         (yyval.evlLst)=(yyvsp[-6].evlLst);
         acsLstSlcAdd((yyval.evlLst), (yyvsp[-4].exp), (yyvsp[-2].exp), bldCnstIntExp(1));
     }
-#line 2664 "y.tab.c"
+#line 2674 "y.tab.c"
     break;
 
   case 110: /* evaluate_list: evaluate_list LEFT_QUAD expression COLON expression COLON expression RIGHT_QUAD  */
-#line 684 "bello.y"
+#line 694 "bello.y"
     {
         (yyval.evlLst)=(yyvsp[-7].evlLst);
         acsLstSlcAdd((yyval.evlLst), (yyvsp[-5].exp), (yyvsp[-3].exp), (yyvsp[-1].exp));
     }
-#line 2673 "y.tab.c"
+#line 2683 "y.tab.c"
     break;
 
   case 111: /* evaluate_list: evaluate_list LEFT_QUAD expression COLON RIGHT_QUAD  */
-#line 689 "bello.y"
+#line 699 "bello.y"
     {
         (yyval.evlLst)=(yyvsp[-4].evlLst);
         acsLstSlcAdd((yyval.evlLst), (yyvsp[-2].exp), bldCnstIntExp(-1), bldCnstIntExp(1));
     }
-#line 2682 "y.tab.c"
+#line 2692 "y.tab.c"
     break;
 
   case 112: /* evaluate_list: evaluate_list LEFT_QUAD expression COLON COLON RIGHT_QUAD  */
-#line 694 "bello.y"
+#line 704 "bello.y"
     {
         (yyval.evlLst)=(yyvsp[-5].evlLst);
         acsLstSlcAdd((yyval.evlLst), (yyvsp[-3].exp), bldCnstIntExp(-1), bldCnstIntExp(1));
     }
-#line 2691 "y.tab.c"
+#line 2701 "y.tab.c"
     break;
 
   case 113: /* evaluate_list: evaluate_list LEFT_QUAD expression COLON COLON expression RIGHT_QUAD  */
-#line 699 "bello.y"
+#line 709 "bello.y"
     {
         (yyval.evlLst)=(yyvsp[-6].evlLst);
         acsLstSlcAdd((yyval.evlLst), (yyvsp[-4].exp), bldCnstIntExp(-1), (yyvsp[-1].exp));
     }
-#line 2700 "y.tab.c"
+#line 2710 "y.tab.c"
     break;
 
   case 114: /* evaluate_list: evaluate_list LEFT_QUAD COLON expression RIGHT_QUAD  */
-#line 704 "bello.y"
+#line 714 "bello.y"
     {
         (yyval.evlLst)=(yyvsp[-4].evlLst);
         acsLstSlcAdd((yyval.evlLst), bldCnstIntExp(0), (yyvsp[-1].exp), bldCnstIntExp(1));
     }
-#line 2709 "y.tab.c"
+#line 2719 "y.tab.c"
     break;
 
   case 115: /* evaluate_list: evaluate_list LEFT_QUAD COLON expression COLON RIGHT_QUAD  */
-#line 709 "bello.y"
+#line 719 "bello.y"
     {
         (yyval.evlLst)=(yyvsp[-5].evlLst);
         acsLstSlcAdd((yyval.evlLst), bldCnstIntExp(0), (yyvsp[-2].exp), bldCnstIntExp(1));
     }
-#line 2718 "y.tab.c"
+#line 2728 "y.tab.c"
     break;
 
   case 116: /* evaluate_list: evaluate_list LEFT_QUAD COLON expression COLON expression RIGHT_QUAD  */
-#line 714 "bello.y"
+#line 724 "bello.y"
     {
         (yyval.evlLst)=(yyvsp[-6].evlLst);
         acsLstSlcAdd((yyval.evlLst), bldCnstIntExp(0), (yyvsp[-3].exp), (yyvsp[-1].exp));
     }
-#line 2727 "y.tab.c"
+#line 2737 "y.tab.c"
     break;
 
   case 117: /* evaluate_list: evaluate_list LEFT_QUAD COLON COLON RIGHT_QUAD  */
-#line 719 "bello.y"
+#line 729 "bello.y"
     {
         (yyval.evlLst)=(yyvsp[-4].evlLst);
         acsLstSlcAdd((yyval.evlLst), bldCnstIntExp(0), bldCnstIntExp(-1), bldCnstIntExp(1));
     }
-#line 2736 "y.tab.c"
+#line 2746 "y.tab.c"
     break;
 
   case 118: /* if_statement: IF LEFT_PAREN expression RIGHT_PAREN  */
-#line 737 "bello.y"
+#line 747 "bello.y"
     {
         (yyval.stmt)=bldIfStmt((yyvsp[-1].exp));
         printf("bld if stmt\n");
     }
-#line 2745 "y.tab.c"
+#line 2755 "y.tab.c"
     break;
 
   case 119: /* for_statement: FOR LEFT_PAREN single_statement_no_semicolon SEMICOLON expression_statement SEMICOLON single_statement_no_semicolon RIGHT_PAREN  */
-#line 754 "bello.y"
+#line 764 "bello.y"
     {
         (yyval.stmt)= bldForStmt((yyvsp[-5].stmt), (yyvsp[-3].stmt), (yyvsp[-1].stmt));  
     }
-#line 2753 "y.tab.c"
+#line 2763 "y.tab.c"
     break;
 
   case 120: /* while_statement: WHILE LEFT_PAREN expression_statement RIGHT_PAREN  */
-#line 766 "bello.y"
+#line 776 "bello.y"
     {
         (yyval.stmt)= bldWhlStmt((yyvsp[-1].stmt));
     }
-#line 2761 "y.tab.c"
+#line 2771 "y.tab.c"
     break;
 
   case 121: /* do_while_statement: DO structure_statement WHILE LEFT_PAREN expression_statement RIGHT_PAREN SEMICOLON  */
-#line 772 "bello.y"
+#line 782 "bello.y"
     {
         (yyval.stmt)= bldDoWhlStmt((yyvsp[-2].stmt), (yyvsp[-5].stmt));
     }
-#line 2769 "y.tab.c"
+#line 2779 "y.tab.c"
     break;
 
   case 122: /* break_statement: BREAK  */
-#line 777 "bello.y"
+#line 787 "bello.y"
             { (yyval.stmt)= bldBrkStmt(bldCnstIntExp(1)); }
-#line 2775 "y.tab.c"
+#line 2785 "y.tab.c"
     break;
 
   case 123: /* break_statement: BREAK LEFT_PAREN expression RIGHT_PAREN  */
-#line 778 "bello.y"
+#line 788 "bello.y"
                                               { (yyval.stmt)= bldBrkStmt((yyvsp[-1].exp)); }
-#line 2781 "y.tab.c"
+#line 2791 "y.tab.c"
     break;
 
   case 124: /* continue_statement: CONTINUE  */
-#line 781 "bello.y"
+#line 791 "bello.y"
                { (yyval.stmt)= bldCntnStmt(bldCnstIntExp(1)); }
-#line 2787 "y.tab.c"
+#line 2797 "y.tab.c"
     break;
 
   case 125: /* continue_statement: CONTINUE LEFT_PAREN expression RIGHT_PAREN  */
-#line 782 "bello.y"
+#line 792 "bello.y"
                                                  { (yyval.stmt)= bldCntnStmt((yyvsp[-1].exp)); }
-#line 2793 "y.tab.c"
+#line 2803 "y.tab.c"
     break;
 
 
-#line 2797 "y.tab.c"
+#line 2807 "y.tab.c"
 
       default: break;
     }
@@ -2986,7 +2996,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 840 "bello.y"
+#line 850 "bello.y"
 
 
 int main(int argc, char * argv[])

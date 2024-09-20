@@ -204,6 +204,7 @@ build_statement
 
             int idx;
 
+            //折叠输入的句子以上的缩进大于该输入的句子，结果为栈中缩进最大的句子为输入的句子及其以上同等缩进的句子
             while (stmtStk.back()->indt > nowIndt)
             {
                 idx = stmtStk.size()-1;
@@ -253,6 +254,15 @@ build_statement
                 }
 
             }
+
+            //输入的句子入栈
+
+            StmtStkItmStrc* itm =new StmtStkItmStrc;
+            itm->indt = nowIndt;
+            itm->stmt = $<stmt>-2;
+            itm->alwSubStmt = chkStmtAlwSubStmt($<stmt>-2);
+
+            stmtStk.push_back(itm);
         }
 
         lstIndt = indt;
