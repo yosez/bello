@@ -12,26 +12,12 @@
 extern int intlEnvr(struct EnvrStrc** envr);
 
 struct FcnStrc* bldFcn(char* nm, struct PrmLstStrc* prmLst, struct StmtStrc* stmt);
+struct FcnStrc* bldFcn(char* nm, struct PrmLstStrc* prmLst);
 struct ArgLstStrc* bldArgLst();
 int argLstAdd(struct ArgLstStrc* argLst, struct ExpStrc* arg);
 struct PrmLstStrc* bldPrmLst();
 int prmLstAdd(struct PrmLstStrc* prmLst, struct ExpStrc* prm);
 
-
-//struct FcnStrc* bldFcn(char* nm, struct PrmLstStrc* prmLst, struct StmtStrc* stmt)
-//{
-//	struct FcnStrc* rslt = new FcnStrc;
-//
-//	rslt->nm = (char*)malloc(0x100);
-//	strcpy(rslt->nm, nm);
-//
-//	intlEnvr(&(rslt->envr));
-//
-//	rslt->prmLst = prmLst;
-//	rslt->stmt = stmt;
-//
-//	return rslt;
-//}
 
 struct FcnStrc* bldFcn(char* nm, struct PrmLstStrc* prmLst, struct StmtStrc* stmt)
 {
@@ -39,10 +25,20 @@ struct FcnStrc* bldFcn(char* nm, struct PrmLstStrc* prmLst, struct StmtStrc* stm
 
 	rslt->nm = nm;
 
-	intlEnvr(&(rslt->envr));
-
 	rslt->prmLst = prmLst;
 	rslt->stmt = stmt;
+
+	return rslt;
+}
+
+struct FcnStrc* bldFcn(char* nm, struct PrmLstStrc* prmLst)
+{
+	struct FcnStrc* rslt = new FcnStrc;
+
+	rslt->nm = nm;
+
+	rslt->prmLst = prmLst;
+	rslt->stmt = nullptr;
 
 	return rslt;
 }

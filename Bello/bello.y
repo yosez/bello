@@ -164,7 +164,7 @@ build_statement
         int indt = $<intVl>-3;
         //如果是当前句的indent == 上1句的indent + 1，则检查上1句是否有语句体，如上1句允许语句体，语句入栈
 
-        printf("indt: %d lstIndt: %d\n",indt, lstIndt);
+        //printf("indt: %d lstIndt: %d\n",indt, lstIndt);
         if (indt == lstIndt + 1 )
         {
             if (stmtStk.back()->alwSubStmt)
@@ -178,7 +178,7 @@ build_statement
 
                 stmtStk.push_back(sktItm);
 
-                printf("--->>>stmt in stk: %d\n", stmtStk.size());
+                //printf("--->>>stmt in stk: %d\n", stmtStk.size());
             }
             else
             {
@@ -196,7 +196,7 @@ build_statement
 
             stmtStk.push_back(sktItm);
 
-            printf("stk lyr: %d\n", stmtStk.size());
+            //printf("stk lyr: %d\n", stmtStk.size());
         }
         else if (indt < lstIndt)
         {
@@ -251,6 +251,11 @@ build_statement
                         stmtStk.back()->stmt->stmt.forStmt->stmt = blk;
                         break;
                     }
+                    case FUNCTION_DEFINE_STATEMENT:
+                    {
+                        stmtStk.back()->stmt->stmt.fcnStmt->fcn->stmt = blk;
+                        break;
+                    }
                 }
 
             }
@@ -275,7 +280,7 @@ close_execute_statement
         //如果存在上一条语句
         if (stmtStk.size()>0)
         {
-            printf("close_execute_statement\n");
+            //printf("close_execute_statement\n");
 
             if (stmtStk.back()->indt == 0 && stmtStk.back()->alwSubStmt)
             {
@@ -293,7 +298,7 @@ close_execute_statement
             //如果上1条语句为子语句，则闭合上1条顶级语句
             if (stmtStk.back()->indt>0)
             {
-                printf("cls top lvl stmt\n");
+                //printf("cls top lvl stmt\n");
 
                 int nowIndt = 0;
 
@@ -335,7 +340,6 @@ close_execute_statement
                     {
                         case IF_STATEMENT:
                         {
-                            printf("if statement\n");
                             stmtStk.back()->stmt->stmt.ifStmt->stmt = blk;
                             break;
                         }
@@ -349,6 +353,11 @@ close_execute_statement
                             stmtStk.back()->stmt->stmt.forStmt->stmt = blk;
                             break;
                         }
+                        case FUNCTION_DEFINE_STATEMENT:
+                        {
+                            stmtStk.back()->stmt->stmt.fcnStmt->fcn->stmt = blk;
+                            break;
+                        }
                     }
 
                 }
@@ -357,7 +366,7 @@ close_execute_statement
                 exctStmt(envr, stmtStk.back()->stmt);
                 stmtStk.pop_back();
 
-                printf("cls stk lyr: %d\n", stmtStk.size());
+                //printf("cls stk lyr: %d\n", stmtStk.size());
 
                 lstIndt=0;
             }
@@ -369,7 +378,7 @@ close_execute_statement
 execute_statement
     : 
     { 
-        printf("alw sub stmt: %d\n", stmtStk.back()->alwSubStmt);
+        //printf("alw sub stmt: %d\n", stmtStk.back()->alwSubStmt);
 
         //只在无缩进的情况下执行语句
         if ($<intVl>-4 != 0 || stmtStk.back()->alwSubStmt == 1)
@@ -381,7 +390,7 @@ execute_statement
             exctStmt(envr, stmtStk.back()->stmt);
             stmtStk.pop_back();
 
-            printf("exct stmt\n");
+            //printf("exct stmt\n");
         }
   
     }
@@ -416,9 +425,9 @@ single_statement
     /* | do_while_statement { $$=$1; } */
     | break_statement { $$=$1; }
     | continue_statement  { $$=$1; }
-    /*| return_statement  { $$=$1; }
-    | function_define_statement { $$=$1; }
-    | null_statement  { $$=$1; } */
+    | return_statement  { $$=$1; }
+    | function_define_statement { $$=$1; } 
+    /* | null_statement  { $$=$1; } */
     | nop_statement { $$=$1; }
     | var_statement  { $$ = $1;}
     | global_statement  { $$ = $1; }  
@@ -750,7 +759,7 @@ if_statement
     : IF LEFT_PAREN expression RIGHT_PAREN 
     {
         $$=bldIfStmt($3);
-        printf("bld if stmt\n");
+        //printf("bld if stmt\n");
     }
     /* | IF LEFT_PAREN expression RIGHT_PAREN structure_statement ELSE structure_statement 
     {
@@ -799,7 +808,7 @@ structure_statement
     : single_statement 
     | statement_block
 
-function_define_statement
+/* function_define_statement
     : FUNC IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN statement_block
     {
         struct FcnStrc* fcn;
@@ -831,7 +840,26 @@ function_define_statement
         fcn=bldFcn($2, bldPrmLst(), $5);
 
         $$ = bldFcnStmt(fcn);
+    } */
+
+function_define_statement
+    : FUNC IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN 
+    {
+        struct FcnStrc* fcn;
+
+        fcn=bldFcn($2, $4);
+
+        $$ = bldFcnStmt(fcn);
     }
+    | FUNC IDENTIFER LEFT_PAREN RIGHT_PAREN
+    {
+        struct FcnStrc *fcn;
+
+        fcn=bldFcn($2, bldPrmLst());
+
+        $$ = bldFcnStmt(fcn);
+    }
+
 
 
 parameter_list

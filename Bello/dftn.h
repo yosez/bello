@@ -431,7 +431,6 @@ struct StmtRsltStrc
 struct FcnStrc
 {
 	string nm;
-	struct EnvrStrc* envr;
 	struct PrmLstStrc* prmLst;
 	struct StmtStrc* stmt;
 };

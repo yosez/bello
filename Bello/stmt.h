@@ -385,7 +385,7 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 			//int envrLyr = envr.size();
 			envr.push_back(new EnvrStrc(STATEMENT_ENVIRONMENT));
 
-			printf("clcExp(envr, stmt->stmt.ifStmt->exp)->vl.intVl: %d\n", clcExp(envr, stmt->stmt.ifStmt->exp)->vl.intVl);
+			//printf("clcExp(envr, stmt->stmt.ifStmt->exp)->vl.intVl: %d\n", clcExp(envr, stmt->stmt.ifStmt->exp)->vl.intVl);
 
 			if ((clcExp(envr, stmt->stmt.ifStmt->exp)->vl.intVl) != 0)
 			{

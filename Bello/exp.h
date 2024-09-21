@@ -1617,8 +1617,6 @@ struct CnstStrc* clcFcnExp(vector<EnvrStrc*>& envr, struct FcnExpStrc* exp)
 
 		envr.push_back(envrFcn);
 
-		//intlEnvr(&envr);
-
 		//计算各个参数的值并赋值给形参
 
 		int i;
