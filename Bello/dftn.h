@@ -18,6 +18,7 @@ struct LvlExpStrc;
 struct ExpStrc;
 struct PrtStmtStrc;
 struct IfStmtStrc;
+struct ElsStmtStrc;
 struct ForStmtStrc;
 struct WhlStmtStrc;
 struct DoWhlStmtStrc;
@@ -308,6 +309,12 @@ struct IfStmtStrc
 {
 	struct ExpStrc* exp;
 	struct StmtStrc* stmt;
+	struct StmtStrc* els;
+};
+
+struct ElsStmtStrc
+{
+	struct StmtStrc* stmt;
 };
 
 struct IfElsStmtStrc
@@ -381,6 +388,7 @@ struct StmtStrc
 		struct ExpStmtStrc* expStmt;
 		struct IfStmtStrc* ifStmt;
 		struct IfElsStmtStrc* ifElsStmt;
+		struct ElsStmtStrc* elsStmt;
 		struct ForStmtStrc* forStmt;
 		struct WhlStmtStrc* whlStmt;
 		struct DoWhlStmtStrc* doWhlStmt;

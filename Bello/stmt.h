@@ -10,8 +10,8 @@
 //语句系列函数，参数为语句的内容部分，如创建if语句结构体的bldIfStmt函数的参数exp为if的条件表达式，stmt参数为if的条件为真执行的语句块
 struct StmtStrc* bldExpStmt(struct ExpStrc* exp);
 struct StmtStrc* bldIfStmt(struct ExpStrc* exp, struct StmtStrc* stmt);
+struct StmtStrc* bldElsStmt(struct StmtStrc* stmt);
 struct StmtStrc* bldIfElsStmt(struct ExpStrc* exp, struct StmtStrc* stmt, struct StmtStrc* elsStmt);
-//struct StmtStrc* bldElsStmt();
 struct StmtStrc* bldForStmt(struct StmtStrc* intl, struct StmtStrc* exp, struct StmtStrc* itr, struct StmtStrc* stmt);
 struct StmtStrc* bldWhlStmt(struct StmtStrc* exp, struct StmtStrc* stmt);
 struct StmtStrc* bldDoWhlStmt(struct StmtStrc* exp, struct StmtStrc* stmt);
@@ -28,6 +28,7 @@ struct StmtStrc* bldNllStmt();
 struct StmtStrc* bldIfStmt(struct ExpStrc* exp);
 struct StmtStrc* bldForStmt(struct StmtStrc* intl, struct StmtStrc* exp, struct StmtStrc* itr);
 struct StmtStrc* bldWhlStmt(struct StmtStrc* exp);
+struct StmtStrc* bldElsStmt();
 
 extern int chkStmtAlwSubStmt(struct StmtStrc* stmt);
 
@@ -58,9 +59,35 @@ struct StmtStrc* bldIfStmt(struct ExpStrc* exp, struct StmtStrc* stmt)
 
 	rslt->stmt.ifStmt->exp = exp;
 	rslt->stmt.ifStmt->stmt = stmt;
+	rslt->stmt.ifStmt->els = nullptr;
 
 	return rslt;
 }
+
+struct StmtStrc* bldElsStmt(struct StmtStrc* stmt)
+{
+	struct StmtStrc* rslt = new StmtStrc;
+
+	rslt->typ = ELSE_STATEMENT;
+
+	rslt->stmt.elsStmt = new ElsStmtStrc;
+	rslt->stmt.elsStmt->stmt = stmt;
+
+	return rslt;
+}
+
+struct StmtStrc* bldElsStmt()
+{
+	struct StmtStrc* rslt = new StmtStrc;
+
+	rslt->typ = ELSE_STATEMENT;
+
+	rslt->stmt.elsStmt = new ElsStmtStrc;
+	rslt->stmt.elsStmt->stmt = nullptr;
+
+	return rslt;
+}
+
 
 struct StmtStrc* bldIfStmt(struct ExpStrc* exp)
 {
@@ -75,6 +102,7 @@ struct StmtStrc* bldIfStmt(struct ExpStrc* exp)
 
 	return rslt;
 }
+
 
 struct StmtStrc* bldIfElsStmt(struct ExpStrc* exp, struct StmtStrc* stmt, struct StmtStrc* elsStmt)
 {
@@ -390,6 +418,10 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 			if ((clcExp(envr, stmt->stmt.ifStmt->exp)->vl.intVl) != 0)
 			{
 				rslt = exctStmt(envr, stmt->stmt.ifStmt->stmt);
+			}
+			else if (stmt->stmt.ifStmt->els != NULL)
+			{
+				rslt = exctStmt(envr, stmt->stmt.ifStmt->els);
 			}
 
 			//删除创建的环境
