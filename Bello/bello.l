@@ -66,6 +66,10 @@
                                 //printf("\d: \s\n", yyleng, yytext);
                                 return INDENT; 
                             }
+([ ]{4})+                   { 
+                                yylval.intVl = strlen(yytext)/4;
+                                return INDENT;
+                            }
 "\n"                        { return LF; }
 "+="                        { return ADD_ASSIGN; }
 "-="                        { return SUB_ASSIGN; }
