@@ -49,6 +49,9 @@
 
     extern int chkStmtAlwSubStmt(struct StmtStrc* stmt);
 
+    //prsStt为1 从标准输入读取 prsStt为2 从源文件读取
+    int prsStt;
+
 %}
 
 %union
@@ -143,11 +146,11 @@
 %%
 
 statement
-    : statement {$<intVl>$ = 0; } single_statement LF check_indent build_statement execute_statement //执行顶层语句
+    : statement close_execute_last_statement {$<intVl>$ = 0; } single_statement LF check_indent build_statement execute_statement //执行顶层语句
     | statement INDENT single_statement LF check_indent build_statement
     | statement LF close_execute_statement 
     | error { yyerrok; }
-    | ; //需要加上识别空语句，以处理输入结束的情况
+    | close_execute_last_statement ; //需要加上识别空语句，以处理输入结束的情况
 
 check_indent
     : { 
@@ -307,11 +310,15 @@ build_statement
 close_execute_statement
     : 
     { 
+        //如果是从源代码输入，则不执行此动作
+        if (prsStt==2)
+        {
+            break;
+        }
 
         //如果存在上一条语句
         if (stmtStk.size()>0)
         {
-            //printf("close_execute_statement\n");
 
             if (stmtStk.back()->indt == 0 && stmtStk.back()->alwSubStmt)
             {
@@ -417,6 +424,126 @@ close_execute_statement
 
         }
 
+    }
+
+close_execute_last_statement
+    :
+    {
+        //如果是标准输入读取数据，则退出此动作
+        if (prsStt==1)
+        {
+            break;
+        }
+
+        //如果存在上一条语句
+        if (stmtStk.size()>0)
+        {
+            //如果存在上1条语句，该语句允许子语句
+            if (stmtStk.back()->indt == 0 && stmtStk.back()->alwSubStmt)
+            {
+                yyclearin;
+                yyerrok;
+                
+            }
+
+            // //如果上1条语句为顶级语句且不允许子语句，则执行上一条语句
+            // if (stmtStk.back()->indt == 0 && stmtStk.back()->alwSubStmt==0)
+            // {
+            //     //执行上一条顶级语句
+            //     exctStmt(envr, stmtStk.back()->stmt);
+            //     stmtStk.pop_back();
+            // }
+
+            //如果上1条语句为子语句，则闭合上1条顶级语句，并执行该顶级语句
+            if (stmtStk.back()->indt > 0)
+            {
+                //printf("cls top lvl stmt\n");
+
+                int nowIndt = 0;
+
+                int idx;
+
+                while (stmtStk.back()->indt > nowIndt)
+                {
+                    
+
+                    idx = stmtStk.size()-1;
+
+                    while (idx>0 && stmtStk.back()->indt == stmtStk.at(idx-1)->indt)
+                    {
+                        idx--;
+                    }
+
+                    int i = idx;
+
+                    StmtStrc* blk = bldStmtBlk();
+
+                    while (i < stmtStk.size())
+                    {
+                        stmtBlkAdd(blk, stmtStk.at(i)->stmt);
+
+                        i++;
+                    }
+
+                    //子语句出栈
+                    int nbrPop = stmtStk.size() - idx;
+
+                    for (i=0;i<nbrPop;i++)
+                    {
+                        stmtStk.pop_back();
+                    }
+
+                    //将语句体附加到上1级语句中
+
+                    switch(stmtStk.back()->stmt->typ)
+                    {
+                        case IF_STATEMENT:
+                        {
+                            stmtStk.back()->stmt->stmt.ifStmt->stmt = blk;
+                            break;
+                        }
+                        case WHILE_STATEMENT:
+                        {
+                            stmtStk.back()->stmt->stmt.whlStmt->stmt = blk;
+                            break;
+                        }
+                        case FOR_STATEMENT:
+                        {
+                            stmtStk.back()->stmt->stmt.forStmt->stmt = blk;
+                            break;
+                        }
+                        case FUNCTION_DEFINE_STATEMENT:
+                        {
+                            stmtStk.back()->stmt->stmt.fcnStmt->fcn->stmt = blk;
+                            break;
+                        }
+                        case ELSE_STATEMENT:
+                        {
+                            stmtStk.back()->stmt->stmt.elsStmt->stmt = blk;
+
+                            //将else语句添加到其上的if语句结构体中
+                            StmtStrc* els = stmtStk.back()->stmt->stmt.elsStmt->stmt;
+
+                            stmtStk.pop_back();
+                            stmtStk.back()->stmt->stmt.ifStmt->els =els;
+                        }
+                    }
+
+                }
+
+                // 如果是双主句语句的情况
+
+
+                //执行上一条顶级语句
+                exctStmt(envr, stmtStk.back()->stmt);
+                stmtStk.pop_back();
+
+                //printf("cls stk lyr: %d\n", stmtStk.size());
+
+                lstIndt=0;
+            }
+
+        }
     }
 
 execute_statement
@@ -933,6 +1060,8 @@ return_statement
 
 %%
 
+
+
 int main(int argc, char * argv[])
 {
 
@@ -950,8 +1079,11 @@ int main(int argc, char * argv[])
 
     extern FILE* yyin;
 
+    prsStt=1;
+
     if (argc==2)
     {
+        prsStt = 2;
         f= fopen(argv[1],"r");
         yyin= f;
     }
