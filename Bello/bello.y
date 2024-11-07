@@ -77,6 +77,7 @@
     //string idtf;
 }
 
+%token NULL_STRING
 %token LF
 %token NOP
 %token <intVl> INDENT
@@ -148,7 +149,7 @@
 statement
     : statement close_execute_last_statement {$<intVl>$ = 0; } single_statement LF check_indent build_statement execute_statement //执行顶层语句
     | statement INDENT single_statement LF check_indent build_statement
-    | statement LF close_execute_statement 
+    | statement NULL_STRING close_execute_statement 
     | error { yyerrok; }
     | close_execute_last_statement ; //需要加上识别空语句，以处理输入结束的情况
 

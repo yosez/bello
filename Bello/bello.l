@@ -53,6 +53,8 @@
 
 %%
 
+
+^[ \r\t]*\n                 { return NULL_STRING; }
 "\t"+                       { 
                                 yylval.intVl = strlen(yytext); 
                                 return INDENT; 
