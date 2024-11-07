@@ -55,6 +55,7 @@
 
 
 ^[ \r\t]*\n                 { return NULL_STRING; }
+<<EOF>>                     { return END_FILE; }
 "\t"+                       { 
                                 yylval.intVl = strlen(yytext); 
                                 return INDENT; 
