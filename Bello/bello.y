@@ -171,7 +171,7 @@ build_statement
         int indt = $<intVl>-3;
         //如果是当前句的indent == 上1句的indent + 1，则检查上1句是否有语句体，如上1句允许语句体，语句入栈
 
-        //printf("indt: %d lstIndt: %d\n",indt, lstIndt);
+        printf("indt: %d lstIndt: %d\n",indt, lstIndt);
         if (indt == lstIndt + 1 )
         {
             if (stmtStk.back()->alwSubStmt)
@@ -248,7 +248,9 @@ build_statement
                 {
                     case IF_STATEMENT:
                     {
+                        //printf("附加if语句 #0\n");
                         stmtStk.back()->stmt->stmt.ifStmt->stmt = blk;
+                        stmtStk.back()->stmt->stmt.ifStmt->els=NULL;
                         break;
                     }
                     case WHILE_STATEMENT:
@@ -382,7 +384,9 @@ close_execute_statement
                     {
                         case IF_STATEMENT:
                         {
+                            //printf("附加if语句 #2\n");
                             stmtStk.back()->stmt->stmt.ifStmt->stmt = blk;
+                            stmtStk.back()->stmt->stmt.ifStmt->els = NULL;
                             break;
                         }
                         case WHILE_STATEMENT:
@@ -504,6 +508,7 @@ close_execute_last_statement
                         case IF_STATEMENT:
                         {
                             stmtStk.back()->stmt->stmt.ifStmt->stmt = blk;
+                            stmtStk.back()->stmt->stmt.ifStmt->stmt = NULL;
                             break;
                         }
                         case WHILE_STATEMENT:

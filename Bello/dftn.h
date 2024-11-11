@@ -473,8 +473,6 @@ public:
 //数组结构体
 struct ArrStrc
 {
-	//int elmtSz;
-	//int elmtCnt;
 
 	vector<CnstStrc*> elmtArr;
 };
