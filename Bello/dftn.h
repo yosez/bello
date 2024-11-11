@@ -55,7 +55,7 @@ union VlUnn
 	float flt;
 	int intVl;
 	//string *str;
-	string str;
+	string *str;
 	struct ArrStrc* arr;
 
 public:

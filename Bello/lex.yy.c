@@ -574,7 +574,7 @@ char *yytext;
     extern void yyerror(const char *s,...);
     
     char *str;
-    int strSz=10;
+    int strSz=0x100;
 
     int strtStr()
     {

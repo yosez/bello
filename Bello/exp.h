@@ -124,10 +124,8 @@ struct ExpStrc* bldCnstStrExp(char* strVl)
 	struct ExpStrc* exp = new ExpStrc;
 
 	exp->typ = CONST_EXPRESSION;
+
 	exp->exp.cnst = bldStrCnst(strVl);
-
-
-	//prtCnst(exp->exp.cnst);
 
 	return exp;
 }
@@ -376,7 +374,7 @@ struct CnstStrc* clcBnrExpAdd(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp)
 
 	if (lftCnst->CnstTyp == STRING_VALUE && rghtCnst->CnstTyp == STRING_VALUE)
 	{
-		str = lftCnst->vl.str + rghtCnst->vl.str;
+		str = *(lftCnst->vl.str) + *(rghtCnst->vl.str);
 
 		rslt = bldStrCnstByStr(str);
 	}
@@ -384,35 +382,18 @@ struct CnstStrc* clcBnrExpAdd(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp)
 	if (lftCnst->CnstTyp == STRING_VALUE && rghtCnst->CnstTyp == INT_VALUE)
 	{
 
+		str = *(lftCnst->vl.str);
 
-		str = lftCnst->vl.str;
-
-		//printf("str lft: %s ", str.c_str());
 		str += to_string(rghtCnst->vl.intVl);
-		//str += strInt;
-		//printf("str: %s ", str.c_str());
 
 		rslt = bldStrCnstByStr(str);
 	}
 
 	if (lftCnst->CnstTyp == INT_VALUE && rghtCnst->CnstTyp == STRING_VALUE)
 	{
-		//char* strInt;
-		//strInt = (char*)malloc(0x10);
-		//memset(strInt, 0, sizeof(strInt));
-
-		//sprintf(strInt, "%d", lftCnst->vl.intVl);
-
-		//str = (char*)malloc(strlen(strInt) + strlen(rghtCnst->vl.str) + 0x10);
-		//memset(str, 0, sizeof(str));
-
-		//strcpy(str, strInt);
-		//strcat(str, rghtCnst->vl.str);
-
-		//str = strInt;
 
 		str = to_string(lftCnst->vl.intVl);
-		str += rghtCnst->vl.str;
+		str += *(rghtCnst->vl.str);
 
 		rslt = bldStrCnstByStr(str);
 	}
@@ -420,7 +401,7 @@ struct CnstStrc* clcBnrExpAdd(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp)
 	if (lftCnst->CnstTyp == STRING_VALUE && rghtCnst->CnstTyp == FLOAT_VALUE)
 	{
 
-		str = lftCnst->vl.str;
+		str = *lftCnst->vl.str;
 		str += to_string(rghtCnst->vl.flt);
 
 		rslt = bldStrCnstByStr(str);
@@ -430,7 +411,7 @@ struct CnstStrc* clcBnrExpAdd(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp)
 	{
 
 		str = to_string(lftCnst->vl.flt);
-		str += rghtCnst->vl.str;
+		str += *(rghtCnst->vl.str);
 
 		rslt = bldStrCnstByStr(str);
 	}
@@ -438,7 +419,7 @@ struct CnstStrc* clcBnrExpAdd(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp)
 	if (lftCnst->CnstTyp == STRING_VALUE && rghtCnst->CnstTyp == BOOLEAN_VALUE)
 	{
 
-		str = lftCnst->vl.str;
+		str = *(lftCnst->vl.str);
 
 		str += rghtCnst->vl.bln == 0 ? "false" : "true";
 
@@ -450,7 +431,7 @@ struct CnstStrc* clcBnrExpAdd(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp)
 
 		str = lftCnst->vl.bln == 0 ? "false" : "true";
 
-		str += rghtCnst->vl.str;
+		str += *(rghtCnst->vl.str);
 
 		rslt = bldStrCnstByStr(str);
 	}
@@ -607,7 +588,7 @@ struct CnstStrc* clcBnrExpEq(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp)
 	if (lftCnst->CnstTyp == STRING_VALUE && rghtCnst->CnstTyp == STRING_VALUE)
 	{
 		//rslt = bldBlnCnst(strcmp(lftCnst->vl.str, rghtCnst->vl.str) == 0);
-		rslt = bldBlnCnst(lftCnst->vl.str.compare(rghtCnst->vl.str) == 0);
+		rslt = bldBlnCnst(lftCnst->vl.str->compare(*rghtCnst->vl.str) == 0);
 	}
 
 	if (rslt == NULL)
@@ -646,7 +627,7 @@ struct CnstStrc* clcBnrExpNe(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp)
 	if (lftCnst->CnstTyp == STRING_VALUE && rghtCnst->CnstTyp == STRING_VALUE)
 	{
 		//rslt = bldBlnCnst(strcmp(lftCnst->vl.str, rghtCnst->vl.str) != 0);
-		rslt = bldBlnCnst(lftCnst->vl.str.compare(rghtCnst->vl.str) != 0);
+		rslt = bldBlnCnst(lftCnst->vl.str->compare(*rghtCnst->vl.str) != 0);
 	}
 
 	if (rslt == NULL)
@@ -684,7 +665,7 @@ struct CnstStrc* clcBnrExpGt(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp)
 
 	if (lftCnst->CnstTyp == STRING_VALUE && rghtCnst->CnstTyp == STRING_VALUE)
 	{
-		rslt = bldBlnCnst(strcmp(lftCnst->vl.str.c_str(), rghtCnst->vl.str.c_str()) > 0);
+		rslt = bldBlnCnst(strcmp(lftCnst->vl.str->c_str(), rghtCnst->vl.str->c_str()) > 0);
 	}
 
 	if (rslt == NULL)
@@ -722,7 +703,7 @@ struct CnstStrc* clcBnrExpGe(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp)
 	if (lftCnst->CnstTyp == STRING_VALUE && rghtCnst->CnstTyp == STRING_VALUE)
 	{
 		//rslt = bldBlnCnst(strcmp(lftCnst->vl.str, rghtCnst->vl.str) >= 0);
-		rslt = bldBlnCnst(lftCnst->vl.str.compare(rghtCnst->vl.str) >= 0);
+		rslt = bldBlnCnst(lftCnst->vl.str->compare(*rghtCnst->vl.str) >= 0);
 	}
 
 	if (rslt == NULL)
@@ -762,7 +743,7 @@ struct CnstStrc* clcBnrExpLt(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp)
 	if (lftCnst->CnstTyp == STRING_VALUE && rghtCnst->CnstTyp == STRING_VALUE)
 	{
 		//rslt = bldBlnCnst(strcmp(lftCnst->vl.str.c_str(), rghtCnst->vl.str.c_str()) < 0);
-		rslt = bldBlnCnst(lftCnst->vl.str.compare(rghtCnst->vl.str) < 0);
+		rslt = bldBlnCnst(lftCnst->vl.str->compare(*rghtCnst->vl.str) < 0);
 	}
 
 	if (rslt == NULL)
@@ -800,7 +781,7 @@ struct CnstStrc* clcBnrExpLe(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp)
 	if (lftCnst->CnstTyp == STRING_VALUE && rghtCnst->CnstTyp == STRING_VALUE)
 	{
 		//rslt = bldBlnCnst(strcmp(lftCnst->vl.str.c_str(), rghtCnst->vl.str.c_str()) <= 0);
-		rslt = bldBlnCnst(lftCnst->vl.str.compare(rghtCnst->vl.str) <= 0);
+		rslt = bldBlnCnst(lftCnst->vl.str->compare(*rghtCnst->vl.str) <= 0);
 	}
 
 	if (rslt == NULL)
@@ -1386,9 +1367,9 @@ struct CnstStrc* clcUnrExpNot(vector<EnvrStrc*>& envr, struct UnrExpStrc* exp)
 	else if (cnst->CnstTyp == STRING_VALUE)
 	{
 		//if (cnst->vl.str != NULL)
-		if (cnst->vl.str.empty() == false)
+		if (cnst->vl.str->empty() == false)
 		{
-			rslt = bldBlnCnst(strcmp(cnst->vl.str.c_str(), "") == 0);
+			rslt = bldBlnCnst(strcmp(cnst->vl.str->c_str(), "") == 0);
 		}
 		else
 		{
