@@ -66,10 +66,7 @@ struct CnstStrc* bldStrCnstByStr(string vl)
 	struct CnstStrc* rslt = new CnstStrc;
 
 	rslt->CnstTyp = STRING_VALUE;
-	//rslt->vl.str = new string(vl);
 	rslt->vl.str = new string(vl);
-
-	//printf("cnst str: %s\n", rslt->vl.str.c_str());
 
 	return rslt;
 }

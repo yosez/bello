@@ -17,7 +17,6 @@ int asgnVrb(struct VrbStrc* vrb, struct CnstStrc* vl)
 {
 	vrb->typ = vl->CnstTyp;
 
-	//vrb->vl = vl->vl;
 	memset(&(vrb->vl), 0, sizeof(VlUnn));
 	memcpy(&(vrb->vl), &(vl->vl), sizeof(VlUnn));
 
@@ -54,8 +53,6 @@ struct VrbStrc* bldVrb(string nm)
 {
 	struct VrbStrc* rslt = new VrbStrc;
 
-	//rslt->nm = (char*)malloc(0x100);
-	//strcpy(rslt->nm, nm);
 	rslt->nm = nm;
 
 	rslt->typ = -1;
@@ -68,25 +65,11 @@ struct AsgnLstStrc* bldAsgnLst()
 {
 	struct AsgnLstStrc* rslt = new AsgnLstStrc;
 
-	//rslt->asgnSz = 10;
-	//rslt->asgnCnt = 0;
-
-	//rslt->asgnArr = (struct ExpStrc**)malloc(sizeof(struct ExpStrc*) * rslt->asgnSz);
-
 	return rslt;
 }
 
 int asgnLstAdd(struct AsgnLstStrc* asgnLst, struct ExpStrc* vrb, struct ExpStrc* exp)
 {
-	//if (asgnLst->asgnCnt == asgnLst->asgnSz)
-	//{
-	//	asgnLst->asgnSz *= 2;
-	//	asgnLst->asgnArr = (struct ExpStrc**)realloc(asgnLst->asgnArr, sizeof(struct ExpStrc*) * asgnLst->asgnSz);
-	//}
-
-	//asgnLst->asgnArr[asgnLst->asgnCnt] = bldAsgnExp(bldLvlExp(vrb), exp);
-
-	//asgnLst->asgnCnt++;
 
 	asgnLst->asgnArr.push_back(bldAsgnExp(bldLvlExp(vrb), exp));
 

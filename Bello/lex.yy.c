@@ -905,7 +905,7 @@ YY_RULE_SETUP
 #line 59 "bello.l"
 { 
                                 yylval.intVl = strlen(yytext); 
-                                printf("yytext \\t: |%s|\n", yytext);
+                                //printf("yytext \\t: |%s|\n", yytext);
                                 return INDENT; 
                             }
 	YY_BREAK
@@ -914,7 +914,7 @@ YY_RULE_SETUP
 #line 64 "bello.l"
 { 
                                 yylval.intVl = strlen(yytext)/4;
-                                printf("yytext [ ]: |%s|\n", yytext);
+                                //printf("yytext [ ]: |%s|\n", yytext);
                                 return INDENT;
                             }
 	YY_BREAK

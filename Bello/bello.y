@@ -52,6 +52,8 @@
     //prsStt为1 从标准输入读取 prsStt为2 从源文件读取
     int prsStt;
 
+    void fldStmt(int indt);
+
 %}
 
 %union
@@ -171,7 +173,7 @@ build_statement
         int indt = $<intVl>-3;
         //如果是当前句的indent == 上1句的indent + 1，则检查上1句是否有语句体，如上1句允许语句体，语句入栈
 
-        printf("indt: %d lstIndt: %d\n",indt, lstIndt);
+        //printf("indt: %d lstIndt: %d\n",indt, lstIndt);
         if (indt == lstIndt + 1 )
         {
             if (stmtStk.back()->alwSubStmt)
@@ -211,78 +213,80 @@ build_statement
             int idx;
 
             //折叠输入的句子以上的缩进大于该输入的句子，结果为栈中缩进最大的句子为输入的句子及其以上同等缩进的句子
-            while (stmtStk.back()->indt > nowIndt)
-            {
-                // 找到当前语句未入栈时，上1个子语句的主语句在语句栈中的序号
-                idx = stmtStk.size()-1;
-                while (idx>0 && stmtStk.back()->indt == stmtStk.at(idx-1)->indt)
-                {
-                    idx--;
-                }
+            fldStmt(nowIndt);
 
-                int i = idx;
+            // while (stmtStk.back()->indt > nowIndt)
+            // {
+            //     // 找到当前语句未入栈时，上1个子语句的主语句在语句栈中的序号
+            //     idx = stmtStk.size()-1;
+            //     while (idx>0 && stmtStk.back()->indt == stmtStk.at(idx-1)->indt)
+            //     {
+            //         idx--;
+            //     }
 
-                StmtStrc* blk = bldStmtBlk();
+            //     int i = idx;
 
-                // 将子语句添加到语句块中
-                while (i < stmtStk.size())
-                {
+            //     StmtStrc* blk = bldStmtBlk();
 
-                    //blk->stmt.stmtBlk->stmtArr.back()->stmt.ifStmt->els = stmtStk.at(i)->stmt;
+            //     // 将子语句添加到语句块中
+            //     while (i < stmtStk.size())
+            //     {
 
-                    stmtBlkAdd(blk, stmtStk.at(i)->stmt);
-                    i++;
-                }
+            //         //blk->stmt.stmtBlk->stmtArr.back()->stmt.ifStmt->els = stmtStk.at(i)->stmt;
 
-                //子语句出栈
-                int nbrPop = stmtStk.size() - idx;
+            //         stmtBlkAdd(blk, stmtStk.at(i)->stmt);
+            //         i++;
+            //     }
 
-                for (i=0;i<nbrPop;i++)
-                {
-                    stmtStk.pop_back();
-                }
+            //     //子语句出栈
+            //     int nbrPop = stmtStk.size() - idx;
 
-                //将语句体附加到上1级语句中
+            //     for (i=0;i<nbrPop;i++)
+            //     {
+            //         stmtStk.pop_back();
+            //     }
 
-                switch(stmtStk.back()->stmt->typ)
-                {
-                    case IF_STATEMENT:
-                    {
-                        //printf("附加if语句 #0\n");
-                        stmtStk.back()->stmt->stmt.ifStmt->stmt = blk;
-                        stmtStk.back()->stmt->stmt.ifStmt->els=NULL;
-                        break;
-                    }
-                    case WHILE_STATEMENT:
-                    {
-                        stmtStk.back()->stmt->stmt.whlStmt->stmt = blk;
-                        break;
-                    }
-                    case FOR_STATEMENT:
-                    {
-                        stmtStk.back()->stmt->stmt.forStmt->stmt = blk;
-                        break;
-                    }
-                    case FUNCTION_DEFINE_STATEMENT:
-                    {
-                        stmtStk.back()->stmt->stmt.fcnStmt->fcn->stmt = blk;
-                        break;
-                    }
-                    case ELSE_STATEMENT:
-                    {
-                        stmtStk.back()->stmt->stmt.elsStmt->stmt = blk;
+            //     //将语句体附加到上1级语句中
 
-                        //如果闭合的语句是else语句，则将其添加到其上的if语句中
-                        StmtStrc* els = stmtStk.back()->stmt->stmt.elsStmt->stmt;
-                        stmtStk.pop_back();
+            //     switch(stmtStk.back()->stmt->typ)
+            //     {
+            //         case IF_STATEMENT:
+            //         {
+            //             //printf("附加if语句 #0\n");
+            //             stmtStk.back()->stmt->stmt.ifStmt->stmt = blk;
+            //             stmtStk.back()->stmt->stmt.ifStmt->els=NULL;
+            //             break;
+            //         }
+            //         case WHILE_STATEMENT:
+            //         {
+            //             stmtStk.back()->stmt->stmt.whlStmt->stmt = blk;
+            //             break;
+            //         }
+            //         case FOR_STATEMENT:
+            //         {
+            //             stmtStk.back()->stmt->stmt.forStmt->stmt = blk;
+            //             break;
+            //         }
+            //         case FUNCTION_DEFINE_STATEMENT:
+            //         {
+            //             stmtStk.back()->stmt->stmt.fcnStmt->fcn->stmt = blk;
+            //             break;
+            //         }
+            //         case ELSE_STATEMENT:
+            //         {
+            //             stmtStk.back()->stmt->stmt.elsStmt->stmt = blk;
 
-                        stmtStk.back()->stmt->stmt.ifStmt->els = els;
+            //             //如果闭合的语句是else语句，则将其添加到其上的if语句中
+            //             StmtStrc* els = stmtStk.back()->stmt->stmt.elsStmt->stmt;
+            //             stmtStk.pop_back();
 
-                        break;
-                    }
-                }
+            //             stmtStk.back()->stmt->stmt.ifStmt->els = els;
 
-            }
+            //             break;
+            //         }
+            //     }
+
+            // }
 
             //如果当前输入的语句是else语句，检查同级缩进的上1个语句是不是if语句
 
@@ -348,75 +352,76 @@ close_execute_statement
 
                 int idx;
 
-                while (stmtStk.back()->indt > nowIndt)
-                {
+                fldStmt(0);
+                // while (stmtStk.back()->indt > nowIndt)
+                // {
                     
 
-                    idx = stmtStk.size()-1;
+                //     idx = stmtStk.size()-1;
 
-                    while (idx>0 && stmtStk.back()->indt == stmtStk.at(idx-1)->indt)
-                    {
-                        idx--;
-                    }
+                //     while (idx>0 && stmtStk.back()->indt == stmtStk.at(idx-1)->indt)
+                //     {
+                //         idx--;
+                //     }
 
-                    int i = idx;
+                //     int i = idx;
 
-                    StmtStrc* blk = bldStmtBlk();
+                //     StmtStrc* blk = bldStmtBlk();
 
-                    while (i < stmtStk.size())
-                    {
-                        stmtBlkAdd(blk, stmtStk.at(i)->stmt);
+                //     while (i < stmtStk.size())
+                //     {
+                //         stmtBlkAdd(blk, stmtStk.at(i)->stmt);
 
-                        i++;
-                    }
+                //         i++;
+                //     }
 
-                    //子语句出栈
-                    int nbrPop = stmtStk.size() - idx;
+                //     //子语句出栈
+                //     int nbrPop = stmtStk.size() - idx;
 
-                    for (i=0;i<nbrPop;i++)
-                    {
-                        stmtStk.pop_back();
-                    }
+                //     for (i=0;i<nbrPop;i++)
+                //     {
+                //         stmtStk.pop_back();
+                //     }
 
-                    //将语句体附加到上1级语句中
+                //     //将语句体附加到上1级语句中
 
-                    switch(stmtStk.back()->stmt->typ)
-                    {
-                        case IF_STATEMENT:
-                        {
-                            //printf("附加if语句 #2\n");
-                            stmtStk.back()->stmt->stmt.ifStmt->stmt = blk;
-                            stmtStk.back()->stmt->stmt.ifStmt->els = NULL;
-                            break;
-                        }
-                        case WHILE_STATEMENT:
-                        {
-                            stmtStk.back()->stmt->stmt.whlStmt->stmt = blk;
-                            break;
-                        }
-                        case FOR_STATEMENT:
-                        {
-                            stmtStk.back()->stmt->stmt.forStmt->stmt = blk;
-                            break;
-                        }
-                        case FUNCTION_DEFINE_STATEMENT:
-                        {
-                            stmtStk.back()->stmt->stmt.fcnStmt->fcn->stmt = blk;
-                            break;
-                        }
-                        case ELSE_STATEMENT:
-                        {
-                            stmtStk.back()->stmt->stmt.elsStmt->stmt = blk;
+                //     switch(stmtStk.back()->stmt->typ)
+                //     {
+                //         case IF_STATEMENT:
+                //         {
+                //             //printf("附加if语句 #2\n");
+                //             stmtStk.back()->stmt->stmt.ifStmt->stmt = blk;
+                //             stmtStk.back()->stmt->stmt.ifStmt->els = NULL;
+                //             break;
+                //         }
+                //         case WHILE_STATEMENT:
+                //         {
+                //             stmtStk.back()->stmt->stmt.whlStmt->stmt = blk;
+                //             break;
+                //         }
+                //         case FOR_STATEMENT:
+                //         {
+                //             stmtStk.back()->stmt->stmt.forStmt->stmt = blk;
+                //             break;
+                //         }
+                //         case FUNCTION_DEFINE_STATEMENT:
+                //         {
+                //             stmtStk.back()->stmt->stmt.fcnStmt->fcn->stmt = blk;
+                //             break;
+                //         }
+                //         case ELSE_STATEMENT:
+                //         {
+                //             stmtStk.back()->stmt->stmt.elsStmt->stmt = blk;
 
-                            //将else语句添加到其上的if语句结构体中
-                            StmtStrc* els = stmtStk.back()->stmt->stmt.elsStmt->stmt;
+                //             //将else语句添加到其上的if语句结构体中
+                //             StmtStrc* els = stmtStk.back()->stmt->stmt.elsStmt->stmt;
 
-                            stmtStk.pop_back();
-                            stmtStk.back()->stmt->stmt.ifStmt->els =els;
-                        }
-                    }
+                //             stmtStk.pop_back();
+                //             stmtStk.back()->stmt->stmt.ifStmt->els =els;
+                //         }
+                //     }
 
-                }
+                // }
 
                 // 如果是双主句语句的情况
 
@@ -471,74 +476,75 @@ close_execute_last_statement
 
                 int idx;
 
-                while (stmtStk.back()->indt > nowIndt)
-                {
+                fldStmt(0);
+                // while (stmtStk.back()->indt > nowIndt)
+                // {
                     
 
-                    idx = stmtStk.size()-1;
+                //     idx = stmtStk.size()-1;
 
-                    while (idx>0 && stmtStk.back()->indt == stmtStk.at(idx-1)->indt)
-                    {
-                        idx--;
-                    }
+                //     while (idx>0 && stmtStk.back()->indt == stmtStk.at(idx-1)->indt)
+                //     {
+                //         idx--;
+                //     }
 
-                    int i = idx;
+                //     int i = idx;
 
-                    StmtStrc* blk = bldStmtBlk();
+                //     StmtStrc* blk = bldStmtBlk();
 
-                    while (i < stmtStk.size())
-                    {
-                        stmtBlkAdd(blk, stmtStk.at(i)->stmt);
+                //     while (i < stmtStk.size())
+                //     {
+                //         stmtBlkAdd(blk, stmtStk.at(i)->stmt);
 
-                        i++;
-                    }
+                //         i++;
+                //     }
 
-                    //子语句出栈
-                    int nbrPop = stmtStk.size() - idx;
+                //     //子语句出栈
+                //     int nbrPop = stmtStk.size() - idx;
 
-                    for (i=0;i<nbrPop;i++)
-                    {
-                        stmtStk.pop_back();
-                    }
+                //     for (i=0;i<nbrPop;i++)
+                //     {
+                //         stmtStk.pop_back();
+                //     }
 
-                    //将语句体附加到上1级语句中
+                //     //将语句体附加到上1级语句中
 
-                    switch(stmtStk.back()->stmt->typ)
-                    {
-                        case IF_STATEMENT:
-                        {
-                            stmtStk.back()->stmt->stmt.ifStmt->stmt = blk;
-                            stmtStk.back()->stmt->stmt.ifStmt->stmt = NULL;
-                            break;
-                        }
-                        case WHILE_STATEMENT:
-                        {
-                            stmtStk.back()->stmt->stmt.whlStmt->stmt = blk;
-                            break;
-                        }
-                        case FOR_STATEMENT:
-                        {
-                            stmtStk.back()->stmt->stmt.forStmt->stmt = blk;
-                            break;
-                        }
-                        case FUNCTION_DEFINE_STATEMENT:
-                        {
-                            stmtStk.back()->stmt->stmt.fcnStmt->fcn->stmt = blk;
-                            break;
-                        }
-                        case ELSE_STATEMENT:
-                        {
-                            stmtStk.back()->stmt->stmt.elsStmt->stmt = blk;
+                //     switch(stmtStk.back()->stmt->typ)
+                //     {
+                //         case IF_STATEMENT:
+                //         {
+                //             stmtStk.back()->stmt->stmt.ifStmt->stmt = blk;
+                //             stmtStk.back()->stmt->stmt.ifStmt->stmt = NULL;
+                //             break;
+                //         }
+                //         case WHILE_STATEMENT:
+                //         {
+                //             stmtStk.back()->stmt->stmt.whlStmt->stmt = blk;
+                //             break;
+                //         }
+                //         case FOR_STATEMENT:
+                //         {
+                //             stmtStk.back()->stmt->stmt.forStmt->stmt = blk;
+                //             break;
+                //         }
+                //         case FUNCTION_DEFINE_STATEMENT:
+                //         {
+                //             stmtStk.back()->stmt->stmt.fcnStmt->fcn->stmt = blk;
+                //             break;
+                //         }
+                //         case ELSE_STATEMENT:
+                //         {
+                //             stmtStk.back()->stmt->stmt.elsStmt->stmt = blk;
 
-                            //将else语句添加到其上的if语句结构体中
-                            StmtStrc* els = stmtStk.back()->stmt->stmt.elsStmt->stmt;
+                //             //将else语句添加到其上的if语句结构体中
+                //             StmtStrc* els = stmtStk.back()->stmt->stmt.elsStmt->stmt;
 
-                            stmtStk.pop_back();
-                            stmtStk.back()->stmt->stmt.ifStmt->els =els;
-                        }
-                    }
+                //             stmtStk.pop_back();
+                //             stmtStk.back()->stmt->stmt.ifStmt->els =els;
+                //         }
+                //     }
 
-                }
+                // }
 
                 // 如果是双主句语句的情况
 
@@ -1069,6 +1075,80 @@ return_statement
 
 %%
 
+
+void fldStmt(int indt=0)
+{
+    int idx;
+
+    while (stmtStk.back()->indt > indt)
+    {
+        
+        idx = stmtStk.size()-1;
+
+        while (idx>0 && stmtStk.back()->indt == stmtStk.at(idx-1)->indt)
+        {
+            idx--;
+        }
+
+        int i = idx;
+
+        StmtStrc* blk = bldStmtBlk();
+
+        while (i < stmtStk.size())
+        {
+            stmtBlkAdd(blk, stmtStk.at(i)->stmt);
+
+            i++;
+        }
+
+        //子语句出栈
+        int nbrPop = stmtStk.size() - idx;
+
+        for (i=0;i<nbrPop;i++)
+        {
+            stmtStk.pop_back();
+        }
+
+        //将语句体附加到上1级语句中
+
+        switch(stmtStk.back()->stmt->typ)
+        {
+            case IF_STATEMENT:
+            {
+                stmtStk.back()->stmt->stmt.ifStmt->stmt = blk;
+                stmtStk.back()->stmt->stmt.ifStmt->els = NULL;
+                break;
+            }
+            case WHILE_STATEMENT:
+            {
+                stmtStk.back()->stmt->stmt.whlStmt->stmt = blk;
+                break;
+            }
+            case FOR_STATEMENT:
+            {
+                stmtStk.back()->stmt->stmt.forStmt->stmt = blk;
+                break;
+            }
+            case FUNCTION_DEFINE_STATEMENT:
+            {
+                stmtStk.back()->stmt->stmt.fcnStmt->fcn->stmt = blk;
+                break;
+            }
+            case ELSE_STATEMENT:
+            {
+                stmtStk.back()->stmt->stmt.elsStmt->stmt = blk;
+
+                //将else语句添加到其上的if语句结构体中
+                StmtStrc* els = stmtStk.back()->stmt->stmt.elsStmt->stmt;
+
+                stmtStk.pop_back();
+                stmtStk.back()->stmt->stmt.ifStmt->els =els;
+            }
+        }
+
+    }
+
+}
 
 
 int main(int argc, char * argv[])
