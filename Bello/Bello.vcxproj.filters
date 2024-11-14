@@ -54,6 +54,9 @@
     <ClInclude Include="y.tab.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="cls.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="bello.l">

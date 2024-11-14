@@ -102,6 +102,7 @@
 "while"                     { return WHILE; }
 "break"                     { return BREAK; }
 "continue"                  { return CONTINUE; }
+"class"                     { return CLASS; }
 "function"                  { return FUNC; }
 "return"                    { return RETURN; }
 "null"                      { return NULL_VALUE; }

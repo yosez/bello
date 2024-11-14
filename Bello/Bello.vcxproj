@@ -145,6 +145,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="arr.h" />
+    <ClInclude Include="cls.h" />
     <ClInclude Include="cnst.h" />
     <ClInclude Include="dftn.h" />
     <ClInclude Include="envr.h" />

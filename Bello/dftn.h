@@ -9,6 +9,8 @@ using namespace std;
 
 struct VrbStrc;
 struct VrbExpStrc;
+struct ClsStrc;
+struct ObjStrc;
 struct CnstStrc;
 struct FcnExpStrc;
 struct VrbDfnStrc;
@@ -163,6 +165,22 @@ struct VrbStrc
 
 	//public:
 	//	VrbStrc();
+};
+
+struct ClsStrc
+{
+	string* nm;
+	vector<string> vrb;
+	vector<FcnStrc*> fcn;
+	vector<VrbStrc*> shrVrb;
+	vector<FcnStrc*> shrFcn;
+};
+
+struct ObjStrc
+{
+	ClsStrc* cls;
+
+	vector<VrbStrc*> vrb;
 };
 
 struct VrbExpStrc
