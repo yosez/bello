@@ -12,6 +12,8 @@ struct VrbExpStrc;
 struct ClsStrc;
 struct ObjStrc;
 struct CnstStrc;
+struct FcnStrc;
+struct EnvrStrc;
 struct FcnExpStrc;
 struct VrbDfnStrc;
 struct UnrExpStrc;
@@ -28,13 +30,12 @@ struct BrkStmtStrc;
 struct CntnStmtStrc;
 struct RtnStmtStrc;
 struct StmtBlkStrc;
+struct ClsStmtStrc;
 struct StmtStrc;
 struct RtnRsltStrc;
 struct BrkRsltStrc;
 struct CntnRsltStrc;
 struct StmtRsltStrc;
-struct FcnStrc;
-struct EnvrStrc;
 struct PrmLstStrc;
 struct ArgLstStrc;
 struct VrbLstStrc;
@@ -126,7 +127,8 @@ enum StmtTyp
 	RETURN_STATEMENT,
 	VAR_STATEMENT,
 	GLOBAL_STATEMENT,
-	NULL_STATEMENT
+	NULL_STATEMENT,
+	CLASS_DEFINE_STATEMENT
 };
 
 enum StmtRsltTyp
@@ -163,8 +165,6 @@ struct VrbStrc
 	int typ;
 	union VlUnn vl;
 
-	//public:
-	//	VrbStrc();
 };
 
 struct ClsStrc
@@ -196,7 +196,7 @@ struct CnstStrc
 public:
 	CnstStrc()
 	{
-	}
+	};
 };
 
 struct AsgnExpStrc
@@ -377,6 +377,11 @@ struct FcnStmtStrc
 	struct FcnStrc* fcn;
 };
 
+struct ClsStmtStrc
+{
+	struct ClsStrc* cls;
+};
+
 struct StmtBlkStrc
 {
 	vector<StmtStrc*> stmtArr;
@@ -418,6 +423,7 @@ struct StmtStrc
 		struct RtnStmtStrc* rtnStmt;
 		struct VarStmtStrc* varStmt;
 		struct GlbStmtStrc* glbStmt;
+		struct ClsStmtStrc* clsStmt;
 	} stmt;
 };
 

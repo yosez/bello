@@ -24,6 +24,7 @@ struct StmtStrc* bldRtnStmt(struct ExpStrc* exp);
 struct StmtStrc* bldVarStmt(struct AsgnLstStrc* asgnLst);
 struct StmtStrc* bldGlbStmt(AsgnLstStrc* asgnLst);
 struct StmtStrc* bldNllStmt();
+struct StmtStrc* bldClsStmt();
 
 struct StmtStrc* bldIfStmt(struct ExpStrc* exp);
 struct StmtStrc* bldForStmt(struct StmtStrc* intl, struct StmtStrc* exp, struct StmtStrc* itr);
@@ -310,6 +311,19 @@ struct StmtStrc* bldNllStmt()
 	struct StmtStrc* rslt = new StmtStrc;
 
 	rslt->typ = NULL_STATEMENT;
+
+	return rslt;
+}
+
+struct StmtStrc* bldClsStmt(ClsStrc *cls)
+{
+	struct StmtStrc* rslt = new StmtStrc;
+
+	rslt->typ = CLASS_DEFINE_STATEMENT;
+
+	rslt->stmt.clsStmt = new ClsStmtStrc;
+
+	rslt->stmt.clsStmt->cls = cls;
 
 	return rslt;
 }

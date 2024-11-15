@@ -12,6 +12,13 @@
 #define EXP_H
 #endif
 
+ClsStrc* bldCls(char* nm);
+int clsAddVrb(ClsStrc* cls, char* vrb);
+int clsAddFcn(ClsStrc* cls, FcnStrc* fcn);
+int clsAddShrVrb(ClsStrc* cls, VrbStrc* vrb);
+int clsAddShrFcn(ClsStrc* cls, FcnStrc* fcn);
+
+
 ClsStrc* bldCls(char* nm)
 {
 	ClsStrc* rslt = new ClsStrc;
@@ -20,4 +27,32 @@ ClsStrc* bldCls(char* nm)
 
 	return rslt;
 
+}
+
+int clsAddVrb(ClsStrc* cls, char* vrb)
+{
+	cls->vrb.push_back(string(vrb));
+
+	return 0;
+}
+
+int clsAddFcn(ClsStrc* cls, FcnStrc* fcn)
+{
+	cls->fcn.push_back(fcn);
+
+	return 0;
+}
+
+int clsAddShrVrb(ClsStrc* cls, VrbStrc* vrb)
+{
+	cls->shrVrb.push_back(vrb);
+
+	return 0;
+}
+
+int clsAddShrFcn(ClsStrc* cls, FcnStrc* fcn)
+{
+	cls->shrFcn.push_back(fcn);
+
+	return 0;
 }

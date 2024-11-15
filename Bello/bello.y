@@ -21,6 +21,7 @@
     #include "exp.h"
     #include "stmt.h"
     #include "fcn.h"
+    #include "cls.h"
     #include "envr.h"
     #include "err.h"
     #ifndef LEX_YY_C
@@ -850,7 +851,9 @@ class_define_statement
     {
         struct ClsStrc* cls;
 
-        $$ = bldCls($<char*>2);
+        cls = bldCls($2);
+
+        $$ = bldClsStmt(cls);
     }
 
 
