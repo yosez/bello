@@ -21,8 +21,10 @@ struct BnrExpStrc;
 struct LvlExpStrc;
 struct ExpStrc;
 struct PrtStmtStrc;
+
 struct IfStmtStrc;
 struct ElsStmtStrc;
+struct FcnStmtStrc;
 struct ForStmtStrc;
 struct WhlStmtStrc;
 struct DoWhlStmtStrc;
@@ -317,11 +319,12 @@ struct ExpStmtStrc
 	struct ExpStrc* exp;
 };
 
-struct PrtStmtStrc
-{
-	int typ;
-	struct ExpStrc* exp;
-};
+//此部分已弃用
+//struct PrtStmtStrc
+//{
+//	int typ;
+//	struct ExpStrc* exp;
+//};
 
 struct IfStmtStrc
 {

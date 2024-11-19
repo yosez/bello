@@ -561,6 +561,7 @@ element_list
 
 var_statement
     : VAR assign_list { $$=bldVarStmt($2); }
+    | SHARED VAR assign_list { $$ = bldVarStmt($2); }
 
 global_statement
     : GLOBAL assign_list { $$=bldGlbStmt($2); }
@@ -953,12 +954,34 @@ void fldStmt(int indt=0)
                 //根据类中的语句填充类
 
                 int lnt = blk->stmt.stmtBlk->stmtArr.size();
+
+                ClsStrc* cls = stmtStk.back()->stmt->stmt.clsStmt->cls;
                 
                 for (int i=0;i<lnt;i++)
                 {
-                    if (blk->stmt.stmtBlk->stmtArr.at(i)->typ == VAR_STATEMENT)
+                    StmtStrc *stmt = blk->stmt.stmtBlk->stmtArr.at(i);
+
+                    if (stmt->typ == VAR_STATEMENT)
                     {
+                        AsgnLstStrc* asgn = stmt->stmt.varStmt->asgnLst;
+
+                        for (int j=0;j<asgn->asgnArr.size();j++)
+                        {
+                            ExpStrc* asgnExp = asgn->asgnArr.at(j);
+
+                            //赋值应只允许静态值
+                            VrbStrc* vrb = bldVrb(asgnExp->exp.asgnExp->lvl->exp.lvlExp->vrb->exp.vrbExp->nm);
+
+                            cls->vrb.push_back(vrb);
+                        }
                         
+                    
+                    }
+
+                    if (stmt->typ == FUNCTION_DEFINE_STATEMENT)
+                    {
+                        FcnStrc* fcn = stmt->stmt.fcnStmt->fcn;
+                        cls->fcn.push_back(fcn);
                     }
                 }
 
