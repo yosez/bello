@@ -13,7 +13,7 @@
 #endif
 
 ClsStrc* bldCls(char* nm);
-int clsAddVrb(ClsStrc* cls, char* vrb);
+int clsAddVrb(ClsStrc* cls, VrbStrc* vrb);
 int clsAddFcn(ClsStrc* cls, FcnStrc* fcn);
 int clsAddShrVrb(ClsStrc* cls, VrbStrc* vrb);
 int clsAddShrFcn(ClsStrc* cls, FcnStrc* fcn);
@@ -29,9 +29,9 @@ ClsStrc* bldCls(char* nm)
 
 }
 
-int clsAddVrb(ClsStrc* cls, char* vrb)
+int clsAddVrb(ClsStrc* cls, VrbStrc* vrb)
 {
-	cls->vrb.push_back(string(vrb));
+	cls->vrb.push_back(vrb);
 
 	return 0;
 }

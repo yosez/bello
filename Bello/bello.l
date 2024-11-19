@@ -106,6 +106,10 @@
 "function"                  { return FUNC; }
 "return"                    { return RETURN; }
 "null"                      { return NULL_VALUE; }
+"class"                     { return CLASS; }
+"func"                      { return FUNC; }
+"shared"                    { return SHARED; }
+"this"                      { return THIS; }
 [0-9]{1,7}                  { yylval.intVl=atoi(yytext); return INT_VALUE; }
 [0-9]{1,7}\.[0-9]{1,7}      { yylval.fltVl= (float)atof(yytext); return FLOAT_VALUE; }
 "true"                      { yylval.blnVl=1; return BOOLEAN_VALUE; }

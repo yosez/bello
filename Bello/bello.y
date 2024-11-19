@@ -55,6 +55,9 @@
 
     void fldStmt(int indt);
 
+    //类定义语句的标志，0为不是类定义的状态，1为类定义的状态
+    int blnClsDfn=0;
+
 %}
 
 %union
@@ -84,7 +87,7 @@
 %token LF
 %token END_FILE
 %token NOP
-%token CLASS
+%token CLASS SHARED THIS
 %token <intVl> INDENT
 %token <intVl> INT_VALUE
 %token <blnVl> BOOLEAN_VALUE
@@ -217,21 +220,21 @@ build_statement
             //折叠输入的句子以上的缩进大于该输入的句子，结果为栈中缩进最大的句子为输入的句子及其以上同等缩进的句子
             fldStmt(nowIndt);
 
-            //如果当前输入的语句是else语句，检查同级缩进的上1个语句是不是if语句
+            // //如果当前输入的语句是else语句，检查同级缩进的上1个语句是不是if语句
 
-            if (($<stmt>-2)->typ == ELSE_STATEMENT)
-            {
-                if (stmtStk.back()->stmt->typ == IF_STATEMENT)
-                {
+            // if (($<stmt>-2)->typ == ELSE_STATEMENT)
+            // {
+            //     if (stmtStk.back()->stmt->typ == IF_STATEMENT)
+            //     {
                     
-                }
-                else
-                {
-                    yyclearin;
-                    yyerrok;
-                }
+            //     }
+            //     else
+            //     {
+            //         yyclearin;
+            //         yyerrok;
+            //     }
 
-            }
+            // }
 
             //输入的句子入栈
 
@@ -911,7 +914,6 @@ void fldStmt(int indt=0)
         }
 
         //将语句体附加到上1级语句中
-
         switch(stmtStk.back()->stmt->typ)
         {
             case IF_STATEMENT:
@@ -945,7 +947,40 @@ void fldStmt(int indt=0)
                 stmtStk.pop_back();
                 stmtStk.back()->stmt->stmt.ifStmt->els =els;
             }
+            case CLASS_DEFINE_STATEMENT:
+            {
+                //此处未完成
+                //根据类中的语句填充类
+
+                int lnt = blk->stmt.stmtBlk->stmtArr.size();
+                
+                for (int i=0;i<lnt;i++)
+                {
+                    if (blk->stmt.stmtBlk->stmtArr.at(i)->typ == VAR_STATEMENT)
+                    {
+                        
+                    }
+                }
+
+                break;
+            }
         }
+
+
+        /* //如果当前输入的语句是else语句，检查同级缩进的上1个语句是不是if语句 */
+        /* if (($<stmt>-2)->typ == ELSE_STATEMENT)
+        {
+            if (stmtStk.back()->stmt->typ == IF_STATEMENT)
+            {
+                
+            }
+            else
+            {
+                yyclearin;
+                yyerrok;
+            }
+
+        } */
 
     }
 

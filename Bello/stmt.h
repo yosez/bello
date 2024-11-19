@@ -24,7 +24,7 @@ struct StmtStrc* bldRtnStmt(struct ExpStrc* exp);
 struct StmtStrc* bldVarStmt(struct AsgnLstStrc* asgnLst);
 struct StmtStrc* bldGlbStmt(AsgnLstStrc* asgnLst);
 struct StmtStrc* bldNllStmt();
-struct StmtStrc* bldClsStmt();
+struct StmtStrc* bldClsStmt(struct ClsStrc* cls);
 
 struct StmtStrc* bldIfStmt(struct ExpStrc* exp);
 struct StmtStrc* bldForStmt(struct StmtStrc* intl, struct StmtStrc* exp, struct StmtStrc* itr);
@@ -778,6 +778,7 @@ int chkStmtAlwSubStmt(struct StmtStrc* stmt)
 		case DO_WHILE_STATEMENT:
 		case FUNCTION_DEFINE_STATEMENT:
 		case ELSE_STATEMENT:
+		case CLASS_DEFINE_STATEMENT:
 		{
 			return 1;
 			break;

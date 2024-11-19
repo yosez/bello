@@ -170,7 +170,7 @@ struct VrbStrc
 struct ClsStrc
 {
 	string* nm;
-	vector<string> vrb;
+	vector<VrbStrc*> vrb;
 	vector<FcnStrc*> fcn;
 	vector<VrbStrc*> shrVrb;
 	vector<FcnStrc*> shrFcn;
@@ -561,9 +561,6 @@ struct ArgLstStrc
 //赋值列表
 struct AsgnLstStrc
 {
-	//int asgnSz;
-	//int asgnCnt;
-
 	vector<ExpStrc*> asgnArr;
 };
 

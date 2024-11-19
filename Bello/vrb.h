@@ -11,6 +11,7 @@
 
 extern struct ExpStrc* bldAsgnExp(struct ExpStrc* vrb, struct ExpStrc* exp);
 struct ExpStrc* bldLvlExp(struct ExpStrc* vrb);
+struct VrbStrc* bldVrb(string nm);
 
 //对变量数组中的选定变量进行赋值
 int asgnVrb(struct VrbStrc* vrb, struct CnstStrc* vl)
