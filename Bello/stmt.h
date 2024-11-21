@@ -288,6 +288,20 @@ struct StmtStrc* bldVarStmt(struct AsgnLstStrc* asgnLst)
 
 }
 
+struct StmtStrc* bldVarStmt(int typ, struct AsgnLstStrc* asgnLst)
+{
+	struct StmtStrc* rslt = new StmtStrc;
+
+	rslt->typ = typ;
+
+	rslt->stmt.varStmt = new VarStmtStrc;
+
+	rslt->stmt.varStmt->asgnLst = asgnLst;
+
+	return rslt;
+
+}
+
 struct StmtStrc* bldGlbStmt(AsgnLstStrc* asgnLst)
 {
 	printf("test\n");

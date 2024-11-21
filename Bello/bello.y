@@ -192,7 +192,6 @@ build_statement
 
                 stmtStk.push_back(sktItm);
 
-                //printf("--->>>stmt in stk: %d\n", stmtStk.size());
             }
             else
             {
@@ -249,6 +248,7 @@ build_statement
         lstIndt = indt;
     }
 
+//从命令行输入，输入空行之后执行语句栈中的语句
 close_execute_statement
     : 
     { 
@@ -302,6 +302,7 @@ close_execute_statement
 
     }
 
+//从源代码输入，新输入顶级语句后，执行上1条顶级语句
 close_execute_last_statement
     :
     {
@@ -314,6 +315,8 @@ close_execute_last_statement
         //如果存在上一条语句
         if (stmtStk.size()>0)
         {
+            //需要闭合上1条顶级语句的子语句，并执行该顶级语句
+
             //如果存在上1条语句，该语句允许子语句
             if (stmtStk.back()->indt == 0 && stmtStk.back()->alwSubStmt)
             {
@@ -322,13 +325,6 @@ close_execute_last_statement
                 
             }
 
-            // //如果上1条语句为顶级语句且不允许子语句，则执行上一条语句
-            // if (stmtStk.back()->indt == 0 && stmtStk.back()->alwSubStmt==0)
-            // {
-            //     //执行上一条顶级语句
-            //     exctStmt(envr, stmtStk.back()->stmt);
-            //     stmtStk.pop_back();
-            // }
 
             //如果上1条语句为子语句，则闭合上1条顶级语句，并执行该顶级语句
             if (stmtStk.back()->indt > 0)
@@ -560,8 +556,31 @@ element_list
 
 
 var_statement
-    : VAR assign_list { $$=bldVarStmt($2); }
-    | SHARED VAR assign_list { $$ = bldVarStmt($2); }
+    : VAR assign_list 
+    { 
+        //建立变量
+        if (blnDfnCls==false)
+        {
+            $$=bldVarStmt($2); 
+        }
+        else
+        {
+            $$=bldVarStmt(CLASS_VAR_STATEMENT, $2);
+        }
+    }
+    | SHARED VAR assign_list 
+    {
+        //需要是类定义状态
+        if (blnClsDfn==1)
+        {
+            $$ = bldVarStmt(CLASS_SHARED_VAR_STATEMENT, $2); 
+        } 
+        else
+        {
+            yyclearin;   
+            yyerrok;
+        }
+    }
 
 global_statement
     : GLOBAL assign_list { $$=bldGlbStmt($2); }
@@ -849,6 +868,31 @@ function_define_statement
 
         $$ = bldFcnStmt(fcn);
     }
+    | SHARED FUNC IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN 
+    {
+        if (blnClsDfn==false)
+        {
+            yyclearin;
+            yyerrok;
+
+            break;
+        }
+
+        struct FcnStrc* fcn;
+
+        fcn=bldFcn($2, $4);
+
+        $$ = bldFcnStmt(fcn);
+        
+    }
+    | SHARED FUNC IDENTIFER LEFT_PAREN RIGHT_PAREN
+    {
+        struct FcnStrc *fcn;
+
+        fcn=bldFcn($2, bldPrmLst());
+
+        $$ = bldFcnStmt(fcn);
+    }
 
 class_define_statement
     : CLASS IDENTIFER
@@ -858,6 +902,8 @@ class_define_statement
         cls = bldCls($2);
 
         $$ = bldClsStmt(cls);
+
+        blnClsDfn = 1;
     }
 
 
@@ -959,7 +1005,7 @@ void fldStmt(int indt=0)
                 
                 for (int i=0;i<lnt;i++)
                 {
-                    StmtStrc *stmt = blk->stmt.stmtBlk->stmtArr.at(i);
+                    StmtStrc *stmt = blk->stmt.stmtBlk->stmtArr.at(i);  
 
                     if (stmt->typ == VAR_STATEMENT)
                     {
