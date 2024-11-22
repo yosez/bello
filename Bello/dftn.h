@@ -176,6 +176,8 @@ struct ClsStrc
 	vector<FcnStrc*> fcn;
 	vector<VrbStrc*> shrVrb;
 	vector<FcnStrc*> shrFcn;
+
+	StmtStrc* dfn;
 };
 
 struct ObjStrc

@@ -54,6 +54,7 @@
     int prsStt;
 
     void fldStmt(int indt);
+    void pshStmt(int indt, StmtStrc* stmt);
 
     //类定义语句的标志，0为不是类定义的状态，1为类定义的状态
     int blnClsDfn=0;
@@ -184,13 +185,7 @@ build_statement
             if (stmtStk.back()->alwSubStmt)
             {
                 //语句入栈
-                StmtStkItmStrc * sktItm = new StmtStkItmStrc;
-
-                sktItm->indt = indt;
-                sktItm->stmt = $<stmt>-2;
-                sktItm->alwSubStmt = chkStmtAlwSubStmt($<stmt>-2);
-
-                stmtStk.push_back(sktItm);
+                pshStmt(indt, $<stmt>-2);
 
                 //printf("--->>>stmt in stk: %d\n", stmtStk.size());
             }
@@ -202,13 +197,8 @@ build_statement
         else if (indt == lstIndt)
         {
             //语句入栈
-            StmtStkItmStrc * sktItm = new StmtStkItmStrc;
 
-            sktItm->indt = indt;
-            sktItm->stmt = $<stmt>-2;
-            sktItm->alwSubStmt = chkStmtAlwSubStmt($<stmt>-2);
-
-            stmtStk.push_back(sktItm);
+            pshStmt(indt, $<stmt>-2);
 
         }
         else if (indt < lstIndt)
@@ -237,13 +227,8 @@ build_statement
             // }
 
             //输入的句子入栈
-
-            StmtStkItmStrc* itm =new StmtStkItmStrc;
-            itm->indt = nowIndt;
-            itm->stmt = $<stmt>-2;
-            itm->alwSubStmt = chkStmtAlwSubStmt($<stmt>-2);
-
-            stmtStk.push_back(itm);
+            pshStmt();
+            
         }
 
         lstIndt = indt;
@@ -322,14 +307,6 @@ close_execute_last_statement
                 
             }
 
-            // //如果上1条语句为顶级语句且不允许子语句，则执行上一条语句
-            // if (stmtStk.back()->indt == 0 && stmtStk.back()->alwSubStmt==0)
-            // {
-            //     //执行上一条顶级语句
-            //     exctStmt(envr, stmtStk.back()->stmt);
-            //     stmtStk.pop_back();
-            // }
-
             //如果上1条语句为子语句，则闭合上1条顶级语句，并执行该顶级语句
             if (stmtStk.back()->indt > 0)
             {
@@ -374,27 +351,6 @@ execute_statement
         }
   
     }
-
-/* execute_last_statement
-    : 
-    { 
-        printf("execute_last_statement: %d\n", stmtStk.back()->alwSubStmt);
-
-        //只在无缩进的情况下执行语句
-        if ($<intVl>-4 != 0 || stmtStk.back()->alwSubStmt == 1)
-        {
-            //YYABORT;
-        }
-        else
-        {
-            exctStmt(envr, stmtStk.back()->stmt);
-            stmtStk.pop_back();
-        }
-
-        printf("exct lst stmt\n");
-         
-    } */
-
 
 
 single_statement
@@ -955,9 +911,10 @@ void fldStmt(int indt=0)
 
                 int lnt = blk->stmt.stmtBlk->stmtArr.size();
 
-                ClsStrc* cls = stmtStk.back()->stmt->stmt.clsStmt->cls;
+                ClsStrc* cls = stmtStk.back()->stmt->stmt.clsStmt->dfn = blk;
                 
-                for (int i=0;i<lnt;i++)
+                //cls->dfn = blk;
+                /* for (int i=0;i<lnt;i++)
                 {
                     StmtStrc *stmt = blk->stmt.stmtBlk->stmtArr.at(i);
 
@@ -983,7 +940,7 @@ void fldStmt(int indt=0)
                         FcnStrc* fcn = stmt->stmt.fcnStmt->fcn;
                         cls->fcn.push_back(fcn);
                     }
-                }
+                } */
 
                 break;
             }
@@ -1007,6 +964,18 @@ void fldStmt(int indt=0)
 
     }
 
+}
+
+//当前读入的语句入栈
+void pshStmt(int indt, StmtStrc* stmt)
+{
+    StmtStkItmStrc * itm =new StmtStkItmStrc;
+
+    itm->indt = indt;
+    itm->stmt = stmt;
+    itm->alwSubStmt = chkStmtAlwSubStmt(stmt);
+
+    stmtStk.push_back(itm);
 }
 
 
