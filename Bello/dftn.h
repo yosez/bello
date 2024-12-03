@@ -493,6 +493,8 @@ struct EnvrStrc
 	//用于保存全局变量，只在顶层空间中有效
 	vector<VrbStrc*> glbArr;
 
+	vector<ClsStrc*> clsArr;
+
 public:
 	EnvrStrc()
 	{
