@@ -716,10 +716,32 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 			addFcn(envr[envr.size()-1], stmt->stmt.fcnStmt->fcn);
 		}
 
-		
 		if (stmt->typ == CLASS_DEFINE_STATEMENT)
 		{
-			//向类定义中添加数据	
+			//遍历类定义语句，填充类定义
+			StmtBlkStrc* blk = stmt->stmt.clsStmt->cls->dfn->stmt.stmtBlk;
+			std::vector<StmtStrc*>& stmtArr = blk->stmtArr;
+
+			ClsStrc* cls =new ClsStrc;
+
+			for (int i = 0; i < blk->stmtArr.size(); i++)
+			{
+				switch (stmtArr.at(i)->typ)
+				{
+					case VAR_STATEMENT:
+					{
+						for (int j = 0; j < stmtArr.at(i)->stmt.varStmt->asgnLst->asgnArr.size(); j++)
+						{
+							/此处未完成
+							VrbStrc* vrb = new VrbStrc;
+							//获取变量名称
+							//vrb->typ
+						}
+
+						break;
+					}
+				}
+			}
 		}
 
 		if (stmt->typ == RETURN_STATEMENT)

@@ -28,9 +28,11 @@ int addFcn(struct EnvrStrc* envr, struct FcnStrc* fcn);
 struct FcnStrc* getEnvrFcn(struct EnvrStrc* envr, struct FcnExpStrc* fcnExp);
 struct FcnStrc* getFcn(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct FcnExpStrc* fcnExp);
 
-//int addNtvFcn(vector<EnvrStrc*>& envr, string fcnNm, ntvFcnDfn* fcn, int prmCnt);
 int addNtvFcn(struct EnvrStrc* envr, string fcnNm, ntvFcnDfn* fcn, int prmCnt);
 struct NtvFcnStrc* getNtvFcn(struct EnvrStrc* envr, struct FcnExpStrc* fcn);
+
+int addCls(struct EnvrStrc* envr, struct ClsStrc* cls);
+struct ClsStrc* getEnvrCls(struct EnvrStrc* envr, string nm);
 
 int prtEnvrFcn(struct EnvrStrc* envr);
 int intlEnvr(struct EnvrStrc** envr);
@@ -221,7 +223,7 @@ struct FcnStrc* getFcn(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struc
 struct FcnStrc* getFcn(vector<EnvrStrc*> envr, struct FcnExpStrc* fcnExp)
 {
 	struct FcnStrc* fcn = NULL;
-	
+
 	int lyr = envr.size() - 1;
 
 	while (true)
@@ -248,7 +250,7 @@ struct FcnStrc* getFcn(vector<EnvrStrc*> envr, struct FcnExpStrc* fcnExp)
 
 	int lyrBfrFcn = 0;
 
-	while (lyrBfrFcn < lyr && envr[lyrBfrFcn]->typ!=FUNCTION_ENVIRONMENT)
+	while (lyrBfrFcn < lyr && envr[lyrBfrFcn]->typ != FUNCTION_ENVIRONMENT)
 	{
 		lyrBfrFcn++;
 	}
@@ -314,16 +316,31 @@ struct NtvFcnStrc* getNtvFcn(struct EnvrStrc* envr, struct FcnExpStrc* fcn)
 
 	int i;
 
-	//printf("ntvFcnCnt: %d\n", envr->ntvFcnArr.size());
-	//printf("cll fcn:%s \n", fcn->nm.c_str());
-
 	for (i = 0; i < envr->ntvFcnArr.size(); i++)
 	{
-		//printf("fcn nm: %s\n", envr->ntvFcnArr[i]->fcnNm);
-
 		if (fcn->nm.compare(envr->ntvFcnArr[i]->fcnNm) == 0)
 		{
 			return envr->ntvFcnArr[i];
+		}
+	}
+
+	return NULL;
+}
+
+int addCls(struct EnvrStrc* envr, struct ClsStrc* cls)
+{
+	envr->clsArr.push_back(cls);
+}
+
+struct ClsStrc* getEnvrCls(struct EnvrStrc* envr, string nm)
+{
+	ClsStrc* rslt = NULL;
+
+	for (int i = 0; i < envr->clsArr.size(); i++)
+	{
+		if (*(envr->clsArr.at(i)->nm) == nm)
+		{
+			return envr->clsArr.at(i);
 		}
 	}
 
@@ -385,7 +402,7 @@ int prtEnvrFcn(struct EnvrStrc* envr)
 //	return 0;
 //}
 
-int initGlbEnvr(vector<EnvrStrc*> &envr)
+int initGlbEnvr(vector<EnvrStrc*>& envr)
 {
 
 	envr.push_back(new EnvrStrc(TOP_LEVEL_ENVIRONMENT));

@@ -973,7 +973,7 @@ void fldStmt(int indt=0)
 
                 int lnt = blk->stmt.stmtBlk->stmtArr.size();
 
-                ClsStrc* cls = stmtStk.back()->stmt->stmt.clsStmt->dfn = blk;
+                ClsStrc* cls = stmtStk.back()->stmt->stmt.clsStmt->cls->dfn->stmt = blk;
                 
                 //cls->dfn = blk;
                 /* for (int i=0;i<lnt;i++)
