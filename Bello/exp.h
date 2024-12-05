@@ -151,20 +151,21 @@ struct ExpStrc* bldAsgnExp(struct ExpStrc* lvl, struct ExpStrc* exp)
 	rslt->exp.asgnExp->exp = exp;
 
 	return rslt;
+
 }
 
-struct ExpStrc* bldGlbAsgnExp(struct AsgnLstStrc* asgnLst)
-{
-	struct ExpStrc* rslt = new ExpStrc;
-
-	rslt->typ = GLOBAL_ASSIGN_EXPRESSION;
-
-	rslt->exp.glbAsgnExp = new GlbAsgnExpStrc;
-
-	rslt->exp.glbAsgnExp->asgnLst = asgnLst;
-
-	return rslt;
-}
+//struct ExpStrc* bldGlbAsgnExp(struct AsgnLstStrc* asgnLst)
+//{
+//	struct ExpStrc* rslt = new ExpStrc;
+//
+//	rslt->typ = GLOBAL_ASSIGN_EXPRESSION;
+//
+//	rslt->exp.glbAsgnExp = new GlbAsgnExpStrc;
+//
+//	rslt->exp.glbAsgnExp->asgnLst = asgnLst;
+//
+//	return rslt;
+//}
 
 //struct ExpStrc* bldLclAsgnExp(struct AsgnLstStrc* asgnLst)
 //{

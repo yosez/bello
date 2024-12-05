@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <stack>
+#include <map>
 
 using namespace std;
 
@@ -47,6 +48,7 @@ struct ArrEvlExpStrc;
 struct ElmtAsgnExpStrc;
 struct NtvFcnStrc;
 struct VarStmtStrc;
+struct VarStmtStrc2;
 struct StmtStkItmStrc;
 
 typedef struct CnstStrc* ntvFcnDfn(vector<EnvrStrc*>& envr, int prmCnt, vector <CnstStrc*> prmArr);
@@ -309,14 +311,14 @@ struct ExpStrc
 		struct UnrExpStrc* unrExp;
 		struct AsgnExpStrc* asgnExp;
 		struct FcnExpStrc* fcnExp;
-		struct GlbAsgnExpStrc* glbAsgnExp;
-		struct LclAsgnExpStrc* lclAsgnExp;
 		struct RdExpStrc* rdExp;
 		struct ArrExpStrc* arrExp;
 		struct ArrEvlExpStrc* arrEvlExp;
 		struct ElmtAsgnExpStrc* elmtAsgnExp;
 		struct NewArrExpStrc* newArrExp;
 		struct LvlExpStrc* lvlExp;
+		//struct GlbAsgnExpStrc* glbAsgnExp;
+		//struct LclAsgnExpStrc* lclAsgnExp;
 	} exp;
 };
 
@@ -405,6 +407,11 @@ struct RtnStmtStrc
 struct VarStmtStrc
 {
 	struct AsgnLstStrc* asgnLst;
+};
+
+struct VarStmtStrc2
+{
+	std::map<string, ExpStrc*> asgnLst;
 };
 
 struct GlbStmtStrc
