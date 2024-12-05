@@ -716,6 +716,12 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 			addFcn(envr[envr.size()-1], stmt->stmt.fcnStmt->fcn);
 		}
 
+		
+		if (stmt->typ == CLASS_DEFINE_STATEMENT)
+		{
+			//向类定义中添加数据	
+		}
+
 		if (stmt->typ == RETURN_STATEMENT)
 		{
 
