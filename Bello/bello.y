@@ -55,9 +55,10 @@
 
     void fldStmt(int indt);
     void pshStmt(int indt, StmtStrc* stmt);
+    void prtStmtStk();
 
     //类定义语句的标志，0为不是类定义的状态，1为类定义的状态
-    int blnClsDfn=0;
+    int blnDfnCls=0;
 
 %}
 
@@ -228,7 +229,7 @@ build_statement
             // }
 
             //输入的句子入栈
-            pshStmt();
+            pshStmt(indt, $<stmt>-2);
             
         }
 
@@ -261,6 +262,8 @@ close_execute_statement
             {
                 
             }
+
+            prtStmtStk();
 
             //如果上1条语句为子语句，则闭合上1条顶级语句
             if (stmtStk.back()->indt > 0)
@@ -543,9 +546,9 @@ var_statement
     | SHARED VAR assign_list 
     {
         //需要是类定义状态
-        if (blnClsDfn==1)
+        if (blnDfnCls==1)
         {
-            $$ = bldVarStmt(CLASS_SHARED_VAR_STATEMENT, $2); 
+            $$ = bldVarStmt(CLASS_SHARED_VAR_STATEMENT, $3); 
         } 
         else
         {
@@ -842,7 +845,7 @@ function_define_statement
     }
     | SHARED FUNC IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN 
     {
-        if (blnClsDfn==false)
+        if (blnDfnCls==false)
         {
             yyclearin;
             yyerrok;
@@ -852,7 +855,7 @@ function_define_statement
 
         struct FcnStrc* fcn;
 
-        fcn=bldFcn($2, $4);
+        fcn=bldFcn($3, $5);
 
         $$ = bldFcnStmt(fcn);
         
@@ -861,7 +864,7 @@ function_define_statement
     {
         struct FcnStrc *fcn;
 
-        fcn=bldFcn($2, bldPrmLst());
+        fcn=bldFcn($3, bldPrmLst());
 
         $$ = bldFcnStmt(fcn);
     }
@@ -875,7 +878,7 @@ class_define_statement
 
         $$ = bldClsStmt(cls);
 
-        blnClsDfn = 1;
+        //blnDfnCls = 1;
     }
 
 
@@ -906,6 +909,8 @@ void fldStmt(int indt=0)
     while (stmtStk.back()->indt > indt)
     {
         
+        //printf("fld stmt\n");
+
         idx = stmtStk.size()-1;
 
         while (idx>0 && stmtStk.back()->indt == stmtStk.at(idx-1)->indt)
@@ -973,7 +978,9 @@ void fldStmt(int indt=0)
 
                 int lnt = blk->stmt.stmtBlk->stmtArr.size();
 
-                ClsStrc* cls = stmtStk.back()->stmt->stmt.clsStmt->cls->dfn->stmt = blk;
+                stmtStk.back()->stmt->stmt.clsStmt->cls->dfn = blk;
+
+                printf("blk arr sz: %d\n", blk->stmt.stmtBlk->stmtArr.size());
                 
                 //cls->dfn = blk;
                 /* for (int i=0;i<lnt;i++)
@@ -1038,6 +1045,89 @@ void pshStmt(int indt, StmtStrc* stmt)
     itm->alwSubStmt = chkStmtAlwSubStmt(stmt);
 
     stmtStk.push_back(itm);
+}
+
+//打印语句栈中的语句信息的函数
+void prtStmtStk()
+{
+    for (int i=0;i<stmtStk.size();i++)
+    {
+        StmtStkItmStrc* stmt =stmtStk.at(i);
+
+        for (int j=0;j<stmt->indt;j++)
+        {
+            printf("\t");
+        } 
+
+        switch (stmt->stmt->typ)
+        {
+            case EXPRESSION_STATEMENT:
+            {
+                printf("expStmt\n");
+                break;
+            }
+            case IF_STATEMENT:
+            {
+                printf("ifStmt\n");
+                break;
+            }
+            case IF_ELSE_STATEMENT:
+            {
+                printf("ifElsStmt\n");
+                break;
+            }
+            case FOR_STATEMENT:
+            {
+                printf("forStmt\n");
+                break;
+            }
+            case WHILE_STATEMENT:
+            {
+                printf("whlStmt\n");
+                break;
+            }
+            case DO_WHILE_STATEMENT:
+            {
+                printf("doWhlStmt\n");
+                break;
+            }
+            case STATEMENT_BLOCK:
+            {
+                printf("stmtBlk\n");
+                break;
+            }
+            case BREAK_STATEMENT:
+            {
+                printf("brkStmt\n");
+                break;
+            }
+            case CONTINUE_STATEMENT:
+            {
+                printf("cntnStmt\n");
+                break;
+            }
+            case VAR_STATEMENT:
+            {
+                printf("varStmt\n");
+                break;
+            }
+            case FUNCTION_DEFINE_STATEMENT:
+            {
+                printf("fcnStmt\n");
+                break;
+            }
+            case CLASS_DEFINE_STATEMENT:
+            {
+                printf("clsStmt\n");
+                break;
+            }
+            case GLOBAL_STATEMENT:
+            {
+                printf("glbStmt\n");
+                break;
+            }
+        }
+    }
 }
 
 

@@ -732,7 +732,6 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 					{
 						for (int j = 0; j < stmtArr.at(i)->stmt.varStmt->asgnLst->asgnArr.size(); j++)
 						{
-							//此处未完成
 							VrbStrc* vrb = new VrbStrc;
 							//获取变量名称
 							vrb->nm = string(stmtArr.at(i)->stmt.varStmt->asgnLst->asgnArr.at(j)->exp.asgnExp->lvl->exp.lvlExp->vrb->exp.vrbExp->nm);
@@ -746,6 +745,7 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 					}
 					case FUNCTION_DEFINE_STATEMENT:
 					{
+						//for (int j=0; j<stmtArr.at(i)->stmt.fcnStmt->fcn->)
 
 						break;
 					}

@@ -330,6 +330,8 @@ struct NtvFcnStrc* getNtvFcn(struct EnvrStrc* envr, struct FcnExpStrc* fcn)
 int addCls(struct EnvrStrc* envr, struct ClsStrc* cls)
 {
 	envr->clsArr.push_back(cls);
+
+	return 0;
 }
 
 struct ClsStrc* getEnvrCls(struct EnvrStrc* envr, string nm)

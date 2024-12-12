@@ -62,7 +62,7 @@ union VlUnn
 	float flt;
 	int intVl;
 	//string *str;
-	string *str;
+	string* str;
 	struct ArrStrc* arr;
 
 public:
@@ -116,8 +116,7 @@ enum Unrtyp
 
 enum StmtTyp
 {
-	PRINT_STATEMENT = 1,
-	EXPRESSION_STATEMENT,
+	EXPRESSION_STATEMENT = 1,
 	IF_STATEMENT,
 	IF_ELSE_STATEMENT,
 	ELSE_STATEMENT,
@@ -326,13 +325,6 @@ struct ExpStmtStrc
 {
 	struct ExpStrc* exp;
 };
-
-//此部分已弃用
-//struct PrtStmtStrc
-//{
-//	int typ;
-//	struct ExpStrc* exp;
-//};
 
 struct IfStmtStrc
 {
