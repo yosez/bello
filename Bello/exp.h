@@ -23,6 +23,8 @@
 #include "err.h"
 #include "expt.h"
 
+extern enum ExpTyp;
+
 extern struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt);
 
 struct ExpStrc* bldCnstIntExp(int intVl);
@@ -88,22 +90,18 @@ struct CnstStrc* clcExp(vector<EnvrStrc*>& envr, struct ExpStrc* exp);
 
 struct ExpStrc* bldCnstIntExp(int intVl)
 {
-	struct ExpStrc* exp = new ExpStrc;
+	struct CnstStrc* exp;
 
-	exp->typ = CONST_EXPRESSION;
-
-	exp->exp.cnst = bldIntCnst(intVl);
+	exp = bldIntCnst(intVl);
 
 	return exp;
 }
 
 struct ExpStrc* bldCnstFltExp(float fltVl)
 {
-	struct ExpStrc* exp = new ExpStrc;
+	struct ExpStrc* exp;
 
-	exp->typ = CONST_EXPRESSION;
-
-	exp->exp.cnst = bldFltCnst(fltVl);
+	exp = bldFltCnst(fltVl);
 
 	return exp;
 }

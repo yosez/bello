@@ -59,19 +59,19 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="bello.l">
-      <Filter>l文件及y文件</Filter>
-    </None>
-    <None Include="bello.y">
-      <Filter>l文件及y文件</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="lex.yy.c">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="y.tab.c">
       <Filter>源文件</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="bello.y">
+      <Filter>l文件及y文件</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="bello.l">
+      <Filter>l文件及y文件</Filter>
+    </CopyFileToFolders>
   </ItemGroup>
 </Project>

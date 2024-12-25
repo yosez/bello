@@ -21,8 +21,8 @@ struct UnrExpStrc;
 struct BnrExpStrc;
 struct LvlExpStrc;
 struct ExpStrc;
-struct PrtStmtStrc;
 
+struct StmtStrc;
 struct IfStmtStrc;
 struct ElsStmtStrc;
 struct FcnStmtStrc;
@@ -61,7 +61,6 @@ union VlUnn
 	int bln;
 	float flt;
 	int intVl;
-	//string *str;
 	string* str;
 	struct ArrStrc* arr;
 
@@ -192,12 +191,12 @@ struct ObjStrc
 	vector<VrbStrc*> vrb;
 };
 
-struct VrbExpStrc
+struct VrbExpStrc :ExpStrc
 {
 	string nm;
 };
 
-struct CnstStrc
+struct CnstStrc : ExpStrc
 {
 	int CnstTyp;
 	union VlUnn vl;
@@ -208,25 +207,25 @@ public:
 	};
 };
 
-struct AsgnExpStrc
+struct AsgnExpStrc : ExpStrc
 {
 	struct ExpStrc* lvl;
 	struct ExpStrc* exp;
 };
 
-struct BnrExpStrc
+struct BnrExpStrc : ExpStrc
 {
 	int oprTyp;
 	struct ExpStrc* lftExp, * rghtExp;
 };
 
-struct UnrExpStrc
+struct UnrExpStrc : ExpStrc
 {
 	int oprTyp;
 	struct ExpStrc* exp;
 };
 
-struct FcnExpStrc
+struct FcnExpStrc : ExpStrc
 {
 	string nm;
 
@@ -234,30 +233,15 @@ struct FcnExpStrc
 };
 
 
-struct GlbAsgnExpStrc
-{
-	struct AsgnLstStrc* asgnLst;
-};
-
-struct LclAsgnExpStrc
-{
-	struct AsgnLstStrc* asgnLst;
-};
-
-//read函数结构体
-struct RdExpStrc
-{
-	int typ;
-};
 
 //数组定义结构体
-struct ArrExpStrc
+struct ArrExpStrc : ExpStrc
 {
 	struct ElmtLstStrc* elmtLst;
 };
 
 //数组取用结构体
-struct ArrEvlExpStrc
+struct ArrEvlExpStrc : ExpStrc
 {
 	// 0: 标识符数组变量 1: 数组表达式
 	int blnArr;
@@ -267,30 +251,21 @@ struct ArrEvlExpStrc
 	struct AcsLstStrc* evlLst;
 };
 
-struct LvlExpStrc
+struct LvlExpStrc : ExpStrc
 {
 	int hasAcsLst;
 	struct ExpStrc* vrb;
 	struct AcsLstStrc* acs;
 };
 
-// struct ArrEvlExpStrc
-// {
-//     // 0: 标识符数组变量 1: 数组表达式
-//     int blnArr;
 
-//     struct ExpStrc *arr;
-
-//     struct PstnLstStrc * pstnLst;
-// };
-
-struct NewArrExpStrc
+struct NewArrExpStrc :ExpStrc
 {
 	struct ExpStrc* cnt;
 };
 
 //数组元素赋值表达式结构体
-struct ElmtAsgnExpStrc
+struct ElmtAsgnExpStrc :ExpStrc
 {
 	struct ExpStrc* arr;
 
@@ -302,50 +277,33 @@ struct ElmtAsgnExpStrc
 struct ExpStrc
 {
 	int typ;
-	union
-	{
-		struct CnstStrc* cnst;
-		struct VrbExpStrc* vrbExp;
-		struct BnrExpStrc* bnrExp;
-		struct UnrExpStrc* unrExp;
-		struct AsgnExpStrc* asgnExp;
-		struct FcnExpStrc* fcnExp;
-		struct RdExpStrc* rdExp;
-		struct ArrExpStrc* arrExp;
-		struct ArrEvlExpStrc* arrEvlExp;
-		struct ElmtAsgnExpStrc* elmtAsgnExp;
-		struct NewArrExpStrc* newArrExp;
-		struct LvlExpStrc* lvlExp;
-		//struct GlbAsgnExpStrc* glbAsgnExp;
-		//struct LclAsgnExpStrc* lclAsgnExp;
-	} exp;
 };
 
-struct ExpStmtStrc
+struct ExpStmtStrc : StmtStrc
 {
 	struct ExpStrc* exp;
 };
 
-struct IfStmtStrc
+struct IfStmtStrc : StmtStrc
 {
 	struct ExpStrc* exp;
 	struct StmtStrc* stmt;
 	struct StmtStrc* els;
 };
 
-struct ElsStmtStrc
+struct ElsStmtStrc :StmtStrc
 {
 	struct StmtStrc* stmt;
 };
 
-struct IfElsStmtStrc
+struct IfElsStmtStrc : StmtStrc
 {
 	struct ExpStrc* exp;
 	struct StmtStrc* stmt;
 	struct StmtStrc* elsStmt;
 };
 
-struct ForStmtStrc
+struct ForStmtStrc : StmtStrc
 {
 	struct StmtStrc* intl;
 	struct StmtStrc* exp;
@@ -353,60 +311,60 @@ struct ForStmtStrc
 	struct StmtStrc* stmt;
 };
 
-struct WhlStmtStrc
+struct WhlStmtStrc : StmtStrc
 {
 	struct StmtStrc* exp;
 	struct StmtStrc* stmt;
 };
 
-struct DoWhlStmtStrc
+struct DoWhlStmtStrc : StmtStrc
 {
 	struct StmtStrc* exp;
 	struct StmtStrc* stmt;
 };
 
-struct BrkStmtStrc
+struct BrkStmtStrc : StmtStrc
 {
 	struct ExpStrc* exp;
 };
 
-struct CntnStmtStrc
+struct CntnStmtStrc : StmtStrc
 {
 	struct ExpStrc* exp;
 };
 
-struct FcnStmtStrc
+struct FcnStmtStrc : StmtStrc
 {
 	struct FcnStrc* fcn;
 };
 
-struct ClsStmtStrc
+struct ClsStmtStrc : StmtStrc
 {
 	struct ClsStrc* cls;
 };
 
-struct StmtBlkStrc
+struct StmtBlkStrc : StmtStrc
 {
 	vector<StmtStrc*> stmtArr;
 };
 
-struct RtnStmtStrc
+struct RtnStmtStrc : StmtStrc
 {
 	int blnRslt;
 	struct ExpStrc* exp;
 };
 
-struct VarStmtStrc
+struct VarStmtStrc : StmtStrc
 {
 	struct AsgnLstStrc* asgnLst;
 };
 
-struct VarStmtStrc2
+struct VarStmtStrc2 : StmtStrc
 {
 	std::map<string, ExpStrc*> asgnLst;
 };
 
-struct GlbStmtStrc
+struct GlbStmtStrc : StmtStrc
 {
 	struct AsgnLstStrc* asgnLst;
 };
@@ -414,26 +372,15 @@ struct GlbStmtStrc
 struct StmtStrc
 {
 	int typ;
-	union
-	{
-		struct ExpStmtStrc* expStmt;
-		struct IfStmtStrc* ifStmt;
-		struct IfElsStmtStrc* ifElsStmt;
-		struct ElsStmtStrc* elsStmt;
-		struct ForStmtStrc* forStmt;
-		struct WhlStmtStrc* whlStmt;
-		struct DoWhlStmtStrc* doWhlStmt;
-		struct BrkStmtStrc* brkStmt;
-		struct CntnStmtStrc* cntnStmt;
-		struct PrtStmtStrc* prtStmt;
-		struct StmtBlkStrc* stmtBlk;
-		struct FcnStmtStrc* fcnStmt;
-		struct RtnStmtStrc* rtnStmt;
-		struct VarStmtStrc* varStmt;
-		struct GlbStmtStrc* glbStmt;
-		struct ClsStmtStrc* clsStmt;
-	} stmt;
+
 };
+
+//struct StmtStrc
+//{
+//	int typ;
+//
+//	StmtStrc* stmt;
+//};
 
 //return语句返回类型结构体
 struct RtnRsltStrc

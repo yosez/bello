@@ -980,7 +980,7 @@ void fldStmt(int indt=0)
 
                 stmtStk.back()->stmt->stmt.clsStmt->cls->dfn = blk;
 
-                printf("blk arr sz: %d\n", blk->stmt.stmtBlk->stmtArr.size());
+                //printf("blk arr sz: %d\n", blk->stmt.stmtBlk->stmtArr.size());
                 
                 //cls->dfn = blk;
                 /* for (int i=0;i<lnt;i++)
@@ -1108,7 +1108,7 @@ void prtStmtStk()
             }
             case VAR_STATEMENT:
             {
-                printf("varStmt\n");
+                printf("varStmt2\n");
                 break;
             }
             case FUNCTION_DEFINE_STATEMENT:

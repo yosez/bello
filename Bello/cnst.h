@@ -10,11 +10,13 @@
 // #endif
 
 //extern struct CnstStrc;
-
+extern enum ExpTyp;
 
 struct CnstStrc* bldIntCnst(int vl)
 {
 	struct CnstStrc* rslt = new CnstStrc;
+
+	rslt->typ = CONST_EXPRESSION;
 
 	rslt->CnstTyp = INT_VALUE;
 	rslt->vl.intVl = vl;
@@ -26,6 +28,7 @@ struct CnstStrc* bldFltCnst(float vl)
 {
 	struct CnstStrc* rslt = new CnstStrc;
 
+	rslt->typ = CONST_EXPRESSION;
 	rslt->CnstTyp = FLOAT_VALUE;
 	rslt->vl.flt = vl;
 
