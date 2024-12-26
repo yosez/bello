@@ -27,24 +27,39 @@ extern enum ExpTyp;
 
 extern struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt);
 
-struct ExpStrc* bldCnstIntExp(int intVl);
-struct ExpStrc* bldCnstFltExp(float fltVl);
-struct ExpStrc* bldCnstBlnExp(int blnVl);
-struct ExpStrc* bldCnstStrExp(char* strVl);
-struct ExpStrc* bldCnstNllExp();
+
+//struct CnstStrc* bldCnstIntExp(int intVl);
+//struct CnstStrc* bldCnstFltExp(float fltVl);
+//struct CnstStrc* bldCnstBlnExp(int blnVl);
+//struct CnstStrc* bldCnstStrExp(char* strVl);
+//struct CnstStrc* bldCnstNllExp();
+//struct AsgnExpStrc* bldAsgnExp(struct ExpStrc* lvl, struct ExpStrc* exp);
+//struct VrbExpStrc* bldVrbExp(char* idtf);
+//struct BnrExpStrc* bldBnrExp(int opr, struct ExpStrc* lftExp, struct ExpStrc* rghtExp);
+//struct UnrExpStrc* bldUnrExp(int opr, struct ExpStrc* exp);
+//struct FcnExpStrc* bldFcnExp(char* nm, struct ArgLstStrc* argLst);
+//struct ArrExpStrc* bldArrExp(struct ElmtLstStrc* elmtLst);
+//struct LvlExpStrc* bldLvlExp(struct ExpStrc* vrb);
+//struct ExpStrc* bldLvlExpAdd(struct ExpStrc* lvl, struct AcsLstStrc* evlLst);
+//struct ElmtAsgnExpStrc* bldElmtAsgnExp(struct ExpStrc* arr, struct PstnLstStrc* pstnLst, struct ExpStrc* vl);
+//struct NewArrExpStrc* bldNewArrExp(struct ExpStrc* cnt);
+
+struct CnstStrc* bldCnstIntExp(int intVl);
+struct CnstStrc* bldCnstFltExp(float fltVl);
+struct CnstStrc* bldCnstBlnExp(int blnVl);
+struct CnstStrc* bldCnstStrExp(char* strVl);
+struct CnstStrc* bldCnstNllExp();
 struct ExpStrc* bldAsgnExp(struct ExpStrc* lvl, struct ExpStrc* exp);
 struct ExpStrc* bldVrbExp(char* idtf);
 struct ExpStrc* bldBnrExp(int opr, struct ExpStrc* lftExp, struct ExpStrc* rghtExp);
 struct ExpStrc* bldUnrExp(int opr, struct ExpStrc* exp);
 struct ExpStrc* bldFcnExp(char* nm, struct ArgLstStrc* argLst);
-struct ExpStrc* bldGlbAsgnExp(struct AsgnLstStrc* asgnLst);
-//struct ExpStrc* bldLclAsgnExp(struct AsgnLstStrc* asgnLst);
-struct ExpStrc* bldRdExp(int typ);
 struct ExpStrc* bldArrExp(struct ElmtLstStrc* elmtLst);
 struct ExpStrc* bldLvlExp(struct ExpStrc* vrb);
 struct ExpStrc* bldLvlExpAdd(struct ExpStrc* lvl, struct AcsLstStrc* evlLst);
 struct ExpStrc* bldElmtAsgnExp(struct ExpStrc* arr, struct PstnLstStrc* pstnLst, struct ExpStrc* vl);
 struct ExpStrc* bldNewArrExp(struct ExpStrc* cnt);
+
 struct CnstStrc* clcBnrExp(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp);
 struct CnstStrc* clcBnrExpAdd(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp);
 struct CnstStrc* clcBnrExpSub(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp);
@@ -74,12 +89,6 @@ struct CnstStrc* clcUnrExpSub(vector<EnvrStrc*>& envr, struct UnrExpStrc* exp);
 struct CnstStrc* clcUnrExpAdd(vector<EnvrStrc*>& envr, struct UnrExpStrc* exp);
 struct CnstStrc* clcUnrExp(vector<EnvrStrc*>& envr, struct UnrExpStrc* exp);
 struct CnstStrc* clcFcnExp(vector<EnvrStrc*>& envr, struct FcnExpStrc* exp);
-struct CnstStrc* clcRdIntExp(vector<EnvrStrc*>& envr, struct RdExpStrc* exp);
-struct CnstStrc* clcRdFltExp(vector<EnvrStrc*>& envr, struct RdExpStrc* exp);
-struct CnstStrc* clcRdBlnExp(vector<EnvrStrc*>& envr, struct RdExpStrc* exp);
-struct CnstStrc* clcRdStrExp(vector<EnvrStrc*>& envr, struct RdExpStrc* exp);
-struct CnstStrc* clcRdLnExp(vector<EnvrStrc*>& envr, struct RdExpStrc* exp);
-struct CnstStrc* clcRdExp(vector<EnvrStrc*>& envr, struct RdExpStrc* exp);
 struct CnstStrc* clcArrExp(vector<EnvrStrc*>& envr, struct ArrExpStrc* exp);
 struct CnstStrc* clcNewArrExp(vector<EnvrStrc*>& envr, struct NewArrExpStrc* exp);
 struct CnstStrc* clcArrEvlExp(vector<EnvrStrc*>& envr, struct ArrEvlExpStrc* exp);
@@ -88,7 +97,7 @@ struct CnstStrc* clcLvlExp(vector<EnvrStrc*>& envr, struct LvlExpStrc* exp);
 struct CnstStrc* clcExp(vector<EnvrStrc*>& envr, struct ExpStrc* exp);
 
 
-struct ExpStrc* bldCnstIntExp(int intVl)
+struct CnstStrc* bldCnstIntExp(int intVl)
 {
 	struct CnstStrc* exp;
 
@@ -97,7 +106,7 @@ struct ExpStrc* bldCnstIntExp(int intVl)
 	return exp;
 }
 
-struct ExpStrc* bldCnstFltExp(float fltVl)
+struct CnstStrc* bldCnstFltExp(float fltVl)
 {
 	struct CnstStrc* exp;
 
@@ -106,7 +115,7 @@ struct ExpStrc* bldCnstFltExp(float fltVl)
 	return exp;
 }
 
-struct ExpStrc* bldCnstBlnExp(int blnVl)
+struct CnstStrc* bldCnstBlnExp(int blnVl)
 {
 	struct CnstStrc* exp;
 
@@ -115,7 +124,7 @@ struct ExpStrc* bldCnstBlnExp(int blnVl)
 	return exp;
 }
 
-struct ExpStrc* bldCnstStrExp(char* strVl)
+struct CnstStrc* bldCnstStrExp(char* strVl)
 {
 	struct CnstStrc* exp;
 
@@ -124,86 +133,39 @@ struct ExpStrc* bldCnstStrExp(char* strVl)
 	return exp;
 }
 
-struct ExpStrc* bldCnstNllExp()
+struct CnstStrc* bldCnstNllExp()
 {
 	struct CnstStrc* exp;
 
-	exp->exp.cnst = bldNllCnst();
+	exp = bldNllCnst();
 
 	return exp;
 }
 
 struct ExpStrc* bldAsgnExp(struct ExpStrc* lvl, struct ExpStrc* exp)
 {
-	struct ExpStrc* rslt = new ExpStrc;
+	struct AsgnExpStrc* rslt = new AsgnExpStrc;
 
 	rslt->typ = ASSIGN_EXPRESSION;
 
-	rslt->exp.asgnExp = new AsgnExpStrc;
-	rslt->exp.asgnExp->lvl = lvl;
-	rslt->exp.asgnExp->exp = exp;
+	rslt->lvl = static_cast<LvlExpStrc*>(lvl);
+	rslt->exp = exp;
 
 	return rslt;
 
 }
-
-//struct ExpStrc* bldGlbAsgnExp(struct AsgnLstStrc* asgnLst)
-//{
-//	struct ExpStrc* rslt = new ExpStrc;
-//
-//	rslt->typ = GLOBAL_ASSIGN_EXPRESSION;
-//
-//	rslt->exp.glbAsgnExp = new GlbAsgnExpStrc;
-//
-//	rslt->exp.glbAsgnExp->asgnLst = asgnLst;
-//
-//	return rslt;
-//}
-
-//struct ExpStrc* bldLclAsgnExp(struct AsgnLstStrc* asgnLst)
-//{
-//	struct ExpStrc* rslt = new ExpStrc;
-//
-//	rslt->typ = LOCAL_ASSIGN_EXPRESSION;
-//
-//	rslt->exp.lclAsgnExp = new LclAsgnExpStrc;
-//
-//	rslt->exp.lclAsgnExp->asgnLst = asgnLst;
-//
-//	return rslt;
-//}
-
 
 
 struct ExpStrc* bldArrExp(struct ElmtLstStrc* elmtLst)
 {
-	struct ExpStrc* rslt = new ExpStrc;
+	struct ArrExpStrc* rslt = new ArrExpStrc;
 
 	rslt->typ = ARRAY_EXPRESSION;
 
-	rslt->exp.arrExp = new ArrExpStrc;
-	rslt->exp.arrExp->elmtLst = elmtLst;
+	rslt->elmtLst = elmtLst;
 
 	return rslt;
 }
-
-//struct ExpStrc* bldArrEvlExp(struct ExpStrc* vrb, struct AcsLstStrc* evlLst)
-//{
-//	struct ExpStrc* rslt = new ExpStrc;
-//
-//	rslt->typ = ARRAY_EVALUATE_EXPRESSION;
-//
-//	//rslt->exp.arrEvlExp = (struct ArrEvlExpStrc*)malloc(sizeof(struct ArrEvlExpStrc));
-//	rslt->exp.arrEvlExp = new ArrEvlExpStrc;
-//
-//	rslt->exp.arrEvlExp->blnArr = 0;
-//
-//	rslt->exp.arrEvlExp->arr = vrb;
-//
-//	rslt->exp.arrEvlExp->evlLst = evlLst;
-//
-//	return rslt;
-//}
 
 struct ExpStrc* bldLvlExp(struct ExpStrc* vrb)
 {
@@ -222,11 +184,11 @@ struct ExpStrc* bldLvlExp(struct ExpStrc* vrb)
 struct ExpStrc* bldLvlExpAdd(struct ExpStrc* lvl, struct AcsLstStrc* evlLst)
 {
 
-	lvl->exp.lvlExp->acs = evlLst;
+	static_cast<LvlExpStrc*>(lvl)->acs = evlLst;
 
 	if (evlLst != NULL)
 	{
-		lvl->exp.lvlExp->hasAcsLst = 1;
+		static_cast<LvlExpStrc*>(lvl)->hasAcsLst = 1;
 	}
 
 	return lvl;
@@ -288,7 +250,7 @@ struct ExpStrc* bldUnrExp(int opr, struct ExpStrc* exp)
 
 	rslt->typ = UNARY_EXPRESSION;
 
-	rslt->exp = exp;
+	rslt->exp = static_cast<LvlExpStrc*>(exp);
 	rslt->oprTyp = opr;
 
 	return rslt;
@@ -1629,76 +1591,7 @@ struct CnstStrc* clcFcnExp(vector<EnvrStrc*>& envr, struct FcnExpStrc* exp)
 
 }
 
-struct CnstStrc* clcRdIntExp(vector<EnvrStrc*>& envr, struct RdExpStrc* exp)
-{
-	int i;
 
-	fscanf(stdin, "%d", &i);
-
-	struct CnstStrc* rslt;
-
-	rslt = bldIntCnst(i);
-
-	return rslt;
-}
-
-struct CnstStrc* clcRdFltExp(vector<EnvrStrc*>& envr, struct RdExpStrc* exp)
-{
-	float f;
-
-	fscanf(stdin, "%f", &f);
-
-	struct CnstStrc* rslt;
-
-	rslt = bldIntCnst(f);
-
-	return rslt;
-}
-struct CnstStrc* clcRdBlnExp(vector<EnvrStrc*>& envr, struct RdExpStrc* exp)
-{
-	char* blnStr = (char*)malloc(0x10);
-
-	fscanf(stdin, "%s", blnStr);
-
-	struct CnstStrc* rslt;
-
-	if (strcmp(blnStr, "true"))
-	{
-		rslt = bldBlnCnst(1);
-	}
-	else
-	{
-		rslt = bldBlnCnst(0);
-	}
-
-	return rslt;
-}
-
-struct CnstStrc* clcRdStrExp(vector<EnvrStrc*>& envr, struct RdExpStrc* exp)
-{
-	char* str = (char*)malloc(0x1000);
-
-	fscanf(stdin, "%s", str);
-
-	struct CnstStrc* rslt;
-
-	rslt = bldStrCnst(str);
-
-	return rslt;
-}
-
-struct CnstStrc* clcRdLnExp(vector<EnvrStrc*>& envr, struct RdExpStrc* exp)
-{
-	char* str = (char*)malloc(0x1000);
-
-	fgets(str, 0x1000, stdin);
-
-	struct CnstStrc* rslt;
-
-	rslt = bldStrCnst(str);
-
-	return rslt;
-}
 
 
 
@@ -2184,17 +2077,17 @@ struct CnstStrc* clcExp(vector<EnvrStrc*>& envr, struct ExpStrc* exp)
 
 	if (exp->typ == ARRAY_EXPRESSION)
 	{
-		rslt = clcArrExp(envr, exp->exp.arrExp);
+		rslt = clcArrExp(envr, static_cast<ArrExpStrc*> (exp));
 	}
 
 	if (exp->typ == ELEMENT_ASSIGN_EXPRESSION)
 	{
-		rslt = clcElmtAsgnExp(envr, exp->exp.elmtAsgnExp);
+		rslt = clcElmtAsgnExp(envr, static_cast<ElmtAsgnExpStrc*>(exp));
 	}
 
 	if (exp->typ == NEW_ARRAY_EXPRESSION)
 	{
-		rslt = clcNewArrExp(envr, exp->exp.newArrExp);
+		rslt = clcNewArrExp(envr, static_cast<NewArrExpStrc*>(exp));
 	}
 
 	if (exp->typ == LVALUE_EXPRESSION)

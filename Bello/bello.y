@@ -189,7 +189,6 @@ build_statement
                 pshStmt(indt, $<stmt>-2);
 
                 //printf("--->>>stmt in stk: %d\n", stmtStk.size());
-                //printf("--->>>stmt in stk: %d\n", stmtStk.size());
             }
             else
             {

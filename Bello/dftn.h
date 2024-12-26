@@ -36,6 +36,7 @@ struct RtnStmtStrc;
 struct StmtBlkStrc;
 struct ClsStmtStrc;
 struct NllStmtStrc;
+struct ExpStmtStrc;
 struct StmtStrc;
 struct RtnRsltStrc;
 struct BrkRsltStrc;
@@ -193,6 +194,12 @@ struct ObjStrc
 	vector<VrbStrc*> vrb;
 };
 
+struct ExpStrc
+{
+public:
+	int typ;
+};
+
 struct VrbExpStrc :public ExpStrc
 {
 	string nm;
@@ -276,9 +283,14 @@ struct ElmtAsgnExpStrc :ExpStrc
 	struct ExpStrc* vl;
 };
 
-struct ExpStrc
+
+
+struct StmtStrc
 {
+public:
 	int typ;
+
+	virtual ~StmtStrc();
 };
 
 struct ExpStmtStrc : public StmtStrc
@@ -321,7 +333,7 @@ struct WhlStmtStrc : public StmtStrc
 
 struct DoWhlStmtStrc : public StmtStrc
 {
-	struct StmtStrc* exp;
+	struct ExpStmtStrc* exp;
 	struct StmtStrc* stmt;
 };
 
@@ -371,11 +383,9 @@ struct GlbStmtStrc : public StmtStrc
 	struct AsgnLstStrc* asgnLst;
 };
 
-struct StmtStrc
+struct NllStmtStrc : public StmtStrc
 {
-	int typ;
 
-	virtual ~StmtStrc();
 };
 
 //struct StmtStrc

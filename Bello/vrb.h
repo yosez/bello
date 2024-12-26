@@ -10,7 +10,8 @@
 #endif
 
 extern struct ExpStrc* bldAsgnExp(struct ExpStrc* vrb, struct ExpStrc* exp);
-struct ExpStrc* bldLvlExp(struct ExpStrc* vrb);
+extern struct ExpStrc* bldLvlExp(struct ExpStrc* vrb);
+
 struct VrbStrc* bldVrb(string nm);
 
 //对变量数组中的选定变量进行赋值
@@ -38,17 +39,6 @@ struct CnstStrc* bldCnstFrmVrb(struct VrbStrc* vrb)
 	return rslt;
 }
 
-//struct VrbStrc* bldVrb(char* nm)
-//{
-//	struct VrbStrc* rslt = new VrbStrc;
-//
-//	rslt->nm = (char*)malloc(0x100);
-//	strcpy(rslt->nm, nm);
-//
-//	rslt->typ = -1;
-//
-//	return rslt;
-//}
 
 struct VrbStrc* bldVrb(string nm)
 {
@@ -72,7 +62,7 @@ struct AsgnLstStrc* bldAsgnLst()
 int asgnLstAdd(struct AsgnLstStrc* asgnLst, struct ExpStrc* vrb, struct ExpStrc* exp)
 {
 
-	asgnLst->asgnArr.push_back(bldAsgnExp(bldLvlExp(vrb), exp));
+	asgnLst->asgnArr.push_back(static_cast<AsgnExpStrc*>(bldAsgnExp(bldLvlExp(vrb), exp)));
 
 	return 0;
 }
