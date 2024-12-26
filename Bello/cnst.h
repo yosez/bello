@@ -39,6 +39,8 @@ struct CnstStrc* bldBlnCnst(int vl)
 {
 	struct CnstStrc* rslt = new CnstStrc;
 
+	rslt->typ = CONST_EXPRESSION;
+
 	rslt->CnstTyp = BOOLEAN_VALUE;
 
 	if (vl != 0)
@@ -57,8 +59,10 @@ struct CnstStrc* bldStrCnst(char* vl)
 {
 	struct CnstStrc* rslt = new CnstStrc;
 
+	rslt->typ = CONST_EXPRESSION;
+
 	rslt->CnstTyp = STRING_VALUE;
-	//printf("str: %s\n",vl);
+
 	rslt->vl.str = new string(vl);
 
 	return rslt;
@@ -87,6 +91,8 @@ struct CnstStrc* bldArrCnst(struct ArrStrc* arr)
 struct CnstStrc* bldNllCnst()
 {
 	struct CnstStrc* rslt = new CnstStrc;
+
+	rslt->typ = CONST_EXPRESSION;
 
 	rslt->CnstTyp = NULL_VALUE;
 

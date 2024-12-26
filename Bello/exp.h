@@ -99,7 +99,7 @@ struct ExpStrc* bldCnstIntExp(int intVl)
 
 struct ExpStrc* bldCnstFltExp(float fltVl)
 {
-	struct ExpStrc* exp;
+	struct CnstStrc* exp;
 
 	exp = bldFltCnst(fltVl);
 
@@ -108,31 +108,26 @@ struct ExpStrc* bldCnstFltExp(float fltVl)
 
 struct ExpStrc* bldCnstBlnExp(int blnVl)
 {
-	struct ExpStrc* exp = new ExpStrc;
+	struct CnstStrc* exp;
 
-	exp->typ = CONST_EXPRESSION;
-
-	exp->exp.cnst = bldBlnCnst(blnVl);
+	exp = bldBlnCnst(blnVl);
 
 	return exp;
 }
 
 struct ExpStrc* bldCnstStrExp(char* strVl)
 {
-	struct ExpStrc* exp = new ExpStrc;
+	struct CnstStrc* exp;
 
-	exp->typ = CONST_EXPRESSION;
-
-	exp->exp.cnst = bldStrCnst(strVl);
+	exp= bldStrCnst(strVl);
 
 	return exp;
 }
 
 struct ExpStrc* bldCnstNllExp()
 {
-	struct ExpStrc* exp = new ExpStrc;
+	struct CnstStrc* exp;
 
-	exp->typ = CONST_EXPRESSION;
 	exp->exp.cnst = bldNllCnst();
 
 	return exp;
@@ -179,18 +174,6 @@ struct ExpStrc* bldAsgnExp(struct ExpStrc* lvl, struct ExpStrc* exp)
 //}
 
 
-//struct ExpStrc* bldRdExp(int typ)
-//{
-//	struct ExpStrc* rslt = new ExpStrc;
-//
-//	rslt->typ = READ_EXPRESSION;
-//
-//	rslt->exp.rdExp = new RdExpStrc;
-//
-//	rslt->exp.rdExp->typ = typ;
-//
-//	return rslt;
-//}
 
 struct ExpStrc* bldArrExp(struct ElmtLstStrc* elmtLst)
 {
@@ -224,16 +207,14 @@ struct ExpStrc* bldArrExp(struct ElmtLstStrc* elmtLst)
 
 struct ExpStrc* bldLvlExp(struct ExpStrc* vrb)
 {
-	struct ExpStrc* rslt = new ExpStrc;
+	struct LvlExpStrc* rslt = new LvlExpStrc;
 
 	rslt->typ = LVALUE_EXPRESSION;
 
-	rslt->exp.lvlExp = new LvlExpStrc;
+	rslt->vrb = vrb;
 
-	rslt->exp.lvlExp->vrb = vrb;
-
-	rslt->exp.lvlExp->hasAcsLst = 0;
-	rslt->exp.lvlExp->acs = NULL;
+	rslt->hasAcsLst = 0;
+	rslt->acs = NULL;
 
 	return rslt;
 }
@@ -283,41 +264,36 @@ struct ExpStrc* bldNewArrExp(struct ExpStrc* cnt)
 
 struct ExpStrc* bldVrbExp(char* nm)
 {
-	struct ExpStrc* exp = new ExpStrc;
+	struct VrbExpStrc* exp = new VrbExpStrc;
 
 	exp->typ = VARIABLE_EXPRESSION;
-	exp->exp.vrbExp = new VrbExpStrc;
 
-	exp->exp.vrbExp->nm = nm;
+	exp->nm = nm;
 
 	return exp;
 }
 
 struct ExpStrc* bldBnrExp(int opr, struct ExpStrc* lftExp, struct ExpStrc* rghtExp)
 {
-	struct ExpStrc* exp = new ExpStrc;
+	struct BnrExpStrc* exp = new BnrExpStrc;
 
 	exp->typ = BINARY_EXPRESSION;
 
-	exp->exp.bnrExp = new BnrExpStrc;
-
-	exp->exp.bnrExp->lftExp = lftExp;
-	exp->exp.bnrExp->rghtExp = rghtExp;
-	exp->exp.bnrExp->oprTyp = opr;
+	exp->lftExp = lftExp;
+	exp->rghtExp = rghtExp;
+	exp->oprTyp = opr;
 
 	return exp;
 }
 
 struct ExpStrc* bldUnrExp(int opr, struct ExpStrc* exp)
 {
-	struct ExpStrc* rslt = new ExpStrc;
+	struct UnrExpStrc* rslt = new UnrExpStrc;
 
 	rslt->typ = UNARY_EXPRESSION;
 
-	rslt->exp.unrExp = new UnrExpStrc;
-
-	rslt->exp.unrExp->exp = exp;
-	rslt->exp.unrExp->oprTyp = opr;
+	rslt->exp = exp;
+	rslt->oprTyp = opr;
 
 	return rslt;
 }
@@ -326,15 +302,13 @@ struct ExpStrc* bldUnrExp(int opr, struct ExpStrc* exp)
 
 struct ExpStrc* bldFcnExp(char* nm, struct ArgLstStrc* argLst)
 {
-	struct ExpStrc* rslt = new ExpStrc;
+	struct FcnExpStrc* rslt = new FcnExpStrc;
 
 	rslt->typ = FUNCTION_EXPRESSION;
 
-	rslt->exp.fcnExp = new FcnExpStrc;
+	rslt->nm = nm;
 
-	rslt->exp.fcnExp->nm = nm;
-
-	rslt->exp.fcnExp->argLst = argLst;
+	rslt->argLst = argLst;
 
 	return rslt;
 
@@ -1034,11 +1008,12 @@ struct CnstStrc* clcUnrExpPfxInc(vector<EnvrStrc*>& envr, struct UnrExpStrc* exp
 
 	struct LvlExpStrc* lvl;
 
-	lvl = exp->exp->exp.lvlExp;
+	//***此修改可能有问题
+	lvl = static_cast<LvlExpStrc*>(exp->exp);
 
 	struct VrbStrc* vrb;
 
-	vrb = getVrb(envr, lvl->vrb->exp.vrbExp);
+	vrb = getVrb(envr, static_cast<VrbExpStrc*>(lvl->vrb));
 
 	if (vrb == NULL)
 	{
@@ -1075,13 +1050,13 @@ struct CnstStrc* clcUnrExpPfxInc(vector<EnvrStrc*>& envr, struct UnrExpStrc* exp
 
 		int nbr;
 
-		lyr = exp->exp->exp.lvlExp->acs->acsLst.size();
+		lyr = lvl->acs->acsLst.size();
 
 		int i;
 
 		for (i = 0; i < lyr; i++)
 		{
-			pstn = clcExp(envr, exp->exp->exp.lvlExp->acs->acsLst[i]->pstn)->vl.intVl;
+			pstn = clcExp(envr, lvl->acs->acsLst[i]->pstn)->vl.intVl;
 
 			if (i < lyr - 1)
 			{
@@ -1116,9 +1091,12 @@ struct CnstStrc* clcUnrExpPfxDec(vector<EnvrStrc*>& envr, struct UnrExpStrc* exp
 
 	struct LvlExpStrc* lvl;
 
-	lvl = exp->exp->exp.lvlExp;
+	//***此修改可能有问题
+	lvl = static_cast<LvlExpStrc*>(exp->exp);
 
-	vrb = getVrb(envr, lvl->vrb->exp.vrbExp);
+	//lvl = exp->exp->exp.lvlExp;
+
+	vrb = getVrb(envr, static_cast<VrbExpStrc*>(lvl->vrb));
 
 	if (vrb == NULL)
 	{
@@ -1153,14 +1131,14 @@ struct CnstStrc* clcUnrExpPfxDec(vector<EnvrStrc*>& envr, struct UnrExpStrc* exp
 
 		int lyr;
 
-		lyr = exp->exp->exp.lvlExp->acs->acsLst.size();
+		lyr = lvl->acs->acsLst.size();
 
 		int i;
 
 		//按层级定位数组中元素的位置，直至arrPrnt定位到包含元素的最内层的数组
 		for (i = 0; i < lyr; i++)
 		{
-			pstn = clcExp(envr, exp->exp->exp.lvlExp->acs->acsLst[i]->pstn)->vl.intVl;
+			pstn = clcExp(envr, lvl->acs->acsLst[i]->pstn)->vl.intVl;
 
 			if (i < lyr - 1)
 			{
@@ -1194,9 +1172,14 @@ struct CnstStrc* clcUnrExpSfxInc(vector<EnvrStrc*>& envr, struct UnrExpStrc* exp
 
 	struct LvlExpStrc* lvl;
 
-	lvl = exp->exp->exp.lvlExp;
+	//***此修改可能有问题
+	lvl = static_cast<LvlExpStrc*>(exp->exp);
 
-	vrb = getVrb(envr, lvl->vrb->exp.vrbExp);
+	vrb = getVrb(envr, static_cast<VrbExpStrc*>(lvl->vrb));
+
+	//lvl = exp->exp->exp.lvlExp;
+
+	//vrb = getVrb(envr, lvl->vrb->exp.vrbExp);
 
 	if (vrb == NULL)
 	{
@@ -1234,13 +1217,13 @@ struct CnstStrc* clcUnrExpSfxInc(vector<EnvrStrc*>& envr, struct UnrExpStrc* exp
 
 		int lyr;
 
-		lyr = exp->exp->exp.lvlExp->acs->acsLst.size();
+		lyr = lvl->acs->acsLst.size();
 
 		int i;
 
 		for (i = 0; i < lyr; i++)
 		{
-			pstn = clcExp(envr, exp->exp->exp.lvlExp->acs->acsLst[i]->pstn)->vl.intVl;
+			pstn = clcExp(envr, lvl->acs->acsLst[i]->pstn)->vl.intVl;
 			if (i < lyr - 1)
 			{
 				arrPrnt = arrPrnt->elmtArr[pstn]->vl.arr;
@@ -1276,9 +1259,14 @@ struct CnstStrc* clcUnrExpSfxDec(vector<EnvrStrc*>& envr, struct UnrExpStrc* exp
 
 	struct LvlExpStrc* lvl;
 
-	lvl = exp->exp->exp.lvlExp;
+	//***此修改可能有问题
+	lvl = static_cast<LvlExpStrc*>(exp->exp);
 
-	vrb = getVrb(envr, lvl->vrb->exp.vrbExp);
+	vrb = getVrb(envr, static_cast<VrbExpStrc*>(lvl->vrb));
+
+	//lvl = exp->exp->exp.lvlExp;
+
+	//vrb = getVrb(envr, lvl->vrb->exp.vrbExp);
 
 	if (vrb == NULL)
 	{
@@ -1316,13 +1304,13 @@ struct CnstStrc* clcUnrExpSfxDec(vector<EnvrStrc*>& envr, struct UnrExpStrc* exp
 
 		int lyr;
 
-		lyr = exp->exp->exp.lvlExp->acs->acsLst.size();
+		lyr = lvl->acs->acsLst.size();
 
 		int i;
 
 		for (i = 0; i < lyr; i++)
 		{
-			pstn = clcExp(envr, exp->exp->exp.lvlExp->acs->acsLst[i]->pstn)->vl.intVl;
+			pstn = clcExp(envr, lvl->acs->acsLst[i]->pstn)->vl.intVl;
 			if (i < lyr - 1)
 			{
 				arrPrnt = arrPrnt->elmtArr[pstn]->vl.arr;
@@ -1715,40 +1703,7 @@ struct CnstStrc* clcRdLnExp(vector<EnvrStrc*>& envr, struct RdExpStrc* exp)
 	return rslt;
 }
 
-struct CnstStrc* clcRdExp(vector<EnvrStrc*>& envr, struct RdExpStrc* exp)
-{
-	struct CnstStrc* rslt;
 
-	switch (exp->typ)
-	{
-	case READ_INT:
-	{
-		rslt = clcRdIntExp(envr, exp);
-		break;
-	}
-	case READ_FLOAT:
-	{
-		rslt = clcRdFltExp(envr, exp);
-		break;
-	}
-	case READ:
-	{
-		rslt = clcRdStrExp(envr, exp);
-		break;
-	}
-	case READ_BOOL:
-	{
-		rslt = clcRdBlnExp(envr, exp);
-		break;
-	}
-	case READ_LINE:
-	{
-		rslt = clcRdLnExp(envr, exp);
-	}
-	}
-
-	return rslt;
-}
 
 
 
@@ -1798,6 +1753,7 @@ struct CnstStrc* clcAsgnExp(vector<EnvrStrc*>& envr, struct AsgnExpStrc* exp)
 	rslt = clcExp(envr, exp->exp);
 
 	struct LvlExpStrc* lvl;
+
 
 	lvl = exp->lvl->exp.lvlExp;
 
@@ -2178,24 +2134,24 @@ struct CnstStrc* clcExp(vector<EnvrStrc*>& envr, struct ExpStrc* exp)
 
 	if (exp->typ == CONST_EXPRESSION)
 	{
-		rslt = exp->exp.cnst;
+		rslt = static_cast<CnstStrc*>(exp);
 
 		//printf("cnst: %d\n", exp->exp.cnst->vl.intVl);
 	}
 
 	if (exp->typ == VARIABLE_EXPRESSION)
 	{
-		struct VrbStrc* vrb = getVrb(envr, exp->exp.vrbExp);
+		struct VrbStrc* vrb = getVrb(envr, static_cast<VrbExpStrc*>(exp));
 
 		//如果变量没有注册过，则注册变量并赋值为null
 		if (vrb == NULL)
 		{
-			vrb = addVrb(envr[envr.size()-1], exp->exp.vrbExp);
+			vrb = addVrb(envr[envr.size()-1], static_cast<VrbExpStrc*>(exp));
 			asgnVrb(vrb, bldNllCnst());
 		}
 
 		rslt = bldCnstFrmVrb(vrb);
-		//printf("Calculate variable expression #1\n");
+
 	}
 
 	if (exp->typ == BINARY_EXPRESSION)
@@ -2246,11 +2202,6 @@ struct CnstStrc* clcExp(vector<EnvrStrc*>& envr, struct ExpStrc* exp)
 		//printf("Calculate array expression #1\n");
 	}
 
-	//if (exp->typ == ARRAY_EVALUATE_EXPRESSION)
-	//{
-	//	rslt = clcArrEvlExp(envr, exp->exp.arrEvlExp);
-	//}
-
 	if (exp->typ == ELEMENT_ASSIGN_EXPRESSION)
 	{
 		rslt = clcElmtAsgnExp(envr, exp->exp.elmtAsgnExp);
@@ -2273,95 +2224,3 @@ struct CnstStrc* clcExp(vector<EnvrStrc*>& envr, struct ExpStrc* exp)
 
 	return rslt;
 }
-
-
-//struct CnstStrc* clcExp(vector<EnvrStrc*>& envr, struct ExpStrc* exp)
-//{
-//	struct CnstStrc* rslt = new CnstStrc;
-//
-//	if (exp->typ == CONST_EXPRESSION)
-//	{
-//		rslt = exp->exp.cnst;
-//
-//		//printf("cnst: %d\n", exp->exp.cnst->vl.intVl);
-//	}
-//
-//	if (exp->typ == VARIABLE_EXPRESSION)
-//	{
-//		struct VrbStrc* vrb = getVrb(envr, exp->exp.vrbExp);
-//
-//		//如果变量没有注册过，则注册变量并赋值为null
-//		if (vrb == NULL)
-//		{
-//			vrb = addVrb(glbEnvr, exp->exp.vrbExp);
-//			asgnVrb(vrb, bldNllCnst());
-//		}
-//
-//		rslt = bldCnstFrmVrb(vrb);
-//		//printf("Calculate variable expression #1\n");
-//	}
-//
-//	if (exp->typ == BINARY_EXPRESSION)
-//	{
-//		rslt = clcBnrExp(envr, exp->exp.bnrExp);
-//	}
-//
-//	if (exp->typ == ASSIGN_EXPRESSION)
-//	{
-//		//如果已经注册为函数名则抛出异常
-//		if (getFcn(envr, bldFcnExp((char*)(exp->exp.asgnExp->lvl->exp.lvlExp->vrb->exp.vrbExp->nm.c_str()), NULL)->exp.fcnExp) != NULL)
-//		{
-//			throw new ExAlrdDfnAsFctn;
-//		}
-//
-//		addVrb(glbEnvr, exp->exp.asgnExp->lvl->exp.lvlExp->vrb->exp.vrbExp);
-//		rslt = clcAsgnExp(envr, exp->exp.asgnExp);
-//	}
-//
-//	if (exp->typ == UNARY_EXPRESSION)
-//	{
-//		rslt = clcUnrExp(envr, exp->exp.unrExp);
-//	}
-//
-//	if (exp->typ == FUNCTION_EXPRESSION)
-//	{
-//		rslt = clcFcnExp(envr, exp->exp.fcnExp);
-//	}
-//
-//	if (exp->typ == LOCAL_ASSIGN_EXPRESSION)
-//	{
-//		rslt = clcLclAsgnExp(envr, exp->exp.lclAsgnExp);
-//	}
-//
-//	if (exp->typ == READ_EXPRESSION)
-//	{
-//		rslt = clcRdExp(envr, exp->exp.rdExp);
-//	}
-//
-//	if (exp->typ == ARRAY_EXPRESSION)
-//	{
-//		//printf("Calculate array expression #0\n");
-//		rslt = clcArrExp(envr, exp->exp.arrExp);
-//		//printf("Calculate array expression #1\n");
-//	}
-//
-//	if (exp->typ == ELEMENT_ASSIGN_EXPRESSION)
-//	{
-//		rslt = clcElmtAsgnExp(envr, exp->exp.elmtAsgnExp);
-//	}
-//
-//	if (exp->typ == NEW_ARRAY_EXPRESSION)
-//	{
-//		rslt = clcNewArrExp(envr, exp->exp.newArrExp);
-//	}
-//
-//	if (exp->typ == LVALUE_EXPRESSION)
-//	{
-//		rslt = clcLvlExp(envr, exp->exp.lvlExp);
-//	}
-//
-//	return rslt;
-//}
-
-
-//#endif 

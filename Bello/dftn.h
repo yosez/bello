@@ -34,6 +34,7 @@ struct CntnStmtStrc;
 struct RtnStmtStrc;
 struct StmtBlkStrc;
 struct ClsStmtStrc;
+struct NllStmtStrc;
 struct StmtStrc;
 struct RtnRsltStrc;
 struct BrkRsltStrc;
@@ -279,31 +280,31 @@ struct ExpStrc
 	int typ;
 };
 
-struct ExpStmtStrc : StmtStrc
+struct ExpStmtStrc : public StmtStrc
 {
 	struct ExpStrc* exp;
 };
 
-struct IfStmtStrc : StmtStrc
+struct IfStmtStrc : public StmtStrc
 {
 	struct ExpStrc* exp;
 	struct StmtStrc* stmt;
 	struct StmtStrc* els;
 };
 
-struct ElsStmtStrc :StmtStrc
+struct ElsStmtStrc :public StmtStrc
 {
 	struct StmtStrc* stmt;
 };
 
-struct IfElsStmtStrc : StmtStrc
+struct IfElsStmtStrc : public StmtStrc
 {
 	struct ExpStrc* exp;
 	struct StmtStrc* stmt;
 	struct StmtStrc* elsStmt;
 };
 
-struct ForStmtStrc : StmtStrc
+struct ForStmtStrc : public StmtStrc
 {
 	struct StmtStrc* intl;
 	struct StmtStrc* exp;
@@ -311,60 +312,60 @@ struct ForStmtStrc : StmtStrc
 	struct StmtStrc* stmt;
 };
 
-struct WhlStmtStrc : StmtStrc
+struct WhlStmtStrc : public StmtStrc
 {
 	struct StmtStrc* exp;
 	struct StmtStrc* stmt;
 };
 
-struct DoWhlStmtStrc : StmtStrc
+struct DoWhlStmtStrc : public StmtStrc
 {
 	struct StmtStrc* exp;
 	struct StmtStrc* stmt;
 };
 
-struct BrkStmtStrc : StmtStrc
+struct BrkStmtStrc : public StmtStrc
 {
 	struct ExpStrc* exp;
 };
 
-struct CntnStmtStrc : StmtStrc
+struct CntnStmtStrc : public StmtStrc
 {
 	struct ExpStrc* exp;
 };
 
-struct FcnStmtStrc : StmtStrc
+struct FcnStmtStrc : public StmtStrc
 {
 	struct FcnStrc* fcn;
 };
 
-struct ClsStmtStrc : StmtStrc
+struct ClsStmtStrc : public StmtStrc
 {
 	struct ClsStrc* cls;
 };
 
-struct StmtBlkStrc : StmtStrc
+struct StmtBlkStrc : public StmtStrc
 {
 	vector<StmtStrc*> stmtArr;
 };
 
-struct RtnStmtStrc : StmtStrc
+struct RtnStmtStrc : public StmtStrc
 {
 	int blnRslt;
 	struct ExpStrc* exp;
 };
 
-struct VarStmtStrc : StmtStrc
+struct VarStmtStrc : public StmtStrc
 {
 	struct AsgnLstStrc* asgnLst;
 };
 
-struct VarStmtStrc2 : StmtStrc
+struct VarStmtStrc2 : public StmtStrc
 {
 	std::map<string, ExpStrc*> asgnLst;
 };
 
-struct GlbStmtStrc : StmtStrc
+struct GlbStmtStrc : public StmtStrc
 {
 	struct AsgnLstStrc* asgnLst;
 };
@@ -373,6 +374,7 @@ struct StmtStrc
 {
 	int typ;
 
+	virtual ~StmtStrc();
 };
 
 //struct StmtStrc
@@ -498,8 +500,6 @@ struct AcsLstStrc
 //函数形参列表
 struct PrmLstStrc
 {
-	//int prmSz;
-	//int prmCnt;
 
 	vector<ExpStrc*> prmArr;
 
