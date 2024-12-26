@@ -20,6 +20,7 @@ struct VrbDfnStrc;
 struct UnrExpStrc;
 struct BnrExpStrc;
 struct LvlExpStrc;
+struct AsgnExpStrc;
 struct ExpStrc;
 
 struct StmtStrc;
@@ -192,12 +193,12 @@ struct ObjStrc
 	vector<VrbStrc*> vrb;
 };
 
-struct VrbExpStrc :ExpStrc
+struct VrbExpStrc :public ExpStrc
 {
 	string nm;
 };
 
-struct CnstStrc : ExpStrc
+struct CnstStrc : public ExpStrc
 {
 	int CnstTyp;
 	union VlUnn vl;
@@ -208,25 +209,25 @@ public:
 	};
 };
 
-struct AsgnExpStrc : ExpStrc
+struct AsgnExpStrc : public ExpStrc
 {
-	struct ExpStrc* lvl;
+	struct LvlExpStrc* lvl;
 	struct ExpStrc* exp;
 };
 
-struct BnrExpStrc : ExpStrc
+struct BnrExpStrc : public ExpStrc
 {
 	int oprTyp;
 	struct ExpStrc* lftExp, * rghtExp;
 };
 
-struct UnrExpStrc : ExpStrc
+struct UnrExpStrc : public ExpStrc
 {
 	int oprTyp;
-	struct ExpStrc* exp;
+	struct LvlExpStrc* exp;
 };
 
-struct FcnExpStrc : ExpStrc
+struct FcnExpStrc : public ExpStrc
 {
 	string nm;
 
@@ -236,13 +237,13 @@ struct FcnExpStrc : ExpStrc
 
 
 //数组定义结构体
-struct ArrExpStrc : ExpStrc
+struct ArrExpStrc :public ExpStrc
 {
 	struct ElmtLstStrc* elmtLst;
 };
 
 //数组取用结构体
-struct ArrEvlExpStrc : ExpStrc
+struct ArrEvlExpStrc :public ExpStrc
 {
 	// 0: 标识符数组变量 1: 数组表达式
 	int blnArr;
@@ -252,10 +253,10 @@ struct ArrEvlExpStrc : ExpStrc
 	struct AcsLstStrc* evlLst;
 };
 
-struct LvlExpStrc : ExpStrc
+struct LvlExpStrc :public ExpStrc
 {
 	int hasAcsLst;
-	struct ExpStrc* vrb;
+	struct VrbExpStrc* vrb;
 	struct AcsLstStrc* acs;
 };
 
@@ -518,7 +519,7 @@ struct ArgLstStrc
 //赋值列表
 struct AsgnLstStrc
 {
-	vector<ExpStrc*> asgnArr;
+	vector<AsgnExpStrc*> asgnArr;
 };
 
 struct NtvFcnStrc

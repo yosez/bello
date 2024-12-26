@@ -337,7 +337,7 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 				struct CnstStrc* rslt;
 				struct VrbExpStrc* vrbExp;
 
-				vrbExp = varStmt->asgnLst->asgnArr[i]->exp.asgnExp->lvl->exp.lvlExp->vrb->exp.vrbExp;
+				vrbExp = varStmt->asgnLst->asgnArr[i]->lvl->vrb;
 
 				if ((vrb = getVrb(envr, vrbExp)) == NULL)
 				{
@@ -348,9 +348,9 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 					throw new ExVrbRdfn();
 				}
 
-				if (varStmt->asgnLst->asgnArr[i]->exp.asgnExp->exp->typ != NULL_EXPRESSION)
+				if (varStmt->asgnLst->asgnArr[i]->exp->typ != NULL_EXPRESSION)
 				{
-					rslt = clcExp(envr, varStmt->asgnLst->asgnArr[i]->exp.asgnExp->exp);
+					rslt = clcExp(envr, varStmt->asgnLst->asgnArr[i]->exp);
 					asgnVrb(vrb, rslt);
 				}
 				else
@@ -379,7 +379,7 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 			//检查变量是否已经被定义过
 			for (int i = 0; i < lnt; i++)
 			{
-				glb = glbStmt->asgnLst->asgnArr[i]->exp.asgnExp->lvl->exp.lvlExp->vrb->exp.vrbExp;
+				glb = glbStmt->asgnLst->asgnArr[i]->lvl->vrb;
 
 				vrb = getVrb(envr, glb);
 
@@ -390,7 +390,7 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 
 				vrb = addVrbGlb(envr, glb);
 
-				CnstStrc* vl = clcExp(envr, glbStmt->asgnLst->asgnArr[i]->exp.asgnExp->exp);
+				CnstStrc* vl = clcExp(envr, glbStmt->asgnLst->asgnArr[i]->exp);
 
 				asgnVrb(vrb, vl);
 			}
@@ -578,6 +578,8 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 
 		if (stmt->typ == DO_WHILE_STATEMENT)
 		{
+			auto doWhlStmt = static_cast<DoWhlStmtStrc*>(stmt);
+
 			do
 			{
 				if (rslt->typ == CONTINUE_RESULT)
@@ -592,7 +594,7 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 					continue;
 				}
 
-				rslt = exctStmt(envr, stmt->stmt.doWhlStmt->stmt);
+				rslt = exctStmt(envr, doWhlStmt);
 
 				if (rslt->typ == RETURN_RESULT)
 				{
@@ -622,7 +624,7 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 
 					continue;
 				}
-			} while (clcExp(envr, stmt->stmt.doWhlStmt->exp->stmt.expStmt->exp)->vl.intVl != 0);
+			} while (clcExp(envr, doWhlStmt->exp->stmt.expStmt->exp)->vl.intVl != 0);
 
 			if (rslt->typ == CONTINUE_RESULT)
 			{
@@ -684,12 +686,12 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 		{
 			auto fcnStmt = static_cast<FcnStmtStrc*>(stmt);
 
-			if (getFcn(envr, bldFcnExp((char*)(fcnStmt->fcn->nm.c_str()), NULL)->exp.fcnExp) != NULL)
+			if (getFcn(envr, static_cast<FcnExpStrc*>(bldFcnExp((char*)(fcnStmt->fcn->nm.c_str()), NULL))) != NULL)
 			{
 				throw new ExFcnRdfn;
 			}
 
-			if (getVrb(envr, bldVrbExp((char*)(fcnStmt->fcn->nm.c_str()))->exp.vrbExp) != NULL)
+			if (getVrb(envr, static_cast<VrbExpStrc*>(bldVrbExp((char*)(fcnStmt->fcn->nm.c_str())))) != NULL)
 			{
 				throw new ExAlrdDfnAsVrb;
 			}
@@ -713,14 +715,14 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 				{
 				case VAR_STATEMENT:
 				{
-					for (int j = 0; j < stmtArr.at(i)->stmt.varStmt->asgnLst->asgnArr.size(); j++)
+					for (int j = 0; j < static_cast<VarStmtStrc*>(stmtArr.at(i))->asgnLst->asgnArr.size(); j++)
 					{
 						VrbStrc* vrb = new VrbStrc;
 						//获取变量名称
-						vrb->nm = string(stmtArr.at(i)->stmt.varStmt->asgnLst->asgnArr.at(j)->exp.asgnExp->lvl->exp.lvlExp->vrb->exp.vrbExp->nm);
+						vrb->nm = string(static_cast<VarStmtStrc*>(stmtArr.at(i))->asgnLst->asgnArr.at(j)->lvl->vrb->nm);
 
 						//获取变量值
-						CnstStrc* expRslt = clcExp(envr, stmtArr.at(i)->stmt.varStmt->asgnLst->asgnArr.at(j)->exp.asgnExp->exp);
+						CnstStrc* expRslt = clcExp(envr, static_cast<VarStmtStrc*>(stmtArr.at(i))->asgnLst->asgnArr.at(j)->exp);
 						asgnVrb(vrb, expRslt);
 					}
 
