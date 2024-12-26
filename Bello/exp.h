@@ -2159,14 +2159,14 @@ struct CnstStrc* clcExp(vector<EnvrStrc*>& envr, struct ExpStrc* exp)
 		AsgnExpStrc* asgnExp = static_cast<AsgnExpStrc*>(exp);
 
 		//如果已经注册为函数名则抛出异常
-		if (getFcn(envr, bldFcnExp((char*)(asgnExp->lvl->exp.lvlExp->vrb->exp.vrbExp->nm.c_str()), NULL)->exp.fcnExp) != NULL)
+		if (getFcn(envr, static_cast<FcnExpStrc*>(bldFcnExp((char*)(asgnExp->lvl->vrb->nm.c_str()), NULL))) != NULL)
 		{
 			throw new ExAlrdDfnAsFctn;
 		}
 
-		if (getVrb(envr, asgnExp->lvl->vrb->exp.vrbExp) == NULL)
+		if (getVrb(envr, asgnExp->lvl->vrb) == NULL)
 		{
-			addVrb(envr[envr.size() - 1], asgnExp->lvl->exp.lvlExp->vrb->exp.vrbExp);
+			addVrb(envr[envr.size() - 1], asgnExp->lvl->vrb);
 		}
 
 		rslt = clcAsgnExp(envr, asgnExp);
