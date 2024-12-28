@@ -56,11 +56,11 @@ Grammar
    18                 | break_statement
    19                 | continue_statement
    20                 | return_statement
-   21                 | function_define_statement
+   21                 | FUNCTION_STATEMENT
    22                 | nop_statement
    23                 | var_statement
    24                 | global_statement
-   25                 | class_define_statement
+   25                 | CLASS_STATEMENT
    26                 | error
 
    27 single_statement_no_semicolon: expression_statement
@@ -204,12 +204,12 @@ Grammar
   135 structure_statement: single_statement
   136                    | statement_block
 
-  137 function_define_statement: FUNC IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN
-  138                          | FUNC IDENTIFER LEFT_PAREN RIGHT_PAREN
-  139                          | SHARED FUNC IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN
-  140                          | SHARED FUNC IDENTIFER LEFT_PAREN RIGHT_PAREN
+  137 FUNCTION_STATEMENT: FUNC IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN
+  138                   | FUNC IDENTIFER LEFT_PAREN RIGHT_PAREN
+  139                   | SHARED FUNC IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN
+  140                   | SHARED FUNC IDENTIFER LEFT_PAREN RIGHT_PAREN
 
-  141 class_define_statement: CLASS IDENTIFER
+  141 CLASS_STATEMENT: CLASS IDENTIFER
 
   142 parameter_list: IDENTIFER
   143               | parameter_list COMMA IDENTIFER
@@ -417,10 +417,10 @@ Nonterminals, with rules where they appear
     structure_statement <stmt> (114)
         on left: 135 136
         on right: 130
-    function_define_statement <stmt> (115)
+    FUNCTION_STATEMENT <stmt> (115)
         on left: 137 138 139 140
         on right: 21
-    class_define_statement <stmt> (116)
+    CLASS_STATEMENT <stmt> (116)
         on left: 141
         on right: 25
     parameter_list <prmLst> (117)
@@ -580,8 +580,8 @@ State 6
     while_statement              go to state 58
     break_statement              go to state 59
     continue_statement           go to state 60
-    function_define_statement    go to state 61
-    class_define_statement       go to state 62
+    FUNCTION_STATEMENT           go to state 61
+    CLASS_STATEMENT              go to state 62
     return_statement             go to state 63
 
 
@@ -624,7 +624,7 @@ State 11
 
 State 12
 
-  141 class_define_statement: CLASS . IDENTIFER
+  141 CLASS_STATEMENT: CLASS . IDENTIFER
 
     IDENTIFER  shift, and go to state 65
 
@@ -632,8 +632,8 @@ State 12
 State 13
 
    94 var_statement: SHARED . VAR assign_list
-  139 function_define_statement: SHARED . FUNC IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN
-  140                          | SHARED . FUNC IDENTIFER LEFT_PAREN RIGHT_PAREN
+  139 FUNCTION_STATEMENT: SHARED . FUNC IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN
+  140                   | SHARED . FUNC IDENTIFER LEFT_PAREN RIGHT_PAREN
 
     VAR   shift, and go to state 66
     FUNC  shift, and go to state 67
@@ -975,8 +975,8 @@ State 35
 
 State 36
 
-  137 function_define_statement: FUNC . IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN
-  138                          | FUNC . IDENTIFER LEFT_PAREN RIGHT_PAREN
+  137 FUNCTION_STATEMENT: FUNC . IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN
+  138                   | FUNC . IDENTIFER LEFT_PAREN RIGHT_PAREN
 
     IDENTIFER  shift, and go to state 88
 
@@ -1254,14 +1254,14 @@ State 60
 
 State 61
 
-   21 single_statement: function_define_statement .
+   21 single_statement: FUNCTION_STATEMENT .
 
     $default  reduce using rule 21 (single_statement)
 
 
 State 62
 
-   25 single_statement: class_define_statement .
+   25 single_statement: CLASS_STATEMENT .
 
     $default  reduce using rule 25 (single_statement)
 
@@ -1329,16 +1329,16 @@ State 64
     while_statement              go to state 58
     break_statement              go to state 59
     continue_statement           go to state 60
-    function_define_statement    go to state 61
-    class_define_statement       go to state 62
+    FUNCTION_STATEMENT           go to state 61
+    CLASS_STATEMENT              go to state 62
     return_statement             go to state 63
 
 
 State 65
 
-  141 class_define_statement: CLASS IDENTIFER .
+  141 CLASS_STATEMENT: CLASS IDENTIFER .
 
-    $default  reduce using rule 141 (class_define_statement)
+    $default  reduce using rule 141 (CLASS_STATEMENT)
 
 
 State 66
@@ -1352,8 +1352,8 @@ State 66
 
 State 67
 
-  139 function_define_statement: SHARED FUNC . IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN
-  140                          | SHARED FUNC . IDENTIFER LEFT_PAREN RIGHT_PAREN
+  139 FUNCTION_STATEMENT: SHARED FUNC . IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN
+  140                   | SHARED FUNC . IDENTIFER LEFT_PAREN RIGHT_PAREN
 
     IDENTIFER  shift, and go to state 120
 
@@ -1827,8 +1827,8 @@ State 87
 
 State 88
 
-  137 function_define_statement: FUNC IDENTIFER . LEFT_PAREN parameter_list RIGHT_PAREN
-  138                          | FUNC IDENTIFER . LEFT_PAREN RIGHT_PAREN
+  137 FUNCTION_STATEMENT: FUNC IDENTIFER . LEFT_PAREN parameter_list RIGHT_PAREN
+  138                   | FUNC IDENTIFER . LEFT_PAREN RIGHT_PAREN
 
     LEFT_PAREN  shift, and go to state 141
 
@@ -2742,8 +2742,8 @@ State 119
 
 State 120
 
-  139 function_define_statement: SHARED FUNC IDENTIFER . LEFT_PAREN parameter_list RIGHT_PAREN
-  140                          | SHARED FUNC IDENTIFER . LEFT_PAREN RIGHT_PAREN
+  139 FUNCTION_STATEMENT: SHARED FUNC IDENTIFER . LEFT_PAREN parameter_list RIGHT_PAREN
+  140                   | SHARED FUNC IDENTIFER . LEFT_PAREN RIGHT_PAREN
 
     LEFT_PAREN  shift, and go to state 170
 
@@ -2990,8 +2990,8 @@ State 130
     break_statement              go to state 59
     continue_statement           go to state 60
     structure_statement          go to state 180
-    function_define_statement    go to state 61
-    class_define_statement       go to state 62
+    FUNCTION_STATEMENT           go to state 61
+    CLASS_STATEMENT              go to state 62
     return_statement             go to state 63
 
 
@@ -3131,8 +3131,8 @@ State 140
 
 State 141
 
-  137 function_define_statement: FUNC IDENTIFER LEFT_PAREN . parameter_list RIGHT_PAREN
-  138                          | FUNC IDENTIFER LEFT_PAREN . RIGHT_PAREN
+  137 FUNCTION_STATEMENT: FUNC IDENTIFER LEFT_PAREN . parameter_list RIGHT_PAREN
+  138                   | FUNC IDENTIFER LEFT_PAREN . RIGHT_PAREN
 
     IDENTIFER    shift, and go to state 185
     RIGHT_PAREN  shift, and go to state 186
@@ -4048,8 +4048,8 @@ State 169
 
 State 170
 
-  139 function_define_statement: SHARED FUNC IDENTIFER LEFT_PAREN . parameter_list RIGHT_PAREN
-  140                          | SHARED FUNC IDENTIFER LEFT_PAREN . RIGHT_PAREN
+  139 FUNCTION_STATEMENT: SHARED FUNC IDENTIFER LEFT_PAREN . parameter_list RIGHT_PAREN
+  140                   | SHARED FUNC IDENTIFER LEFT_PAREN . RIGHT_PAREN
 
     IDENTIFER    shift, and go to state 185
     RIGHT_PAREN  shift, and go to state 197
@@ -4253,8 +4253,8 @@ State 177
     while_statement              go to state 58
     break_statement              go to state 59
     continue_statement           go to state 60
-    function_define_statement    go to state 61
-    class_define_statement       go to state 62
+    FUNCTION_STATEMENT           go to state 61
+    CLASS_STATEMENT              go to state 62
     return_statement             go to state 63
 
 
@@ -4343,14 +4343,14 @@ State 185
 
 State 186
 
-  138 function_define_statement: FUNC IDENTIFER LEFT_PAREN RIGHT_PAREN .
+  138 FUNCTION_STATEMENT: FUNC IDENTIFER LEFT_PAREN RIGHT_PAREN .
 
-    $default  reduce using rule 138 (function_define_statement)
+    $default  reduce using rule 138 (FUNCTION_STATEMENT)
 
 
 State 187
 
-  137 function_define_statement: FUNC IDENTIFER LEFT_PAREN parameter_list . RIGHT_PAREN
+  137 FUNCTION_STATEMENT: FUNC IDENTIFER LEFT_PAREN parameter_list . RIGHT_PAREN
   143 parameter_list: parameter_list . COMMA IDENTIFER
 
     RIGHT_PAREN  shift, and go to state 206
@@ -4561,14 +4561,14 @@ State 196
 
 State 197
 
-  140 function_define_statement: SHARED FUNC IDENTIFER LEFT_PAREN RIGHT_PAREN .
+  140 FUNCTION_STATEMENT: SHARED FUNC IDENTIFER LEFT_PAREN RIGHT_PAREN .
 
-    $default  reduce using rule 140 (function_define_statement)
+    $default  reduce using rule 140 (FUNCTION_STATEMENT)
 
 
 State 198
 
-  139 function_define_statement: SHARED FUNC IDENTIFER LEFT_PAREN parameter_list . RIGHT_PAREN
+  139 FUNCTION_STATEMENT: SHARED FUNC IDENTIFER LEFT_PAREN parameter_list . RIGHT_PAREN
   143 parameter_list: parameter_list . COMMA IDENTIFER
 
     RIGHT_PAREN  shift, and go to state 219
@@ -4720,8 +4720,8 @@ State 203
     while_statement              go to state 58
     break_statement              go to state 59
     continue_statement           go to state 60
-    function_define_statement    go to state 61
-    class_define_statement       go to state 62
+    FUNCTION_STATEMENT           go to state 61
+    CLASS_STATEMENT              go to state 62
     return_statement             go to state 63
 
 
@@ -4741,9 +4741,9 @@ State 205
 
 State 206
 
-  137 function_define_statement: FUNC IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN .
+  137 FUNCTION_STATEMENT: FUNC IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN .
 
-    $default  reduce using rule 137 (function_define_statement)
+    $default  reduce using rule 137 (FUNCTION_STATEMENT)
 
 
 State 207
@@ -4993,9 +4993,9 @@ State 218
 
 State 219
 
-  139 function_define_statement: SHARED FUNC IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN .
+  139 FUNCTION_STATEMENT: SHARED FUNC IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN .
 
-    $default  reduce using rule 139 (function_define_statement)
+    $default  reduce using rule 139 (FUNCTION_STATEMENT)
 
 
 State 220

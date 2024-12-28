@@ -489,8 +489,8 @@ enum yysymbol_kind_t
   YYSYMBOL_break_statement = 112,          /* break_statement  */
   YYSYMBOL_continue_statement = 113,       /* continue_statement  */
   YYSYMBOL_structure_statement = 114,      /* structure_statement  */
-  YYSYMBOL_function_define_statement = 115, /* function_define_statement  */
-  YYSYMBOL_class_define_statement = 116,   /* class_define_statement  */
+  YYSYMBOL_FUNCTION_STATEMENT = 115,       /* FUNCTION_STATEMENT  */
+  YYSYMBOL_CLASS_STATEMENT = 116,          /* CLASS_STATEMENT  */
   YYSYMBOL_parameter_list = 117,           /* parameter_list  */
   YYSYMBOL_return_statement = 118          /* return_statement  */
 };
@@ -939,8 +939,8 @@ static const char *const yytname[] =
   "function_expression", "argument_list", "evaluate_list", "if_statement",
   "else_statement", "for_statement", "while_statement",
   "do_while_statement", "break_statement", "continue_statement",
-  "structure_statement", "function_define_statement",
-  "class_define_statement", "parameter_list", "return_statement", YY_NULLPTR
+  "structure_statement", "FUNCTION_STATEMENT", "CLASS_STATEMENT",
+  "parameter_list", "return_statement", YY_NULLPTR
 };
 
 static const char *
@@ -2146,9 +2146,9 @@ yyreduce:
 #line 2147 "y.tab.c"
     break;
 
-  case 22: /* single_statement: function_define_statement  */
+  case 22: /* single_statement: FUNCTION_STATEMENT  */
 #line 380 "bello.y"
-                                { (yyval.stmt)=(yyvsp[0].stmt); }
+                         { (yyval.stmt)=(yyvsp[0].stmt); }
 #line 2153 "y.tab.c"
     break;
 
@@ -2170,9 +2170,9 @@ yyreduce:
 #line 2171 "y.tab.c"
     break;
 
-  case 26: /* single_statement: class_define_statement  */
+  case 26: /* single_statement: CLASS_STATEMENT  */
 #line 385 "bello.y"
-                             { (yyval.stmt)= (yyvsp[0].stmt); }
+                      { (yyval.stmt)= (yyvsp[0].stmt); }
 #line 2177 "y.tab.c"
     break;
 
@@ -2904,7 +2904,7 @@ yyreduce:
 #line 2905 "y.tab.c"
     break;
 
-  case 138: /* function_define_statement: FUNC IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN  */
+  case 138: /* FUNCTION_STATEMENT: FUNC IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN  */
 #line 830 "bello.y"
     {
         struct FcnStrc* fcn;
@@ -2916,7 +2916,7 @@ yyreduce:
 #line 2917 "y.tab.c"
     break;
 
-  case 139: /* function_define_statement: FUNC IDENTIFER LEFT_PAREN RIGHT_PAREN  */
+  case 139: /* FUNCTION_STATEMENT: FUNC IDENTIFER LEFT_PAREN RIGHT_PAREN  */
 #line 838 "bello.y"
     {
         struct FcnStrc *fcn;
@@ -2928,7 +2928,7 @@ yyreduce:
 #line 2929 "y.tab.c"
     break;
 
-  case 140: /* function_define_statement: SHARED FUNC IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN  */
+  case 140: /* FUNCTION_STATEMENT: SHARED FUNC IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN  */
 #line 846 "bello.y"
     {
         if (blnDfnCls==false)
@@ -2949,7 +2949,7 @@ yyreduce:
 #line 2950 "y.tab.c"
     break;
 
-  case 141: /* function_define_statement: SHARED FUNC IDENTIFER LEFT_PAREN RIGHT_PAREN  */
+  case 141: /* FUNCTION_STATEMENT: SHARED FUNC IDENTIFER LEFT_PAREN RIGHT_PAREN  */
 #line 863 "bello.y"
     {
         struct FcnStrc *fcn;
@@ -2961,7 +2961,7 @@ yyreduce:
 #line 2962 "y.tab.c"
     break;
 
-  case 142: /* class_define_statement: CLASS IDENTIFER  */
+  case 142: /* CLASS_STATEMENT: CLASS IDENTIFER  */
 #line 873 "bello.y"
     {
         struct ClsStrc* cls;
@@ -3243,43 +3243,54 @@ void fldStmt(int indt=0)
         {
             case IF_STATEMENT:
             {
-                stmtStk.back()->stmt->stmt.ifStmt->stmt = blk;
-                stmtStk.back()->stmt->stmt.ifStmt->els = NULL;
+                auto ifStmt = static_cast<IfStmtStrc*>(stmtStk.back()->stmt);
+                ifStmt->stmt = blk;
+                ifStmt->els = NULL;
                 break;
             }
             case WHILE_STATEMENT:
             {
-                stmtStk.back()->stmt->stmt.whlStmt->stmt = blk;
+                auto whlStmt = static_cast<WhlStmtStrc*>(stmtStk.back()->stmt);
+                whlStmt->stmt = blk;
                 break;
             }
             case FOR_STATEMENT:
             {
-                stmtStk.back()->stmt->stmt.forStmt->stmt = blk;
+                auto forStmt = static_cast<ForStmtStrc*>(stmtStk.back()->stmt);
+                forStmt->stmt = blk;
                 break;
             }
-            case FUNCTION_DEFINE_STATEMENT:
+            case FUNCTION_STATEMENT:
             {
-                stmtStk.back()->stmt->stmt.fcnStmt->fcn->stmt = blk;
+                auto fcnStmt = static_cast<ForStmtStrc*>(stmtStk.back()->stmt);
+                fcnStmt->stmt = blk;
                 break;
             }
             case ELSE_STATEMENT:
             {
-                stmtStk.back()->stmt->stmt.elsStmt->stmt = blk;
+                auto elsStmt = static_cast<ElsStmtStrc*>(stmtStk.back()->stmt);
+                elsStmt->stmt = blk;
 
                 //将else语句添加到其上的if语句结构体中
-                StmtStrc* els = stmtStk.back()->stmt->stmt.elsStmt->stmt;
+                //StmtStrc* els = stmtStk.back()->stmt->stmt.elsStmt->stmt;
 
                 stmtStk.pop_back();
-                stmtStk.back()->stmt->stmt.ifStmt->els =els;
+
+                auto ifStmtLst = static_cast<IfStmtStrc*>(stmtStk.back()->stmt);
+
+                ifStmtLst->els = elsStmt->stmt;
             }
-            case CLASS_DEFINE_STATEMENT:
+            case CLASS_STATEMENT:
             {
+                
                 //此处未完成
                 //根据类中的语句填充类
 
-                int lnt = blk->stmt.stmtBlk->stmtArr.size();
+                auto clsStmt = static_cast<ClsStmtStrc*>(stmtStk.back()->stmt);
 
-                stmtStk.back()->stmt->stmt.clsStmt->cls->dfn = blk;
+                int lnt = static_cast<StmtBlkStrc*>(blk)->stmtArr.size();
+
+                clsStmt->cls->dfn = blk;
 
                 //printf("blk arr sz: %d\n", blk->stmt.stmtBlk->stmtArr.size());
                 
@@ -3305,7 +3316,7 @@ void fldStmt(int indt=0)
                     
                     }
 
-                    if (stmt->typ == FUNCTION_DEFINE_STATEMENT)
+                    if (stmt->typ == FUNCTION_STATEMENT)
                     {
                         FcnStrc* fcn = stmt->stmt.fcnStmt->fcn;
                         cls->fcn.push_back(fcn);
@@ -3412,12 +3423,12 @@ void prtStmtStk()
                 printf("varStmt2\n");
                 break;
             }
-            case FUNCTION_DEFINE_STATEMENT:
+            case FUNCTION_STATEMENT:
             {
                 printf("fcnStmt\n");
                 break;
             }
-            case CLASS_DEFINE_STATEMENT:
+            case CLASS_STATEMENT:
             {
                 printf("clsStmt\n");
                 break;

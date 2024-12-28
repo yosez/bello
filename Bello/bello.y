@@ -124,7 +124,7 @@
     statement_block block_list null_statement var_statement global_statement
 %type <stmt> if_statement else_statement structure_statement for_statement single_statement_no_semicolon while_statement 
     do_while_statement break_statement continue_statement return_statement nop_statement
-%type <stmt> function_define_statement class_define_statement
+%type <stmt> FUNCTION_STATEMENT CLASS_STATEMENT
 %type <prmLst> parameter_list 
 %type <argLst> argument_list
 %type <asgnLst> assign_list
@@ -377,12 +377,12 @@ single_statement
     | break_statement { $$=$1; }
     | continue_statement  { $$=$1; }
     | return_statement  { $$=$1; }
-    | function_define_statement { $$=$1; } 
+    | FUNCTION_STATEMENT { $$=$1; } 
     /* | null_statement  { $$=$1; } */
     | nop_statement { $$=$1; }
     | var_statement  { $$ = $1;}
     | global_statement  { $$ = $1; } 
-    | class_define_statement { $$= $1; } 
+    | CLASS_STATEMENT { $$= $1; } 
     | error 
     { 
         $$=bldNllStmt(); 
@@ -791,7 +791,7 @@ structure_statement
     : single_statement 
     | statement_block
 
-/* function_define_statement
+/* FUNCTION_STATEMENT
     : FUNC IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN statement_block
     {
         struct FcnStrc* fcn;
@@ -825,7 +825,7 @@ structure_statement
         $$ = bldFcnStmt(fcn);
     } */
 
-function_define_statement
+FUNCTION_STATEMENT
     : FUNC IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN 
     {
         struct FcnStrc* fcn;
@@ -868,7 +868,7 @@ function_define_statement
         $$ = bldFcnStmt(fcn);
     }
 
-class_define_statement
+CLASS_STATEMENT
     : CLASS IDENTIFER
     {
         struct ClsStrc* cls;
@@ -941,43 +941,54 @@ void fldStmt(int indt=0)
         {
             case IF_STATEMENT:
             {
-                stmtStk.back()->stmt->stmt.ifStmt->stmt = blk;
-                stmtStk.back()->stmt->stmt.ifStmt->els = NULL;
+                auto ifStmt = static_cast<IfStmtStrc*>(stmtStk.back()->stmt);
+                ifStmt->stmt = blk;
+                ifStmt->els = NULL;
                 break;
             }
             case WHILE_STATEMENT:
             {
-                stmtStk.back()->stmt->stmt.whlStmt->stmt = blk;
+                auto whlStmt = static_cast<WhlStmtStrc*>(stmtStk.back()->stmt);
+                whlStmt->stmt = blk;
                 break;
             }
             case FOR_STATEMENT:
             {
-                stmtStk.back()->stmt->stmt.forStmt->stmt = blk;
+                auto forStmt = static_cast<ForStmtStrc*>(stmtStk.back()->stmt);
+                forStmt->stmt = blk;
                 break;
             }
-            case FUNCTION_DEFINE_STATEMENT:
+            case FUNCTION_STATEMENT:
             {
-                stmtStk.back()->stmt->stmt.fcnStmt->fcn->stmt = blk;
+                auto fcnStmt = static_cast<ForStmtStrc*>(stmtStk.back()->stmt);
+                fcnStmt->stmt = blk;
                 break;
             }
             case ELSE_STATEMENT:
             {
-                stmtStk.back()->stmt->stmt.elsStmt->stmt = blk;
+                auto elsStmt = static_cast<ElsStmtStrc*>(stmtStk.back()->stmt);
+                elsStmt->stmt = blk;
 
                 //将else语句添加到其上的if语句结构体中
-                StmtStrc* els = stmtStk.back()->stmt->stmt.elsStmt->stmt;
+                //StmtStrc* els = stmtStk.back()->stmt->stmt.elsStmt->stmt;
 
                 stmtStk.pop_back();
-                stmtStk.back()->stmt->stmt.ifStmt->els =els;
+
+                auto ifStmtLst = static_cast<IfStmtStrc*>(stmtStk.back()->stmt);
+
+                ifStmtLst->els = elsStmt->stmt;
             }
-            case CLASS_DEFINE_STATEMENT:
+            case CLASS_STATEMENT:
             {
+                
                 //此处未完成
                 //根据类中的语句填充类
 
-                int lnt = blk->stmt.stmtBlk->stmtArr.size();
+                auto clsStmt = static_cast<ClsStmtStrc*>(stmtStk.back()->stmt);
 
-                stmtStk.back()->stmt->stmt.clsStmt->cls->dfn = blk;
+                int lnt = static_cast<StmtBlkStrc*>(blk)->stmtArr.size();
+
+                clsStmt->cls->dfn = blk;
 
                 //printf("blk arr sz: %d\n", blk->stmt.stmtBlk->stmtArr.size());
                 
@@ -1003,7 +1014,7 @@ void fldStmt(int indt=0)
                     
                     }
 
-                    if (stmt->typ == FUNCTION_DEFINE_STATEMENT)
+                    if (stmt->typ == FUNCTION_STATEMENT)
                     {
                         FcnStrc* fcn = stmt->stmt.fcnStmt->fcn;
                         cls->fcn.push_back(fcn);
@@ -1110,12 +1121,12 @@ void prtStmtStk()
                 printf("varStmt2\n");
                 break;
             }
-            case FUNCTION_DEFINE_STATEMENT:
+            case FUNCTION_STATEMENT:
             {
                 printf("fcnStmt\n");
                 break;
             }
-            case CLASS_DEFINE_STATEMENT:
+            case CLASS_STATEMENT:
             {
                 printf("clsStmt\n");
                 break;

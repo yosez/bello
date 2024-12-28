@@ -44,11 +44,11 @@ extern struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* s
 //struct ElmtAsgnExpStrc* bldElmtAsgnExp(struct ExpStrc* arr, struct PstnLstStrc* pstnLst, struct ExpStrc* vl);
 //struct NewArrExpStrc* bldNewArrExp(struct ExpStrc* cnt);
 
-struct CnstStrc* bldCnstIntExp(int intVl);
-struct CnstStrc* bldCnstFltExp(float fltVl);
-struct CnstStrc* bldCnstBlnExp(int blnVl);
-struct CnstStrc* bldCnstStrExp(char* strVl);
-struct CnstStrc* bldCnstNllExp();
+struct ExpStrc* bldCnstIntExp(int intVl);
+struct ExpStrc* bldCnstFltExp(float fltVl);
+struct ExpStrc* bldCnstBlnExp(int blnVl);
+struct ExpStrc* bldCnstStrExp(char* strVl);
+struct ExpStrc* bldCnstNllExp();
 struct ExpStrc* bldAsgnExp(struct ExpStrc* lvl, struct ExpStrc* exp);
 struct ExpStrc* bldVrbExp(char* idtf);
 struct ExpStrc* bldBnrExp(int opr, struct ExpStrc* lftExp, struct ExpStrc* rghtExp);
@@ -77,8 +77,7 @@ struct CnstStrc* clcBnrExpBitAnd(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp
 struct CnstStrc* clcBnrExpBitOr(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp);
 struct CnstStrc* clcBnrExpBitXor(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp);
 struct CnstStrc* clcAsgnExp(vector<EnvrStrc*>& envr, struct AsgnExpStrc* exp);
-//struct CnstStrc* clcLclAsgnExp(vector<EnvrStrc*>& envr, struct LclAsgnExpStrc* exp);
-struct CnstStrc* clcGlbAsgnExp(vector<EnvrStrc*>& envr, struct GlbAsgnExpStrc* exp);
+//struct CnstStrc* clcGlbAsgnExp(vector<EnvrStrc*>& envr, struct GlbAsgnExpStrc* exp);
 struct CnstStrc* clcUnrExpPfxInc(vector<EnvrStrc*>& envr, struct UnrExpStrc* exp);
 struct CnstStrc* clcUnrExpPfxDec(vector<EnvrStrc*>& envr, struct UnrExpStrc* exp);
 struct CnstStrc* clcUnrExpSfxInc(vector<EnvrStrc*>& envr, struct UnrExpStrc* exp);
@@ -97,7 +96,7 @@ struct CnstStrc* clcLvlExp(vector<EnvrStrc*>& envr, struct LvlExpStrc* exp);
 struct CnstStrc* clcExp(vector<EnvrStrc*>& envr, struct ExpStrc* exp);
 
 
-struct CnstStrc* bldCnstIntExp(int intVl)
+struct ExpStrc* bldCnstIntExp(int intVl)
 {
 	struct CnstStrc* exp;
 
@@ -106,7 +105,7 @@ struct CnstStrc* bldCnstIntExp(int intVl)
 	return exp;
 }
 
-struct CnstStrc* bldCnstFltExp(float fltVl)
+struct ExpStrc* bldCnstFltExp(float fltVl)
 {
 	struct CnstStrc* exp;
 
@@ -115,7 +114,7 @@ struct CnstStrc* bldCnstFltExp(float fltVl)
 	return exp;
 }
 
-struct CnstStrc* bldCnstBlnExp(int blnVl)
+struct ExpStrc* bldCnstBlnExp(int blnVl)
 {
 	struct CnstStrc* exp;
 
@@ -124,7 +123,7 @@ struct CnstStrc* bldCnstBlnExp(int blnVl)
 	return exp;
 }
 
-struct CnstStrc* bldCnstStrExp(char* strVl)
+struct ExpStrc* bldCnstStrExp(char* strVl)
 {
 	struct CnstStrc* exp;
 
@@ -133,7 +132,7 @@ struct CnstStrc* bldCnstStrExp(char* strVl)
 	return exp;
 }
 
-struct CnstStrc* bldCnstNllExp()
+struct ExpStrc* bldCnstNllExp()
 {
 	struct CnstStrc* exp;
 

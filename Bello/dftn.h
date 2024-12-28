@@ -12,9 +12,12 @@ struct VrbStrc;
 struct VrbExpStrc;
 struct ClsStrc;
 struct ObjStrc;
-struct CnstStrc;
+
 struct FcnStrc;
 struct EnvrStrc;
+
+struct CnstStrc;
+
 struct FcnExpStrc;
 struct VrbDfnStrc;
 struct UnrExpStrc;
@@ -23,7 +26,6 @@ struct LvlExpStrc;
 struct AsgnExpStrc;
 struct ExpStrc;
 
-struct StmtStrc;
 struct IfStmtStrc;
 struct ElsStmtStrc;
 struct FcnStmtStrc;
@@ -38,6 +40,7 @@ struct ClsStmtStrc;
 struct NllStmtStrc;
 struct ExpStmtStrc;
 struct StmtStrc;
+
 struct RtnRsltStrc;
 struct BrkRsltStrc;
 struct CntnRsltStrc;
@@ -128,7 +131,10 @@ enum StmtTyp
 	STATEMENT_BLOCK,
 	BREAK_STATEMENT,
 	CONTINUE_STATEMENT,
-	FUNCTION_DEFINE_STATEMENT,
+	/// <summary>
+	/// 函数定义语句
+	/// </summary>
+	FUNCTION_STATEMENT,
 	RETURN_STATEMENT,
 	VAR_STATEMENT,
 	CLASS_VAR_STATEMENT,
@@ -137,7 +143,7 @@ enum StmtTyp
 	CLASS_SHARED_FUNCTION_STATEMENT,
 	GLOBAL_STATEMENT,
 	NULL_STATEMENT,
-	CLASS_DEFINE_STATEMENT
+	CLASS_STATEMENT
 };
 
 enum StmtRsltTyp
@@ -290,7 +296,6 @@ struct StmtStrc
 public:
 	int typ;
 
-	virtual ~StmtStrc();
 };
 
 struct ExpStmtStrc : public StmtStrc
