@@ -30,6 +30,7 @@ struct StmtStrc* bldClsStmt(struct ClsStrc* cls);
 struct StmtStrc* bldIfStmt(struct ExpStrc* exp);
 struct StmtStrc* bldForStmt(struct StmtStrc* intl, struct StmtStrc* exp, struct StmtStrc* itr);
 struct StmtStrc* bldWhlStmt(struct StmtStrc* exp);
+struct StmtStrc* bldWhlStmt();
 struct StmtStrc* bldElsStmt();
 
 extern int chkStmtAlwSubStmt(struct StmtStrc* stmt);
@@ -137,7 +138,7 @@ struct StmtStrc* bldForStmt(struct StmtStrc* intl, struct StmtStrc* exp, struct 
 	return rslt;
 }
 
-struct StmtStrc* bldWhlStmt(struct StmtStrc* exp, struct StmtStrc* stmt)
+struct StmtStrc* bldWhlStmt(struct ExpStrc* exp, struct StmtStrc* stmt)
 {
 	struct WhlStmtStrc* rslt = new WhlStmtStrc;
 
@@ -149,13 +150,26 @@ struct StmtStrc* bldWhlStmt(struct StmtStrc* exp, struct StmtStrc* stmt)
 	return rslt;
 }
 
-struct StmtStrc* bldWhlStmt(struct StmtStrc* exp)
+struct StmtStrc* bldWhlStmt(struct ExpStrc* exp)
 {
 	struct WhlStmtStrc* rslt = new WhlStmtStrc;
 
 	rslt->typ = WHILE_STATEMENT;
 
 	rslt->exp = exp;
+	rslt->stmt = nullptr;
+
+	return rslt;
+}
+
+struct StmtStrc* bldWhlStmt()
+{
+	auto rslt = new WhlStmtStrc;
+
+	rslt->typ = WHILE_STATEMENT;
+
+	rslt->exp = nullptr;
+
 	rslt->stmt = nullptr;
 
 	return rslt;
@@ -524,7 +538,7 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 
 			envr.push_back(new EnvrStrc(STATEMENT_ENVIRONMENT));
 
-			while (clcExp(envr, static_cast<ExpStmtStrc*>(whlStmt->exp)->exp)->vl.intVl != 0)
+			while (whlStmt->exp == nullptr || clcExp(envr, (whlStmt->exp))->vl.intVl != 0 )
 			{
 				if (rslt->typ == CONTINUE_RESULT)
 				{
@@ -558,7 +572,7 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 
 				if (rslt->typ == CONTINUE_RESULT)
 				{
-					//printf("while continue #2: %d\n",rslt->rslt.cntnRslt->cntnCnt);
+
 					rslt->rslt.cntnRslt->cntnCnt--;
 
 					if (rslt->rslt.cntnRslt->cntnCnt == 0)

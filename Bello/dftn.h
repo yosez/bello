@@ -332,7 +332,7 @@ struct ForStmtStrc : public StmtStrc
 
 struct WhlStmtStrc : public StmtStrc
 {
-	struct StmtStrc* exp;
+	struct ExpStrc* exp;
 	struct StmtStrc* stmt;
 };
 

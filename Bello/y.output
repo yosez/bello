@@ -14,6 +14,7 @@ Terminals unused in grammar
 
 State 0 conflicts: 1 shift/reduce
 State 19 conflicts: 1 shift/reduce
+State 33 conflicts: 1 shift/reduce
 State 34 conflicts: 1 shift/reduce
 State 35 conflicts: 1 shift/reduce
 State 37 conflicts: 15 shift/reduce
@@ -191,31 +192,32 @@ Grammar
 
   128 for_statement: FOR LEFT_PAREN single_statement_no_semicolon SEMICOLON expression_statement SEMICOLON single_statement_no_semicolon RIGHT_PAREN
 
-  129 while_statement: WHILE LEFT_PAREN expression_statement RIGHT_PAREN
+  129 while_statement: WHILE LEFT_PAREN expression RIGHT_PAREN
+  130                | WHILE
 
-  130 do_while_statement: DO structure_statement WHILE LEFT_PAREN expression_statement RIGHT_PAREN SEMICOLON
+  131 do_while_statement: DO structure_statement WHILE LEFT_PAREN expression_statement RIGHT_PAREN SEMICOLON
 
-  131 break_statement: BREAK
-  132                | BREAK LEFT_PAREN expression RIGHT_PAREN
+  132 break_statement: BREAK
+  133                | BREAK LEFT_PAREN expression RIGHT_PAREN
 
-  133 continue_statement: CONTINUE
-  134                   | CONTINUE LEFT_PAREN expression RIGHT_PAREN
+  134 continue_statement: CONTINUE
+  135                   | CONTINUE LEFT_PAREN expression RIGHT_PAREN
 
-  135 structure_statement: single_statement
-  136                    | statement_block
+  136 structure_statement: single_statement
+  137                    | statement_block
 
-  137 FUNCTION_STATEMENT: FUNC IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN
-  138                   | FUNC IDENTIFER LEFT_PAREN RIGHT_PAREN
-  139                   | SHARED FUNC IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN
-  140                   | SHARED FUNC IDENTIFER LEFT_PAREN RIGHT_PAREN
+  138 FUNCTION_STATEMENT: FUNC IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN
+  139                   | FUNC IDENTIFER LEFT_PAREN RIGHT_PAREN
+  140                   | SHARED FUNC IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN
+  141                   | SHARED FUNC IDENTIFER LEFT_PAREN RIGHT_PAREN
 
-  141 CLASS_STATEMENT: CLASS IDENTIFER
+  142 CLASS_STATEMENT: CLASS IDENTIFER
 
-  142 parameter_list: IDENTIFER
-  143               | parameter_list COMMA IDENTIFER
+  143 parameter_list: IDENTIFER
+  144               | parameter_list COMMA IDENTIFER
 
-  144 return_statement: RETURN
-  145                 | RETURN expression
+  145 return_statement: RETURN
+  146                 | RETURN expression
 
 
 Terminals, with rules where they appear
@@ -226,8 +228,8 @@ Terminals, with rules where they appear
     LF (259) 2 3
     END_FILE (260) 5
     NOP (261) 34
-    CLASS (262) 141
-    SHARED (263) 94 139 140
+    CLASS (262) 142
+    SHARED (263) 94 140 141
     THIS (264)
     INDENT <intVl> (265) 3
     INT_VALUE <intVl> (266) 79
@@ -236,7 +238,7 @@ Terminals, with rules where they appear
     STRING_VALUE <strVl> (269) 82
     NULL_VALUE (270) 83
     ARRAY_VALUE (271)
-    IDENTIFER <idtf> (272) 86 96 97 98 99 100 101 137 138 139 140 141 142 143
+    IDENTIFER <idtf> (272) 86 96 97 98 99 100 101 138 139 140 141 142 143 144
     ASSIGN (273) 48 97 99
     VAR (274) 93 94
     GLOBAL (275) 95
@@ -247,15 +249,15 @@ Terminals, with rules where they appear
     MOD_ASSIGN (280) 53
     PRINT (281)
     PRINTLN (282)
-    LEFT_PAREN (283) 60 90 100 101 126 128 129 130 132 134 137 138 139 140
-    RIGHT_PAREN (284) 60 90 100 101 126 128 129 130 132 134 137 138 139 140
+    LEFT_PAREN (283) 60 90 100 101 126 128 129 131 133 135 138 139 140 141
+    RIGHT_PAREN (284) 60 90 100 101 126 128 129 131 133 135 138 139 140 141
     LEFT_QUAD (285) 88 89 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125
     RIGHT_QUAD (286) 88 89 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125
     LEFT_BRACE (287) 35 36
     RIGHT_BRACE (288) 35 36
     SEMICOLON_OPTIONAL (289)
-    SEMICOLON (290) 128 130
-    COMMA (291) 92 98 99 103 143
+    SEMICOLON (290) 128 131
+    COMMA (291) 92 98 99 103 144
     COLON (292) 105 106 107 108 109 110 111 112 113 114 116 117 118 119 120 121 122 123 124 125
     ADD (293) 59 63
     SUB (294) 58 64
@@ -280,12 +282,12 @@ Terminals, with rules where they appear
     IF (313) 126
     ELSE (314) 127
     FOR (315) 128
-    WHILE (316) 129 130
-    DO (317) 130
-    CONTINUE (318) 133 134
-    BREAK (319) 131 132
-    FUNC (320) 137 138 139 140
-    RETURN (321) 144 145
+    WHILE (316) 129 130 131
+    DO (317) 131
+    CONTINUE (318) 134 135
+    BREAK (319) 132 133
+    FUNC (320) 138 139 140 141
+    RETURN (321) 145 146
     NEW_ARRAY (322) 90
     MINUS_SIGN (323)
     PLUS_SIGN (324)
@@ -323,7 +325,7 @@ Nonterminals, with rules where they appear
         on right: 2
     single_statement <stmt> (83)
         on left: 13 14 15 16 17 18 19 20 21 22 23 24 25 26
-        on right: 2 3 37 38 135
+        on right: 2 3 37 38 136
     single_statement_no_semicolon <stmt> (84)
         on left: 27 28 29 30 31 32
         on right: 128
@@ -335,16 +337,16 @@ Nonterminals, with rules where they appear
         on right: 22
     statement_block <stmt> (87)
         on left: 35 36
-        on right: 136
+        on right: 137
     block_list <stmt> (88)
         on left: 37 38
         on right: 35 38
     expression_statement <stmt> (89)
         on left: 39
-        on right: 13 27 128 129 130
+        on right: 13 27 128 131
     expression <exp> (90)
         on left: 40 41 42 43 44 45
-        on right: 39 48 49 50 51 52 53 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 90 91 92 97 99 102 103 104 105 106 107 108 109 110 111 112 113 115 116 117 118 119 120 121 122 123 124 126 132 134 145
+        on right: 39 48 49 50 51 52 53 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 90 91 92 97 99 102 103 104 105 106 107 108 109 110 111 112 113 115 116 117 118 119 120 121 122 123 124 126 129 133 135 146
     lvalue_operation_expression <exp> (91)
         on left: 46 47
         on right: 41
@@ -403,31 +405,31 @@ Nonterminals, with rules where they appear
         on left: 128
         on right: 16 29
     while_statement <stmt> (110)
-        on left: 129
+        on left: 129 130
         on right: 17 30
     do_while_statement <stmt> (111)
-        on left: 130
+        on left: 131
         on right: 31
     break_statement <stmt> (112)
-        on left: 131 132
+        on left: 132 133
         on right: 18
     continue_statement <stmt> (113)
-        on left: 133 134
+        on left: 134 135
         on right: 19
     structure_statement <stmt> (114)
-        on left: 135 136
-        on right: 130
+        on left: 136 137
+        on right: 131
     FUNCTION_STATEMENT <stmt> (115)
-        on left: 137 138 139 140
+        on left: 138 139 140 141
         on right: 21
     CLASS_STATEMENT <stmt> (116)
-        on left: 141
+        on left: 142
         on right: 25
     parameter_list <prmLst> (117)
-        on left: 142 143
-        on right: 137 139 143
+        on left: 143 144
+        on right: 138 140 144
     return_statement <stmt> (118)
-        on left: 144 145
+        on left: 145 146
         on right: 20
 
 
@@ -624,7 +626,7 @@ State 11
 
 State 12
 
-  141 CLASS_STATEMENT: CLASS . IDENTIFER
+  142 CLASS_STATEMENT: CLASS . IDENTIFER
 
     IDENTIFER  shift, and go to state 65
 
@@ -632,8 +634,8 @@ State 12
 State 13
 
    94 var_statement: SHARED . VAR assign_list
-  139 FUNCTION_STATEMENT: SHARED . FUNC IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN
-  140                   | SHARED . FUNC IDENTIFER LEFT_PAREN RIGHT_PAREN
+  140 FUNCTION_STATEMENT: SHARED . FUNC IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN
+  141                   | SHARED . FUNC IDENTIFER LEFT_PAREN RIGHT_PAREN
 
     VAR   shift, and go to state 66
     FUNC  shift, and go to state 67
@@ -946,45 +948,49 @@ State 32
 
 State 33
 
-  129 while_statement: WHILE . LEFT_PAREN expression_statement RIGHT_PAREN
+  129 while_statement: WHILE . LEFT_PAREN expression RIGHT_PAREN
+  130                | WHILE .
 
     LEFT_PAREN  shift, and go to state 85
+
+    LEFT_PAREN  [reduce using rule 130 (while_statement)]
+    $default    reduce using rule 130 (while_statement)
 
 
 State 34
 
-  133 continue_statement: CONTINUE .
-  134                   | CONTINUE . LEFT_PAREN expression RIGHT_PAREN
+  134 continue_statement: CONTINUE .
+  135                   | CONTINUE . LEFT_PAREN expression RIGHT_PAREN
 
     LEFT_PAREN  shift, and go to state 86
 
-    LEFT_PAREN  [reduce using rule 133 (continue_statement)]
-    $default    reduce using rule 133 (continue_statement)
+    LEFT_PAREN  [reduce using rule 134 (continue_statement)]
+    $default    reduce using rule 134 (continue_statement)
 
 
 State 35
 
-  131 break_statement: BREAK .
-  132                | BREAK . LEFT_PAREN expression RIGHT_PAREN
+  132 break_statement: BREAK .
+  133                | BREAK . LEFT_PAREN expression RIGHT_PAREN
 
     LEFT_PAREN  shift, and go to state 87
 
-    LEFT_PAREN  [reduce using rule 131 (break_statement)]
-    $default    reduce using rule 131 (break_statement)
+    LEFT_PAREN  [reduce using rule 132 (break_statement)]
+    $default    reduce using rule 132 (break_statement)
 
 
 State 36
 
-  137 FUNCTION_STATEMENT: FUNC . IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN
-  138                   | FUNC . IDENTIFER LEFT_PAREN RIGHT_PAREN
+  138 FUNCTION_STATEMENT: FUNC . IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN
+  139                   | FUNC . IDENTIFER LEFT_PAREN RIGHT_PAREN
 
     IDENTIFER  shift, and go to state 88
 
 
 State 37
 
-  144 return_statement: RETURN .
-  145                 | RETURN . expression
+  145 return_statement: RETURN .
+  146                 | RETURN . expression
 
     INT_VALUE      shift, and go to state 14
     BOOLEAN_VALUE  shift, and go to state 15
@@ -1002,22 +1008,22 @@ State 37
     DECREMENT      shift, and go to state 29
     NEW_ARRAY      shift, and go to state 38
 
-    INT_VALUE      [reduce using rule 144 (return_statement)]
-    BOOLEAN_VALUE  [reduce using rule 144 (return_statement)]
-    FLOAT_VALUE    [reduce using rule 144 (return_statement)]
-    STRING_VALUE   [reduce using rule 144 (return_statement)]
-    NULL_VALUE     [reduce using rule 144 (return_statement)]
-    IDENTIFER      [reduce using rule 144 (return_statement)]
-    LEFT_PAREN     [reduce using rule 144 (return_statement)]
-    LEFT_QUAD      [reduce using rule 144 (return_statement)]
-    ADD            [reduce using rule 144 (return_statement)]
-    SUB            [reduce using rule 144 (return_statement)]
-    NOT            [reduce using rule 144 (return_statement)]
-    BIT_NOT        [reduce using rule 144 (return_statement)]
-    INCREMENT      [reduce using rule 144 (return_statement)]
-    DECREMENT      [reduce using rule 144 (return_statement)]
-    NEW_ARRAY      [reduce using rule 144 (return_statement)]
-    $default       reduce using rule 144 (return_statement)
+    INT_VALUE      [reduce using rule 145 (return_statement)]
+    BOOLEAN_VALUE  [reduce using rule 145 (return_statement)]
+    FLOAT_VALUE    [reduce using rule 145 (return_statement)]
+    STRING_VALUE   [reduce using rule 145 (return_statement)]
+    NULL_VALUE     [reduce using rule 145 (return_statement)]
+    IDENTIFER      [reduce using rule 145 (return_statement)]
+    LEFT_PAREN     [reduce using rule 145 (return_statement)]
+    LEFT_QUAD      [reduce using rule 145 (return_statement)]
+    ADD            [reduce using rule 145 (return_statement)]
+    SUB            [reduce using rule 145 (return_statement)]
+    NOT            [reduce using rule 145 (return_statement)]
+    BIT_NOT        [reduce using rule 145 (return_statement)]
+    INCREMENT      [reduce using rule 145 (return_statement)]
+    DECREMENT      [reduce using rule 145 (return_statement)]
+    NEW_ARRAY      [reduce using rule 145 (return_statement)]
+    $default       reduce using rule 145 (return_statement)
 
     expression                   go to state 89
     lvalue_operation_expression  go to state 43
@@ -1336,9 +1342,9 @@ State 64
 
 State 65
 
-  141 CLASS_STATEMENT: CLASS IDENTIFER .
+  142 CLASS_STATEMENT: CLASS IDENTIFER .
 
-    $default  reduce using rule 141 (CLASS_STATEMENT)
+    $default  reduce using rule 142 (CLASS_STATEMENT)
 
 
 State 66
@@ -1352,8 +1358,8 @@ State 66
 
 State 67
 
-  139 FUNCTION_STATEMENT: SHARED FUNC . IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN
-  140                   | SHARED FUNC . IDENTIFER LEFT_PAREN RIGHT_PAREN
+  140 FUNCTION_STATEMENT: SHARED FUNC . IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN
+  141                   | SHARED FUNC . IDENTIFER LEFT_PAREN RIGHT_PAREN
 
     IDENTIFER  shift, and go to state 120
 
@@ -1727,7 +1733,7 @@ State 84
 
 State 85
 
-  129 while_statement: WHILE LEFT_PAREN . expression_statement RIGHT_PAREN
+  129 while_statement: WHILE LEFT_PAREN . expression RIGHT_PAREN
 
     INT_VALUE      shift, and go to state 14
     BOOLEAN_VALUE  shift, and go to state 15
@@ -1745,8 +1751,7 @@ State 85
     DECREMENT      shift, and go to state 29
     NEW_ARRAY      shift, and go to state 38
 
-    expression_statement         go to state 138
-    expression                   go to state 42
+    expression                   go to state 138
     lvalue_operation_expression  go to state 43
     assign_expression            go to state 44
     self_operation_expression    go to state 45
@@ -1761,7 +1766,7 @@ State 85
 
 State 86
 
-  134 continue_statement: CONTINUE LEFT_PAREN . expression RIGHT_PAREN
+  135 continue_statement: CONTINUE LEFT_PAREN . expression RIGHT_PAREN
 
     INT_VALUE      shift, and go to state 14
     BOOLEAN_VALUE  shift, and go to state 15
@@ -1794,7 +1799,7 @@ State 86
 
 State 87
 
-  132 break_statement: BREAK LEFT_PAREN . expression RIGHT_PAREN
+  133 break_statement: BREAK LEFT_PAREN . expression RIGHT_PAREN
 
     INT_VALUE      shift, and go to state 14
     BOOLEAN_VALUE  shift, and go to state 15
@@ -1827,8 +1832,8 @@ State 87
 
 State 88
 
-  137 FUNCTION_STATEMENT: FUNC IDENTIFER . LEFT_PAREN parameter_list RIGHT_PAREN
-  138                   | FUNC IDENTIFER . LEFT_PAREN RIGHT_PAREN
+  138 FUNCTION_STATEMENT: FUNC IDENTIFER . LEFT_PAREN parameter_list RIGHT_PAREN
+  139                   | FUNC IDENTIFER . LEFT_PAREN RIGHT_PAREN
 
     LEFT_PAREN  shift, and go to state 141
 
@@ -1851,7 +1856,7 @@ State 89
    76                  | expression . BIT_AND expression
    77                  | expression . BIT_OR expression
    78                  | expression . BIT_XOR expression
-  145 return_statement: RETURN expression .
+  146 return_statement: RETURN expression .
 
     ADD      shift, and go to state 92
     SUB      shift, and go to state 93
@@ -1870,9 +1875,9 @@ State 89
     BIT_OR   shift, and go to state 106
     BIT_XOR  shift, and go to state 107
 
-    ADD       [reduce using rule 145 (return_statement)]
-    SUB       [reduce using rule 145 (return_statement)]
-    $default  reduce using rule 145 (return_statement)
+    ADD       [reduce using rule 146 (return_statement)]
+    SUB       [reduce using rule 146 (return_statement)]
+    $default  reduce using rule 146 (return_statement)
 
 
 State 90
@@ -2742,8 +2747,8 @@ State 119
 
 State 120
 
-  139 FUNCTION_STATEMENT: SHARED FUNC IDENTIFER . LEFT_PAREN parameter_list RIGHT_PAREN
-  140                   | SHARED FUNC IDENTIFER . LEFT_PAREN RIGHT_PAREN
+  140 FUNCTION_STATEMENT: SHARED FUNC IDENTIFER . LEFT_PAREN parameter_list RIGHT_PAREN
+  141                   | SHARED FUNC IDENTIFER . LEFT_PAREN RIGHT_PAREN
 
     LEFT_PAREN  shift, and go to state 170
 
@@ -2933,7 +2938,7 @@ State 129
 
 State 130
 
-  130 do_while_statement: DO . structure_statement WHILE LEFT_PAREN expression_statement RIGHT_PAREN SEMICOLON
+  131 do_while_statement: DO . structure_statement WHILE LEFT_PAREN expression_statement RIGHT_PAREN SEMICOLON
 
     error          shift, and go to state 10
     NOP            shift, and go to state 11
@@ -3046,9 +3051,41 @@ State 137
 
 State 138
 
-  129 while_statement: WHILE LEFT_PAREN expression_statement . RIGHT_PAREN
+   63 binary_expression: expression . ADD expression
+   64                  | expression . SUB expression
+   65                  | expression . MUL expression
+   66                  | expression . DIV expression
+   67                  | expression . MOD expression
+   68                  | expression . AND expression
+   69                  | expression . OR expression
+   70                  | expression . EQ expression
+   71                  | expression . NE expression
+   72                  | expression . GT expression
+   73                  | expression . GE expression
+   74                  | expression . LT expression
+   75                  | expression . LE expression
+   76                  | expression . BIT_AND expression
+   77                  | expression . BIT_OR expression
+   78                  | expression . BIT_XOR expression
+  129 while_statement: WHILE LEFT_PAREN expression . RIGHT_PAREN
 
     RIGHT_PAREN  shift, and go to state 182
+    ADD          shift, and go to state 92
+    SUB          shift, and go to state 93
+    MUL          shift, and go to state 94
+    DIV          shift, and go to state 95
+    MOD          shift, and go to state 96
+    EQ           shift, and go to state 97
+    NE           shift, and go to state 98
+    GT           shift, and go to state 99
+    GE           shift, and go to state 100
+    LT           shift, and go to state 101
+    LE           shift, and go to state 102
+    AND          shift, and go to state 103
+    OR           shift, and go to state 104
+    BIT_AND      shift, and go to state 105
+    BIT_OR       shift, and go to state 106
+    BIT_XOR      shift, and go to state 107
 
 
 State 139
@@ -3069,7 +3106,7 @@ State 139
    76                  | expression . BIT_AND expression
    77                  | expression . BIT_OR expression
    78                  | expression . BIT_XOR expression
-  134 continue_statement: CONTINUE LEFT_PAREN expression . RIGHT_PAREN
+  135 continue_statement: CONTINUE LEFT_PAREN expression . RIGHT_PAREN
 
     RIGHT_PAREN  shift, and go to state 183
     ADD          shift, and go to state 92
@@ -3108,7 +3145,7 @@ State 140
    76                  | expression . BIT_AND expression
    77                  | expression . BIT_OR expression
    78                  | expression . BIT_XOR expression
-  132 break_statement: BREAK LEFT_PAREN expression . RIGHT_PAREN
+  133 break_statement: BREAK LEFT_PAREN expression . RIGHT_PAREN
 
     RIGHT_PAREN  shift, and go to state 184
     ADD          shift, and go to state 92
@@ -3131,8 +3168,8 @@ State 140
 
 State 141
 
-  137 FUNCTION_STATEMENT: FUNC IDENTIFER LEFT_PAREN . parameter_list RIGHT_PAREN
-  138                   | FUNC IDENTIFER LEFT_PAREN . RIGHT_PAREN
+  138 FUNCTION_STATEMENT: FUNC IDENTIFER LEFT_PAREN . parameter_list RIGHT_PAREN
+  139                   | FUNC IDENTIFER LEFT_PAREN . RIGHT_PAREN
 
     IDENTIFER    shift, and go to state 185
     RIGHT_PAREN  shift, and go to state 186
@@ -4048,8 +4085,8 @@ State 169
 
 State 170
 
-  139 FUNCTION_STATEMENT: SHARED FUNC IDENTIFER LEFT_PAREN . parameter_list RIGHT_PAREN
-  140                   | SHARED FUNC IDENTIFER LEFT_PAREN . RIGHT_PAREN
+  140 FUNCTION_STATEMENT: SHARED FUNC IDENTIFER LEFT_PAREN . parameter_list RIGHT_PAREN
+  141                   | SHARED FUNC IDENTIFER LEFT_PAREN . RIGHT_PAREN
 
     IDENTIFER    shift, and go to state 185
     RIGHT_PAREN  shift, and go to state 197
@@ -4260,21 +4297,21 @@ State 177
 
 State 178
 
-  135 structure_statement: single_statement .
-
-    $default  reduce using rule 135 (structure_statement)
-
-
-State 179
-
-  136 structure_statement: statement_block .
+  136 structure_statement: single_statement .
 
     $default  reduce using rule 136 (structure_statement)
 
 
+State 179
+
+  137 structure_statement: statement_block .
+
+    $default  reduce using rule 137 (structure_statement)
+
+
 State 180
 
-  130 do_while_statement: DO structure_statement . WHILE LEFT_PAREN expression_statement RIGHT_PAREN SEMICOLON
+  131 do_while_statement: DO structure_statement . WHILE LEFT_PAREN expression_statement RIGHT_PAREN SEMICOLON
 
     WHILE  shift, and go to state 204
 
@@ -4315,43 +4352,43 @@ State 181
 
 State 182
 
-  129 while_statement: WHILE LEFT_PAREN expression_statement RIGHT_PAREN .
+  129 while_statement: WHILE LEFT_PAREN expression RIGHT_PAREN .
 
     $default  reduce using rule 129 (while_statement)
 
 
 State 183
 
-  134 continue_statement: CONTINUE LEFT_PAREN expression RIGHT_PAREN .
+  135 continue_statement: CONTINUE LEFT_PAREN expression RIGHT_PAREN .
 
-    $default  reduce using rule 134 (continue_statement)
+    $default  reduce using rule 135 (continue_statement)
 
 
 State 184
 
-  132 break_statement: BREAK LEFT_PAREN expression RIGHT_PAREN .
+  133 break_statement: BREAK LEFT_PAREN expression RIGHT_PAREN .
 
-    $default  reduce using rule 132 (break_statement)
+    $default  reduce using rule 133 (break_statement)
 
 
 State 185
 
-  142 parameter_list: IDENTIFER .
+  143 parameter_list: IDENTIFER .
 
-    $default  reduce using rule 142 (parameter_list)
+    $default  reduce using rule 143 (parameter_list)
 
 
 State 186
 
-  138 FUNCTION_STATEMENT: FUNC IDENTIFER LEFT_PAREN RIGHT_PAREN .
+  139 FUNCTION_STATEMENT: FUNC IDENTIFER LEFT_PAREN RIGHT_PAREN .
 
-    $default  reduce using rule 138 (FUNCTION_STATEMENT)
+    $default  reduce using rule 139 (FUNCTION_STATEMENT)
 
 
 State 187
 
-  137 FUNCTION_STATEMENT: FUNC IDENTIFER LEFT_PAREN parameter_list . RIGHT_PAREN
-  143 parameter_list: parameter_list . COMMA IDENTIFER
+  138 FUNCTION_STATEMENT: FUNC IDENTIFER LEFT_PAREN parameter_list . RIGHT_PAREN
+  144 parameter_list: parameter_list . COMMA IDENTIFER
 
     RIGHT_PAREN  shift, and go to state 206
     COMMA        shift, and go to state 207
@@ -4561,15 +4598,15 @@ State 196
 
 State 197
 
-  140 FUNCTION_STATEMENT: SHARED FUNC IDENTIFER LEFT_PAREN RIGHT_PAREN .
+  141 FUNCTION_STATEMENT: SHARED FUNC IDENTIFER LEFT_PAREN RIGHT_PAREN .
 
-    $default  reduce using rule 140 (FUNCTION_STATEMENT)
+    $default  reduce using rule 141 (FUNCTION_STATEMENT)
 
 
 State 198
 
-  139 FUNCTION_STATEMENT: SHARED FUNC IDENTIFER LEFT_PAREN parameter_list . RIGHT_PAREN
-  143 parameter_list: parameter_list . COMMA IDENTIFER
+  140 FUNCTION_STATEMENT: SHARED FUNC IDENTIFER LEFT_PAREN parameter_list . RIGHT_PAREN
+  144 parameter_list: parameter_list . COMMA IDENTIFER
 
     RIGHT_PAREN  shift, and go to state 219
     COMMA        shift, and go to state 207
@@ -4727,7 +4764,7 @@ State 203
 
 State 204
 
-  130 do_while_statement: DO structure_statement WHILE . LEFT_PAREN expression_statement RIGHT_PAREN SEMICOLON
+  131 do_while_statement: DO structure_statement WHILE . LEFT_PAREN expression_statement RIGHT_PAREN SEMICOLON
 
     LEFT_PAREN  shift, and go to state 223
 
@@ -4741,14 +4778,14 @@ State 205
 
 State 206
 
-  137 FUNCTION_STATEMENT: FUNC IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN .
+  138 FUNCTION_STATEMENT: FUNC IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN .
 
-    $default  reduce using rule 137 (FUNCTION_STATEMENT)
+    $default  reduce using rule 138 (FUNCTION_STATEMENT)
 
 
 State 207
 
-  143 parameter_list: parameter_list COMMA . IDENTIFER
+  144 parameter_list: parameter_list COMMA . IDENTIFER
 
     IDENTIFER  shift, and go to state 225
 
@@ -4993,9 +5030,9 @@ State 218
 
 State 219
 
-  139 FUNCTION_STATEMENT: SHARED FUNC IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN .
+  140 FUNCTION_STATEMENT: SHARED FUNC IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN .
 
-    $default  reduce using rule 139 (FUNCTION_STATEMENT)
+    $default  reduce using rule 140 (FUNCTION_STATEMENT)
 
 
 State 220
@@ -5054,7 +5091,7 @@ State 222
 
 State 223
 
-  130 do_while_statement: DO structure_statement WHILE LEFT_PAREN . expression_statement RIGHT_PAREN SEMICOLON
+  131 do_while_statement: DO structure_statement WHILE LEFT_PAREN . expression_statement RIGHT_PAREN SEMICOLON
 
     INT_VALUE      shift, and go to state 14
     BOOLEAN_VALUE  shift, and go to state 15
@@ -5134,9 +5171,9 @@ State 224
 
 State 225
 
-  143 parameter_list: parameter_list COMMA IDENTIFER .
+  144 parameter_list: parameter_list COMMA IDENTIFER .
 
-    $default  reduce using rule 143 (parameter_list)
+    $default  reduce using rule 144 (parameter_list)
 
 
 State 226
@@ -5415,7 +5452,7 @@ State 238
 
 State 239
 
-  130 do_while_statement: DO structure_statement WHILE LEFT_PAREN expression_statement . RIGHT_PAREN SEMICOLON
+  131 do_while_statement: DO structure_statement WHILE LEFT_PAREN expression_statement . RIGHT_PAREN SEMICOLON
 
     RIGHT_PAREN  shift, and go to state 251
 
@@ -5623,7 +5660,7 @@ State 250
 
 State 251
 
-  130 do_while_statement: DO structure_statement WHILE LEFT_PAREN expression_statement RIGHT_PAREN . SEMICOLON
+  131 do_while_statement: DO structure_statement WHILE LEFT_PAREN expression_statement RIGHT_PAREN . SEMICOLON
 
     SEMICOLON  shift, and go to state 258
 
@@ -5704,9 +5741,9 @@ State 257
 
 State 258
 
-  130 do_while_statement: DO structure_statement WHILE LEFT_PAREN expression_statement RIGHT_PAREN SEMICOLON .
+  131 do_while_statement: DO structure_statement WHILE LEFT_PAREN expression_statement RIGHT_PAREN SEMICOLON .
 
-    $default  reduce using rule 130 (do_while_statement)
+    $default  reduce using rule 131 (do_while_statement)
 
 
 State 259

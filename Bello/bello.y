@@ -768,9 +768,13 @@ for_statement
     } */
 
 while_statement
-    : WHILE LEFT_PAREN expression_statement RIGHT_PAREN
+    : WHILE LEFT_PAREN expression RIGHT_PAREN
     {
-        $$= bldWhlStmt($3);
+        $$ = bldWhlStmt($3);
+    }
+    | WHILE 
+    {
+        $$ = bldWhlStmt();
     }
 
 do_while_statement
