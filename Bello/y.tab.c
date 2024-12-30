@@ -3274,8 +3274,8 @@ void fldStmt(int indt=0)
             }
             case FUNCTION_STATEMENT:
             {
-                auto fcnStmt = static_cast<ForStmtStrc*>(stmtStk.back()->stmt);
-                fcnStmt->stmt = blk;
+                auto fcnStmt = static_cast<FcnStmtStrc*>(stmtStk.back()->stmt);
+                fcnStmt->fcn->stmt = blk;
                 break;
             }
             case ELSE_STATEMENT:

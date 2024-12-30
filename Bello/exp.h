@@ -77,7 +77,6 @@ struct CnstStrc* clcBnrExpBitAnd(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp
 struct CnstStrc* clcBnrExpBitOr(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp);
 struct CnstStrc* clcBnrExpBitXor(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp);
 struct CnstStrc* clcAsgnExp(vector<EnvrStrc*>& envr, struct AsgnExpStrc* exp);
-//struct CnstStrc* clcGlbAsgnExp(vector<EnvrStrc*>& envr, struct GlbAsgnExpStrc* exp);
 struct CnstStrc* clcUnrExpPfxInc(vector<EnvrStrc*>& envr, struct UnrExpStrc* exp);
 struct CnstStrc* clcUnrExpPfxDec(vector<EnvrStrc*>& envr, struct UnrExpStrc* exp);
 struct CnstStrc* clcUnrExpSfxInc(vector<EnvrStrc*>& envr, struct UnrExpStrc* exp);

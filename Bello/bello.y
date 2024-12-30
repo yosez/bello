@@ -912,7 +912,6 @@ void fldStmt(int indt=0)
     while (stmtStk.back()->indt > indt)
     {
         
-        //printf("fld stmt\n");
 
         idx = stmtStk.size()-1;
 
@@ -964,8 +963,8 @@ void fldStmt(int indt=0)
             }
             case FUNCTION_STATEMENT:
             {
-                auto fcnStmt = static_cast<ForStmtStrc*>(stmtStk.back()->stmt);
-                fcnStmt->stmt = blk;
+                auto fcnStmt = static_cast<FcnStmtStrc*>(stmtStk.back()->stmt);
+                fcnStmt->fcn->stmt = blk;
                 break;
             }
             case ELSE_STATEMENT:
@@ -1090,6 +1089,10 @@ void prtStmtStk()
                 printf("ifElsStmt\n");
                 break;
             }
+            case ELSE_STATEMENT:
+            {
+                printf("elsStmt\n");                
+            }
             case FOR_STATEMENT:
             {
                 printf("forStmt\n");
@@ -1138,6 +1141,11 @@ void prtStmtStk()
             case GLOBAL_STATEMENT:
             {
                 printf("glbStmt\n");
+                break;
+            }
+            case RETURN_STATEMENT:
+            {
+                printf("rtnStmt\n");
                 break;
             }
         }
