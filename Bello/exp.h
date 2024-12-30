@@ -1502,7 +1502,7 @@ struct CnstStrc* clcFcnExp(vector<EnvrStrc*>& envr, struct FcnExpStrc* exp)
 	{
 		throw new ExFcnNotFnd;
 	}
-	else if (ntvFcn != NULL)
+	else if (ntvFcn != nullptr)
 	{
 		//计算各个参数的值并赋值给传参数组
 
@@ -1533,7 +1533,7 @@ struct CnstStrc* clcFcnExp(vector<EnvrStrc*>& envr, struct FcnExpStrc* exp)
 
 		rslt = ntvFcn->fcn(envr, ntvFcn->prmCnt, argArr);
 	}
-	else if (fcn != NULL)
+	else if (fcn != nullptr)
 	{
 		//建立函数中的EnvrStrc
 
@@ -1548,15 +1548,16 @@ struct CnstStrc* clcFcnExp(vector<EnvrStrc*>& envr, struct FcnExpStrc* exp)
 		struct CnstStrc* arg;
 		int argCnt = 0, argSz;
 
+		//此处暂时屏蔽
 		//如果函数参数个数不正确
-		if (exp->argLst->argArr.size() > fcn->prmLst->prmArr.size())
-		{
-			throw new ExFcnTooMnyArg;
-		}
-		else if (exp->argLst->argArr.size() < fcn->prmLst->prmArr.size())
-		{
-			throw new ExFcnTooFewArg;
-		}
+		//if (exp->argLst->argArr.size() > fcn->prmLst->prmArr.size())
+		//{
+		//	throw new ExFcnTooMnyArg;
+		//}
+		//else if (exp->argLst->argArr.size() < fcn->prmLst->prmArr.size())
+		//{
+		//	throw new ExFcnTooFewArg;
+		//}
 
 		struct VrbStrc* vrb;
 
@@ -1564,11 +1565,11 @@ struct CnstStrc* clcFcnExp(vector<EnvrStrc*>& envr, struct FcnExpStrc* exp)
 		for (i = 0; i < exp->argLst->argArr.size(); i++)
 		{
 			//位置参数赋值
-			if (exp->argLst->prmArr[i] != nullptr)
+			if (exp->argLst->prmArr[i] == nullptr)
 			{
 				arg = clcExp(envr, exp->argLst->argArr[i]);
 
-				vrb = addVrb(envrFcn, static_cast<VrbExpStrc*>(fcn->prmLst->prmArr[i]));
+				vrb = addVrb(envrFcn, fcn->prmLst->prmArr[i]);
 
 				asgnVrb(vrb, arg);
 			}
@@ -1576,11 +1577,11 @@ struct CnstStrc* clcFcnExp(vector<EnvrStrc*>& envr, struct FcnExpStrc* exp)
 			else
 			{
 				arg = clcExp(envr, exp->argLst->argArr[i]);
-				vrb = getEnvrVrb(envrFcn, static_cast<VrbExpStrc*>(exp->argLst->prmArr[i]));
-				
+				vrb = getEnvrVrb(envrFcn, exp->argLst->prmArr[i]);
+
 				if (vrb == nullptr)
 				{
-					vrb = addVrb(envrFcn, static_cast<VrbExpStrc*>(exp->argLst->prmArr[i]));
+					vrb = addVrb(envrFcn, exp->argLst->prmArr[i]);
 				}
 
 				asgnVrb(vrb, arg);
@@ -1590,8 +1591,15 @@ struct CnstStrc* clcFcnExp(vector<EnvrStrc*>& envr, struct FcnExpStrc* exp)
 		for (i = 0; i < fcn->prmLst->prmArr.size(); i++)
 		{
 			//默认参数赋值
-			//此处未完成
-			vrb = getEnvrVrb()
+			vrb = getEnvrVrb(envrFcn, fcn->prmLst->prmArr[i]);
+
+			if (vrb == nullptr && fcn->prmLst->expArr[i] != nullptr)
+			{
+				vrb = addVrb(envrFcn, fcn->prmLst->prmArr[i]);
+				arg = clcExp(envr, fcn->prmLst->expArr[i]);
+
+				asgnVrb(vrb, arg);
+			}
 		}
 
 		struct StmtRsltStrc* stmtRslt;

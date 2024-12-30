@@ -511,7 +511,7 @@ struct AcsLstStrc
 struct PrmLstStrc
 {
 
-	vector<ExpStrc*> prmArr;
+	vector<VrbExpStrc*> prmArr;
 	vector<ExpStrc*> expArr;
 };
 
@@ -519,7 +519,7 @@ struct PrmLstStrc
 //函数实参列表
 struct ArgLstStrc
 {
-	vector <ExpStrc*> prmArr;
+	vector <VrbExpStrc*> prmArr;
 	vector <ExpStrc*> argArr;
 };
 

@@ -64,8 +64,8 @@ int argLstAdd(struct ArgLstStrc* argLst, struct ExpStrc* arg)
 
 int argLstAdd(struct ArgLstStrc* argLst, struct ExpStrc* prm, struct ExpStrc* arg)
 {
-	argLst->prmArr.push_back(prm);
-	argLst->prmArr.push_back(arg);
+	argLst->prmArr.push_back(static_cast<VrbExpStrc*>(prm));
+	argLst->argArr.push_back(arg);
 
 	return 0;
 }
@@ -79,7 +79,7 @@ struct PrmLstStrc* bldPrmLst()
 
 int prmLstAdd(struct PrmLstStrc* prmLst, struct ExpStrc* prm)
 {
-	prmLst->prmArr.push_back(prm);
+	prmLst->prmArr.push_back(static_cast<VrbExpStrc*>(prm));
 	prmLst->expArr.push_back(nullptr);
 
 	return 0;
@@ -87,7 +87,7 @@ int prmLstAdd(struct PrmLstStrc* prmLst, struct ExpStrc* prm)
 
 int prmLstAdd(struct PrmLstStrc* prmLst, struct ExpStrc* prm, struct ExpStrc* dft)
 {
-	prmLst->prmArr.push_back(prm);
+	prmLst->prmArr.push_back(static_cast<VrbExpStrc*>(prm));
 	prmLst->expArr.push_back(dft);
 
 	return 0;

@@ -165,60 +165,60 @@ Grammar
   104              | argument_list COMMA expression
   105              | argument_list COMMA IDENTIFER COLON expression
 
-  106 evaluate_list: LEFT_QUAD expression RIGHT_QUAD
-  107              | LEFT_QUAD expression COLON expression RIGHT_QUAD
-  108              | LEFT_QUAD expression COLON expression COLON RIGHT_QUAD
-  109              | LEFT_QUAD expression COLON expression COLON expression RIGHT_QUAD
-  110              | LEFT_QUAD expression COLON RIGHT_QUAD
-  111              | LEFT_QUAD expression COLON COLON RIGHT_QUAD
-  112              | LEFT_QUAD expression COLON COLON expression RIGHT_QUAD
-  113              | LEFT_QUAD COLON expression RIGHT_QUAD
-  114              | LEFT_QUAD COLON expression COLON RIGHT_QUAD
-  115              | LEFT_QUAD COLON expression COLON expression RIGHT_QUAD
-  116              | LEFT_QUAD COLON COLON RIGHT_QUAD
-  117              | evaluate_list LEFT_QUAD expression RIGHT_QUAD
-  118              | evaluate_list LEFT_QUAD expression COLON expression RIGHT_QUAD
-  119              | evaluate_list LEFT_QUAD expression COLON expression COLON RIGHT_QUAD
-  120              | evaluate_list LEFT_QUAD expression COLON expression COLON expression RIGHT_QUAD
-  121              | evaluate_list LEFT_QUAD expression COLON RIGHT_QUAD
-  122              | evaluate_list LEFT_QUAD expression COLON COLON RIGHT_QUAD
-  123              | evaluate_list LEFT_QUAD expression COLON COLON expression RIGHT_QUAD
-  124              | evaluate_list LEFT_QUAD COLON expression RIGHT_QUAD
-  125              | evaluate_list LEFT_QUAD COLON expression COLON RIGHT_QUAD
-  126              | evaluate_list LEFT_QUAD COLON expression COLON expression RIGHT_QUAD
-  127              | evaluate_list LEFT_QUAD COLON COLON RIGHT_QUAD
+  106 parameter_list: IDENTIFER
+  107               | IDENTIFER ASSIGN expression
+  108               | parameter_list COMMA IDENTIFER
+  109               | parameter_list COMMA IDENTIFER ASSIGN expression
 
-  128 if_statement: IF LEFT_PAREN expression RIGHT_PAREN
+  110 evaluate_list: LEFT_QUAD expression RIGHT_QUAD
+  111              | LEFT_QUAD expression COLON expression RIGHT_QUAD
+  112              | LEFT_QUAD expression COLON expression COLON RIGHT_QUAD
+  113              | LEFT_QUAD expression COLON expression COLON expression RIGHT_QUAD
+  114              | LEFT_QUAD expression COLON RIGHT_QUAD
+  115              | LEFT_QUAD expression COLON COLON RIGHT_QUAD
+  116              | LEFT_QUAD expression COLON COLON expression RIGHT_QUAD
+  117              | LEFT_QUAD COLON expression RIGHT_QUAD
+  118              | LEFT_QUAD COLON expression COLON RIGHT_QUAD
+  119              | LEFT_QUAD COLON expression COLON expression RIGHT_QUAD
+  120              | LEFT_QUAD COLON COLON RIGHT_QUAD
+  121              | evaluate_list LEFT_QUAD expression RIGHT_QUAD
+  122              | evaluate_list LEFT_QUAD expression COLON expression RIGHT_QUAD
+  123              | evaluate_list LEFT_QUAD expression COLON expression COLON RIGHT_QUAD
+  124              | evaluate_list LEFT_QUAD expression COLON expression COLON expression RIGHT_QUAD
+  125              | evaluate_list LEFT_QUAD expression COLON RIGHT_QUAD
+  126              | evaluate_list LEFT_QUAD expression COLON COLON RIGHT_QUAD
+  127              | evaluate_list LEFT_QUAD expression COLON COLON expression RIGHT_QUAD
+  128              | evaluate_list LEFT_QUAD COLON expression RIGHT_QUAD
+  129              | evaluate_list LEFT_QUAD COLON expression COLON RIGHT_QUAD
+  130              | evaluate_list LEFT_QUAD COLON expression COLON expression RIGHT_QUAD
+  131              | evaluate_list LEFT_QUAD COLON COLON RIGHT_QUAD
 
-  129 else_statement: ELSE
+  132 if_statement: IF LEFT_PAREN expression RIGHT_PAREN
 
-  130 for_statement: FOR LEFT_PAREN single_statement_no_semicolon SEMICOLON expression_statement SEMICOLON single_statement_no_semicolon RIGHT_PAREN
+  133 else_statement: ELSE
 
-  131 while_statement: WHILE LEFT_PAREN expression RIGHT_PAREN
-  132                | WHILE
+  134 for_statement: FOR LEFT_PAREN single_statement_no_semicolon SEMICOLON expression_statement SEMICOLON single_statement_no_semicolon RIGHT_PAREN
 
-  133 do_while_statement: DO structure_statement WHILE LEFT_PAREN expression_statement RIGHT_PAREN SEMICOLON
+  135 while_statement: WHILE LEFT_PAREN expression RIGHT_PAREN
+  136                | WHILE
 
-  134 break_statement: BREAK
-  135                | BREAK LEFT_PAREN expression RIGHT_PAREN
+  137 do_while_statement: DO structure_statement WHILE LEFT_PAREN expression_statement RIGHT_PAREN SEMICOLON
 
-  136 continue_statement: CONTINUE
-  137                   | CONTINUE LEFT_PAREN expression RIGHT_PAREN
+  138 break_statement: BREAK
+  139                | BREAK LEFT_PAREN expression RIGHT_PAREN
 
-  138 structure_statement: single_statement
-  139                    | statement_block
+  140 continue_statement: CONTINUE
+  141                   | CONTINUE LEFT_PAREN expression RIGHT_PAREN
 
-  140 FUNCTION_STATEMENT: FUNC IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN
-  141                   | FUNC IDENTIFER LEFT_PAREN RIGHT_PAREN
-  142                   | SHARED FUNC IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN
-  143                   | SHARED FUNC IDENTIFER LEFT_PAREN RIGHT_PAREN
+  142 structure_statement: single_statement
+  143                    | statement_block
 
-  144 CLASS_STATEMENT: CLASS IDENTIFER
+  144 FUNCTION_STATEMENT: FUNC IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN
+  145                   | FUNC IDENTIFER LEFT_PAREN RIGHT_PAREN
+  146                   | SHARED FUNC IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN
+  147                   | SHARED FUNC IDENTIFER LEFT_PAREN RIGHT_PAREN
 
-  145 parameter_list: IDENTIFER
-  146               | IDENTIFER ASSIGN expression
-  147               | parameter_list COMMA IDENTIFER
-  148               | parameter_list COMMA IDENTIFER ASSIGN expression
+  148 CLASS_STATEMENT: CLASS IDENTIFER
 
   149 return_statement: RETURN
   150                 | RETURN expression
@@ -232,8 +232,8 @@ Terminals, with rules where they appear
     LF (259) 2 3
     END_FILE (260) 5
     NOP (261) 34
-    CLASS (262) 144
-    SHARED (263) 94 142 143
+    CLASS (262) 148
+    SHARED (263) 94 146 147
     THIS (264)
     INDENT <intVl> (265) 3
     INT_VALUE <intVl> (266) 79
@@ -242,8 +242,8 @@ Terminals, with rules where they appear
     STRING_VALUE <strVl> (269) 82
     NULL_VALUE (270) 83
     ARRAY_VALUE (271)
-    IDENTIFER <idtf> (272) 86 96 97 98 99 100 101 103 105 140 141 142 143 144 145 146 147 148
-    ASSIGN (273) 48 97 99 146 148
+    IDENTIFER <idtf> (272) 86 96 97 98 99 100 101 103 105 106 107 108 109 144 145 146 147 148
+    ASSIGN (273) 48 97 99 107 109
     VAR (274) 93 94
     GLOBAL (275) 95
     ADD_ASSIGN (276) 49
@@ -253,16 +253,16 @@ Terminals, with rules where they appear
     MOD_ASSIGN (280) 53
     PRINT (281)
     PRINTLN (282)
-    LEFT_PAREN (283) 60 90 100 101 128 130 131 133 135 137 140 141 142 143
-    RIGHT_PAREN (284) 60 90 100 101 128 130 131 133 135 137 140 141 142 143
-    LEFT_QUAD (285) 88 89 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127
-    RIGHT_QUAD (286) 88 89 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127
+    LEFT_PAREN (283) 60 90 100 101 132 134 135 137 139 141 144 145 146 147
+    RIGHT_PAREN (284) 60 90 100 101 132 134 135 137 139 141 144 145 146 147
+    LEFT_QUAD (285) 88 89 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 129 130 131
+    RIGHT_QUAD (286) 88 89 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 129 130 131
     LEFT_BRACE (287) 35 36
     RIGHT_BRACE (288) 35 36
     SEMICOLON_OPTIONAL (289)
-    SEMICOLON (290) 130 133
-    COMMA (291) 92 98 99 104 105 147 148
-    COLON (292) 103 105 107 108 109 110 111 112 113 114 115 116 118 119 120 121 122 123 124 125 126 127
+    SEMICOLON (290) 134 137
+    COMMA (291) 92 98 99 104 105 108 109
+    COLON (292) 103 105 111 112 113 114 115 116 117 118 119 120 122 123 124 125 126 127 128 129 130 131
     ADD (293) 59 63
     SUB (294) 58 64
     MUL (295) 65
@@ -283,14 +283,14 @@ Terminals, with rules where they appear
     BIT_NOT (310) 62
     INCREMENT (311) 54 56
     DECREMENT (312) 55 57
-    IF (313) 128
-    ELSE (314) 129
-    FOR (315) 130
-    WHILE (316) 131 132 133
-    DO (317) 133
-    CONTINUE (318) 136 137
-    BREAK (319) 134 135
-    FUNC (320) 140 141 142 143
+    IF (313) 132
+    ELSE (314) 133
+    FOR (315) 134
+    WHILE (316) 135 136 137
+    DO (317) 137
+    CONTINUE (318) 140 141
+    BREAK (319) 138 139
+    FUNC (320) 144 145 146 147
     RETURN (321) 149 150
     NEW_ARRAY (322) 90
     MINUS_SIGN (323)
@@ -329,10 +329,10 @@ Nonterminals, with rules where they appear
         on right: 2
     single_statement <stmt> (83)
         on left: 13 14 15 16 17 18 19 20 21 22 23 24 25 26
-        on right: 2 3 37 38 138
+        on right: 2 3 37 38 142
     single_statement_no_semicolon <stmt> (84)
         on left: 27 28 29 30 31 32
-        on right: 130
+        on right: 134
     null_statement <stmt> (85)
         on left: 33
         on right: 32
@@ -341,16 +341,16 @@ Nonterminals, with rules where they appear
         on right: 22
     statement_block <stmt> (87)
         on left: 35 36
-        on right: 139
+        on right: 143
     block_list <stmt> (88)
         on left: 37 38
         on right: 35 38
     expression_statement <stmt> (89)
         on left: 39
-        on right: 13 27 130 133
+        on right: 13 27 134 137
     expression <exp> (90)
         on left: 40 41 42 43 44 45
-        on right: 39 48 49 50 51 52 53 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 90 91 92 97 99 102 103 104 105 106 107 108 109 110 111 112 113 114 115 117 118 119 120 121 122 123 124 125 126 128 131 135 137 146 148 150
+        on right: 39 48 49 50 51 52 53 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 90 91 92 97 99 102 103 104 105 107 109 110 111 112 113 114 115 116 117 118 119 121 122 123 124 125 126 127 128 129 130 132 135 139 141 150
     lvalue_operation_expression <exp> (91)
         on left: 46 47
         on right: 41
@@ -396,42 +396,42 @@ Nonterminals, with rules where they appear
     argument_list <argLst> (105)
         on left: 102 103 104 105
         on right: 100 104 105
-    evaluate_list <evlLst> (106)
-        on left: 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127
-        on right: 87 117 118 119 120 121 122 123 124 125 126 127
-    if_statement <stmt> (107)
-        on left: 128
+    parameter_list <prmLst> (106)
+        on left: 106 107 108 109
+        on right: 108 109 144 146
+    evaluate_list <evlLst> (107)
+        on left: 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 129 130 131
+        on right: 87 121 122 123 124 125 126 127 128 129 130 131
+    if_statement <stmt> (108)
+        on left: 132
         on right: 14 28
-    else_statement <stmt> (108)
-        on left: 129
-        on right: 15
-    for_statement <stmt> (109)
-        on left: 130
-        on right: 16 29
-    while_statement <stmt> (110)
-        on left: 131 132
-        on right: 17 30
-    do_while_statement <stmt> (111)
+    else_statement <stmt> (109)
         on left: 133
+        on right: 15
+    for_statement <stmt> (110)
+        on left: 134
+        on right: 16 29
+    while_statement <stmt> (111)
+        on left: 135 136
+        on right: 17 30
+    do_while_statement <stmt> (112)
+        on left: 137
         on right: 31
-    break_statement <stmt> (112)
-        on left: 134 135
-        on right: 18
-    continue_statement <stmt> (113)
-        on left: 136 137
-        on right: 19
-    structure_statement <stmt> (114)
+    break_statement <stmt> (113)
         on left: 138 139
-        on right: 133
-    FUNCTION_STATEMENT <stmt> (115)
-        on left: 140 141 142 143
+        on right: 18
+    continue_statement <stmt> (114)
+        on left: 140 141
+        on right: 19
+    structure_statement <stmt> (115)
+        on left: 142 143
+        on right: 137
+    FUNCTION_STATEMENT <stmt> (116)
+        on left: 144 145 146 147
         on right: 21
-    CLASS_STATEMENT <stmt> (116)
-        on left: 144
+    CLASS_STATEMENT <stmt> (117)
+        on left: 148
         on right: 25
-    parameter_list <prmLst> (117)
-        on left: 145 146 147 148
-        on right: 140 142 147 148
     return_statement <stmt> (118)
         on left: 149 150
         on right: 20
@@ -630,7 +630,7 @@ State 11
 
 State 12
 
-  144 CLASS_STATEMENT: CLASS . IDENTIFER
+  148 CLASS_STATEMENT: CLASS . IDENTIFER
 
     IDENTIFER  shift, and go to state 65
 
@@ -638,8 +638,8 @@ State 12
 State 13
 
    94 var_statement: SHARED . VAR assign_list
-  142 FUNCTION_STATEMENT: SHARED . FUNC IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN
-  143                   | SHARED . FUNC IDENTIFER LEFT_PAREN RIGHT_PAREN
+  146 FUNCTION_STATEMENT: SHARED . FUNC IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN
+  147                   | SHARED . FUNC IDENTIFER LEFT_PAREN RIGHT_PAREN
 
     VAR   shift, and go to state 66
     FUNC  shift, and go to state 67
@@ -931,62 +931,62 @@ State 29
 
 State 30
 
-  128 if_statement: IF . LEFT_PAREN expression RIGHT_PAREN
+  132 if_statement: IF . LEFT_PAREN expression RIGHT_PAREN
 
     LEFT_PAREN  shift, and go to state 83
 
 
 State 31
 
-  129 else_statement: ELSE .
+  133 else_statement: ELSE .
 
-    $default  reduce using rule 129 (else_statement)
+    $default  reduce using rule 133 (else_statement)
 
 
 State 32
 
-  130 for_statement: FOR . LEFT_PAREN single_statement_no_semicolon SEMICOLON expression_statement SEMICOLON single_statement_no_semicolon RIGHT_PAREN
+  134 for_statement: FOR . LEFT_PAREN single_statement_no_semicolon SEMICOLON expression_statement SEMICOLON single_statement_no_semicolon RIGHT_PAREN
 
     LEFT_PAREN  shift, and go to state 84
 
 
 State 33
 
-  131 while_statement: WHILE . LEFT_PAREN expression RIGHT_PAREN
-  132                | WHILE .
+  135 while_statement: WHILE . LEFT_PAREN expression RIGHT_PAREN
+  136                | WHILE .
 
     LEFT_PAREN  shift, and go to state 85
 
-    LEFT_PAREN  [reduce using rule 132 (while_statement)]
-    $default    reduce using rule 132 (while_statement)
+    LEFT_PAREN  [reduce using rule 136 (while_statement)]
+    $default    reduce using rule 136 (while_statement)
 
 
 State 34
 
-  136 continue_statement: CONTINUE .
-  137                   | CONTINUE . LEFT_PAREN expression RIGHT_PAREN
+  140 continue_statement: CONTINUE .
+  141                   | CONTINUE . LEFT_PAREN expression RIGHT_PAREN
 
     LEFT_PAREN  shift, and go to state 86
 
-    LEFT_PAREN  [reduce using rule 136 (continue_statement)]
-    $default    reduce using rule 136 (continue_statement)
+    LEFT_PAREN  [reduce using rule 140 (continue_statement)]
+    $default    reduce using rule 140 (continue_statement)
 
 
 State 35
 
-  134 break_statement: BREAK .
-  135                | BREAK . LEFT_PAREN expression RIGHT_PAREN
+  138 break_statement: BREAK .
+  139                | BREAK . LEFT_PAREN expression RIGHT_PAREN
 
     LEFT_PAREN  shift, and go to state 87
 
-    LEFT_PAREN  [reduce using rule 134 (break_statement)]
-    $default    reduce using rule 134 (break_statement)
+    LEFT_PAREN  [reduce using rule 138 (break_statement)]
+    $default    reduce using rule 138 (break_statement)
 
 
 State 36
 
-  140 FUNCTION_STATEMENT: FUNC . IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN
-  141                   | FUNC . IDENTIFER LEFT_PAREN RIGHT_PAREN
+  144 FUNCTION_STATEMENT: FUNC . IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN
+  145                   | FUNC . IDENTIFER LEFT_PAREN RIGHT_PAREN
 
     IDENTIFER  shift, and go to state 88
 
@@ -1346,9 +1346,9 @@ State 64
 
 State 65
 
-  144 CLASS_STATEMENT: CLASS IDENTIFER .
+  148 CLASS_STATEMENT: CLASS IDENTIFER .
 
-    $default  reduce using rule 144 (CLASS_STATEMENT)
+    $default  reduce using rule 148 (CLASS_STATEMENT)
 
 
 State 66
@@ -1362,8 +1362,8 @@ State 66
 
 State 67
 
-  142 FUNCTION_STATEMENT: SHARED FUNC . IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN
-  143                   | SHARED FUNC . IDENTIFER LEFT_PAREN RIGHT_PAREN
+  146 FUNCTION_STATEMENT: SHARED FUNC . IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN
+  147                   | SHARED FUNC . IDENTIFER LEFT_PAREN RIGHT_PAREN
 
     IDENTIFER  shift, and go to state 120
 
@@ -1658,7 +1658,7 @@ State 82
 
 State 83
 
-  128 if_statement: IF LEFT_PAREN . expression RIGHT_PAREN
+  132 if_statement: IF LEFT_PAREN . expression RIGHT_PAREN
 
     INT_VALUE      shift, and go to state 14
     BOOLEAN_VALUE  shift, and go to state 15
@@ -1691,7 +1691,7 @@ State 83
 
 State 84
 
-  130 for_statement: FOR LEFT_PAREN . single_statement_no_semicolon SEMICOLON expression_statement SEMICOLON single_statement_no_semicolon RIGHT_PAREN
+  134 for_statement: FOR LEFT_PAREN . single_statement_no_semicolon SEMICOLON expression_statement SEMICOLON single_statement_no_semicolon RIGHT_PAREN
 
     INT_VALUE      shift, and go to state 14
     BOOLEAN_VALUE  shift, and go to state 15
@@ -1737,7 +1737,7 @@ State 84
 
 State 85
 
-  131 while_statement: WHILE LEFT_PAREN . expression RIGHT_PAREN
+  135 while_statement: WHILE LEFT_PAREN . expression RIGHT_PAREN
 
     INT_VALUE      shift, and go to state 14
     BOOLEAN_VALUE  shift, and go to state 15
@@ -1770,7 +1770,7 @@ State 85
 
 State 86
 
-  137 continue_statement: CONTINUE LEFT_PAREN . expression RIGHT_PAREN
+  141 continue_statement: CONTINUE LEFT_PAREN . expression RIGHT_PAREN
 
     INT_VALUE      shift, and go to state 14
     BOOLEAN_VALUE  shift, and go to state 15
@@ -1803,7 +1803,7 @@ State 86
 
 State 87
 
-  135 break_statement: BREAK LEFT_PAREN . expression RIGHT_PAREN
+  139 break_statement: BREAK LEFT_PAREN . expression RIGHT_PAREN
 
     INT_VALUE      shift, and go to state 14
     BOOLEAN_VALUE  shift, and go to state 15
@@ -1836,8 +1836,8 @@ State 87
 
 State 88
 
-  140 FUNCTION_STATEMENT: FUNC IDENTIFER . LEFT_PAREN parameter_list RIGHT_PAREN
-  141                   | FUNC IDENTIFER . LEFT_PAREN RIGHT_PAREN
+  144 FUNCTION_STATEMENT: FUNC IDENTIFER . LEFT_PAREN parameter_list RIGHT_PAREN
+  145                   | FUNC IDENTIFER . LEFT_PAREN RIGHT_PAREN
 
     LEFT_PAREN  shift, and go to state 142
 
@@ -2654,17 +2654,17 @@ State 113
 
 State 114
 
-  106 evaluate_list: LEFT_QUAD . expression RIGHT_QUAD
-  107              | LEFT_QUAD . expression COLON expression RIGHT_QUAD
-  108              | LEFT_QUAD . expression COLON expression COLON RIGHT_QUAD
-  109              | LEFT_QUAD . expression COLON expression COLON expression RIGHT_QUAD
-  110              | LEFT_QUAD . expression COLON RIGHT_QUAD
-  111              | LEFT_QUAD . expression COLON COLON RIGHT_QUAD
-  112              | LEFT_QUAD . expression COLON COLON expression RIGHT_QUAD
-  113              | LEFT_QUAD . COLON expression RIGHT_QUAD
-  114              | LEFT_QUAD . COLON expression COLON RIGHT_QUAD
-  115              | LEFT_QUAD . COLON expression COLON expression RIGHT_QUAD
-  116              | LEFT_QUAD . COLON COLON RIGHT_QUAD
+  110 evaluate_list: LEFT_QUAD . expression RIGHT_QUAD
+  111              | LEFT_QUAD . expression COLON expression RIGHT_QUAD
+  112              | LEFT_QUAD . expression COLON expression COLON RIGHT_QUAD
+  113              | LEFT_QUAD . expression COLON expression COLON expression RIGHT_QUAD
+  114              | LEFT_QUAD . expression COLON RIGHT_QUAD
+  115              | LEFT_QUAD . expression COLON COLON RIGHT_QUAD
+  116              | LEFT_QUAD . expression COLON COLON expression RIGHT_QUAD
+  117              | LEFT_QUAD . COLON expression RIGHT_QUAD
+  118              | LEFT_QUAD . COLON expression COLON RIGHT_QUAD
+  119              | LEFT_QUAD . COLON expression COLON expression RIGHT_QUAD
+  120              | LEFT_QUAD . COLON COLON RIGHT_QUAD
 
     INT_VALUE      shift, and go to state 14
     BOOLEAN_VALUE  shift, and go to state 15
@@ -2713,17 +2713,17 @@ State 116
 State 117
 
    87 lvalue_expression: lvalue_expression evaluate_list .
-  117 evaluate_list: evaluate_list . LEFT_QUAD expression RIGHT_QUAD
-  118              | evaluate_list . LEFT_QUAD expression COLON expression RIGHT_QUAD
-  119              | evaluate_list . LEFT_QUAD expression COLON expression COLON RIGHT_QUAD
-  120              | evaluate_list . LEFT_QUAD expression COLON expression COLON expression RIGHT_QUAD
-  121              | evaluate_list . LEFT_QUAD expression COLON RIGHT_QUAD
-  122              | evaluate_list . LEFT_QUAD expression COLON COLON RIGHT_QUAD
-  123              | evaluate_list . LEFT_QUAD expression COLON COLON expression RIGHT_QUAD
-  124              | evaluate_list . LEFT_QUAD COLON expression RIGHT_QUAD
-  125              | evaluate_list . LEFT_QUAD COLON expression COLON RIGHT_QUAD
-  126              | evaluate_list . LEFT_QUAD COLON expression COLON expression RIGHT_QUAD
-  127              | evaluate_list . LEFT_QUAD COLON COLON RIGHT_QUAD
+  121 evaluate_list: evaluate_list . LEFT_QUAD expression RIGHT_QUAD
+  122              | evaluate_list . LEFT_QUAD expression COLON expression RIGHT_QUAD
+  123              | evaluate_list . LEFT_QUAD expression COLON expression COLON RIGHT_QUAD
+  124              | evaluate_list . LEFT_QUAD expression COLON expression COLON expression RIGHT_QUAD
+  125              | evaluate_list . LEFT_QUAD expression COLON RIGHT_QUAD
+  126              | evaluate_list . LEFT_QUAD expression COLON COLON RIGHT_QUAD
+  127              | evaluate_list . LEFT_QUAD expression COLON COLON expression RIGHT_QUAD
+  128              | evaluate_list . LEFT_QUAD COLON expression RIGHT_QUAD
+  129              | evaluate_list . LEFT_QUAD COLON expression COLON RIGHT_QUAD
+  130              | evaluate_list . LEFT_QUAD COLON expression COLON expression RIGHT_QUAD
+  131              | evaluate_list . LEFT_QUAD COLON COLON RIGHT_QUAD
 
     LEFT_QUAD  shift, and go to state 169
 
@@ -2751,8 +2751,8 @@ State 119
 
 State 120
 
-  142 FUNCTION_STATEMENT: SHARED FUNC IDENTIFER . LEFT_PAREN parameter_list RIGHT_PAREN
-  143                   | SHARED FUNC IDENTIFER . LEFT_PAREN RIGHT_PAREN
+  146 FUNCTION_STATEMENT: SHARED FUNC IDENTIFER . LEFT_PAREN parameter_list RIGHT_PAREN
+  147                   | SHARED FUNC IDENTIFER . LEFT_PAREN RIGHT_PAREN
 
     LEFT_PAREN  shift, and go to state 171
 
@@ -2933,7 +2933,7 @@ State 130
    76                  | expression . BIT_AND expression
    77                  | expression . BIT_OR expression
    78                  | expression . BIT_XOR expression
-  128 if_statement: IF LEFT_PAREN expression . RIGHT_PAREN
+  132 if_statement: IF LEFT_PAREN expression . RIGHT_PAREN
 
     RIGHT_PAREN  shift, and go to state 178
     ADD          shift, and go to state 92
@@ -2956,7 +2956,7 @@ State 130
 
 State 131
 
-  133 do_while_statement: DO . structure_statement WHILE LEFT_PAREN expression_statement RIGHT_PAREN SEMICOLON
+  137 do_while_statement: DO . structure_statement WHILE LEFT_PAREN expression_statement RIGHT_PAREN SEMICOLON
 
     error          shift, and go to state 10
     NOP            shift, and go to state 11
@@ -3020,7 +3020,7 @@ State 131
 
 State 132
 
-  130 for_statement: FOR LEFT_PAREN single_statement_no_semicolon . SEMICOLON expression_statement SEMICOLON single_statement_no_semicolon RIGHT_PAREN
+  134 for_statement: FOR LEFT_PAREN single_statement_no_semicolon . SEMICOLON expression_statement SEMICOLON single_statement_no_semicolon RIGHT_PAREN
 
     SEMICOLON  shift, and go to state 183
 
@@ -3085,7 +3085,7 @@ State 139
    76                  | expression . BIT_AND expression
    77                  | expression . BIT_OR expression
    78                  | expression . BIT_XOR expression
-  131 while_statement: WHILE LEFT_PAREN expression . RIGHT_PAREN
+  135 while_statement: WHILE LEFT_PAREN expression . RIGHT_PAREN
 
     RIGHT_PAREN  shift, and go to state 184
     ADD          shift, and go to state 92
@@ -3124,7 +3124,7 @@ State 140
    76                  | expression . BIT_AND expression
    77                  | expression . BIT_OR expression
    78                  | expression . BIT_XOR expression
-  137 continue_statement: CONTINUE LEFT_PAREN expression . RIGHT_PAREN
+  141 continue_statement: CONTINUE LEFT_PAREN expression . RIGHT_PAREN
 
     RIGHT_PAREN  shift, and go to state 185
     ADD          shift, and go to state 92
@@ -3163,7 +3163,7 @@ State 141
    76                  | expression . BIT_AND expression
    77                  | expression . BIT_OR expression
    78                  | expression . BIT_XOR expression
-  135 break_statement: BREAK LEFT_PAREN expression . RIGHT_PAREN
+  139 break_statement: BREAK LEFT_PAREN expression . RIGHT_PAREN
 
     RIGHT_PAREN  shift, and go to state 186
     ADD          shift, and go to state 92
@@ -3186,8 +3186,8 @@ State 141
 
 State 142
 
-  140 FUNCTION_STATEMENT: FUNC IDENTIFER LEFT_PAREN . parameter_list RIGHT_PAREN
-  141                   | FUNC IDENTIFER LEFT_PAREN . RIGHT_PAREN
+  144 FUNCTION_STATEMENT: FUNC IDENTIFER LEFT_PAREN . parameter_list RIGHT_PAREN
+  145                   | FUNC IDENTIFER LEFT_PAREN . RIGHT_PAREN
 
     IDENTIFER    shift, and go to state 187
     RIGHT_PAREN  shift, and go to state 188
@@ -3967,10 +3967,10 @@ State 166
 
 State 167
 
-  113 evaluate_list: LEFT_QUAD COLON . expression RIGHT_QUAD
-  114              | LEFT_QUAD COLON . expression COLON RIGHT_QUAD
-  115              | LEFT_QUAD COLON . expression COLON expression RIGHT_QUAD
-  116              | LEFT_QUAD COLON . COLON RIGHT_QUAD
+  117 evaluate_list: LEFT_QUAD COLON . expression RIGHT_QUAD
+  118              | LEFT_QUAD COLON . expression COLON RIGHT_QUAD
+  119              | LEFT_QUAD COLON . expression COLON expression RIGHT_QUAD
+  120              | LEFT_QUAD COLON . COLON RIGHT_QUAD
 
     INT_VALUE      shift, and go to state 14
     BOOLEAN_VALUE  shift, and go to state 15
@@ -4020,13 +4020,13 @@ State 168
    76                  | expression . BIT_AND expression
    77                  | expression . BIT_OR expression
    78                  | expression . BIT_XOR expression
-  106 evaluate_list: LEFT_QUAD expression . RIGHT_QUAD
-  107              | LEFT_QUAD expression . COLON expression RIGHT_QUAD
-  108              | LEFT_QUAD expression . COLON expression COLON RIGHT_QUAD
-  109              | LEFT_QUAD expression . COLON expression COLON expression RIGHT_QUAD
-  110              | LEFT_QUAD expression . COLON RIGHT_QUAD
-  111              | LEFT_QUAD expression . COLON COLON RIGHT_QUAD
-  112              | LEFT_QUAD expression . COLON COLON expression RIGHT_QUAD
+  110 evaluate_list: LEFT_QUAD expression . RIGHT_QUAD
+  111              | LEFT_QUAD expression . COLON expression RIGHT_QUAD
+  112              | LEFT_QUAD expression . COLON expression COLON RIGHT_QUAD
+  113              | LEFT_QUAD expression . COLON expression COLON expression RIGHT_QUAD
+  114              | LEFT_QUAD expression . COLON RIGHT_QUAD
+  115              | LEFT_QUAD expression . COLON COLON RIGHT_QUAD
+  116              | LEFT_QUAD expression . COLON COLON expression RIGHT_QUAD
 
     RIGHT_QUAD  shift, and go to state 194
     COLON       shift, and go to state 195
@@ -4050,17 +4050,17 @@ State 168
 
 State 169
 
-  117 evaluate_list: evaluate_list LEFT_QUAD . expression RIGHT_QUAD
-  118              | evaluate_list LEFT_QUAD . expression COLON expression RIGHT_QUAD
-  119              | evaluate_list LEFT_QUAD . expression COLON expression COLON RIGHT_QUAD
-  120              | evaluate_list LEFT_QUAD . expression COLON expression COLON expression RIGHT_QUAD
-  121              | evaluate_list LEFT_QUAD . expression COLON RIGHT_QUAD
-  122              | evaluate_list LEFT_QUAD . expression COLON COLON RIGHT_QUAD
-  123              | evaluate_list LEFT_QUAD . expression COLON COLON expression RIGHT_QUAD
-  124              | evaluate_list LEFT_QUAD . COLON expression RIGHT_QUAD
-  125              | evaluate_list LEFT_QUAD . COLON expression COLON RIGHT_QUAD
-  126              | evaluate_list LEFT_QUAD . COLON expression COLON expression RIGHT_QUAD
-  127              | evaluate_list LEFT_QUAD . COLON COLON RIGHT_QUAD
+  121 evaluate_list: evaluate_list LEFT_QUAD . expression RIGHT_QUAD
+  122              | evaluate_list LEFT_QUAD . expression COLON expression RIGHT_QUAD
+  123              | evaluate_list LEFT_QUAD . expression COLON expression COLON RIGHT_QUAD
+  124              | evaluate_list LEFT_QUAD . expression COLON expression COLON expression RIGHT_QUAD
+  125              | evaluate_list LEFT_QUAD . expression COLON RIGHT_QUAD
+  126              | evaluate_list LEFT_QUAD . expression COLON COLON RIGHT_QUAD
+  127              | evaluate_list LEFT_QUAD . expression COLON COLON expression RIGHT_QUAD
+  128              | evaluate_list LEFT_QUAD . COLON expression RIGHT_QUAD
+  129              | evaluate_list LEFT_QUAD . COLON expression COLON RIGHT_QUAD
+  130              | evaluate_list LEFT_QUAD . COLON expression COLON expression RIGHT_QUAD
+  131              | evaluate_list LEFT_QUAD . COLON COLON RIGHT_QUAD
 
     INT_VALUE      shift, and go to state 14
     BOOLEAN_VALUE  shift, and go to state 15
@@ -4103,8 +4103,8 @@ State 170
 
 State 171
 
-  142 FUNCTION_STATEMENT: SHARED FUNC IDENTIFER LEFT_PAREN . parameter_list RIGHT_PAREN
-  143                   | SHARED FUNC IDENTIFER LEFT_PAREN . RIGHT_PAREN
+  146 FUNCTION_STATEMENT: SHARED FUNC IDENTIFER LEFT_PAREN . parameter_list RIGHT_PAREN
+  147                   | SHARED FUNC IDENTIFER LEFT_PAREN . RIGHT_PAREN
 
     IDENTIFER    shift, and go to state 187
     RIGHT_PAREN  shift, and go to state 199
@@ -4278,9 +4278,9 @@ State 177
 
 State 178
 
-  128 if_statement: IF LEFT_PAREN expression RIGHT_PAREN .
+  132 if_statement: IF LEFT_PAREN expression RIGHT_PAREN .
 
-    $default  reduce using rule 128 (if_statement)
+    $default  reduce using rule 132 (if_statement)
 
 
 State 179
@@ -4349,28 +4349,28 @@ State 179
 
 State 180
 
-  138 structure_statement: single_statement .
+  142 structure_statement: single_statement .
 
-    $default  reduce using rule 138 (structure_statement)
+    $default  reduce using rule 142 (structure_statement)
 
 
 State 181
 
-  139 structure_statement: statement_block .
+  143 structure_statement: statement_block .
 
-    $default  reduce using rule 139 (structure_statement)
+    $default  reduce using rule 143 (structure_statement)
 
 
 State 182
 
-  133 do_while_statement: DO structure_statement . WHILE LEFT_PAREN expression_statement RIGHT_PAREN SEMICOLON
+  137 do_while_statement: DO structure_statement . WHILE LEFT_PAREN expression_statement RIGHT_PAREN SEMICOLON
 
     WHILE  shift, and go to state 208
 
 
 State 183
 
-  130 for_statement: FOR LEFT_PAREN single_statement_no_semicolon SEMICOLON . expression_statement SEMICOLON single_statement_no_semicolon RIGHT_PAREN
+  134 for_statement: FOR LEFT_PAREN single_statement_no_semicolon SEMICOLON . expression_statement SEMICOLON single_statement_no_semicolon RIGHT_PAREN
 
     INT_VALUE      shift, and go to state 14
     BOOLEAN_VALUE  shift, and go to state 15
@@ -4404,47 +4404,47 @@ State 183
 
 State 184
 
-  131 while_statement: WHILE LEFT_PAREN expression RIGHT_PAREN .
+  135 while_statement: WHILE LEFT_PAREN expression RIGHT_PAREN .
 
-    $default  reduce using rule 131 (while_statement)
+    $default  reduce using rule 135 (while_statement)
 
 
 State 185
 
-  137 continue_statement: CONTINUE LEFT_PAREN expression RIGHT_PAREN .
+  141 continue_statement: CONTINUE LEFT_PAREN expression RIGHT_PAREN .
 
-    $default  reduce using rule 137 (continue_statement)
+    $default  reduce using rule 141 (continue_statement)
 
 
 State 186
 
-  135 break_statement: BREAK LEFT_PAREN expression RIGHT_PAREN .
+  139 break_statement: BREAK LEFT_PAREN expression RIGHT_PAREN .
 
-    $default  reduce using rule 135 (break_statement)
+    $default  reduce using rule 139 (break_statement)
 
 
 State 187
 
-  145 parameter_list: IDENTIFER .
-  146               | IDENTIFER . ASSIGN expression
+  106 parameter_list: IDENTIFER .
+  107               | IDENTIFER . ASSIGN expression
 
     ASSIGN  shift, and go to state 210
 
-    $default  reduce using rule 145 (parameter_list)
+    $default  reduce using rule 106 (parameter_list)
 
 
 State 188
 
-  141 FUNCTION_STATEMENT: FUNC IDENTIFER LEFT_PAREN RIGHT_PAREN .
+  145 FUNCTION_STATEMENT: FUNC IDENTIFER LEFT_PAREN RIGHT_PAREN .
 
-    $default  reduce using rule 141 (FUNCTION_STATEMENT)
+    $default  reduce using rule 145 (FUNCTION_STATEMENT)
 
 
 State 189
 
-  140 FUNCTION_STATEMENT: FUNC IDENTIFER LEFT_PAREN parameter_list . RIGHT_PAREN
-  147 parameter_list: parameter_list . COMMA IDENTIFER
-  148               | parameter_list . COMMA IDENTIFER ASSIGN expression
+  108 parameter_list: parameter_list . COMMA IDENTIFER
+  109               | parameter_list . COMMA IDENTIFER ASSIGN expression
+  144 FUNCTION_STATEMENT: FUNC IDENTIFER LEFT_PAREN parameter_list . RIGHT_PAREN
 
     RIGHT_PAREN  shift, and go to state 211
     COMMA        shift, and go to state 212
@@ -4466,7 +4466,7 @@ State 191
 
 State 192
 
-  116 evaluate_list: LEFT_QUAD COLON COLON . RIGHT_QUAD
+  120 evaluate_list: LEFT_QUAD COLON COLON . RIGHT_QUAD
 
     RIGHT_QUAD  shift, and go to state 213
 
@@ -4489,9 +4489,9 @@ State 193
    76                  | expression . BIT_AND expression
    77                  | expression . BIT_OR expression
    78                  | expression . BIT_XOR expression
-  113 evaluate_list: LEFT_QUAD COLON expression . RIGHT_QUAD
-  114              | LEFT_QUAD COLON expression . COLON RIGHT_QUAD
-  115              | LEFT_QUAD COLON expression . COLON expression RIGHT_QUAD
+  117 evaluate_list: LEFT_QUAD COLON expression . RIGHT_QUAD
+  118              | LEFT_QUAD COLON expression . COLON RIGHT_QUAD
+  119              | LEFT_QUAD COLON expression . COLON expression RIGHT_QUAD
 
     RIGHT_QUAD  shift, and go to state 214
     COLON       shift, and go to state 215
@@ -4515,19 +4515,19 @@ State 193
 
 State 194
 
-  106 evaluate_list: LEFT_QUAD expression RIGHT_QUAD .
+  110 evaluate_list: LEFT_QUAD expression RIGHT_QUAD .
 
-    $default  reduce using rule 106 (evaluate_list)
+    $default  reduce using rule 110 (evaluate_list)
 
 
 State 195
 
-  107 evaluate_list: LEFT_QUAD expression COLON . expression RIGHT_QUAD
-  108              | LEFT_QUAD expression COLON . expression COLON RIGHT_QUAD
-  109              | LEFT_QUAD expression COLON . expression COLON expression RIGHT_QUAD
-  110              | LEFT_QUAD expression COLON . RIGHT_QUAD
-  111              | LEFT_QUAD expression COLON . COLON RIGHT_QUAD
-  112              | LEFT_QUAD expression COLON . COLON expression RIGHT_QUAD
+  111 evaluate_list: LEFT_QUAD expression COLON . expression RIGHT_QUAD
+  112              | LEFT_QUAD expression COLON . expression COLON RIGHT_QUAD
+  113              | LEFT_QUAD expression COLON . expression COLON expression RIGHT_QUAD
+  114              | LEFT_QUAD expression COLON . RIGHT_QUAD
+  115              | LEFT_QUAD expression COLON . COLON RIGHT_QUAD
+  116              | LEFT_QUAD expression COLON . COLON expression RIGHT_QUAD
 
     INT_VALUE      shift, and go to state 14
     BOOLEAN_VALUE  shift, and go to state 15
@@ -4562,10 +4562,10 @@ State 195
 
 State 196
 
-  124 evaluate_list: evaluate_list LEFT_QUAD COLON . expression RIGHT_QUAD
-  125              | evaluate_list LEFT_QUAD COLON . expression COLON RIGHT_QUAD
-  126              | evaluate_list LEFT_QUAD COLON . expression COLON expression RIGHT_QUAD
-  127              | evaluate_list LEFT_QUAD COLON . COLON RIGHT_QUAD
+  128 evaluate_list: evaluate_list LEFT_QUAD COLON . expression RIGHT_QUAD
+  129              | evaluate_list LEFT_QUAD COLON . expression COLON RIGHT_QUAD
+  130              | evaluate_list LEFT_QUAD COLON . expression COLON expression RIGHT_QUAD
+  131              | evaluate_list LEFT_QUAD COLON . COLON RIGHT_QUAD
 
     INT_VALUE      shift, and go to state 14
     BOOLEAN_VALUE  shift, and go to state 15
@@ -4615,13 +4615,13 @@ State 197
    76                  | expression . BIT_AND expression
    77                  | expression . BIT_OR expression
    78                  | expression . BIT_XOR expression
-  117 evaluate_list: evaluate_list LEFT_QUAD expression . RIGHT_QUAD
-  118              | evaluate_list LEFT_QUAD expression . COLON expression RIGHT_QUAD
-  119              | evaluate_list LEFT_QUAD expression . COLON expression COLON RIGHT_QUAD
-  120              | evaluate_list LEFT_QUAD expression . COLON expression COLON expression RIGHT_QUAD
-  121              | evaluate_list LEFT_QUAD expression . COLON RIGHT_QUAD
-  122              | evaluate_list LEFT_QUAD expression . COLON COLON RIGHT_QUAD
-  123              | evaluate_list LEFT_QUAD expression . COLON COLON expression RIGHT_QUAD
+  121 evaluate_list: evaluate_list LEFT_QUAD expression . RIGHT_QUAD
+  122              | evaluate_list LEFT_QUAD expression . COLON expression RIGHT_QUAD
+  123              | evaluate_list LEFT_QUAD expression . COLON expression COLON RIGHT_QUAD
+  124              | evaluate_list LEFT_QUAD expression . COLON expression COLON expression RIGHT_QUAD
+  125              | evaluate_list LEFT_QUAD expression . COLON RIGHT_QUAD
+  126              | evaluate_list LEFT_QUAD expression . COLON COLON RIGHT_QUAD
+  127              | evaluate_list LEFT_QUAD expression . COLON COLON expression RIGHT_QUAD
 
     RIGHT_QUAD  shift, and go to state 221
     COLON       shift, and go to state 222
@@ -4654,16 +4654,16 @@ State 198
 
 State 199
 
-  143 FUNCTION_STATEMENT: SHARED FUNC IDENTIFER LEFT_PAREN RIGHT_PAREN .
+  147 FUNCTION_STATEMENT: SHARED FUNC IDENTIFER LEFT_PAREN RIGHT_PAREN .
 
-    $default  reduce using rule 143 (FUNCTION_STATEMENT)
+    $default  reduce using rule 147 (FUNCTION_STATEMENT)
 
 
 State 200
 
-  142 FUNCTION_STATEMENT: SHARED FUNC IDENTIFER LEFT_PAREN parameter_list . RIGHT_PAREN
-  147 parameter_list: parameter_list . COMMA IDENTIFER
-  148               | parameter_list . COMMA IDENTIFER ASSIGN expression
+  108 parameter_list: parameter_list . COMMA IDENTIFER
+  109               | parameter_list . COMMA IDENTIFER ASSIGN expression
+  146 FUNCTION_STATEMENT: SHARED FUNC IDENTIFER LEFT_PAREN parameter_list . RIGHT_PAREN
 
     RIGHT_PAREN  shift, and go to state 224
     COMMA        shift, and go to state 212
@@ -4874,21 +4874,21 @@ State 207
 
 State 208
 
-  133 do_while_statement: DO structure_statement WHILE . LEFT_PAREN expression_statement RIGHT_PAREN SEMICOLON
+  137 do_while_statement: DO structure_statement WHILE . LEFT_PAREN expression_statement RIGHT_PAREN SEMICOLON
 
     LEFT_PAREN  shift, and go to state 229
 
 
 State 209
 
-  130 for_statement: FOR LEFT_PAREN single_statement_no_semicolon SEMICOLON expression_statement . SEMICOLON single_statement_no_semicolon RIGHT_PAREN
+  134 for_statement: FOR LEFT_PAREN single_statement_no_semicolon SEMICOLON expression_statement . SEMICOLON single_statement_no_semicolon RIGHT_PAREN
 
     SEMICOLON  shift, and go to state 230
 
 
 State 210
 
-  146 parameter_list: IDENTIFER ASSIGN . expression
+  107 parameter_list: IDENTIFER ASSIGN . expression
 
     INT_VALUE      shift, and go to state 14
     BOOLEAN_VALUE  shift, and go to state 15
@@ -4921,37 +4921,37 @@ State 210
 
 State 211
 
-  140 FUNCTION_STATEMENT: FUNC IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN .
+  144 FUNCTION_STATEMENT: FUNC IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN .
 
-    $default  reduce using rule 140 (FUNCTION_STATEMENT)
+    $default  reduce using rule 144 (FUNCTION_STATEMENT)
 
 
 State 212
 
-  147 parameter_list: parameter_list COMMA . IDENTIFER
-  148               | parameter_list COMMA . IDENTIFER ASSIGN expression
+  108 parameter_list: parameter_list COMMA . IDENTIFER
+  109               | parameter_list COMMA . IDENTIFER ASSIGN expression
 
     IDENTIFER  shift, and go to state 232
 
 
 State 213
 
-  116 evaluate_list: LEFT_QUAD COLON COLON RIGHT_QUAD .
+  120 evaluate_list: LEFT_QUAD COLON COLON RIGHT_QUAD .
 
-    $default  reduce using rule 116 (evaluate_list)
+    $default  reduce using rule 120 (evaluate_list)
 
 
 State 214
 
-  113 evaluate_list: LEFT_QUAD COLON expression RIGHT_QUAD .
+  117 evaluate_list: LEFT_QUAD COLON expression RIGHT_QUAD .
 
-    $default  reduce using rule 113 (evaluate_list)
+    $default  reduce using rule 117 (evaluate_list)
 
 
 State 215
 
-  114 evaluate_list: LEFT_QUAD COLON expression COLON . RIGHT_QUAD
-  115              | LEFT_QUAD COLON expression COLON . expression RIGHT_QUAD
+  118 evaluate_list: LEFT_QUAD COLON expression COLON . RIGHT_QUAD
+  119              | LEFT_QUAD COLON expression COLON . expression RIGHT_QUAD
 
     INT_VALUE      shift, and go to state 14
     BOOLEAN_VALUE  shift, and go to state 15
@@ -4985,15 +4985,15 @@ State 215
 
 State 216
 
-  110 evaluate_list: LEFT_QUAD expression COLON RIGHT_QUAD .
+  114 evaluate_list: LEFT_QUAD expression COLON RIGHT_QUAD .
 
-    $default  reduce using rule 110 (evaluate_list)
+    $default  reduce using rule 114 (evaluate_list)
 
 
 State 217
 
-  111 evaluate_list: LEFT_QUAD expression COLON COLON . RIGHT_QUAD
-  112              | LEFT_QUAD expression COLON COLON . expression RIGHT_QUAD
+  115 evaluate_list: LEFT_QUAD expression COLON COLON . RIGHT_QUAD
+  116              | LEFT_QUAD expression COLON COLON . expression RIGHT_QUAD
 
     INT_VALUE      shift, and go to state 14
     BOOLEAN_VALUE  shift, and go to state 15
@@ -5043,9 +5043,9 @@ State 218
    76                  | expression . BIT_AND expression
    77                  | expression . BIT_OR expression
    78                  | expression . BIT_XOR expression
-  107 evaluate_list: LEFT_QUAD expression COLON expression . RIGHT_QUAD
-  108              | LEFT_QUAD expression COLON expression . COLON RIGHT_QUAD
-  109              | LEFT_QUAD expression COLON expression . COLON expression RIGHT_QUAD
+  111 evaluate_list: LEFT_QUAD expression COLON expression . RIGHT_QUAD
+  112              | LEFT_QUAD expression COLON expression . COLON RIGHT_QUAD
+  113              | LEFT_QUAD expression COLON expression . COLON expression RIGHT_QUAD
 
     RIGHT_QUAD  shift, and go to state 237
     COLON       shift, and go to state 238
@@ -5069,7 +5069,7 @@ State 218
 
 State 219
 
-  127 evaluate_list: evaluate_list LEFT_QUAD COLON COLON . RIGHT_QUAD
+  131 evaluate_list: evaluate_list LEFT_QUAD COLON COLON . RIGHT_QUAD
 
     RIGHT_QUAD  shift, and go to state 239
 
@@ -5092,9 +5092,9 @@ State 220
    76                  | expression . BIT_AND expression
    77                  | expression . BIT_OR expression
    78                  | expression . BIT_XOR expression
-  124 evaluate_list: evaluate_list LEFT_QUAD COLON expression . RIGHT_QUAD
-  125              | evaluate_list LEFT_QUAD COLON expression . COLON RIGHT_QUAD
-  126              | evaluate_list LEFT_QUAD COLON expression . COLON expression RIGHT_QUAD
+  128 evaluate_list: evaluate_list LEFT_QUAD COLON expression . RIGHT_QUAD
+  129              | evaluate_list LEFT_QUAD COLON expression . COLON RIGHT_QUAD
+  130              | evaluate_list LEFT_QUAD COLON expression . COLON expression RIGHT_QUAD
 
     RIGHT_QUAD  shift, and go to state 240
     COLON       shift, and go to state 241
@@ -5118,19 +5118,19 @@ State 220
 
 State 221
 
-  117 evaluate_list: evaluate_list LEFT_QUAD expression RIGHT_QUAD .
+  121 evaluate_list: evaluate_list LEFT_QUAD expression RIGHT_QUAD .
 
-    $default  reduce using rule 117 (evaluate_list)
+    $default  reduce using rule 121 (evaluate_list)
 
 
 State 222
 
-  118 evaluate_list: evaluate_list LEFT_QUAD expression COLON . expression RIGHT_QUAD
-  119              | evaluate_list LEFT_QUAD expression COLON . expression COLON RIGHT_QUAD
-  120              | evaluate_list LEFT_QUAD expression COLON . expression COLON expression RIGHT_QUAD
-  121              | evaluate_list LEFT_QUAD expression COLON . RIGHT_QUAD
-  122              | evaluate_list LEFT_QUAD expression COLON . COLON RIGHT_QUAD
-  123              | evaluate_list LEFT_QUAD expression COLON . COLON expression RIGHT_QUAD
+  122 evaluate_list: evaluate_list LEFT_QUAD expression COLON . expression RIGHT_QUAD
+  123              | evaluate_list LEFT_QUAD expression COLON . expression COLON RIGHT_QUAD
+  124              | evaluate_list LEFT_QUAD expression COLON . expression COLON expression RIGHT_QUAD
+  125              | evaluate_list LEFT_QUAD expression COLON . RIGHT_QUAD
+  126              | evaluate_list LEFT_QUAD expression COLON . COLON RIGHT_QUAD
+  127              | evaluate_list LEFT_QUAD expression COLON . COLON expression RIGHT_QUAD
 
     INT_VALUE      shift, and go to state 14
     BOOLEAN_VALUE  shift, and go to state 15
@@ -5174,9 +5174,9 @@ State 223
 
 State 224
 
-  142 FUNCTION_STATEMENT: SHARED FUNC IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN .
+  146 FUNCTION_STATEMENT: SHARED FUNC IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN .
 
-    $default  reduce using rule 142 (FUNCTION_STATEMENT)
+    $default  reduce using rule 146 (FUNCTION_STATEMENT)
 
 
 State 225
@@ -5268,7 +5268,7 @@ State 228
 
 State 229
 
-  133 do_while_statement: DO structure_statement WHILE LEFT_PAREN . expression_statement RIGHT_PAREN SEMICOLON
+  137 do_while_statement: DO structure_statement WHILE LEFT_PAREN . expression_statement RIGHT_PAREN SEMICOLON
 
     INT_VALUE      shift, and go to state 14
     BOOLEAN_VALUE  shift, and go to state 15
@@ -5302,7 +5302,7 @@ State 229
 
 State 230
 
-  130 for_statement: FOR LEFT_PAREN single_statement_no_semicolon SEMICOLON expression_statement SEMICOLON . single_statement_no_semicolon RIGHT_PAREN
+  134 for_statement: FOR LEFT_PAREN single_statement_no_semicolon SEMICOLON expression_statement SEMICOLON . single_statement_no_semicolon RIGHT_PAREN
 
     INT_VALUE      shift, and go to state 14
     BOOLEAN_VALUE  shift, and go to state 15
@@ -5364,7 +5364,7 @@ State 231
    76                  | expression . BIT_AND expression
    77                  | expression . BIT_OR expression
    78                  | expression . BIT_XOR expression
-  146 parameter_list: IDENTIFER ASSIGN expression .
+  107 parameter_list: IDENTIFER ASSIGN expression .
 
     ADD      shift, and go to state 92
     SUB      shift, and go to state 93
@@ -5383,24 +5383,24 @@ State 231
     BIT_OR   shift, and go to state 106
     BIT_XOR  shift, and go to state 107
 
-    $default  reduce using rule 146 (parameter_list)
+    $default  reduce using rule 107 (parameter_list)
 
 
 State 232
 
-  147 parameter_list: parameter_list COMMA IDENTIFER .
-  148               | parameter_list COMMA IDENTIFER . ASSIGN expression
+  108 parameter_list: parameter_list COMMA IDENTIFER .
+  109               | parameter_list COMMA IDENTIFER . ASSIGN expression
 
     ASSIGN  shift, and go to state 249
 
-    $default  reduce using rule 147 (parameter_list)
+    $default  reduce using rule 108 (parameter_list)
 
 
 State 233
 
-  114 evaluate_list: LEFT_QUAD COLON expression COLON RIGHT_QUAD .
+  118 evaluate_list: LEFT_QUAD COLON expression COLON RIGHT_QUAD .
 
-    $default  reduce using rule 114 (evaluate_list)
+    $default  reduce using rule 118 (evaluate_list)
 
 
 State 234
@@ -5421,7 +5421,7 @@ State 234
    76                  | expression . BIT_AND expression
    77                  | expression . BIT_OR expression
    78                  | expression . BIT_XOR expression
-  115 evaluate_list: LEFT_QUAD COLON expression COLON expression . RIGHT_QUAD
+  119 evaluate_list: LEFT_QUAD COLON expression COLON expression . RIGHT_QUAD
 
     RIGHT_QUAD  shift, and go to state 250
     ADD         shift, and go to state 92
@@ -5444,9 +5444,9 @@ State 234
 
 State 235
 
-  111 evaluate_list: LEFT_QUAD expression COLON COLON RIGHT_QUAD .
+  115 evaluate_list: LEFT_QUAD expression COLON COLON RIGHT_QUAD .
 
-    $default  reduce using rule 111 (evaluate_list)
+    $default  reduce using rule 115 (evaluate_list)
 
 
 State 236
@@ -5467,7 +5467,7 @@ State 236
    76                  | expression . BIT_AND expression
    77                  | expression . BIT_OR expression
    78                  | expression . BIT_XOR expression
-  112 evaluate_list: LEFT_QUAD expression COLON COLON expression . RIGHT_QUAD
+  116 evaluate_list: LEFT_QUAD expression COLON COLON expression . RIGHT_QUAD
 
     RIGHT_QUAD  shift, and go to state 251
     ADD         shift, and go to state 92
@@ -5490,15 +5490,15 @@ State 236
 
 State 237
 
-  107 evaluate_list: LEFT_QUAD expression COLON expression RIGHT_QUAD .
+  111 evaluate_list: LEFT_QUAD expression COLON expression RIGHT_QUAD .
 
-    $default  reduce using rule 107 (evaluate_list)
+    $default  reduce using rule 111 (evaluate_list)
 
 
 State 238
 
-  108 evaluate_list: LEFT_QUAD expression COLON expression COLON . RIGHT_QUAD
-  109              | LEFT_QUAD expression COLON expression COLON . expression RIGHT_QUAD
+  112 evaluate_list: LEFT_QUAD expression COLON expression COLON . RIGHT_QUAD
+  113              | LEFT_QUAD expression COLON expression COLON . expression RIGHT_QUAD
 
     INT_VALUE      shift, and go to state 14
     BOOLEAN_VALUE  shift, and go to state 15
@@ -5532,22 +5532,22 @@ State 238
 
 State 239
 
-  127 evaluate_list: evaluate_list LEFT_QUAD COLON COLON RIGHT_QUAD .
+  131 evaluate_list: evaluate_list LEFT_QUAD COLON COLON RIGHT_QUAD .
 
-    $default  reduce using rule 127 (evaluate_list)
+    $default  reduce using rule 131 (evaluate_list)
 
 
 State 240
 
-  124 evaluate_list: evaluate_list LEFT_QUAD COLON expression RIGHT_QUAD .
+  128 evaluate_list: evaluate_list LEFT_QUAD COLON expression RIGHT_QUAD .
 
-    $default  reduce using rule 124 (evaluate_list)
+    $default  reduce using rule 128 (evaluate_list)
 
 
 State 241
 
-  125 evaluate_list: evaluate_list LEFT_QUAD COLON expression COLON . RIGHT_QUAD
-  126              | evaluate_list LEFT_QUAD COLON expression COLON . expression RIGHT_QUAD
+  129 evaluate_list: evaluate_list LEFT_QUAD COLON expression COLON . RIGHT_QUAD
+  130              | evaluate_list LEFT_QUAD COLON expression COLON . expression RIGHT_QUAD
 
     INT_VALUE      shift, and go to state 14
     BOOLEAN_VALUE  shift, and go to state 15
@@ -5581,15 +5581,15 @@ State 241
 
 State 242
 
-  121 evaluate_list: evaluate_list LEFT_QUAD expression COLON RIGHT_QUAD .
+  125 evaluate_list: evaluate_list LEFT_QUAD expression COLON RIGHT_QUAD .
 
-    $default  reduce using rule 121 (evaluate_list)
+    $default  reduce using rule 125 (evaluate_list)
 
 
 State 243
 
-  122 evaluate_list: evaluate_list LEFT_QUAD expression COLON COLON . RIGHT_QUAD
-  123              | evaluate_list LEFT_QUAD expression COLON COLON . expression RIGHT_QUAD
+  126 evaluate_list: evaluate_list LEFT_QUAD expression COLON COLON . RIGHT_QUAD
+  127              | evaluate_list LEFT_QUAD expression COLON COLON . expression RIGHT_QUAD
 
     INT_VALUE      shift, and go to state 14
     BOOLEAN_VALUE  shift, and go to state 15
@@ -5639,9 +5639,9 @@ State 244
    76                  | expression . BIT_AND expression
    77                  | expression . BIT_OR expression
    78                  | expression . BIT_XOR expression
-  118 evaluate_list: evaluate_list LEFT_QUAD expression COLON expression . RIGHT_QUAD
-  119              | evaluate_list LEFT_QUAD expression COLON expression . COLON RIGHT_QUAD
-  120              | evaluate_list LEFT_QUAD expression COLON expression . COLON expression RIGHT_QUAD
+  122 evaluate_list: evaluate_list LEFT_QUAD expression COLON expression . RIGHT_QUAD
+  123              | evaluate_list LEFT_QUAD expression COLON expression . COLON RIGHT_QUAD
+  124              | evaluate_list LEFT_QUAD expression COLON expression . COLON expression RIGHT_QUAD
 
     RIGHT_QUAD  shift, and go to state 258
     COLON       shift, and go to state 259
@@ -5712,21 +5712,21 @@ State 246
 
 State 247
 
-  133 do_while_statement: DO structure_statement WHILE LEFT_PAREN expression_statement . RIGHT_PAREN SEMICOLON
+  137 do_while_statement: DO structure_statement WHILE LEFT_PAREN expression_statement . RIGHT_PAREN SEMICOLON
 
     RIGHT_PAREN  shift, and go to state 260
 
 
 State 248
 
-  130 for_statement: FOR LEFT_PAREN single_statement_no_semicolon SEMICOLON expression_statement SEMICOLON single_statement_no_semicolon . RIGHT_PAREN
+  134 for_statement: FOR LEFT_PAREN single_statement_no_semicolon SEMICOLON expression_statement SEMICOLON single_statement_no_semicolon . RIGHT_PAREN
 
     RIGHT_PAREN  shift, and go to state 261
 
 
 State 249
 
-  148 parameter_list: parameter_list COMMA IDENTIFER ASSIGN . expression
+  109 parameter_list: parameter_list COMMA IDENTIFER ASSIGN . expression
 
     INT_VALUE      shift, and go to state 14
     BOOLEAN_VALUE  shift, and go to state 15
@@ -5759,23 +5759,23 @@ State 249
 
 State 250
 
-  115 evaluate_list: LEFT_QUAD COLON expression COLON expression RIGHT_QUAD .
+  119 evaluate_list: LEFT_QUAD COLON expression COLON expression RIGHT_QUAD .
 
-    $default  reduce using rule 115 (evaluate_list)
+    $default  reduce using rule 119 (evaluate_list)
 
 
 State 251
 
-  112 evaluate_list: LEFT_QUAD expression COLON COLON expression RIGHT_QUAD .
+  116 evaluate_list: LEFT_QUAD expression COLON COLON expression RIGHT_QUAD .
 
-    $default  reduce using rule 112 (evaluate_list)
+    $default  reduce using rule 116 (evaluate_list)
 
 
 State 252
 
-  108 evaluate_list: LEFT_QUAD expression COLON expression COLON RIGHT_QUAD .
+  112 evaluate_list: LEFT_QUAD expression COLON expression COLON RIGHT_QUAD .
 
-    $default  reduce using rule 108 (evaluate_list)
+    $default  reduce using rule 112 (evaluate_list)
 
 
 State 253
@@ -5796,7 +5796,7 @@ State 253
    76                  | expression . BIT_AND expression
    77                  | expression . BIT_OR expression
    78                  | expression . BIT_XOR expression
-  109 evaluate_list: LEFT_QUAD expression COLON expression COLON expression . RIGHT_QUAD
+  113 evaluate_list: LEFT_QUAD expression COLON expression COLON expression . RIGHT_QUAD
 
     RIGHT_QUAD  shift, and go to state 263
     ADD         shift, and go to state 92
@@ -5819,9 +5819,9 @@ State 253
 
 State 254
 
-  125 evaluate_list: evaluate_list LEFT_QUAD COLON expression COLON RIGHT_QUAD .
+  129 evaluate_list: evaluate_list LEFT_QUAD COLON expression COLON RIGHT_QUAD .
 
-    $default  reduce using rule 125 (evaluate_list)
+    $default  reduce using rule 129 (evaluate_list)
 
 
 State 255
@@ -5842,7 +5842,7 @@ State 255
    76                  | expression . BIT_AND expression
    77                  | expression . BIT_OR expression
    78                  | expression . BIT_XOR expression
-  126 evaluate_list: evaluate_list LEFT_QUAD COLON expression COLON expression . RIGHT_QUAD
+  130 evaluate_list: evaluate_list LEFT_QUAD COLON expression COLON expression . RIGHT_QUAD
 
     RIGHT_QUAD  shift, and go to state 264
     ADD         shift, and go to state 92
@@ -5865,9 +5865,9 @@ State 255
 
 State 256
 
-  122 evaluate_list: evaluate_list LEFT_QUAD expression COLON COLON RIGHT_QUAD .
+  126 evaluate_list: evaluate_list LEFT_QUAD expression COLON COLON RIGHT_QUAD .
 
-    $default  reduce using rule 122 (evaluate_list)
+    $default  reduce using rule 126 (evaluate_list)
 
 
 State 257
@@ -5888,7 +5888,7 @@ State 257
    76                  | expression . BIT_AND expression
    77                  | expression . BIT_OR expression
    78                  | expression . BIT_XOR expression
-  123 evaluate_list: evaluate_list LEFT_QUAD expression COLON COLON expression . RIGHT_QUAD
+  127 evaluate_list: evaluate_list LEFT_QUAD expression COLON COLON expression . RIGHT_QUAD
 
     RIGHT_QUAD  shift, and go to state 265
     ADD         shift, and go to state 92
@@ -5911,15 +5911,15 @@ State 257
 
 State 258
 
-  118 evaluate_list: evaluate_list LEFT_QUAD expression COLON expression RIGHT_QUAD .
+  122 evaluate_list: evaluate_list LEFT_QUAD expression COLON expression RIGHT_QUAD .
 
-    $default  reduce using rule 118 (evaluate_list)
+    $default  reduce using rule 122 (evaluate_list)
 
 
 State 259
 
-  119 evaluate_list: evaluate_list LEFT_QUAD expression COLON expression COLON . RIGHT_QUAD
-  120              | evaluate_list LEFT_QUAD expression COLON expression COLON . expression RIGHT_QUAD
+  123 evaluate_list: evaluate_list LEFT_QUAD expression COLON expression COLON . RIGHT_QUAD
+  124              | evaluate_list LEFT_QUAD expression COLON expression COLON . expression RIGHT_QUAD
 
     INT_VALUE      shift, and go to state 14
     BOOLEAN_VALUE  shift, and go to state 15
@@ -5953,16 +5953,16 @@ State 259
 
 State 260
 
-  133 do_while_statement: DO structure_statement WHILE LEFT_PAREN expression_statement RIGHT_PAREN . SEMICOLON
+  137 do_while_statement: DO structure_statement WHILE LEFT_PAREN expression_statement RIGHT_PAREN . SEMICOLON
 
     SEMICOLON  shift, and go to state 268
 
 
 State 261
 
-  130 for_statement: FOR LEFT_PAREN single_statement_no_semicolon SEMICOLON expression_statement SEMICOLON single_statement_no_semicolon RIGHT_PAREN .
+  134 for_statement: FOR LEFT_PAREN single_statement_no_semicolon SEMICOLON expression_statement SEMICOLON single_statement_no_semicolon RIGHT_PAREN .
 
-    $default  reduce using rule 130 (for_statement)
+    $default  reduce using rule 134 (for_statement)
 
 
 State 262
@@ -5983,7 +5983,7 @@ State 262
    76                  | expression . BIT_AND expression
    77                  | expression . BIT_OR expression
    78                  | expression . BIT_XOR expression
-  148 parameter_list: parameter_list COMMA IDENTIFER ASSIGN expression .
+  109 parameter_list: parameter_list COMMA IDENTIFER ASSIGN expression .
 
     ADD      shift, and go to state 92
     SUB      shift, and go to state 93
@@ -6002,35 +6002,35 @@ State 262
     BIT_OR   shift, and go to state 106
     BIT_XOR  shift, and go to state 107
 
-    $default  reduce using rule 148 (parameter_list)
+    $default  reduce using rule 109 (parameter_list)
 
 
 State 263
 
-  109 evaluate_list: LEFT_QUAD expression COLON expression COLON expression RIGHT_QUAD .
+  113 evaluate_list: LEFT_QUAD expression COLON expression COLON expression RIGHT_QUAD .
 
-    $default  reduce using rule 109 (evaluate_list)
+    $default  reduce using rule 113 (evaluate_list)
 
 
 State 264
 
-  126 evaluate_list: evaluate_list LEFT_QUAD COLON expression COLON expression RIGHT_QUAD .
+  130 evaluate_list: evaluate_list LEFT_QUAD COLON expression COLON expression RIGHT_QUAD .
 
-    $default  reduce using rule 126 (evaluate_list)
+    $default  reduce using rule 130 (evaluate_list)
 
 
 State 265
 
-  123 evaluate_list: evaluate_list LEFT_QUAD expression COLON COLON expression RIGHT_QUAD .
+  127 evaluate_list: evaluate_list LEFT_QUAD expression COLON COLON expression RIGHT_QUAD .
 
-    $default  reduce using rule 123 (evaluate_list)
+    $default  reduce using rule 127 (evaluate_list)
 
 
 State 266
 
-  119 evaluate_list: evaluate_list LEFT_QUAD expression COLON expression COLON RIGHT_QUAD .
+  123 evaluate_list: evaluate_list LEFT_QUAD expression COLON expression COLON RIGHT_QUAD .
 
-    $default  reduce using rule 119 (evaluate_list)
+    $default  reduce using rule 123 (evaluate_list)
 
 
 State 267
@@ -6051,7 +6051,7 @@ State 267
    76                  | expression . BIT_AND expression
    77                  | expression . BIT_OR expression
    78                  | expression . BIT_XOR expression
-  120 evaluate_list: evaluate_list LEFT_QUAD expression COLON expression COLON expression . RIGHT_QUAD
+  124 evaluate_list: evaluate_list LEFT_QUAD expression COLON expression COLON expression . RIGHT_QUAD
 
     RIGHT_QUAD  shift, and go to state 269
     ADD         shift, and go to state 92
@@ -6074,13 +6074,13 @@ State 267
 
 State 268
 
-  133 do_while_statement: DO structure_statement WHILE LEFT_PAREN expression_statement RIGHT_PAREN SEMICOLON .
+  137 do_while_statement: DO structure_statement WHILE LEFT_PAREN expression_statement RIGHT_PAREN SEMICOLON .
 
-    $default  reduce using rule 133 (do_while_statement)
+    $default  reduce using rule 137 (do_while_statement)
 
 
 State 269
 
-  120 evaluate_list: evaluate_list LEFT_QUAD expression COLON expression COLON expression RIGHT_QUAD .
+  124 evaluate_list: evaluate_list LEFT_QUAD expression COLON expression COLON expression RIGHT_QUAD .
 
-    $default  reduce using rule 120 (evaluate_list)
+    $default  reduce using rule 124 (evaluate_list)

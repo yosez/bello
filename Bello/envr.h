@@ -207,7 +207,7 @@ struct FcnStrc* getEnvrFcn(struct EnvrStrc* envr, struct FcnExpStrc* fcnExp)
 		}
 	}
 
-	return NULL;
+	return nullptr;
 
 }
 
@@ -222,7 +222,7 @@ struct FcnStrc* getFcn(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struc
 
 struct FcnStrc* getFcn(vector<EnvrStrc*> envr, struct FcnExpStrc* fcnExp)
 {
-	struct FcnStrc* fcn = NULL;
+	struct FcnStrc* fcn = nullptr;
 
 	int lyr = envr.size() - 1;
 
@@ -230,14 +230,14 @@ struct FcnStrc* getFcn(vector<EnvrStrc*> envr, struct FcnExpStrc* fcnExp)
 	{
 		fcn = getEnvrFcn(envr[lyr], fcnExp);
 
-		if (fcn != NULL)
+		if (fcn != nullptr)
 		{
 			return fcn;
 		}
 
 		if (lyr == 0)
 		{
-			return NULL;
+			return nullptr;
 		}
 
 		if (envr[lyr]->typ == FUNCTION_ENVIRONMENT)
@@ -261,14 +261,14 @@ struct FcnStrc* getFcn(vector<EnvrStrc*> envr, struct FcnExpStrc* fcnExp)
 	{
 		fcn = getEnvrFcn(envr[lyr], fcnExp);
 
-		if (fcn != NULL)
+		if (fcn != nullptr)
 		{
 			return fcn;
 		}
 
 		if (lyr == 0)
 		{
-			return NULL;
+			return nullptr;
 		}
 
 		lyr--;
@@ -351,7 +351,7 @@ struct ClsStrc* getEnvrCls(struct EnvrStrc* envr, string nm)
 
 struct NtvFcnStrc* getNtvFcn(vector<EnvrStrc*> envr, struct FcnExpStrc* fcn)
 {
-	struct NtvFctnStrc* rslt = NULL;
+	struct NtvFctnStrc* rslt = nullptr;
 
 	int i;
 
@@ -368,7 +368,7 @@ struct NtvFcnStrc* getNtvFcn(vector<EnvrStrc*> envr, struct FcnExpStrc* fcn)
 		}
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 

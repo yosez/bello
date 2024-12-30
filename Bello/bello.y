@@ -617,6 +617,29 @@ argument_list
         argLstAdd($$, bldVrbExp($3), $5);
     }
 
+parameter_list
+    : IDENTIFER 
+    {
+        $$ = bldPrmLst();
+        prmLstAdd($$, bldVrbExp($1));
+    }
+    | IDENTIFER ASSIGN expression
+    {
+        $$ = bldPrmLst();
+        prmLstAdd($$, bldVrbExp($1), $3);
+    }
+    | parameter_list COMMA IDENTIFER 
+    { 
+        $$ = $1;  
+        prmLstAdd($$, bldVrbExp($3));
+    }
+    | parameter_list COMMA IDENTIFER ASSIGN expression
+    {
+        $$ = $1;
+        prmLstAdd($$, bldVrbExp($3), $5);
+    }
+
+
 
 evaluate_list
     : LEFT_QUAD expression RIGHT_QUAD
@@ -895,27 +918,6 @@ CLASS_STATEMENT
     }
 
 
-parameter_list
-    : IDENTIFER 
-    {
-        $$ = bldPrmLst();
-        prmLstAdd($$, bldVrbExp($1));
-    }
-    | IDENTIFER ASSIGN expression
-    {
-        $$ = bldPrmLst();
-        prmLstAdd($$, bldVrbExp($1), $3);
-    }
-    | parameter_list COMMA IDENTIFER 
-    { 
-        $$ = $1;  
-        prmLstAdd($$, bldVrbExp($3));
-    }
-    | parameter_list COMMA IDENTIFER ASSIGN expression
-    {
-        $$ = $1;
-        prmLstAdd($$, bldVrbExp($3), $5);
-    }
 
 return_statement
     : RETURN { $$=bldRtnStmt(NULL); } 
