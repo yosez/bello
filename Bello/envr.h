@@ -89,7 +89,7 @@ struct VrbStrc* getEnvrVrb(struct EnvrStrc* envr, struct VrbExpStrc* vrbExp)
 		}
 	}
 
-	return NULL;
+	return nullptr;
 
 }
 

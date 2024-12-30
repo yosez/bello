@@ -601,10 +601,20 @@ argument_list
         $$=bldArgLst();
         argLstAdd($$, $1);
     }
+    | IDENTIFER COLON expression
+    {
+        $$ = bldArgLst();
+        argLstAdd($$, bldVrbExp($1), $3);
+    }
     | argument_list COMMA expression
     {
-        $$=$1;
+        $$ = $1;
         argLstAdd($$, $3);
+    }
+    | argument_list COMMA IDENTIFER COLON expression
+    {
+        $$ = $1;
+        argLstAdd($$, bldVrbExp($3), $5);
     }
 
 
@@ -891,10 +901,20 @@ parameter_list
         $$ = bldPrmLst();
         prmLstAdd($$, bldVrbExp($1));
     }
+    | IDENTIFER ASSIGN expression
+    {
+        $$ = bldPrmLst();
+        prmLstAdd($$, bldVrbExp($1), $3);
+    }
     | parameter_list COMMA IDENTIFER 
     { 
-        $$=$1;  
+        $$ = $1;  
         prmLstAdd($$, bldVrbExp($3));
+    }
+    | parameter_list COMMA IDENTIFER ASSIGN expression
+    {
+        $$ = $1;
+        prmLstAdd($$, bldVrbExp($3), $5);
     }
 
 return_statement

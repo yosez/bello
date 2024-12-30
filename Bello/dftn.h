@@ -393,12 +393,6 @@ struct NllStmtStrc : public StmtStrc
 
 };
 
-//struct StmtStrc
-//{
-//	int typ;
-//
-//	StmtStrc* stmt;
-//};
 
 //return语句返回类型结构体
 struct RtnRsltStrc
@@ -518,16 +512,14 @@ struct PrmLstStrc
 {
 
 	vector<ExpStrc*> prmArr;
-
+	vector<ExpStrc*> expArr;
 };
 
 
 //函数实参列表
 struct ArgLstStrc
 {
-	//int argSz;
-	//int argCnt;
-
+	vector <ExpStrc*> prmArr;
 	vector <ExpStrc*> argArr;
 };
 
