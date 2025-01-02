@@ -1535,6 +1535,16 @@ struct CnstStrc* clcFcnExp(vector<EnvrStrc*>& envr, struct FcnExpStrc* exp)
 	}
 	else if (fcn != nullptr)
 	{
+		//在建立函数环境前，计算实参的各个值
+
+		for (int i = 0; i < exp->argLst->argArr.size(); i++)
+		{
+			if (exp->argLst->argArr[i] != nullptr)
+			{
+				exp->argLst->argArr[i] = clcExp(envr, exp->argLst->argArr[i]);
+			}
+		}
+
 		//建立函数中的EnvrStrc
 
 		struct EnvrStrc* envrFcn = new EnvrStrc(FUNCTION_ENVIRONMENT);
