@@ -4,9 +4,7 @@
 #include <string>
 #include <stdlib.h>
 #include "y.tab.h"
-//#ifndef DFTN_H
-//#define DFTN_H
-//#endif
+#include "vrb.h"
 #include "dftn.h"
 #ifndef EXP_H
 #define EXP_H
@@ -55,4 +53,18 @@ int clsAddShrFcn(ClsStrc* cls, FcnStrc* fcn)
 	cls->shrFcn.push_back(fcn);
 
 	return 0;
+}
+
+ObjStrc* istObj(ClsStrc* cls, string nm)
+{
+	auto obj = new ObjStrc;
+
+	obj->nm = new string(nm);
+
+	obj->cls = cls;
+
+	for (int i = 0; i < cls->vrb.size(); i++)
+	{
+		obj->vrb.push_back(cpyVrb(cls->vrb.at(i)));
+	}
 }

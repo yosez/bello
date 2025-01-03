@@ -176,7 +176,7 @@ std::vector<StmtStkItmStrc*> stmtStk;
 
 struct VrbStrc
 {
-	string nm;
+	string *nm;
 	int typ;
 	union VlUnn vl;
 
@@ -193,12 +193,15 @@ struct ClsStrc
 	StmtStrc* dfn;
 };
 
-struct ObjStrc
+struct ObjStrc : public VrbStrc
 {
-	ClsStrc* cls;
 
 	vector<VrbStrc*> vrb;
+	vector<FcnStrc*> fcn;
+
+	ClsStrc* cls;
 };
+
 
 struct ExpStrc
 {

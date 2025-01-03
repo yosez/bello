@@ -13,6 +13,11 @@ extern struct ExpStrc* bldAsgnExp(struct ExpStrc* vrb, struct ExpStrc* exp);
 extern struct ExpStrc* bldLvlExp(struct ExpStrc* vrb);
 
 struct VrbStrc* bldVrb(string nm);
+struct VrbStrc* cpyVrb(VrbStrc* vrb, string* nm = nullptr);
+int asgnVrb(struct VrbStrc* vrb, struct CnstStrc* vl);
+struct CnstStrc* bldCnstFrmVrb(struct VrbStrc* vrb);
+struct AsgnLstStrc* bldAsgnLst();
+int asgnLstAdd(struct AsgnLstStrc* asgnLst, struct ExpStrc* vrb, struct ExpStrc* exp);
 
 //对变量数组中的选定变量进行赋值
 int asgnVrb(struct VrbStrc* vrb, struct CnstStrc* vl)
@@ -25,6 +30,24 @@ int asgnVrb(struct VrbStrc* vrb, struct CnstStrc* vl)
 	return 0;
 }
 
+struct VrbStrc* cpyVrb(VrbStrc* vrb, string* nm = nullptr)
+{
+	auto rslt = new VrbStrc;
+
+	rslt->typ = vrb->typ;
+	rslt->vl = vrb->vl;
+
+	if (nm != nullptr)
+	{
+		rslt->nm = new string(*nm);
+	}
+	else
+	{
+		rslt->nm = new string(*(vrb->nm));
+	}
+
+	return rslt;
+}
 
 struct CnstStrc* bldCnstFrmVrb(struct VrbStrc* vrb)
 {
@@ -32,7 +55,6 @@ struct CnstStrc* bldCnstFrmVrb(struct VrbStrc* vrb)
 
 	rslt->CnstTyp = vrb->typ;
 
-	//rslt->vl = vrb->vl;
 	memset(&(rslt->vl), 0, sizeof(VlUnn));
 	memcpy(&(rslt->vl), &(vrb->vl), sizeof(VlUnn));
 
@@ -44,7 +66,7 @@ struct VrbStrc* bldVrb(string nm)
 {
 	struct VrbStrc* rslt = new VrbStrc;
 
-	rslt->nm = nm;
+	rslt->nm = new string(nm);
 
 	rslt->typ = -1;
 
@@ -61,7 +83,6 @@ struct AsgnLstStrc* bldAsgnLst()
 
 int asgnLstAdd(struct AsgnLstStrc* asgnLst, struct ExpStrc* vrb, struct ExpStrc* exp)
 {
-
 	asgnLst->asgnArr.push_back(static_cast<AsgnExpStrc*>(bldAsgnExp(bldLvlExp(vrb), exp)));
 
 	return 0;

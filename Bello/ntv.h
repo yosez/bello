@@ -18,8 +18,6 @@ struct CnstStrc* newArrFcn(vector<EnvrStrc*>& envr, int argCnt, vector <CnstStrc
 struct CnstStrc* flOpn(vector<EnvrStrc*>& envr, int argCnt, vector <CnstStrc*> argArr);
 
 
-
-
 struct CnstStrc* rdIntFcn(vector<EnvrStrc*>& envr, int argCnt, vector <CnstStrc*> argArr)
 {
 	if (argCnt != 0)

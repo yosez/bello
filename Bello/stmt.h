@@ -741,13 +741,16 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 						//获取变量值
 						CnstStrc* expRslt = clcExp(envr, static_cast<VarStmtStrc*>(stmtArr.at(i))->asgnLst->asgnArr.at(j)->exp);
 						asgnVrb(vrb, expRslt);
+
+						cls->vrb.push_back(vrb);
 					}
 
 					break;
 				}
 				case FUNCTION_STATEMENT:
 				{
-					//for (int j=0; j<stmtArr.at(i)->stmt.fcnStmt->fcn->)
+					//将函数定义语句添加到类结构体中
+					cls->fcn.push_back(static_cast<FcnStmtStrc*>(stmtArr.at(i))->fcn);
 
 					break;
 				}
