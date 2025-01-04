@@ -69,6 +69,7 @@ union VlUnn
 	int intVl;
 	string* str;
 	struct ArrStrc* arr;
+	struct ObjStrc* obj;
 
 public:
 	VlUnn()
@@ -107,7 +108,8 @@ enum VrbTyp
 	BOOLEAN,
 	STRING,
 	NULL_TYPE,
-	ARRAY
+	ARRAY,
+	OBJECT
 };
 
 
@@ -162,7 +164,12 @@ enum EnvrTyp
 	STATEMENT_ENVIRONMENT
 };
 
+struct StmtStrc
+{
+public:
+	int typ;
 
+};
 
 struct StmtStkItmStrc
 {
@@ -193,7 +200,7 @@ struct ClsStrc
 	StmtStrc* dfn;
 };
 
-struct ObjStrc : public VrbStrc
+struct ObjStrc
 {
 
 	vector<VrbStrc*> vrb;
@@ -274,6 +281,9 @@ struct LvlExpStrc :public ExpStrc
 	int hasAcsLst;
 	struct VrbExpStrc* vrb;
 	struct AcsLstStrc* acs;
+
+	int hasAtb;
+	struct LvlExpStrc* atb;
 };
 
 
@@ -294,12 +304,7 @@ struct ElmtAsgnExpStrc :ExpStrc
 
 
 
-struct StmtStrc
-{
-public:
-	int typ;
 
-};
 
 struct ExpStmtStrc : public StmtStrc
 {

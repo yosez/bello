@@ -736,7 +736,7 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 					{
 						VrbStrc* vrb = new VrbStrc;
 						//获取变量名称
-						vrb->nm = string(static_cast<VarStmtStrc*>(stmtArr.at(i))->asgnLst->asgnArr.at(j)->lvl->vrb->nm);
+						vrb->nm = new string(static_cast<VarStmtStrc*>(stmtArr.at(i))->asgnLst->asgnArr.at(j)->lvl->vrb->nm);
 
 						//获取变量值
 						CnstStrc* expRslt = clcExp(envr, static_cast<VarStmtStrc*>(stmtArr.at(i))->asgnLst->asgnArr.at(j)->exp);

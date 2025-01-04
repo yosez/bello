@@ -72,7 +72,7 @@ struct VrbStrc* getEnvrVrb(struct EnvrStrc* envr, struct VrbExpStrc* vrbExp)
 	for (i = 0; i < envr->vrbArr.size(); i++)
 	{
 
-		if (vrbExp->nm == envr->vrbArr[i]->nm)
+		if (vrbExp->nm == *(envr->vrbArr[i]->nm))
 		{
 			return envr->vrbArr[i];
 		}
@@ -82,7 +82,7 @@ struct VrbStrc* getEnvrVrb(struct EnvrStrc* envr, struct VrbExpStrc* vrbExp)
 	{
 		for (i = 0; i < envr->glbArr.size(); i++)
 		{
-			if (vrbExp->nm == envr->glbArr[i]->nm)
+			if (vrbExp->nm == *(envr->glbArr[i]->nm))
 			{
 				return envr->glbArr[i];
 			}

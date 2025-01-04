@@ -58,74 +58,75 @@ extern int yydebug;
     LF = 259,                      /* LF  */
     END_FILE = 260,                /* END_FILE  */
     NOP = 261,                     /* NOP  */
-    CLASS = 262,                   /* CLASS  */
-    SHARED = 263,                  /* SHARED  */
-    THIS = 264,                    /* THIS  */
-    INDENT = 265,                  /* INDENT  */
-    INT_VALUE = 266,               /* INT_VALUE  */
-    BOOLEAN_VALUE = 267,           /* BOOLEAN_VALUE  */
-    FLOAT_VALUE = 268,             /* FLOAT_VALUE  */
-    STRING_VALUE = 269,            /* STRING_VALUE  */
-    NULL_VALUE = 270,              /* NULL_VALUE  */
-    ARRAY_VALUE = 271,             /* ARRAY_VALUE  */
-    IDENTIFER = 272,               /* IDENTIFER  */
-    ASSIGN = 273,                  /* ASSIGN  */
-    VAR = 274,                     /* VAR  */
-    GLOBAL = 275,                  /* GLOBAL  */
-    ADD_ASSIGN = 276,              /* ADD_ASSIGN  */
-    SUB_ASSIGN = 277,              /* SUB_ASSIGN  */
-    MUL_ASSIGN = 278,              /* MUL_ASSIGN  */
-    DIV_ASSIGN = 279,              /* DIV_ASSIGN  */
-    MOD_ASSIGN = 280,              /* MOD_ASSIGN  */
-    PRINT = 281,                   /* PRINT  */
-    PRINTLN = 282,                 /* PRINTLN  */
-    LEFT_PAREN = 283,              /* LEFT_PAREN  */
-    RIGHT_PAREN = 284,             /* RIGHT_PAREN  */
-    LEFT_QUAD = 285,               /* LEFT_QUAD  */
-    RIGHT_QUAD = 286,              /* RIGHT_QUAD  */
-    LEFT_BRACE = 287,              /* LEFT_BRACE  */
-    RIGHT_BRACE = 288,             /* RIGHT_BRACE  */
-    SEMICOLON_OPTIONAL = 289,      /* SEMICOLON_OPTIONAL  */
-    SEMICOLON = 290,               /* SEMICOLON  */
-    COMMA = 291,                   /* COMMA  */
-    COLON = 292,                   /* COLON  */
-    ADD = 293,                     /* ADD  */
-    SUB = 294,                     /* SUB  */
-    MUL = 295,                     /* MUL  */
-    DIV = 296,                     /* DIV  */
-    MOD = 297,                     /* MOD  */
-    EQ = 298,                      /* EQ  */
-    NE = 299,                      /* NE  */
-    GT = 300,                      /* GT  */
-    GE = 301,                      /* GE  */
-    LT = 302,                      /* LT  */
-    LE = 303,                      /* LE  */
-    AND = 304,                     /* AND  */
-    OR = 305,                      /* OR  */
-    NOT = 306,                     /* NOT  */
-    BIT_AND = 307,                 /* BIT_AND  */
-    BIT_OR = 308,                  /* BIT_OR  */
-    BIT_XOR = 309,                 /* BIT_XOR  */
-    BIT_NOT = 310,                 /* BIT_NOT  */
-    INCREMENT = 311,               /* INCREMENT  */
-    DECREMENT = 312,               /* DECREMENT  */
-    IF = 313,                      /* IF  */
-    ELSE = 314,                    /* ELSE  */
-    FOR = 315,                     /* FOR  */
-    WHILE = 316,                   /* WHILE  */
-    DO = 317,                      /* DO  */
-    CONTINUE = 318,                /* CONTINUE  */
-    BREAK = 319,                   /* BREAK  */
-    FUNC = 320,                    /* FUNC  */
-    RETURN = 321,                  /* RETURN  */
-    NEW_ARRAY = 322,               /* NEW_ARRAY  */
-    MINUS_SIGN = 323,              /* MINUS_SIGN  */
-    PLUS_SIGN = 324,               /* PLUS_SIGN  */
-    READ_INT = 325,                /* READ_INT  */
-    READ_FLOAT = 326,              /* READ_FLOAT  */
-    READ = 327,                    /* READ  */
-    READ_BOOL = 328,               /* READ_BOOL  */
-    READ_LINE = 329                /* READ_LINE  */
+    DOT = 262,                     /* DOT  */
+    CLASS = 263,                   /* CLASS  */
+    SHARED = 264,                  /* SHARED  */
+    THIS = 265,                    /* THIS  */
+    INDENT = 266,                  /* INDENT  */
+    INT_VALUE = 267,               /* INT_VALUE  */
+    BOOLEAN_VALUE = 268,           /* BOOLEAN_VALUE  */
+    FLOAT_VALUE = 269,             /* FLOAT_VALUE  */
+    STRING_VALUE = 270,            /* STRING_VALUE  */
+    NULL_VALUE = 271,              /* NULL_VALUE  */
+    ARRAY_VALUE = 272,             /* ARRAY_VALUE  */
+    IDENTIFER = 273,               /* IDENTIFER  */
+    ASSIGN = 274,                  /* ASSIGN  */
+    VAR = 275,                     /* VAR  */
+    GLOBAL = 276,                  /* GLOBAL  */
+    ADD_ASSIGN = 277,              /* ADD_ASSIGN  */
+    SUB_ASSIGN = 278,              /* SUB_ASSIGN  */
+    MUL_ASSIGN = 279,              /* MUL_ASSIGN  */
+    DIV_ASSIGN = 280,              /* DIV_ASSIGN  */
+    MOD_ASSIGN = 281,              /* MOD_ASSIGN  */
+    PRINT = 282,                   /* PRINT  */
+    PRINTLN = 283,                 /* PRINTLN  */
+    LEFT_PAREN = 284,              /* LEFT_PAREN  */
+    RIGHT_PAREN = 285,             /* RIGHT_PAREN  */
+    LEFT_QUAD = 286,               /* LEFT_QUAD  */
+    RIGHT_QUAD = 287,              /* RIGHT_QUAD  */
+    LEFT_BRACE = 288,              /* LEFT_BRACE  */
+    RIGHT_BRACE = 289,             /* RIGHT_BRACE  */
+    SEMICOLON_OPTIONAL = 290,      /* SEMICOLON_OPTIONAL  */
+    SEMICOLON = 291,               /* SEMICOLON  */
+    COMMA = 292,                   /* COMMA  */
+    COLON = 293,                   /* COLON  */
+    ADD = 294,                     /* ADD  */
+    SUB = 295,                     /* SUB  */
+    MUL = 296,                     /* MUL  */
+    DIV = 297,                     /* DIV  */
+    MOD = 298,                     /* MOD  */
+    EQ = 299,                      /* EQ  */
+    NE = 300,                      /* NE  */
+    GT = 301,                      /* GT  */
+    GE = 302,                      /* GE  */
+    LT = 303,                      /* LT  */
+    LE = 304,                      /* LE  */
+    AND = 305,                     /* AND  */
+    OR = 306,                      /* OR  */
+    NOT = 307,                     /* NOT  */
+    BIT_AND = 308,                 /* BIT_AND  */
+    BIT_OR = 309,                  /* BIT_OR  */
+    BIT_XOR = 310,                 /* BIT_XOR  */
+    BIT_NOT = 311,                 /* BIT_NOT  */
+    INCREMENT = 312,               /* INCREMENT  */
+    DECREMENT = 313,               /* DECREMENT  */
+    IF = 314,                      /* IF  */
+    ELSE = 315,                    /* ELSE  */
+    FOR = 316,                     /* FOR  */
+    WHILE = 317,                   /* WHILE  */
+    DO = 318,                      /* DO  */
+    CONTINUE = 319,                /* CONTINUE  */
+    BREAK = 320,                   /* BREAK  */
+    FUNC = 321,                    /* FUNC  */
+    RETURN = 322,                  /* RETURN  */
+    NEW_ARRAY = 323,               /* NEW_ARRAY  */
+    MINUS_SIGN = 324,              /* MINUS_SIGN  */
+    PLUS_SIGN = 325,               /* PLUS_SIGN  */
+    READ_INT = 326,                /* READ_INT  */
+    READ_FLOAT = 327,              /* READ_FLOAT  */
+    READ = 328,                    /* READ  */
+    READ_BOOL = 329,               /* READ_BOOL  */
+    READ_LINE = 330                /* READ_LINE  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -138,74 +139,75 @@ extern int yydebug;
 #define LF 259
 #define END_FILE 260
 #define NOP 261
-#define CLASS 262
-#define SHARED 263
-#define THIS 264
-#define INDENT 265
-#define INT_VALUE 266
-#define BOOLEAN_VALUE 267
-#define FLOAT_VALUE 268
-#define STRING_VALUE 269
-#define NULL_VALUE 270
-#define ARRAY_VALUE 271
-#define IDENTIFER 272
-#define ASSIGN 273
-#define VAR 274
-#define GLOBAL 275
-#define ADD_ASSIGN 276
-#define SUB_ASSIGN 277
-#define MUL_ASSIGN 278
-#define DIV_ASSIGN 279
-#define MOD_ASSIGN 280
-#define PRINT 281
-#define PRINTLN 282
-#define LEFT_PAREN 283
-#define RIGHT_PAREN 284
-#define LEFT_QUAD 285
-#define RIGHT_QUAD 286
-#define LEFT_BRACE 287
-#define RIGHT_BRACE 288
-#define SEMICOLON_OPTIONAL 289
-#define SEMICOLON 290
-#define COMMA 291
-#define COLON 292
-#define ADD 293
-#define SUB 294
-#define MUL 295
-#define DIV 296
-#define MOD 297
-#define EQ 298
-#define NE 299
-#define GT 300
-#define GE 301
-#define LT 302
-#define LE 303
-#define AND 304
-#define OR 305
-#define NOT 306
-#define BIT_AND 307
-#define BIT_OR 308
-#define BIT_XOR 309
-#define BIT_NOT 310
-#define INCREMENT 311
-#define DECREMENT 312
-#define IF 313
-#define ELSE 314
-#define FOR 315
-#define WHILE 316
-#define DO 317
-#define CONTINUE 318
-#define BREAK 319
-#define FUNC 320
-#define RETURN 321
-#define NEW_ARRAY 322
-#define MINUS_SIGN 323
-#define PLUS_SIGN 324
-#define READ_INT 325
-#define READ_FLOAT 326
-#define READ 327
-#define READ_BOOL 328
-#define READ_LINE 329
+#define DOT 262
+#define CLASS 263
+#define SHARED 264
+#define THIS 265
+#define INDENT 266
+#define INT_VALUE 267
+#define BOOLEAN_VALUE 268
+#define FLOAT_VALUE 269
+#define STRING_VALUE 270
+#define NULL_VALUE 271
+#define ARRAY_VALUE 272
+#define IDENTIFER 273
+#define ASSIGN 274
+#define VAR 275
+#define GLOBAL 276
+#define ADD_ASSIGN 277
+#define SUB_ASSIGN 278
+#define MUL_ASSIGN 279
+#define DIV_ASSIGN 280
+#define MOD_ASSIGN 281
+#define PRINT 282
+#define PRINTLN 283
+#define LEFT_PAREN 284
+#define RIGHT_PAREN 285
+#define LEFT_QUAD 286
+#define RIGHT_QUAD 287
+#define LEFT_BRACE 288
+#define RIGHT_BRACE 289
+#define SEMICOLON_OPTIONAL 290
+#define SEMICOLON 291
+#define COMMA 292
+#define COLON 293
+#define ADD 294
+#define SUB 295
+#define MUL 296
+#define DIV 297
+#define MOD 298
+#define EQ 299
+#define NE 300
+#define GT 301
+#define GE 302
+#define LT 303
+#define LE 304
+#define AND 305
+#define OR 306
+#define NOT 307
+#define BIT_AND 308
+#define BIT_OR 309
+#define BIT_XOR 310
+#define BIT_NOT 311
+#define INCREMENT 312
+#define DECREMENT 313
+#define IF 314
+#define ELSE 315
+#define FOR 316
+#define WHILE 317
+#define DO 318
+#define CONTINUE 319
+#define BREAK 320
+#define FUNC 321
+#define RETURN 322
+#define NEW_ARRAY 323
+#define MINUS_SIGN 324
+#define PLUS_SIGN 325
+#define READ_INT 326
+#define READ_FLOAT 327
+#define READ 328
+#define READ_BOOL 329
+#define READ_LINE 330
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -233,7 +235,7 @@ union YYSTYPE
     char *idtf;
     //string idtf;
 
-#line 237 "y.tab.h"
+#line 239 "y.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

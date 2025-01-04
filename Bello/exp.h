@@ -22,10 +22,15 @@
 #endif
 #include "err.h"
 #include "expt.h"
+#include "cls.h"
+
+
 
 extern enum ExpTyp;
 
 extern struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt);
+
+extern VrbStrc* getObjVrb(VrbStrc* vrb, LvlExpStrc* lvl);
 
 
 //struct CnstStrc* bldCnstIntExp(int intVl);
@@ -174,7 +179,10 @@ struct ExpStrc* bldLvlExp(struct ExpStrc* vrb)
 	rslt->vrb = static_cast<VrbExpStrc*>(vrb);
 
 	rslt->hasAcsLst = 0;
-	rslt->acs = NULL;
+	rslt->acs = nullptr;
+
+	rslt->hasAtb = 0;
+	rslt->atb = nullptr;
 
 	return rslt;
 }
@@ -1929,14 +1937,23 @@ struct CnstStrc* clcLvlExp(vector<EnvrStrc*>& envr, struct LvlExpStrc* exp)
 
 	lvl = getVrb(envr, static_cast<VrbExpStrc*> (exp->vrb));
 
-	if (lvl == NULL)
+	if (lvl == nullptr)
 	{
-		//errRpt(VARIABLE_NOT_DEFINED);
 		throw new ExVrbNotFnd();
-		return NULL;
+		return nullptr;
 	}
 
-	//printf("Get lvalue vrb: %08h\n", (int)lvl);
+	//如果左值表达式中有属性
+
+	if (exp->hasAtb == 1)
+	{
+		lvl = getObjVrb(lvl, exp->atb);
+
+		while (exp->hasAtb == 1)
+		{
+			exp = exp->atb;
+		}
+	}
 
 	//如果是变量名的情况
 	if (exp->hasAcsLst == 0)
@@ -1988,15 +2005,6 @@ struct CnstStrc* clcLvlExp(vector<EnvrStrc*>& envr, struct LvlExpStrc* exp)
 				}
 
 				arrTmp = arrTmp->vl.arr->elmtArr[pstn];
-				//if (i < lyr - 1)
-				//{
-				//	arrTmp = arrTmp->vl.arr->elmtArr[pstn];
-				//}
-				//else
-				//{
-				//	rslt = bldCnstCpy(arrTmp->vl.arr->elmtArr[pstn]);
-				//	return rslt;
-				//}
 			}
 
 			if (exp->acs->acsLst[i]->blnSlc != 0)

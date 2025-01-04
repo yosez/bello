@@ -89,6 +89,7 @@
 %token LF
 %token END_FILE
 %token NOP
+%token DOT
 %token CLASS SHARED THIS
 %token <intVl> INDENT
 %token <intVl> INT_VALUE
@@ -493,6 +494,12 @@ value_expression
 
 lvalue_expression
     : IDENTIFER { $$= bldLvlExp(bldVrbExp($1)); }
+    | lvalue_expression DOT IDENTIFER 
+    {
+        $$ = $1;
+        static_cast<LvlExpStrc*>($$)->hasAtb=1;
+        static_cast<LvlExpStrc*>($$)->atb=static_cast<LvlExpStrc*>(bldLvlExp(bldVrbExp($3)));
+    }
     | lvalue_expression evaluate_list 
     { 
         $$=$1; 
@@ -1015,37 +1022,6 @@ void fldStmt(int indt=0)
 
                 clsStmt->cls->dfn = blk;
 
-                //printf("blk arr sz: %d\n", blk->stmt.stmtBlk->stmtArr.size());
-                
-                //cls->dfn = blk;
-                /* for (int i=0;i<lnt;i++)
-                {
-                    StmtStrc *stmt = blk->stmt.stmtBlk->stmtArr.at(i);  
-
-                    if (stmt->typ == VAR_STATEMENT)
-                    {
-                        AsgnLstStrc* asgn = stmt->stmt.varStmt->asgnLst;
-
-                        for (int j=0;j<asgn->asgnArr.size();j++)
-                        {
-                            ExpStrc* asgnExp = asgn->asgnArr.at(j);
-
-                            //赋值应只允许静态值
-                            VrbStrc* vrb = bldVrb(asgnExp->exp.asgnExp->lvl->exp.lvlExp->vrb->exp.vrbExp->nm);
-
-                            cls->vrb.push_back(vrb);
-                        }
-                        
-                    
-                    }
-
-                    if (stmt->typ == FUNCTION_STATEMENT)
-                    {
-                        FcnStrc* fcn = stmt->stmt.fcnStmt->fcn;
-                        cls->fcn.push_back(fcn);
-                    }
-                } */
-
                 break;
             }
         }
@@ -1179,10 +1155,6 @@ int main(int argc, char * argv[])
 {
 
     //创建全局环境
-
-    //struct EnvrStrc* glbEnvr = new EnvrStrc;
-
-    //envr.push_back(glbEnvr);
 
     initGlbEnvr(envr);
 

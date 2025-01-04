@@ -13,7 +13,7 @@ extern struct ExpStrc* bldAsgnExp(struct ExpStrc* vrb, struct ExpStrc* exp);
 extern struct ExpStrc* bldLvlExp(struct ExpStrc* vrb);
 
 struct VrbStrc* bldVrb(string nm);
-struct VrbStrc* cpyVrb(VrbStrc* vrb, string* nm = nullptr);
+struct VrbStrc* cpyVrb(VrbStrc* vrb, string* nm);
 int asgnVrb(struct VrbStrc* vrb, struct CnstStrc* vl);
 struct CnstStrc* bldCnstFrmVrb(struct VrbStrc* vrb);
 struct AsgnLstStrc* bldAsgnLst();
