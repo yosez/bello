@@ -1125,7 +1125,7 @@ void prtStmtStk()
             }
             case VAR_STATEMENT:
             {
-                printf("varStmt2\n");
+                printf("varStmt\n");
                 break;
             }
             case FUNCTION_STATEMENT:

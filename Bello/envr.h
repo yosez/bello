@@ -2,6 +2,8 @@
 
 #include <stdio.h>
 #include <malloc.h>
+#include <vector>
+#include <algorithm>
 
 #include "y.tab.h"
 #include "dftn.h"
@@ -15,6 +17,8 @@
 #define EXP_H        
 #endif              
 
+using namespace std;
+
 //typedef struct CnstStrc* ntvFcnDfn(vector<EnvrStrc*>& envr, int prmCnt, vector <CnstStrc*> prmArr);
 
 extern struct ExpStrc* bldFcnExp(char* nm, struct ArgLstStrc* argLst);
@@ -26,7 +30,9 @@ int prtEnvrVrb(struct EnvrStrc* envr);
 
 int addFcn(struct EnvrStrc* envr, struct FcnStrc* fcn);
 struct FcnStrc* getEnvrFcn(struct EnvrStrc* envr, struct FcnExpStrc* fcnExp);
-struct FcnStrc* getFcn(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct FcnExpStrc* fcnExp);
+
+struct ClsStrc* getEnvrCls(EnvrStrc* envr, string nm);
+struct ClsStrc* getGlbCls(vector<EnvrStrc*>& envr, string nm);
 
 int addNtvFcn(struct EnvrStrc* envr, string fcnNm, ntvFcnDfn* fcn, int prmCnt);
 struct NtvFcnStrc* getNtvFcn(struct EnvrStrc* envr, struct FcnExpStrc* fcn);
@@ -211,14 +217,6 @@ struct FcnStrc* getEnvrFcn(struct EnvrStrc* envr, struct FcnExpStrc* fcnExp)
 
 }
 
-struct FcnStrc* getFcn(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct FcnExpStrc* fcnExp)
-{
-	struct FcnStrc* fcn = NULL;
-
-	fcn = getEnvrFcn(fcnEnvr, fcnExp) != NULL ? getEnvrFcn(fcnEnvr, fcnExp) : getEnvrFcn(glbEnvr, fcnExp);
-
-	return fcn;
-}
 
 struct FcnStrc* getFcn(vector<EnvrStrc*> envr, struct FcnExpStrc* fcnExp)
 {
@@ -334,19 +332,53 @@ int addCls(struct EnvrStrc* envr, struct ClsStrc* cls)
 	return 0;
 }
 
-struct ClsStrc* getEnvrCls(struct EnvrStrc* envr, string nm)
-{
-	ClsStrc* rslt = NULL;
+//struct ClsStrc* getEnvrCls(struct EnvrStrc* envr, string nm)
+//{
+//	ClsStrc* rslt = NULL;
+//
+//	for (int i = 0; i < envr->clsArr.size(); i++)
+//	{
+//		if (*(envr->clsArr.at(i)->nm) == nm)
+//		{
+//			return envr->clsArr.at(i);
+//		}
+//	}
+//
+//	return NULL;
+//}
 
-	for (int i = 0; i < envr->clsArr.size(); i++)
-	{
-		if (*(envr->clsArr.at(i)->nm) == nm)
+struct ClsStrc* getEnvrCls(EnvrStrc* envr, string nm)
+{
+	vector<ClsStrc*>* vct = &(envr->clsArr);
+
+	auto itr = find_if(vct->begin(), vct->end(), [nm](ClsStrc* cls)
 		{
-			return envr->clsArr.at(i);
-		}
+			printf("fnd cls #2: %s\n", cls->nm->c_str());
+			return *(cls->nm) == nm;
+		});
+
+	if (itr != vct->end())
+	{
+		auto rslt = *itr;
+		return rslt;
 	}
 
-	return NULL;
+	return nullptr;
+}
+
+
+struct ClsStrc* getGlbCls(vector<EnvrStrc*>& envr, string nm)
+{
+	ClsStrc* rslt = nullptr;
+
+	any_of(envr.rbegin(), envr.rend(), [nm, &rslt](EnvrStrc* envr)
+		{
+			printf("fnd cls: %s\n", nm.c_str());
+			rslt = getEnvrCls(envr, nm);
+			return rslt != nullptr;
+		});
+
+	return rslt;
 }
 
 struct NtvFcnStrc* getNtvFcn(vector<EnvrStrc*> envr, struct FcnExpStrc* fcn)
@@ -387,22 +419,8 @@ int prtEnvrFcn(struct EnvrStrc* envr)
 	return 0;
 }
 
-//int initGlbEnvr(struct EnvrStrc** envr)
-//{
-//
-//	*envr = new EnvrStrc;
-//
-//	addNtvFcn((*envr), string("readInt"), rdIntFcn, 0);
-//	addNtvFcn((*envr), string("readFloat"), rdFltFcn, 0);
-//	addNtvFcn((*envr), string("readBool"), rdBlnFcn, 0);
-//	addNtvFcn((*envr), string("read"), rdFcn, 0);
-//	addNtvFcn((*envr), string("readln"), rdlnFcn, 0);
-//	addNtvFcn((*envr), string("print"), prtFcn, 1);
-//	addNtvFcn((*envr), string("println"), prtlnFcn, 1);
-//	addNtvFcn((*envr), string("newArray"), newArrFcn, 1);
-//
-//	return 0;
-//}
+
+
 
 int initGlbEnvr(vector<EnvrStrc*>& envr)
 {

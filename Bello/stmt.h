@@ -756,6 +756,10 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 				}
 				}
 			}
+
+			//将类定义结构体添加到中环境中
+
+			envr.back()->clsArr.push_back(cls);
 		}
 
 		if (stmt->typ == RETURN_STATEMENT)
@@ -820,7 +824,10 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 	{
 		printf("Error: The index given is out of range of the array.\n");
 	}
-
+	catch (ExClsNotDfn* ex)
+	{
+		printf("Error: The class is not defined.\n");
+	}
 
 	return rslt;
 }

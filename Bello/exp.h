@@ -64,6 +64,7 @@ struct ExpStrc* bldLvlExp(struct ExpStrc* vrb);
 struct ExpStrc* bldLvlExpAdd(struct ExpStrc* lvl, struct AcsLstStrc* evlLst);
 struct ExpStrc* bldElmtAsgnExp(struct ExpStrc* arr, struct PstnLstStrc* pstnLst, struct ExpStrc* vl);
 struct ExpStrc* bldNewArrExp(struct ExpStrc* cnt);
+struct ExpStrc* bldNewExp(char *cls);
 
 struct CnstStrc* clcBnrExp(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp);
 struct CnstStrc* clcBnrExpAdd(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp);
@@ -97,6 +98,7 @@ struct CnstStrc* clcNewArrExp(vector<EnvrStrc*>& envr, struct NewArrExpStrc* exp
 struct CnstStrc* clcArrEvlExp(vector<EnvrStrc*>& envr, struct ArrEvlExpStrc* exp);
 struct CnstStrc* clcElmtAsgnExp(vector<EnvrStrc*>& envr, struct ElmtAsgnExpStrc* exp);
 struct CnstStrc* clcLvlExp(vector<EnvrStrc*>& envr, struct LvlExpStrc* exp);
+struct CnstStrc* clcNewExp(vector<EnvrStrc*>& envr, struct NewExpStrc* exp);
 struct CnstStrc* clcExp(vector<EnvrStrc*>& envr, struct ExpStrc* exp);
 
 
@@ -221,6 +223,15 @@ struct ExpStrc* bldNewArrExp(struct ExpStrc* cnt)
 	rslt->typ = NEW_ARRAY_EXPRESSION;
 
 	rslt->cnt = cnt;
+
+	return rslt;
+}
+
+struct ExpStrc* bldNewExp(char* cls)
+{
+	auto rslt = new NewExpStrc;
+	rslt->typ = NEW_EXPRESSION;
+	rslt->nm = new string(cls);
 
 	return rslt;
 }
@@ -2064,6 +2075,26 @@ struct CnstStrc* clcLvlExp(vector<EnvrStrc*>& envr, struct LvlExpStrc* exp)
 
 }
 
+struct CnstStrc* clcNewExp(vector<EnvrStrc*>& envr, struct NewExpStrc* exp)
+{
+	ClsStrc* cls = nullptr;
+
+	printf("new exp: %s\n", exp->nm->c_str());
+
+	cls = getGlbCls(envr, *(exp->nm));
+
+	if (cls != nullptr)
+	{
+		auto obj = istObj(cls);
+
+		return obj;
+	}
+	else
+	{
+		throw ExClsNotDfn();
+	}
+}
+
 struct CnstStrc* clcExp(vector<EnvrStrc*>& envr, struct ExpStrc* exp)
 {
 	struct CnstStrc* rslt = new CnstStrc;
@@ -2144,6 +2175,11 @@ struct CnstStrc* clcExp(vector<EnvrStrc*>& envr, struct ExpStrc* exp)
 	if (exp->typ == NULL_EXPRESSION)
 	{
 		rslt = bldNllCnst();
+	}
+
+	if (exp->typ == NEW_EXPRESSION)
+	{
+		rslt = clcNewExp(envr, static_cast<NewExpStrc*>(exp));
 	}
 
 	return rslt;

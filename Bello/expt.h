@@ -73,3 +73,8 @@ class ExIdxOutArrRng: public ExLgc
 {
 
 };
+
+class ExClsNotDfn : public ExLgc
+{
+
+};

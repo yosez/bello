@@ -19,6 +19,8 @@ int clsAddShrFcn(ClsStrc* cls, FcnStrc* fcn);
 VrbStrc* getObjVrb(VrbStrc* vrb, LvlExpStrc* lvl);
 VrbStrc* getObjVrb(ObjStrc* obj, string nm);
 
+CnstStrc* istObj(ClsStrc* cls);
+
 
 ClsStrc* bldCls(char* nm)
 {
@@ -58,13 +60,11 @@ int clsAddShrFcn(ClsStrc* cls, FcnStrc* fcn)
 	return 0;
 }
 
-VrbStrc* istObj(ClsStrc* cls, string nm)
+CnstStrc* istObj(ClsStrc* cls)
 {
-	auto rslt = new VrbStrc;
+	auto rslt = new CnstStrc;
 
 	rslt->typ = OBJECT;
-
-	rslt->nm = new string(nm);
 
 	rslt->vl.obj = new ObjStrc;
 
