@@ -24,6 +24,7 @@ struct UnrExpStrc;
 struct BnrExpStrc;
 struct LvlExpStrc;
 struct AsgnExpStrc;
+struct NewExpStrc;
 struct ExpStrc;
 
 struct IfStmtStrc;
@@ -98,7 +99,8 @@ enum ExpTyp
 	ARRAY_EVALUATE_EXPRESSION,
 	ELEMENT_ASSIGN_EXPRESSION,
 	NEW_ARRAY_EXPRESSION,
-	LVALUE_EXPRESSION
+	LVALUE_EXPRESSION,
+	NEW_EXPRESSION
 };
 
 enum VrbTyp
@@ -236,6 +238,12 @@ struct AsgnExpStrc : public ExpStrc
 {
 	struct LvlExpStrc* lvl;
 	struct ExpStrc* exp;
+};
+
+struct NewExpStrc :public ExpStrc
+{
+	string* nm;
+	struct ArgLstStrc* arg;
 };
 
 struct BnrExpStrc : public ExpStrc

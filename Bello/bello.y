@@ -88,6 +88,7 @@
 %token NULL_STRING
 %token LF
 %token END_FILE
+%token NEW
 %token NOP
 %token DOT
 %token CLASS SHARED THIS
@@ -491,6 +492,7 @@ value_expression
     | NULL_VALUE { $$=bldCnstNllExp(); }
     | function_expression
     | lvalue_expression 
+    | NEW IDENTIFER { $$= bldNewExp($2); }
 
 lvalue_expression
     : IDENTIFER { $$= bldLvlExp(bldVrbExp($1)); }

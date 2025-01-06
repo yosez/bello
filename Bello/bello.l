@@ -94,6 +94,7 @@
 "!"                         { return NOT; }
 "."                         { return DOT; }
 "nop"                       { return NOP; }
+"new"                       { return NEW; }
 "var"                       { return VAR; }
 "global"                    { return GLOBAL; }
 "if"                        { return IF; }
