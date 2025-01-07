@@ -2085,6 +2085,7 @@ struct CnstStrc* clcNewExp(vector<EnvrStrc*>& envr, struct NewExpStrc* exp)
 
 	if (cls != nullptr)
 	{
+		printf("get cls\n");
 		auto obj = istObj(cls);
 
 		return obj;

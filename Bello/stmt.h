@@ -720,11 +720,11 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 		{
 			auto clsStmt = static_cast<ClsStmtStrc*>(stmt);
 
+			ClsStrc* cls = clsStmt->cls;
+
 			//遍历类定义语句，填充类定义
 			StmtBlkStrc* blk = static_cast<StmtBlkStrc*>(clsStmt->cls->dfn);
 			std::vector<StmtStrc*>& stmtArr = blk->stmtArr;
-
-			ClsStrc* cls = new ClsStrc;
 
 			for (int i = 0; i < blk->stmtArr.size(); i++)
 			{
@@ -760,6 +760,10 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 			//将类定义结构体添加到中环境中
 
 			envr.back()->clsArr.push_back(cls);
+
+			//printf("stmt: %s\n", envr.back()->clsArr[0]->nm->c_str());
+
+			//printf("var: %s\n", envr.back()->clsArr.front()->vrb.front()->nm->c_str());
 		}
 
 		if (stmt->typ == RETURN_STATEMENT)

@@ -72,7 +72,7 @@ CnstStrc* istObj(ClsStrc* cls)
 
 	for (int i = 0; i < cls->vrb.size(); i++)
 	{
-		obj->vrb.push_back(cpyVrb(cls->vrb.at(i)));
+		obj->vrb.push_back(cpyVrb(cls->vrb.at(i), cls->vrb.at(i)->nm));
 	}
 
 	return rslt;
