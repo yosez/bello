@@ -1712,6 +1712,7 @@ struct CnstStrc* clcAsgnExp(vector<EnvrStrc*>& envr, struct AsgnExpStrc* exp)
 	if (lvl->hasAcsLst == 0)
 	{
 		asgnVrb(vrb, rslt);
+		printf("vrb asgn: typ: %d\n", vrb->typ);
 		printf("vrb asgn: ctn vrb: %s\n", vrb->vl.obj->vrb.back()->nm->c_str());
 	}
 	//定位到数组元素的情况
@@ -1960,7 +1961,7 @@ struct CnstStrc* clcLvlExp(vector<EnvrStrc*>& envr, struct LvlExpStrc* exp)
 
 	if (exp->hasAtb == 1)
 	{
-		printf("hasAtb vrb: %016x typ: %d tgt typ: %d\n", vrb, vrb->typ, OBJECT);
+		printf("hasAtb typ: %d tgt typ: %d\n", vrb->typ, OBJECT_VALUE);
 
 		vrb = getObjVrb(vrb, exp);
 
@@ -2147,6 +2148,9 @@ struct CnstStrc* clcExp(vector<EnvrStrc*>& envr, struct ExpStrc* exp)
 		}
 
 		rslt = clcAsgnExp(envr, asgnExp);
+
+		printf("aft asgn: rslt typ: %d cnst typ: %d\n", rslt->typ, rslt->CnstTyp);
+		printf("aft asgn: rslt vrb: %s typ: %d\n", rslt->vl.obj->vrb.back()->nm->c_str(), rslt->vl.obj->vrb.back()->typ);
 	}
 
 	if (exp->typ == UNARY_EXPRESSION)

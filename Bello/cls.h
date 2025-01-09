@@ -64,7 +64,9 @@ CnstStrc* istObj(ClsStrc* cls)
 {
 	auto rslt = new CnstStrc;
 
-	rslt->typ = OBJECT;
+	rslt->typ = CONST_EXPRESSION;
+
+	rslt->CnstTyp = OBJECT_VALUE;
 
 	rslt->vl.obj = new ObjStrc;
 
@@ -91,9 +93,9 @@ VrbStrc* getObjVrb(VrbStrc* vrb, LvlExpStrc* lvl)
 
 	VrbStrc* rslt = nullptr;
 
-	printf("vrb typ = obj: %016x %d\n", (void*)vrb, vrb->typ);
+	printf("vrb typ = obj: %016x %d\n", vrb->typ);
 
-	while (vrb->typ == OBJECT && lvl->hasAtb == 1)
+	while (vrb->typ == OBJECT_VALUE && lvl->hasAtb == 1)
 	{
 		vrb = getObjVrb(vrb->vl.obj, lvl->atb->vrb->nm);
 		lvl = lvl->atb;
@@ -127,7 +129,7 @@ VrbStrc* getObjVrb(ObjStrc* obj, string nm)
 	VrbStrc* rslt = nullptr;
 	for (int i = 0; i < obj->vrb.size(); i++)
 	{
-		printf("obj: vrb: %s\n", *(obj->vrb.at(i)->nm));
+		printf("obj: vrb: %s\n", obj->vrb.at(i)->nm->c_str());
 		if (*(obj->vrb.at(i)->nm) == nm)
 		{
 			rslt = obj->vrb.at(i);

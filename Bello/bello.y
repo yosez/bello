@@ -68,6 +68,7 @@
     int intVl;
     float fltVl;
     char *strVl;
+    struct ObjStrc* objVl;
 
     struct VrbStrc *vrb;
     struct ExpStrc *exp;
@@ -80,7 +81,7 @@
     struct ElmtLstStrc *elmtLst;
     struct PstnLstStrc *pstnLst;
     struct AcsLstStrc *evlLst;
-
+    
     char *idtf;
     //string idtf;
 }
@@ -97,6 +98,7 @@
 %token <blnVl> BOOLEAN_VALUE
 %token <fltVl> FLOAT_VALUE
 %token <strVl> STRING_VALUE
+%token <objVl> OBJECT_VALUE
 %token NULL_VALUE
 %token ARRAY_VALUE
 %token <idtf> IDENTIFER
@@ -510,7 +512,7 @@ lvalue_expression
         lvl->hasAtb=1;
         lvl->atb=static_cast<LvlExpStrc*>(bldLvlExp(bldVrbExp($3)));
 
-        printf("%s \n", lvl->atb->vrb->nm.c_str());
+        printf("lvl exp vrb%s \n", lvl->atb->vrb->nm.c_str());
     }
     | lvalue_expression evaluate_list 
     { 

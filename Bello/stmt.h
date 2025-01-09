@@ -538,7 +538,7 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 
 			envr.push_back(new EnvrStrc(STATEMENT_ENVIRONMENT));
 
-			while (whlStmt->exp == nullptr || clcExp(envr, (whlStmt->exp))->vl.intVl != 0 )
+			while (whlStmt->exp == nullptr || clcExp(envr, (whlStmt->exp))->vl.intVl != 0)
 			{
 				if (rslt->typ == CONTINUE_RESULT)
 				{
@@ -741,7 +741,7 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 						//获取变量值
 						CnstStrc* expRslt = clcExp(envr, static_cast<VarStmtStrc*>(stmtArr.at(i))->asgnLst->asgnArr.at(j)->exp);
 
-						printf("expRslt typ: %d %d\n", expRslt->CnstTyp, expRslt->typ);
+						printf("expRslt typ: %d cnst typ: %d\n", expRslt->typ, expRslt->CnstTyp);
 
 						asgnVrb(vrb, expRslt);
 
