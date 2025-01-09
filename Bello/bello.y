@@ -498,9 +498,19 @@ lvalue_expression
     : IDENTIFER { $$= bldLvlExp(bldVrbExp($1)); }
     | lvalue_expression DOT IDENTIFER 
     {
-        $$ = $1;
-        static_cast<LvlExpStrc*>($$)->hasAtb=1;
-        static_cast<LvlExpStrc*>($$)->atb=static_cast<LvlExpStrc*>(bldLvlExp(bldVrbExp($3)));
+        LvlExpStrc* lvl = static_cast<LvlExpStrc*>($1);
+        $$ = lvl;
+
+        while (lvl->hasAtb==1)
+        {
+            lvl= static_cast<LvlExpStrc*>(lvl->atb);
+            printf("lyr \n");
+        }
+
+        lvl->hasAtb=1;
+        lvl->atb=static_cast<LvlExpStrc*>(bldLvlExp(bldVrbExp($3)));
+
+        printf("%s \n", lvl->atb->vrb->nm.c_str());
     }
     | lvalue_expression evaluate_list 
     { 

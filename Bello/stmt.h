@@ -740,6 +740,9 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 
 						//获取变量值
 						CnstStrc* expRslt = clcExp(envr, static_cast<VarStmtStrc*>(stmtArr.at(i))->asgnLst->asgnArr.at(j)->exp);
+
+						printf("expRslt typ: %d %d\n", expRslt->CnstTyp, expRslt->typ);
+
 						asgnVrb(vrb, expRslt);
 
 						cls->vrb.push_back(vrb);

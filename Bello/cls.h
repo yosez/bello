@@ -73,6 +73,8 @@ CnstStrc* istObj(ClsStrc* cls)
 	for (int i = 0; i < cls->vrb.size(); i++)
 	{
 		obj->vrb.push_back(cpyVrb(cls->vrb.at(i), cls->vrb.at(i)->nm));
+
+		printf("var: %s typ: %d tgt typ: %d\n", obj->vrb.back()->nm->c_str(), obj->vrb.back()->typ, cls->vrb.at(i)->typ);
 	}
 
 	return rslt;
@@ -89,10 +91,18 @@ VrbStrc* getObjVrb(VrbStrc* vrb, LvlExpStrc* lvl)
 
 	VrbStrc* rslt = nullptr;
 
-	while (vrb->typ==OBJECT && lvl->hasAtb == 1)
+	printf("vrb typ = obj: %016x %d\n", (void*)vrb, vrb->typ);
+
+	while (vrb->typ == OBJECT && lvl->hasAtb == 1)
 	{
 		vrb = getObjVrb(vrb->vl.obj, lvl->atb->vrb->nm);
 		lvl = lvl->atb;
+
+		if (lvl->hasAtb == 0)
+		{
+			printf("----- get obj vrb\n");
+			return vrb;
+		}
 	}
 
 	//如果左值表达式未完全找到，则返回空指针
@@ -117,6 +127,7 @@ VrbStrc* getObjVrb(ObjStrc* obj, string nm)
 	VrbStrc* rslt = nullptr;
 	for (int i = 0; i < obj->vrb.size(); i++)
 	{
+		printf("obj: vrb: %s\n", *(obj->vrb.at(i)->nm));
 		if (*(obj->vrb.at(i)->nm) == nm)
 		{
 			rslt = obj->vrb.at(i);

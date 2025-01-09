@@ -64,7 +64,7 @@ struct ExpStrc* bldLvlExp(struct ExpStrc* vrb);
 struct ExpStrc* bldLvlExpAdd(struct ExpStrc* lvl, struct AcsLstStrc* evlLst);
 struct ExpStrc* bldElmtAsgnExp(struct ExpStrc* arr, struct PstnLstStrc* pstnLst, struct ExpStrc* vl);
 struct ExpStrc* bldNewArrExp(struct ExpStrc* cnt);
-struct ExpStrc* bldNewExp(char *cls);
+struct ExpStrc* bldNewExp(char* cls);
 
 struct CnstStrc* clcBnrExp(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp);
 struct CnstStrc* clcBnrExpAdd(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp);
@@ -1701,16 +1701,18 @@ struct CnstStrc* clcAsgnExp(vector<EnvrStrc*>& envr, struct AsgnExpStrc* exp)
 
 	struct LvlExpStrc* lvl;
 
-
 	lvl = static_cast<LvlExpStrc*>(exp->lvl);
 
 	struct VrbStrc* vrb;
 
 	vrb = getVrb(envr, static_cast<VrbExpStrc*> (lvl->vrb));
 
+	printf("clc obj vrb: %s\n", rslt->vl.obj->vrb.back()->nm->c_str());
+
 	if (lvl->hasAcsLst == 0)
 	{
 		asgnVrb(vrb, rslt);
+		printf("vrb asgn: ctn vrb: %s\n", vrb->vl.obj->vrb.back()->nm->c_str());
 	}
 	//定位到数组元素的情况
 	else
@@ -1944,11 +1946,11 @@ struct CnstStrc* clcLvlExp(vector<EnvrStrc*>& envr, struct LvlExpStrc* exp)
 {
 	struct CnstStrc* rslt = new CnstStrc;
 
-	struct VrbStrc* lvl;
+	struct VrbStrc* vrb;
 
-	lvl = getVrb(envr, static_cast<VrbExpStrc*> (exp->vrb));
+	vrb = getVrb(envr, exp->vrb);
 
-	if (lvl == nullptr)
+	if (vrb == nullptr)
 	{
 		throw new ExVrbNotFnd();
 		return nullptr;
@@ -1958,7 +1960,9 @@ struct CnstStrc* clcLvlExp(vector<EnvrStrc*>& envr, struct LvlExpStrc* exp)
 
 	if (exp->hasAtb == 1)
 	{
-		lvl = getObjVrb(lvl, exp->atb);
+		printf("hasAtb vrb: %016x typ: %d tgt typ: %d\n", vrb, vrb->typ, OBJECT);
+
+		vrb = getObjVrb(vrb, exp);
 
 		while (exp->hasAtb == 1)
 		{
@@ -1969,7 +1973,7 @@ struct CnstStrc* clcLvlExp(vector<EnvrStrc*>& envr, struct LvlExpStrc* exp)
 	//如果是变量名的情况
 	if (exp->hasAcsLst == 0)
 	{
-		rslt = bldCnstFrmVrb(lvl);
+		rslt = bldCnstFrmVrb(vrb);
 	}
 	//如果是数组评估表达式的情况
 	else
@@ -1987,7 +1991,7 @@ struct CnstStrc* clcLvlExp(vector<EnvrStrc*>& envr, struct LvlExpStrc* exp)
 		int strt, end, stp;
 
 		//arrTmp用于迭代取数组的值
-		arrTmp = bldCnstFrmVrb(lvl);
+		arrTmp = bldCnstFrmVrb(vrb);
 
 		int lyr = exp->acs->acsLst.size();
 
@@ -2138,6 +2142,8 @@ struct CnstStrc* clcExp(vector<EnvrStrc*>& envr, struct ExpStrc* exp)
 		if (getVrb(envr, asgnExp->lvl->vrb) == NULL)
 		{
 			addVrb(envr[envr.size() - 1], asgnExp->lvl->vrb);
+
+			printf("add vrb %s\n", asgnExp->lvl->vrb->nm.c_str());
 		}
 
 		rslt = clcAsgnExp(envr, asgnExp);
