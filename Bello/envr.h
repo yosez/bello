@@ -26,6 +26,8 @@ extern struct ExpStrc* bldFcnExp(char* nm, struct ArgLstStrc* argLst);
 struct VrbStrc* addVrb(struct EnvrStrc* envr, struct VrbExpStrc* vrbExp);
 struct VrbStrc* getEnvrVrb(struct EnvrStrc* envr, struct VrbExpStrc* vrbExp);
 struct VrbStrc* addVrbGlb(vector<EnvrStrc*>& envr, VrbExpStrc* vrbExp);
+struct VrbStrc* getVrb(vector<EnvrStrc*>& envr, struct VrbExpStrc* vrbExp);
+struct VrbStrc* getVrb(vector<EnvrStrc*>& envr, struct LvlExpStrc* lvl);
 int prtEnvrVrb(struct EnvrStrc* envr);
 
 int addFcn(struct EnvrStrc* envr, struct FcnStrc* fcn);
@@ -53,7 +55,7 @@ extern struct CnstStrc* prtFcn(vector<EnvrStrc*>& envr, int argCnt, vector <Cnst
 extern struct CnstStrc* prtlnFcn(vector<EnvrStrc*>& envr, int argCnt, vector <CnstStrc*> argArr);
 extern struct CnstStrc* newArrFcn(vector<EnvrStrc*>& envr, int argCnt, vector <CnstStrc*> argArr);
 
-
+extern VrbStrc* getObjVrb(VrbStrc* vrb, LvlExpStrc* lvl);
 
 struct VrbStrc* addVrb(struct EnvrStrc* envr, struct VrbExpStrc* vrbExp)
 {
@@ -99,17 +101,10 @@ struct VrbStrc* getEnvrVrb(struct EnvrStrc* envr, struct VrbExpStrc* vrbExp)
 
 }
 
-//struct VrbStrc* getVrb(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct VrbExpStrc* vrbExp)
-//{
-//	struct VrbStrc* vrb = NULL;
-//	vrb = getEnvrVrb(fcnEnvr, vrbExp) != NULL ? getEnvrVrb(fcnEnvr, vrbExp) : getEnvrVrb(glbEnvr, vrbExp);
-//
-//	return vrb;
-//}
 
 struct VrbStrc* getVrb(vector<EnvrStrc*>& envr, struct VrbExpStrc* vrbExp)
 {
-	struct VrbStrc* vrb = NULL;
+	struct VrbStrc* vrb = nullptr;
 
 	int lyrNbr = envr.size();
 
@@ -126,7 +121,7 @@ struct VrbStrc* getVrb(vector<EnvrStrc*>& envr, struct VrbExpStrc* vrbExp)
 
 		vrb = getEnvrVrb(tmp, vrbExp);
 
-		if (vrb != NULL)
+		if (vrb != nullptr)
 		{
 			return vrb;
 		}
@@ -138,7 +133,7 @@ struct VrbStrc* getVrb(vector<EnvrStrc*>& envr, struct VrbExpStrc* vrbExp)
 
 		if (envr[lyr]->typ == TOP_LEVEL_ENVIRONMENT)
 		{
-			return NULL;
+			return nullptr;
 		}
 
 		lyr--;
@@ -159,7 +154,7 @@ struct VrbStrc* getVrb(vector<EnvrStrc*>& envr, struct VrbExpStrc* vrbExp)
 
 		vrb = getEnvrVrb(tmp, vrbExp);
 
-		if (vrb != NULL)
+		if (vrb != nullptr)
 		{
 			return vrb;
 		}
@@ -173,6 +168,20 @@ struct VrbStrc* getVrb(vector<EnvrStrc*>& envr, struct VrbExpStrc* vrbExp)
 	}
 
 	return vrb;
+}
+
+struct VrbStrc* getVrb(vector<EnvrStrc*>& envr, struct LvlExpStrc* lvl)
+{
+	VrbStrc* rslt = nullptr;
+
+	rslt = getVrb(envr, lvl->vrb);
+
+	if (lvl->hasAtb)
+	{
+		rslt = getObjVrb(rslt, lvl);
+	}
+
+	return rslt;
 }
 
 

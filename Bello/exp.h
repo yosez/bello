@@ -1705,15 +1705,16 @@ struct CnstStrc* clcAsgnExp(vector<EnvrStrc*>& envr, struct AsgnExpStrc* exp)
 
 	struct VrbStrc* vrb;
 
-	vrb = getVrb(envr, static_cast<VrbExpStrc*> (lvl->vrb));
+	//vrb = getVrb(envr, static_cast<VrbExpStrc*> (lvl->vrb));
+	vrb = getVrb(envr, lvl);
 
-	printf("clc obj vrb: %s\n", rslt->vl.obj->vrb.back()->nm->c_str());
+	//printf("clc obj vrb: %s\n", rslt->vl.obj->vrb.back()->nm->c_str());
 
 	if (lvl->hasAcsLst == 0)
 	{
 		asgnVrb(vrb, rslt);
-		printf("vrb asgn: typ: %d\n", vrb->typ);
-		printf("vrb asgn: ctn vrb: %s\n", vrb->vl.obj->vrb.back()->nm->c_str());
+		//printf("vrb asgn: typ: %d\n", vrb->typ);
+		//printf("vrb asgn: ctn vrb: %s\n", vrb->vl.obj->vrb.back()->nm->c_str());
 	}
 	//定位到数组元素的情况
 	else
@@ -2144,13 +2145,13 @@ struct CnstStrc* clcExp(vector<EnvrStrc*>& envr, struct ExpStrc* exp)
 		{
 			addVrb(envr[envr.size() - 1], asgnExp->lvl->vrb);
 
-			printf("add vrb %s\n", asgnExp->lvl->vrb->nm.c_str());
+			//printf("add vrb %s\n", asgnExp->lvl->vrb->nm.c_str());
 		}
 
 		rslt = clcAsgnExp(envr, asgnExp);
 
-		printf("aft asgn: rslt typ: %d cnst typ: %d\n", rslt->typ, rslt->CnstTyp);
-		printf("aft asgn: rslt vrb: %s typ: %d\n", rslt->vl.obj->vrb.back()->nm->c_str(), rslt->vl.obj->vrb.back()->typ);
+		//printf("aft asgn: rslt typ: %d cnst typ: %d\n", rslt->typ, rslt->CnstTyp);
+		//printf("aft asgn: rslt vrb: %s typ: %d\n", rslt->vl.obj->vrb.back()->nm->c_str(), rslt->vl.obj->vrb.back()->typ);
 	}
 
 	if (exp->typ == UNARY_EXPRESSION)
