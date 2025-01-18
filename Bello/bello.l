@@ -1,5 +1,6 @@
 %option noyywrap
 %option nodefault
+
 %{ 
 
     #include <stdio.h>
@@ -112,8 +113,8 @@
 "func"                      { return FUNC; }
 "shared"                    { return SHARED; }
 "this"                      { return THIS; }
-[0-9]{1,7}                  { yylval.intVl=atoi(yytext); return INT_VALUE; }
-[0-9]{1,7}\.[0-9]{1,7}      { yylval.fltVl= (float)atof(yytext); return FLOAT_VALUE; }
+[0-9]{1,8}                  { yylval.intVl=atoi(yytext); return INT_VALUE; }
+[0-9]{1,8}\.[0-9]{1,8}      { yylval.fltVl= (float)atof(yytext); return FLOAT_VALUE; }
 "true"                      { yylval.blnVl=1; return BOOLEAN_VALUE; }
 "false"                     { yylval.blnVl=0; return BOOLEAN_VALUE; }
 "//"                        { stt=YY_START; BEGIN COMMENT; }
@@ -123,6 +124,7 @@
 <COMMENT_2>"*/"             { BEGIN stt; }
 <COMMENT_2>(.|[\n])         {}
 "\""                        { strtStr(); stt=YY_START; BEGIN STRING; }
+<STRING>[^\x00-\x7F]+       { strAdd(yytext); }
 <STRING>[^\\\"\r\n\t\v\b\f] { strAdd(yytext); }
 <STRING>"\\n"               { strAdd("\n"); }
 <STRING>"\\r"               { strAdd("\r"); }
