@@ -123,7 +123,7 @@
 %type <exp> expression value_expression function_expression  array_expression
     new_array_expression assign_expression unary_expression binary_expression 
     lvalue_operation_expression self_operation_expression lvalue_expression
-    //local_assign_expression
+    object_invoke_expression
 %type <stmt> single_statement expression_statement 
     statement_block block_list null_statement var_statement global_statement
 %type <stmt> if_statement else_statement structure_statement for_statement single_statement_no_semicolon while_statement 
@@ -493,6 +493,7 @@ value_expression
     | STRING_VALUE { $$=bldCnstStrExp($1); } 
     | NULL_VALUE { $$=bldCnstNllExp(); }
     | function_expression
+    //| object_invoke_expression
     | lvalue_expression 
     | NEW IDENTIFER { $$= bldNewExp($2); }
 
@@ -503,23 +504,83 @@ lvalue_expression
         LvlExpStrc* lvl = static_cast<LvlExpStrc*>($1);
         $$ = lvl;
 
+        //寻找LvlExpStrc链最末尾的结构体
         while (lvl->hasAtb==1)
         {
             lvl= static_cast<LvlExpStrc*>(lvl->atb);
-            printf("lyr \n");
         }
 
         lvl->hasAtb=1;
         lvl->atb=static_cast<LvlExpStrc*>(bldLvlExp(bldVrbExp($3)));
 
-        printf("lvl exp vrb%s \n", lvl->atb->vrb->nm.c_str());
     }
     | lvalue_expression evaluate_list 
     { 
         $$=$1; 
         bldLvlExpAdd($1, $2); 
     }
-    
+    | lvalue_expression DOT function_expression
+    {
+
+        printf("bld obj ivk exp\n");
+
+        LvlExpStrc* lvl = static_cast<LvlExpStrc*>($1);
+
+        $$ = $1;
+
+        //左值表达式设置调用对象方法的标志
+        lvl->blnIvk = 1;
+
+        while (lvl->hasAtb==1)
+        {
+            lvl = static_cast<LvlExpStrc*>(lvl->atb);
+        }
+
+        lvl->hasFcn=1;
+        lvl->fcn=static_cast<FcnExpStrc*>($3);
+
+    }
+
+/* object_invoke_expression
+    : object_invoke_expression DOT IDENTIFER LEFT_PAREN RIGHT_PAREN
+    {
+        printf("bld obj ivk exp\n");
+
+        LvlExpStrc* lvl = static_cast<LvlExpStrc*>($1);
+
+        $$ = $1;
+
+        while (lvl->hasAtb==1)
+        {
+            lvl = static_cast<LvlExpStrc*>(lvl->atb);
+        }
+
+        lvl->hasFcn=1;
+
+        //lvl->fcn = static_cast<FcnExpStrc*>($1);
+
+    }
+    /* | object_invoke_expression DOT IDENTIFER
+    {
+        LvlExpStrc* lvl = static_cast<LvlExpStrc*>($1);
+
+        $$=$1;
+
+        //寻找LvlExpStrc链最末尾的结构体
+        while (lvl->hasAtb==1)
+        {
+            lvl = static_cast<LvlExpStrc*>(lvl->atb);
+        }
+
+        lvl->hasAtb=1;
+        lvl->atb = static_cast<LvlExpStrc*>(bldLvlExp(bldVrbExp($3)));
+        
+    } 
+    | IDENTIFER DOT object_invoke_expression
+    {
+        $$ = bldLvlExp(bldVrbExp($1));
+    }
+    */
 
 array_expression
     : LEFT_QUAD element_list RIGHT_QUAD

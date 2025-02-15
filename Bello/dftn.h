@@ -292,6 +292,11 @@ struct LvlExpStrc :public ExpStrc
 
 	int hasAtb;
 	struct LvlExpStrc* atb;
+
+	int hasFcn;
+	struct FcnExpStrc* fcn;
+
+	int blnIvk;
 };
 
 

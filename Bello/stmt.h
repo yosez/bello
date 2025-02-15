@@ -294,8 +294,6 @@ struct StmtStrc* bldGlbStmt(AsgnLstStrc* asgnLst)
 
 	rslt->asgnLst = asgnLst;
 
-	//printf("asgnLst: %s", rslt->stmt.glbStmt->asgnLst->asgnArr[0]->exp.lvlExp->vrb->exp.vrbExp->nm.c_str());
-
 	return rslt;
 }
 

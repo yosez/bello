@@ -19,6 +19,9 @@ int clsAddShrFcn(ClsStrc* cls, FcnStrc* fcn);
 VrbStrc* getObjVrb(VrbStrc* vrb, LvlExpStrc* lvl);
 VrbStrc* getObjVrb(ObjStrc* obj, string nm);
 
+FcnStrc* getObjFcn(VrbStrc* vrb, LvlExpStrc* lvl);
+FcnStrc* getObjFcn(ObjStrc* obj, string nm);
+
 CnstStrc* istObj(ClsStrc* cls);
 
 
@@ -79,6 +82,12 @@ CnstStrc* istObj(ClsStrc* cls)
 		printf("var: %s typ: %d tgt typ: %d\n", obj->vrb.back()->nm->c_str(), obj->vrb.back()->typ, cls->vrb.at(i)->typ);
 	}
 
+	//将函数放到obj的结构体中
+	for (int i = 0; i < cls->fcn.size(); i++)
+	{
+		obj->fcn.push_back(cls->fcn.at(i));
+	}
+
 	return rslt;
 }
 
@@ -116,6 +125,56 @@ VrbStrc* getObjVrb(VrbStrc* vrb, LvlExpStrc* lvl)
 	rslt = vrb;
 
 	return rslt;
+}
+
+FcnStrc* getObjFcn(VrbStrc* vrb, LvlExpStrc* lvl)
+{
+
+	FcnStrc* rslt = nullptr;
+
+	while (vrb->typ == OBJECT_VALUE && lvl->hasAtb == 1)
+	{
+		vrb = getObjVrb(vrb->vl.obj, lvl->atb->vrb->nm);
+		lvl = lvl->atb;
+
+		if (lvl->hasFcn == 1)
+		{
+			rslt = getObjFcn(vrb->vl.obj, lvl->fcn->nm);
+
+			return rslt;
+		}
+	}
+
+	//如果左值表达式未完全找到，则返回空指针
+	if (lvl->hasAtb == 1)
+	{
+		return nullptr;
+	}
+
+
+	return nullptr;
+}
+
+/// <summary>
+/// 在对象中浅层寻找指定名称的函数
+/// </summary>
+/// <param name="obj"></param>
+/// <param name="nm"></param>
+/// <returns></returns>
+FcnStrc* getObjFcn(ObjStrc* obj, string nm)
+{
+	FcnStrc* rslt = nullptr;
+	for (int i = 0; i < obj->fcn.size(); i++)
+	{
+		printf("obj: vrb: %s\n", obj->fcn.at(i)->nm.c_str());
+		if ((obj->fcn.at(i)->nm) == nm)
+		{
+			rslt = obj->fcn.at(i);
+			return rslt;
+		}
+	}
+
+	return nullptr;
 }
 
 /// <summary>

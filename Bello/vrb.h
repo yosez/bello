@@ -37,7 +37,7 @@ struct VrbStrc* cpyVrb(VrbStrc* vrb, string* nm = nullptr)
 	rslt->typ = vrb->typ;
 	rslt->vl = vrb->vl;
 
-	printf("cpy vrb: typ: %d\n", rslt->typ);
+	//printf("cpy vrb: typ: %d\n", rslt->typ);
 
 	if (nm != nullptr)
 	{

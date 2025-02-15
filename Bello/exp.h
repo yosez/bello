@@ -93,6 +93,7 @@ struct CnstStrc* clcUnrExpSub(vector<EnvrStrc*>& envr, struct UnrExpStrc* exp);
 struct CnstStrc* clcUnrExpAdd(vector<EnvrStrc*>& envr, struct UnrExpStrc* exp);
 struct CnstStrc* clcUnrExp(vector<EnvrStrc*>& envr, struct UnrExpStrc* exp);
 struct CnstStrc* clcFcnExp(vector<EnvrStrc*>& envr, struct FcnExpStrc* exp);
+struct CnstStrc* clcFcnExp(vector<EnvrStrc*>& envr, struct FcnStrc* fcn, struct FcnExpStrc* exp);
 struct CnstStrc* clcArrExp(vector<EnvrStrc*>& envr, struct ArrExpStrc* exp);
 struct CnstStrc* clcNewArrExp(vector<EnvrStrc*>& envr, struct NewArrExpStrc* exp);
 struct CnstStrc* clcArrEvlExp(vector<EnvrStrc*>& envr, struct ArrEvlExpStrc* exp);
@@ -185,6 +186,11 @@ struct ExpStrc* bldLvlExp(struct ExpStrc* vrb)
 
 	rslt->hasAtb = 0;
 	rslt->atb = nullptr;
+
+	rslt->hasFcn = 0;
+	rslt->fcn = nullptr;
+
+	rslt->blnIvk = 0;
 
 	return rslt;
 }
@@ -1648,6 +1654,108 @@ struct CnstStrc* clcFcnExp(vector<EnvrStrc*>& envr, struct FcnExpStrc* exp)
 
 }
 
+/// <summary>
+/// 使用函数结构体以及函数表达式结构体计算函数表达式
+/// </summary>
+struct CnstStrc* clcFcnExp(vector<EnvrStrc*>& envr, struct FcnStrc* fcn, struct FcnExpStrc* exp)
+{
+	struct CnstStrc* rslt = new CnstStrc;
+
+	if (fcn != nullptr)
+	{
+		//在建立函数环境前，计算实参的各个值
+
+		for (int i = 0; i < exp->argLst->argArr.size(); i++)
+		{
+			if (exp->argLst->argArr[i] != nullptr)
+			{
+				exp->argLst->argArr[i] = clcExp(envr, exp->argLst->argArr[i]);
+			}
+		}
+
+		//建立函数中的EnvrStrc
+
+		struct EnvrStrc* envrFcn = new EnvrStrc(FUNCTION_ENVIRONMENT);
+
+		envr.push_back(envrFcn);
+
+		//计算各个参数的值并赋值给形参
+
+		int i;
+
+		struct CnstStrc* arg;
+		int argCnt = 0, argSz;
+
+		//此处暂时屏蔽
+		//如果函数参数个数不正确
+		//if (exp->argLst->argArr.size() > fcn->prmLst->prmArr.size())
+		//{
+		//	throw new ExFcnTooMnyArg;
+		//}
+		//else if (exp->argLst->argArr.size() < fcn->prmLst->prmArr.size())
+		//{
+		//	throw new ExFcnTooFewArg;
+		//}
+
+		struct VrbStrc* vrb;
+
+		//函数参数赋值
+		for (i = 0; i < exp->argLst->argArr.size(); i++)
+		{
+			//位置参数赋值
+			if (exp->argLst->prmArr[i] == nullptr)
+			{
+				arg = clcExp(envr, exp->argLst->argArr[i]);
+
+				vrb = addVrb(envrFcn, fcn->prmLst->prmArr[i]);
+
+				asgnVrb(vrb, arg);
+			}
+			//关键字参数赋值
+			else
+			{
+				arg = clcExp(envr, exp->argLst->argArr[i]);
+				vrb = getEnvrVrb(envrFcn, exp->argLst->prmArr[i]);
+
+				if (vrb == nullptr)
+				{
+					vrb = addVrb(envrFcn, exp->argLst->prmArr[i]);
+				}
+
+				asgnVrb(vrb, arg);
+			}
+		}
+
+		for (i = 0; i < fcn->prmLst->prmArr.size(); i++)
+		{
+			//默认参数赋值
+			vrb = getEnvrVrb(envrFcn, fcn->prmLst->prmArr[i]);
+
+			if (vrb == nullptr && fcn->prmLst->expArr[i] != nullptr)
+			{
+				vrb = addVrb(envrFcn, fcn->prmLst->prmArr[i]);
+				arg = clcExp(envr, fcn->prmLst->expArr[i]);
+
+				asgnVrb(vrb, arg);
+			}
+		}
+
+		struct StmtRsltStrc* stmtRslt;
+
+		stmtRslt = exctStmt(envr, fcn->stmt);
+
+		if (stmtRslt->typ == RETURN_RESULT && stmtRslt->rslt.rtnRslt->blnRslt == 1)
+		{
+			rslt = stmtRslt->rslt.rtnRslt->rslt;
+		}
+
+		envr.pop_back();
+	}
+
+
+	return rslt;
+
+}
 
 
 
@@ -1958,8 +2066,27 @@ struct CnstStrc* clcLvlExp(vector<EnvrStrc*>& envr, struct LvlExpStrc* exp)
 		return nullptr;
 	}
 
-	//如果左值表达式中有属性
+	FcnExpStrc* fcnExp = nullptr;
+	FcnStrc* fcn = nullptr;
 
+	//如果是调用对象的函数
+	if (exp->blnIvk)
+	{
+		printf("clc lvl exp obj fcn\n");
+
+		fcn = getObjFcn(vrb, exp);
+		
+		while (exp->hasAtb == 1)
+		{
+			exp = exp->atb;
+		}
+
+		rslt = clcFcnExp(envr, fcn, exp->fcn);
+
+		return rslt;
+	}
+
+	//如果左值表达式中有属性
 	if (exp->hasAtb == 1)
 	{
 		printf("hasAtb typ: %d tgt typ: %d\n", vrb->typ, OBJECT_VALUE);
