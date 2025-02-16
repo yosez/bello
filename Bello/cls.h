@@ -17,10 +17,10 @@ int clsAddShrVrb(ClsStrc* cls, VrbStrc* vrb);
 int clsAddShrFcn(ClsStrc* cls, FcnStrc* fcn);
 
 VrbStrc* getObjVrb(VrbStrc* vrb, LvlExpStrc* lvl);
-VrbStrc* getObjVrb(ObjStrc* obj, string nm);
+VrbStrc* getObjVrbDrct(ObjStrc* obj, string nm);
 
 FcnStrc* getObjFcn(VrbStrc* vrb, LvlExpStrc* lvl);
-FcnStrc* getObjFcn(ObjStrc* obj, string nm);
+FcnStrc* getObjFcnDrct(ObjStrc* obj, string nm);
 
 CnstStrc* istObj(ClsStrc* cls);
 
@@ -106,7 +106,7 @@ VrbStrc* getObjVrb(VrbStrc* vrb, LvlExpStrc* lvl)
 
 	while (vrb->typ == OBJECT_VALUE && lvl->hasAtb == 1)
 	{
-		vrb = getObjVrb(vrb->vl.obj, lvl->atb->vrb->nm);
+		vrb = getObjVrbDrct(vrb->vl.obj, lvl->atb->vrb->nm);
 		lvl = lvl->atb;
 
 		if (lvl->hasAtb == 0)
@@ -127,6 +127,12 @@ VrbStrc* getObjVrb(VrbStrc* vrb, LvlExpStrc* lvl)
 	return rslt;
 }
 
+/// <summary>
+/// 从变量结构体中寻找函数结构体，可以递归进行寻找
+/// </summary>
+/// <param name="vrb"></param>
+/// <param name="lvl"></param>
+/// <returns></returns>
 FcnStrc* getObjFcn(VrbStrc* vrb, LvlExpStrc* lvl)
 {
 
@@ -134,15 +140,16 @@ FcnStrc* getObjFcn(VrbStrc* vrb, LvlExpStrc* lvl)
 
 	while (vrb->typ == OBJECT_VALUE && lvl->hasAtb == 1)
 	{
-		vrb = getObjVrb(vrb->vl.obj, lvl->atb->vrb->nm);
+		vrb = getObjVrbDrct(vrb->vl.obj, lvl->atb->vrb->nm);
 		lvl = lvl->atb;
 
-		if (lvl->hasFcn == 1)
-		{
-			rslt = getObjFcn(vrb->vl.obj, lvl->fcn->nm);
+	}
 
-			return rslt;
-		}
+	if (lvl->hasFcn == 1)
+	{
+		rslt = getObjFcnDrct(vrb->vl.obj, lvl->fcn->nm);
+
+		return rslt;
 	}
 
 	//如果左值表达式未完全找到，则返回空指针
@@ -161,7 +168,7 @@ FcnStrc* getObjFcn(VrbStrc* vrb, LvlExpStrc* lvl)
 /// <param name="obj"></param>
 /// <param name="nm"></param>
 /// <returns></returns>
-FcnStrc* getObjFcn(ObjStrc* obj, string nm)
+FcnStrc* getObjFcnDrct(ObjStrc* obj, string nm)
 {
 	FcnStrc* rslt = nullptr;
 	for (int i = 0; i < obj->fcn.size(); i++)
@@ -183,7 +190,7 @@ FcnStrc* getObjFcn(ObjStrc* obj, string nm)
 /// <param name="obj"></param>
 /// <param name="nm"></param>
 /// <returns></returns>
-VrbStrc* getObjVrb(ObjStrc* obj, string nm)
+VrbStrc* getObjVrbDrct(ObjStrc* obj, string nm)
 {
 	VrbStrc* rslt = nullptr;
 	for (int i = 0; i < obj->vrb.size(); i++)
