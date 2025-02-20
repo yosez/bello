@@ -113,22 +113,23 @@ extern int yydebug;
     INCREMENT = 314,               /* INCREMENT  */
     DECREMENT = 315,               /* DECREMENT  */
     IF = 316,                      /* IF  */
-    ELSE = 317,                    /* ELSE  */
-    FOR = 318,                     /* FOR  */
-    WHILE = 319,                   /* WHILE  */
-    DO = 320,                      /* DO  */
-    CONTINUE = 321,                /* CONTINUE  */
-    BREAK = 322,                   /* BREAK  */
-    FUNC = 323,                    /* FUNC  */
-    RETURN = 324,                  /* RETURN  */
-    NEW_ARRAY = 325,               /* NEW_ARRAY  */
-    MINUS_SIGN = 326,              /* MINUS_SIGN  */
-    PLUS_SIGN = 327,               /* PLUS_SIGN  */
-    READ_INT = 328,                /* READ_INT  */
-    READ_FLOAT = 329,              /* READ_FLOAT  */
-    READ = 330,                    /* READ  */
-    READ_BOOL = 331,               /* READ_BOOL  */
-    READ_LINE = 332                /* READ_LINE  */
+    ELSEIF = 317,                  /* ELSEIF  */
+    ELSE = 318,                    /* ELSE  */
+    FOR = 319,                     /* FOR  */
+    WHILE = 320,                   /* WHILE  */
+    DO = 321,                      /* DO  */
+    CONTINUE = 322,                /* CONTINUE  */
+    BREAK = 323,                   /* BREAK  */
+    FUNC = 324,                    /* FUNC  */
+    RETURN = 325,                  /* RETURN  */
+    NEW_ARRAY = 326,               /* NEW_ARRAY  */
+    MINUS_SIGN = 327,              /* MINUS_SIGN  */
+    PLUS_SIGN = 328,               /* PLUS_SIGN  */
+    READ_INT = 329,                /* READ_INT  */
+    READ_FLOAT = 330,              /* READ_FLOAT  */
+    READ = 331,                    /* READ  */
+    READ_BOOL = 332,               /* READ_BOOL  */
+    READ_LINE = 333                /* READ_LINE  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -196,22 +197,23 @@ extern int yydebug;
 #define INCREMENT 314
 #define DECREMENT 315
 #define IF 316
-#define ELSE 317
-#define FOR 318
-#define WHILE 319
-#define DO 320
-#define CONTINUE 321
-#define BREAK 322
-#define FUNC 323
-#define RETURN 324
-#define NEW_ARRAY 325
-#define MINUS_SIGN 326
-#define PLUS_SIGN 327
-#define READ_INT 328
-#define READ_FLOAT 329
-#define READ 330
-#define READ_BOOL 331
-#define READ_LINE 332
+#define ELSEIF 317
+#define ELSE 318
+#define FOR 319
+#define WHILE 320
+#define DO 321
+#define CONTINUE 322
+#define BREAK 323
+#define FUNC 324
+#define RETURN 325
+#define NEW_ARRAY 326
+#define MINUS_SIGN 327
+#define PLUS_SIGN 328
+#define READ_INT 329
+#define READ_FLOAT 330
+#define READ 331
+#define READ_BOOL 332
+#define READ_LINE 333
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -240,7 +242,7 @@ union YYSTYPE
     char *idtf;
     //string idtf;
 
-#line 244 "y.tab.h"
+#line 246 "y.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

@@ -56,6 +56,7 @@
 
 
 ^[ \r\t]*\n                 { return NULL_STRING; }
+^[ \r\t]*"//".*\n           { }
 <<EOF>>                     { return END_FILE; }
 "\t"+                       { 
                                 yylval.intVl = strlen(yytext); 
@@ -99,6 +100,7 @@
 "var"                       { return VAR; }
 "global"                    { return GLOBAL; }
 "if"                        { return IF; }
+"elseif"                    { return ELSEIF; }
 "else"                      { return ELSE; }
 "for"                       { return FOR; }
 "do"                        { return DO; }

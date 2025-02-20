@@ -535,7 +535,7 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 			std::chrono::steady_clock::time_point tmEnd;
 			tmEnd = std::chrono::high_resolution_clock::now();
 
-			printf("tm: %d\n", chrono::duration_cast<chrono::microseconds>(tmEnd - tmStrt));
+			//printf("tm: %d\n", chrono::duration_cast<chrono::microseconds>(tmEnd - tmStrt));
 		}
 
 		if (stmt->typ == WHILE_STATEMENT)

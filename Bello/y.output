@@ -11,6 +11,7 @@ Terminals unused in grammar
     PRINT
     PRINTLN
     SEMICOLON_OPTIONAL
+    ELSEIF
     READ_INT
     READ_FLOAT
     READ
@@ -64,11 +65,11 @@ Grammar
    18                 | break_statement
    19                 | continue_statement
    20                 | return_statement
-   21                 | FUNCTION_STATEMENT
+   21                 | function_statement
    22                 | nop_statement
    23                 | var_statement
    24                 | global_statement
-   25                 | CLASS_STATEMENT
+   25                 | class_statement
    26                 | error
 
    27 single_statement_no_semicolon: expression_statement
@@ -223,12 +224,12 @@ Grammar
   145 structure_statement: single_statement
   146                    | statement_block
 
-  147 FUNCTION_STATEMENT: FUNC IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN
+  147 function_statement: FUNC IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN
   148                   | FUNC IDENTIFER LEFT_PAREN RIGHT_PAREN
   149                   | SHARED FUNC IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN
   150                   | SHARED FUNC IDENTIFER LEFT_PAREN RIGHT_PAREN
 
-  151 CLASS_STATEMENT: CLASS IDENTIFER
+  151 class_statement: CLASS IDENTIFER
 
   152 return_statement: RETURN
   153                 | RETURN expression
@@ -297,155 +298,156 @@ Terminals, with rules where they appear
     INCREMENT (314) 54 56
     DECREMENT (315) 55 57
     IF (316) 135
-    ELSE (317) 136
-    FOR (318) 137
-    WHILE (319) 138 139 140
-    DO (320) 140
-    CONTINUE (321) 143 144
-    BREAK (322) 141 142
-    FUNC (323) 147 148 149 150
-    RETURN (324) 152 153
-    NEW_ARRAY (325) 93
-    MINUS_SIGN (326)
-    PLUS_SIGN (327)
-    READ_INT (328)
-    READ_FLOAT (329)
-    READ (330)
-    READ_BOOL (331)
-    READ_LINE (332)
+    ELSEIF (317)
+    ELSE (318) 136
+    FOR (319) 137
+    WHILE (320) 138 139 140
+    DO (321) 140
+    CONTINUE (322) 143 144
+    BREAK (323) 141 142
+    FUNC (324) 147 148 149 150
+    RETURN (325) 152 153
+    NEW_ARRAY (326) 93
+    MINUS_SIGN (327)
+    PLUS_SIGN (328)
+    READ_INT (329)
+    READ_FLOAT (330)
+    READ (331)
+    READ_BOOL (332)
+    READ_LINE (333)
 
 
 Nonterminals, with rules where they appear
 
-    $accept (78)
+    $accept (79)
         on left: 0
-    statement (79)
+    statement (80)
         on left: 2 3 4 5 6 7
         on right: 0 2 3 4 5
-    @1 (80)
+    @1 (81)
         on left: 1
         on right: 2
-    check_indent (81)
+    check_indent (82)
         on left: 8
         on right: 2 3
-    build_statement (82)
+    build_statement (83)
         on left: 9
         on right: 2 3
-    close_execute_statement (83)
+    close_execute_statement (84)
         on left: 10
         on right: 4
-    close_execute_last_statement (84)
+    close_execute_last_statement (85)
         on left: 11
         on right: 2 5
-    execute_statement (85)
+    execute_statement (86)
         on left: 12
         on right: 2
-    single_statement <stmt> (86)
+    single_statement <stmt> (87)
         on left: 13 14 15 16 17 18 19 20 21 22 23 24 25 26
         on right: 2 3 37 38 145
-    single_statement_no_semicolon <stmt> (87)
+    single_statement_no_semicolon <stmt> (88)
         on left: 27 28 29 30 31 32
         on right: 137
-    null_statement <stmt> (88)
+    null_statement <stmt> (89)
         on left: 33
         on right: 32
-    nop_statement <stmt> (89)
+    nop_statement <stmt> (90)
         on left: 34
         on right: 22
-    statement_block <stmt> (90)
+    statement_block <stmt> (91)
         on left: 35 36
         on right: 146
-    block_list <stmt> (91)
+    block_list <stmt> (92)
         on left: 37 38
         on right: 35 38
-    expression_statement <stmt> (92)
+    expression_statement <stmt> (93)
         on left: 39
         on right: 13 27 137 140
-    expression <exp> (93)
+    expression <exp> (94)
         on left: 40 41 42 43 44 45
         on right: 39 48 49 50 51 52 53 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 93 94 95 100 102 105 106 107 108 110 112 113 114 115 116 117 118 119 120 121 122 124 125 126 127 128 129 130 131 132 133 135 138 142 144 153
-    lvalue_operation_expression <exp> (94)
+    lvalue_operation_expression <exp> (95)
         on left: 46 47
         on right: 41
-    assign_expression <exp> (95)
+    assign_expression <exp> (96)
         on left: 48 49 50 51 52 53
         on right: 46
-    self_operation_expression <exp> (96)
+    self_operation_expression <exp> (97)
         on left: 54 55 56 57
         on right: 47
-    unary_expression <exp> (97)
+    unary_expression <exp> (98)
         on left: 58 59 60 61 62
         on right: 42
-    binary_expression <exp> (98)
+    binary_expression <exp> (99)
         on left: 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78
         on right: 43
-    value_expression <exp> (99)
+    value_expression <exp> (100)
         on left: 79 80 81 82 83 84 85 86
         on right: 40
-    lvalue_expression <exp> (100)
+    lvalue_expression <exp> (101)
         on left: 87 88 89 90
         on right: 48 49 50 51 52 53 54 55 56 57 85 88 89 90
-    array_expression <exp> (101)
+    array_expression <exp> (102)
         on left: 91 92
         on right: 44
-    new_array_expression <exp> (102)
+    new_array_expression <exp> (103)
         on left: 93
         on right: 45
-    element_list <elmtLst> (103)
+    element_list <elmtLst> (104)
         on left: 94 95
         on right: 91 95
-    var_statement <stmt> (104)
+    var_statement <stmt> (105)
         on left: 96 97
         on right: 23
-    global_statement <stmt> (105)
+    global_statement <stmt> (106)
         on left: 98
         on right: 24
-    assign_list <asgnLst> (106)
+    assign_list <asgnLst> (107)
         on left: 99 100 101 102
         on right: 96 97 98 101 102
-    function_expression <exp> (107)
+    function_expression <exp> (108)
         on left: 103 104
         on right: 84 90
-    argument_list <argLst> (108)
+    argument_list <argLst> (109)
         on left: 105 106 107 108
         on right: 103 107 108
-    parameter_list <prmLst> (109)
+    parameter_list <prmLst> (110)
         on left: 109 110 111 112
         on right: 111 112 147 149
-    evaluate_list <evlLst> (110)
+    evaluate_list <evlLst> (111)
         on left: 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 129 130 131 132 133 134
         on right: 89 124 125 126 127 128 129 130 131 132 133 134
-    if_statement <stmt> (111)
+    if_statement <stmt> (112)
         on left: 135
         on right: 14 28
-    else_statement <stmt> (112)
+    else_statement <stmt> (113)
         on left: 136
         on right: 15
-    for_statement <stmt> (113)
+    for_statement <stmt> (114)
         on left: 137
         on right: 16 29
-    while_statement <stmt> (114)
+    while_statement <stmt> (115)
         on left: 138 139
         on right: 17 30
-    do_while_statement <stmt> (115)
+    do_while_statement <stmt> (116)
         on left: 140
         on right: 31
-    break_statement <stmt> (116)
+    break_statement <stmt> (117)
         on left: 141 142
         on right: 18
-    continue_statement <stmt> (117)
+    continue_statement <stmt> (118)
         on left: 143 144
         on right: 19
-    structure_statement <stmt> (118)
+    structure_statement <stmt> (119)
         on left: 145 146
         on right: 140
-    FUNCTION_STATEMENT <stmt> (119)
+    function_statement <stmt> (120)
         on left: 147 148 149 150
         on right: 21
-    CLASS_STATEMENT <stmt> (120)
+    class_statement <stmt> (121)
         on left: 151
         on right: 25
-    return_statement <stmt> (121)
+    return_statement <stmt> (122)
         on left: 152 153
         on right: 20
 
@@ -601,8 +603,8 @@ State 6
     while_statement              go to state 59
     break_statement              go to state 60
     continue_statement           go to state 61
-    FUNCTION_STATEMENT           go to state 62
-    CLASS_STATEMENT              go to state 63
+    function_statement           go to state 62
+    class_statement              go to state 63
     return_statement             go to state 64
 
 
@@ -652,7 +654,7 @@ State 12
 
 State 13
 
-  151 CLASS_STATEMENT: CLASS . IDENTIFER
+  151 class_statement: CLASS . IDENTIFER
 
     IDENTIFER  shift, and go to state 67
 
@@ -660,7 +662,7 @@ State 13
 State 14
 
    97 var_statement: SHARED . VAR assign_list
-  149 FUNCTION_STATEMENT: SHARED . FUNC IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN
+  149 function_statement: SHARED . FUNC IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN
   150                   | SHARED . FUNC IDENTIFER LEFT_PAREN RIGHT_PAREN
 
     VAR   shift, and go to state 68
@@ -1013,7 +1015,7 @@ State 36
 
 State 37
 
-  147 FUNCTION_STATEMENT: FUNC . IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN
+  147 function_statement: FUNC . IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN
   148                   | FUNC . IDENTIFER LEFT_PAREN RIGHT_PAREN
 
     IDENTIFER  shift, and go to state 90
@@ -1297,14 +1299,14 @@ State 61
 
 State 62
 
-   21 single_statement: FUNCTION_STATEMENT .
+   21 single_statement: function_statement .
 
     $default  reduce using rule 21 (single_statement)
 
 
 State 63
 
-   25 single_statement: CLASS_STATEMENT .
+   25 single_statement: class_statement .
 
     $default  reduce using rule 25 (single_statement)
 
@@ -1373,8 +1375,8 @@ State 65
     while_statement              go to state 59
     break_statement              go to state 60
     continue_statement           go to state 61
-    FUNCTION_STATEMENT           go to state 62
-    CLASS_STATEMENT              go to state 63
+    function_statement           go to state 62
+    class_statement              go to state 63
     return_statement             go to state 64
 
 
@@ -1387,9 +1389,9 @@ State 66
 
 State 67
 
-  151 CLASS_STATEMENT: CLASS IDENTIFER .
+  151 class_statement: CLASS IDENTIFER .
 
-    $default  reduce using rule 151 (CLASS_STATEMENT)
+    $default  reduce using rule 151 (class_statement)
 
 
 State 68
@@ -1403,7 +1405,7 @@ State 68
 
 State 69
 
-  149 FUNCTION_STATEMENT: SHARED FUNC . IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN
+  149 function_statement: SHARED FUNC . IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN
   150                   | SHARED FUNC . IDENTIFER LEFT_PAREN RIGHT_PAREN
 
     IDENTIFER  shift, and go to state 123
@@ -1889,7 +1891,7 @@ State 89
 
 State 90
 
-  147 FUNCTION_STATEMENT: FUNC IDENTIFER . LEFT_PAREN parameter_list RIGHT_PAREN
+  147 function_statement: FUNC IDENTIFER . LEFT_PAREN parameter_list RIGHT_PAREN
   148                   | FUNC IDENTIFER . LEFT_PAREN RIGHT_PAREN
 
     LEFT_PAREN  shift, and go to state 145
@@ -2838,7 +2840,7 @@ State 122
 
 State 123
 
-  149 FUNCTION_STATEMENT: SHARED FUNC IDENTIFER . LEFT_PAREN parameter_list RIGHT_PAREN
+  149 function_statement: SHARED FUNC IDENTIFER . LEFT_PAREN parameter_list RIGHT_PAREN
   150                   | SHARED FUNC IDENTIFER . LEFT_PAREN RIGHT_PAREN
 
     LEFT_PAREN  shift, and go to state 176
@@ -3103,8 +3105,8 @@ State 134
     break_statement              go to state 60
     continue_statement           go to state 61
     structure_statement          go to state 187
-    FUNCTION_STATEMENT           go to state 62
-    CLASS_STATEMENT              go to state 63
+    function_statement           go to state 62
+    class_statement              go to state 63
     return_statement             go to state 64
 
 
@@ -3276,7 +3278,7 @@ State 144
 
 State 145
 
-  147 FUNCTION_STATEMENT: FUNC IDENTIFER LEFT_PAREN . parameter_list RIGHT_PAREN
+  147 function_statement: FUNC IDENTIFER LEFT_PAREN . parameter_list RIGHT_PAREN
   148                   | FUNC IDENTIFER LEFT_PAREN . RIGHT_PAREN
 
     IDENTIFER    shift, and go to state 192
@@ -4214,7 +4216,7 @@ State 175
 
 State 176
 
-  149 FUNCTION_STATEMENT: SHARED FUNC IDENTIFER LEFT_PAREN . parameter_list RIGHT_PAREN
+  149 function_statement: SHARED FUNC IDENTIFER LEFT_PAREN . parameter_list RIGHT_PAREN
   150                   | SHARED FUNC IDENTIFER LEFT_PAREN . RIGHT_PAREN
 
     IDENTIFER    shift, and go to state 192
@@ -4456,8 +4458,8 @@ State 184
     while_statement              go to state 59
     break_statement              go to state 60
     continue_statement           go to state 61
-    FUNCTION_STATEMENT           go to state 62
-    CLASS_STATEMENT              go to state 63
+    function_statement           go to state 62
+    class_statement              go to state 63
     return_statement             go to state 64
 
 
@@ -4550,16 +4552,16 @@ State 192
 
 State 193
 
-  148 FUNCTION_STATEMENT: FUNC IDENTIFER LEFT_PAREN RIGHT_PAREN .
+  148 function_statement: FUNC IDENTIFER LEFT_PAREN RIGHT_PAREN .
 
-    $default  reduce using rule 148 (FUNCTION_STATEMENT)
+    $default  reduce using rule 148 (function_statement)
 
 
 State 194
 
   111 parameter_list: parameter_list . COMMA IDENTIFER
   112               | parameter_list . COMMA IDENTIFER ASSIGN expression
-  147 FUNCTION_STATEMENT: FUNC IDENTIFER LEFT_PAREN parameter_list . RIGHT_PAREN
+  147 function_statement: FUNC IDENTIFER LEFT_PAREN parameter_list . RIGHT_PAREN
 
     RIGHT_PAREN  shift, and go to state 216
     COMMA        shift, and go to state 217
@@ -4771,16 +4773,16 @@ State 203
 
 State 204
 
-  150 FUNCTION_STATEMENT: SHARED FUNC IDENTIFER LEFT_PAREN RIGHT_PAREN .
+  150 function_statement: SHARED FUNC IDENTIFER LEFT_PAREN RIGHT_PAREN .
 
-    $default  reduce using rule 150 (FUNCTION_STATEMENT)
+    $default  reduce using rule 150 (function_statement)
 
 
 State 205
 
   111 parameter_list: parameter_list . COMMA IDENTIFER
   112               | parameter_list . COMMA IDENTIFER ASSIGN expression
-  149 FUNCTION_STATEMENT: SHARED FUNC IDENTIFER LEFT_PAREN parameter_list . RIGHT_PAREN
+  149 function_statement: SHARED FUNC IDENTIFER LEFT_PAREN parameter_list . RIGHT_PAREN
 
     RIGHT_PAREN  shift, and go to state 229
     COMMA        shift, and go to state 217
@@ -4986,8 +4988,8 @@ State 212
     while_statement              go to state 59
     break_statement              go to state 60
     continue_statement           go to state 61
-    FUNCTION_STATEMENT           go to state 62
-    CLASS_STATEMENT              go to state 63
+    function_statement           go to state 62
+    class_statement              go to state 63
     return_statement             go to state 64
 
 
@@ -5041,9 +5043,9 @@ State 215
 
 State 216
 
-  147 FUNCTION_STATEMENT: FUNC IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN .
+  147 function_statement: FUNC IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN .
 
-    $default  reduce using rule 147 (FUNCTION_STATEMENT)
+    $default  reduce using rule 147 (function_statement)
 
 
 State 217
@@ -5297,9 +5299,9 @@ State 228
 
 State 229
 
-  149 FUNCTION_STATEMENT: SHARED FUNC IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN .
+  149 function_statement: SHARED FUNC IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN .
 
-    $default  reduce using rule 149 (FUNCTION_STATEMENT)
+    $default  reduce using rule 149 (function_statement)
 
 
 State 230

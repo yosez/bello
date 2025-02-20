@@ -291,6 +291,11 @@ struct ExpStrc* bldFcnExp(char* nm, struct ArgLstStrc* argLst)
 
 	rslt->argLst = argLst;
 
+	if (rslt->argLst != nullptr)
+	{
+		printf("argLst: arg typ: %d\n", rslt->argLst->argArr.at(0)->typ);
+	}
+
 	return rslt;
 
 }
@@ -1564,10 +1569,14 @@ struct CnstStrc* clcFcnExp(vector<EnvrStrc*>& envr, struct FcnExpStrc* exp)
 
 		for (int i = 0; i < exp->argLst->argArr.size(); i++)
 		{
+			printf("bfr argArr[%d] typ: %d\n", i, exp->argLst->argArr[i]->typ);
+
 			if (exp->argLst->argArr[i] != nullptr)
 			{
 				exp->argLst->argArr[i] = clcExp(envr, exp->argLst->argArr[i]);
 			}
+
+			printf("argArr[%d] typ: %d\n", i, exp->argLst->argArr[i]->typ);
 		}
 
 		//建立函数中的EnvrStrc
@@ -1887,7 +1896,7 @@ struct CnstStrc* clcArrExp(vector<EnvrStrc*>& envr, struct ArrExpStrc* exp)
 
 	elmtCnt = exp->elmtLst->elmtArr.size();
 
-	//printf("arr: %d:", elmtCnt);
+	printf("arr: %d:", elmtCnt);
 
 	for (i = 0; i < elmtCnt; i++)
 	{
@@ -2126,6 +2135,7 @@ struct CnstStrc* clcLvlExp(vector<EnvrStrc*>& envr, struct LvlExpStrc* exp)
 
 		for (i = 0; i < lyr; i++)
 		{
+			//printf("cnst typ: %d\n", arrTmp->CnstTyp);
 			//检查是否是有效的数组
 			if (arrTmp->CnstTyp != ARRAY_VALUE)
 			{

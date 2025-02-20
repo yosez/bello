@@ -116,7 +116,7 @@
 %token AND OR NOT
 %token BIT_AND BIT_OR BIT_XOR BIT_NOT
 %token INCREMENT DECREMENT
-%token IF ELSE FOR WHILE DO CONTINUE BREAK
+%token IF ELSEIF ELSE FOR WHILE DO CONTINUE BREAK
 %token FUNC RETURN
 %token NEW_ARRAY
 
@@ -128,7 +128,7 @@
     statement_block block_list null_statement var_statement global_statement
 %type <stmt> if_statement else_statement structure_statement for_statement single_statement_no_semicolon while_statement 
     do_while_statement break_statement continue_statement return_statement nop_statement
-%type <stmt> FUNCTION_STATEMENT CLASS_STATEMENT
+%type <stmt> function_statement class_statement
 %type <prmLst> parameter_list 
 %type <argLst> argument_list
 %type <asgnLst> assign_list
@@ -266,7 +266,7 @@ close_execute_statement
                 
             }
 
-            prtStmtStk();
+            //prtStmtStk();
 
             //如果上1条语句为子语句，则闭合上1条顶级语句
             if (stmtStk.back()->indt > 0)
@@ -381,12 +381,12 @@ single_statement
     | break_statement { $$=$1; }
     | continue_statement  { $$=$1; }
     | return_statement  { $$=$1; }
-    | FUNCTION_STATEMENT { $$=$1; } 
+    | function_statement { $$=$1; } 
     /* | null_statement  { $$=$1; } */
     | nop_statement { $$=$1; }
     | var_statement  { $$ = $1;}
     | global_statement  { $$ = $1; } 
-    | CLASS_STATEMENT { $$= $1; } 
+    | class_statement { $$= $1; } 
     | error 
     { 
         $$=bldNllStmt(); 
@@ -944,7 +944,7 @@ structure_statement
         $$ = bldFcnStmt(fcn);
     } */
 
-FUNCTION_STATEMENT
+function_statement
     : FUNC IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN 
     {
         struct FcnStrc* fcn;
@@ -987,7 +987,7 @@ FUNCTION_STATEMENT
         $$ = bldFcnStmt(fcn);
     }
 
-CLASS_STATEMENT
+class_statement
     : CLASS IDENTIFER
     {
         struct ClsStrc* cls;
