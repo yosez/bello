@@ -291,10 +291,10 @@ struct ExpStrc* bldFcnExp(char* nm, struct ArgLstStrc* argLst)
 
 	rslt->argLst = argLst;
 
-	if (rslt->argLst != nullptr)
-	{
-		printf("argLst: arg typ: %d\n", rslt->argLst->argArr.at(0)->typ);
-	}
+	//if (rslt->argLst != nullptr)
+	//{
+	//	printf("argLst: arg typ: %d\n", rslt->argLst->argArr.at(0)->typ);
+	//}
 
 	return rslt;
 
@@ -314,7 +314,10 @@ struct CnstStrc* clcBnrExpAdd(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp)
 	struct CnstStrc* lftCnst = clcExp(envr, exp->lftExp);
 	struct CnstStrc* rghtCnst = clcExp(envr, exp->rghtExp);
 
-	struct CnstStrc* rslt = NULL;
+	printf("bnr exp lft: typ: %d\n", lftCnst->CnstTyp);
+	printf("bnr exp rgt: typ: %d\n", rghtCnst->CnstTyp);
+
+	struct CnstStrc* rslt = nullptr;
 
 	if (lftCnst->CnstTyp == INT_VALUE && rghtCnst->CnstTyp == INT_VALUE)
 	{
@@ -395,8 +398,9 @@ struct CnstStrc* clcBnrExpAdd(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp)
 		rslt = bldStrCnstByStr(str);
 	}
 
-	if (rslt == NULL)
+	if (rslt == nullptr)
 	{
+		printf("bnr exp err\n");
 		throw new ExWrgOprndTyp;
 	}
 
@@ -1554,9 +1558,15 @@ struct CnstStrc* clcFcnExp(vector<EnvrStrc*>& envr, struct FcnExpStrc* exp)
 		//struct CnstStrc** argArr = (struct CnstStrc**)malloc(sizeof(struct CnstStrc*) * ntvFcn->prmCnt);
 		vector<CnstStrc*> argArr;
 
+		printf("clc fcn prm cnt: %d\n", exp->argLst->argArr.size());
+
 		for (i = 0; i < exp->argLst->argArr.size(); i++)
 		{
+			printf("ntvFcn arg[%2d] typ: %d\n", i, exp->argLst->argArr.at(i)->typ);
+
 			arg = clcExp(envr, exp->argLst->argArr[i]);
+
+			printf("aft clc ntvFcn arg[%2d] typ: %d\n", i, exp->argLst->argArr.at(i)->typ);
 
 			argArr.push_back(arg);
 		}
@@ -1576,7 +1586,7 @@ struct CnstStrc* clcFcnExp(vector<EnvrStrc*>& envr, struct FcnExpStrc* exp)
 				exp->argLst->argArr[i] = clcExp(envr, exp->argLst->argArr[i]);
 			}
 
-			printf("argArr[%d] typ: %d\n", i, exp->argLst->argArr[i]->typ);
+			printf("aft argArr[%d] typ: %d\n", i, exp->argLst->argArr[i]->typ);
 		}
 
 		//建立函数中的EnvrStrc
@@ -1611,11 +1621,17 @@ struct CnstStrc* clcFcnExp(vector<EnvrStrc*>& envr, struct FcnExpStrc* exp)
 			//位置参数赋值
 			if (exp->argLst->prmArr[i] == nullptr)
 			{
+				printf("bfr lctn prm asgn: typ: %d\n", exp->argLst->argArr[i]->typ);
+
 				arg = clcExp(envr, exp->argLst->argArr[i]);
+
+				printf("bfr lctn prm asgn: arg: cnstTyp: %d typ: %d\n",arg->CnstTyp, arg->typ);
 
 				vrb = addVrb(envrFcn, fcn->prmLst->prmArr[i]);
 
 				asgnVrb(vrb, arg);
+
+				printf("aft lctn prm asgn: typ: %d\n", vrb->typ);
 			}
 			//关键字参数赋值
 			else
@@ -2069,6 +2085,8 @@ struct CnstStrc* clcLvlExp(vector<EnvrStrc*>& envr, struct LvlExpStrc* exp)
 
 	vrb = getVrb(envr, exp->vrb);
 
+	printf("vrb == nullptr: %d typ: %d\n", vrb == nullptr, vrb->typ);
+
 	if (vrb == nullptr)
 	{
 		throw new ExVrbNotFnd();
@@ -2084,7 +2102,7 @@ struct CnstStrc* clcLvlExp(vector<EnvrStrc*>& envr, struct LvlExpStrc* exp)
 		printf("clc lvl exp obj fcn\n");
 
 		fcn = getObjFcn(vrb, exp);
-		
+
 		while (exp->hasAtb == 1)
 		{
 			exp = exp->atb;
@@ -2111,7 +2129,16 @@ struct CnstStrc* clcLvlExp(vector<EnvrStrc*>& envr, struct LvlExpStrc* exp)
 	//如果是变量名的情况
 	if (exp->hasAcsLst == 0)
 	{
+		printf("hasAcsLst == 0 vrb typ: %d\n", vrb->typ);
+
 		rslt = bldCnstFrmVrb(vrb);
+
+		printf("hasAcsLst == 0 rslt typ: %d\n", rslt->typ);
+
+		if (rslt->typ == -842150451)
+		{
+			throw 123;
+		}
 	}
 	//如果是数组评估表达式的情况
 	else
@@ -2128,19 +2155,22 @@ struct CnstStrc* clcLvlExp(vector<EnvrStrc*>& envr, struct LvlExpStrc* exp)
 
 		int strt, end, stp;
 
+		printf("vrb typ: %d\n", vrb->typ);
 		//arrTmp用于迭代取数组的值
 		arrTmp = bldCnstFrmVrb(vrb);
+
+		printf("arrTmp typ: %d\n", arrTmp->CnstTyp);
 
 		int lyr = exp->acs->acsLst.size();
 
 		for (i = 0; i < lyr; i++)
 		{
-			//printf("cnst typ: %d\n", arrTmp->CnstTyp);
+			printf("clcLvlExp cnst typ: %d\n", arrTmp->CnstTyp);
 			//检查是否是有效的数组
-			if (arrTmp->CnstTyp != ARRAY_VALUE)
-			{
-				throw new ExNotAvlbArr;
-			}
+			//if (arrTmp->CnstTyp != LVALUE_EXPRESSION)
+			//{
+			//	throw new ExNotAvlbArr;
+			//}
 
 			//该层为数组索引的情况
 			if (exp->acs->acsLst[i]->blnSlc == 0)
@@ -2329,6 +2359,11 @@ struct CnstStrc* clcExp(vector<EnvrStrc*>& envr, struct ExpStrc* exp)
 	if (exp->typ == NEW_EXPRESSION)
 	{
 		rslt = clcNewExp(envr, static_cast<NewExpStrc*>(exp));
+	}
+
+	if (exp->typ == INT_VALUE || exp->typ == FLOAT_VALUE || exp->typ == BOOLEAN_VALUE || exp->typ == STRING_VALUE || exp->typ == OBJECT_VALUE || exp->typ == ARRAY_VALUE || exp->typ == NULL_VALUE)
+	{
+		rslt = static_cast<CnstStrc*>(exp);
 	}
 
 	return rslt;

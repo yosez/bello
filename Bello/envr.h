@@ -161,7 +161,7 @@ struct VrbStrc* getVrb(vector<EnvrStrc*>& envr, struct VrbExpStrc* vrbExp)
 
 		if (lyr == 0)
 		{
-			return NULL;
+			return nullptr;
 		}
 
 		lyr--;

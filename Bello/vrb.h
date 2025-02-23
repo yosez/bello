@@ -55,6 +55,7 @@ struct CnstStrc* bldCnstFrmVrb(struct VrbStrc* vrb)
 {
 	struct CnstStrc* rslt = new CnstStrc;
 
+	rslt->typ = vrb->typ;
 	rslt->CnstTyp = vrb->typ;
 
 	memset(&(rslt->vl), 0, sizeof(VlUnn));
