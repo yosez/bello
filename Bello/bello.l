@@ -54,16 +54,27 @@
 
 %%
 
+^[ \r\t]*"//".*\n           { 
+                                return LF;
+                                //return NULL_STRING; 
+                            }
+^[ \r\t]*"/*"(.|[\n])"*/"[ \r\t]*\n        { 
+                                return LF;
+                                //return NULL_STRING; 
+                            }
+^[ \r\t]*\n                 { 
+                                return LF;
+                                //return NULL_STRING; 
+                            }
 
-^[ \r\t]*\n                 { return NULL_STRING; }
-^[ \r\t]*"//".*\n           { }
+
 <<EOF>>                     { return END_FILE; }
-"\t"+                       { 
+^"\t"+                       { 
                                 yylval.intVl = strlen(yytext); 
                                 //printf("yytext \\t: |%s|\n", yytext);
                                 return INDENT; 
                             }
-([ ]{4})+                   { 
+^([ ]{4})+                   { 
                                 yylval.intVl = strlen(yytext)/4;
                                 //printf("yytext [ ]: |%s|\n", yytext);
                                 return INDENT;
@@ -121,7 +132,7 @@
 "false"                     { yylval.blnVl=0; return BOOLEAN_VALUE; }
 "//"                        { stt=YY_START; BEGIN COMMENT; }
 <COMMENT>\n                 { BEGIN stt; }  
-<COMMENT>.                  {}
+<COMMENT>.                  { return LF; }
 "/*"                        { stt=YY_START; BEGIN COMMENT_2; }
 <COMMENT_2>"*/"             { BEGIN stt; }
 <COMMENT_2>(.|[\n])         {}

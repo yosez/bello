@@ -5,6 +5,7 @@ Nonterminals useless in grammar
 
 Terminals unused in grammar
 
+    NULL_STRING
     THIS
     OBJECT_VALUE
     ARRAY_VALUE
@@ -42,7 +43,7 @@ Grammar
 
     2 statement: statement close_execute_last_statement @1 single_statement LF check_indent build_statement execute_statement
     3          | statement INDENT single_statement LF check_indent build_statement
-    4          | statement NULL_STRING close_execute_statement
+    4          | statement LF close_execute_statement
     5          | statement END_FILE close_execute_last_statement
     6          | %empty
     7          | error
@@ -239,8 +240,8 @@ Terminals, with rules where they appear
 
     $end (0) 0
     error (256) 7 26
-    NULL_STRING (258) 4
-    LF (259) 2 3
+    NULL_STRING (258)
+    LF (259) 2 3 4
     END_FILE (260) 5
     NEW (261) 86
     NOP (262) 34
@@ -460,7 +461,7 @@ State 0
 
     $end           reduce using rule 6 (statement)
     error          [reduce using rule 6 (statement)]
-    NULL_STRING    reduce using rule 6 (statement)
+    LF             reduce using rule 6 (statement)
     END_FILE       reduce using rule 6 (statement)
     NEW            reduce using rule 6 (statement)
     NOP            reduce using rule 6 (statement)
@@ -508,13 +509,13 @@ State 2
     0 $accept: statement . $end
     2 statement: statement . close_execute_last_statement @1 single_statement LF check_indent build_statement execute_statement
     3          | statement . INDENT single_statement LF check_indent build_statement
-    4          | statement . NULL_STRING close_execute_statement
+    4          | statement . LF close_execute_statement
     5          | statement . END_FILE close_execute_last_statement
 
-    $end         shift, and go to state 3
-    NULL_STRING  shift, and go to state 4
-    END_FILE     shift, and go to state 5
-    INDENT       shift, and go to state 6
+    $end      shift, and go to state 3
+    LF        shift, and go to state 4
+    END_FILE  shift, and go to state 5
+    INDENT    shift, and go to state 6
 
     $default  reduce using rule 11 (close_execute_last_statement)
 
@@ -530,7 +531,7 @@ State 3
 
 State 4
 
-    4 statement: statement NULL_STRING . close_execute_statement
+    4 statement: statement LF . close_execute_statement
 
     $default  reduce using rule 10 (close_execute_statement)
 
@@ -619,7 +620,7 @@ State 7
 
 State 8
 
-    4 statement: statement NULL_STRING close_execute_statement .
+    4 statement: statement LF close_execute_statement .
 
     $default  reduce using rule 4 (statement)
 
