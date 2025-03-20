@@ -11,8 +11,10 @@
 //语句系列函数，参数为语句的内容部分，如创建if语句结构体的bldIfStmt函数的参数exp为if的条件表达式，stmt参数为if的条件为真执行的语句块
 struct StmtStrc* bldExpStmt(struct ExpStrc* exp);
 struct StmtStrc* bldIfStmt(struct ExpStrc* exp, struct StmtStrc* stmt);
+struct StmtStrc* bldElsStmt();
 struct StmtStrc* bldElsStmt(struct StmtStrc* stmt);
 struct StmtStrc* bldIfElsStmt(struct ExpStrc* exp, struct StmtStrc* stmt, struct StmtStrc* elsStmt);
+//struct StmtStrc* bldElifStmt(struct ExpStrc* exp);
 struct StmtStrc* bldForStmt(struct StmtStrc* intl, struct StmtStrc* exp, struct StmtStrc* itr, struct StmtStrc* stmt);
 struct StmtStrc* bldWhlStmt(struct StmtStrc* exp, struct StmtStrc* stmt);
 struct StmtStrc* bldDoWhlStmt(struct StmtStrc* exp, struct StmtStrc* stmt);
@@ -96,6 +98,20 @@ struct StmtStrc* bldElsStmt()
 
 	return rslt;
 }
+
+
+
+
+//struct StmtStrc* bldElifStmt(struct ExpStrc* exp)
+//{
+//	struct ElifStmtStrc* rslt = new ElifStmtStrc;
+//
+//	rslt->typ = ELSEIF_STATEMENT;
+//
+//	rslt->stmt = nullptr;
+//
+//	return rslt;
+//}
 
 
 struct StmtStrc* bldIfElsStmt(struct ExpStrc* exp, struct StmtStrc* stmt, struct StmtStrc* elsStmt)
@@ -425,9 +441,13 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 			{
 				rslt = exctStmt(envr, ifStmt->stmt);
 			}
-			else if (ifStmt->els != NULL)
+			else if (ifStmt->els != nullptr)
 			{
 				rslt = exctStmt(envr, ifStmt->els);
+			}
+			else if (ifStmt->elif != nullptr)
+			{
+				rslt = exctStmt(envr, ifStmt->elif);
 			}
 
 			//删除创建的环境
@@ -857,6 +877,7 @@ int chkStmtAlwSubStmt(struct StmtStrc* stmt)
 	case FUNCTION_STATEMENT:
 	case ELSE_STATEMENT:
 	case CLASS_STATEMENT:
+	case ELSEIF_STATEMENT:
 	{
 		return 1;
 		break;
@@ -868,3 +889,23 @@ int chkStmtAlwSubStmt(struct StmtStrc* stmt)
 
 	}
 }
+
+int chkStmtAlwScndStmt(struct StmtStrc* stmt)
+{
+	switch (stmt->typ)
+	{
+	case IF_STATEMENT:
+	case DO_WHILE_STATEMENT:
+	case ELSEIF_STATEMENT:
+	{
+		return 1;
+		break;
+	}
+	default:
+	{
+		return 0;
+	}
+
+	}
+}
+

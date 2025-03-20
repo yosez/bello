@@ -180,6 +180,7 @@ struct StmtStkItmStrc
 	int indt;
 	StmtStrc* stmt;
 	int alwSubStmt = 0;
+	int blnScndStmt = 0;
 };
 
 std::vector<StmtStkItmStrc*> stmtStk;
@@ -330,6 +331,7 @@ struct IfStmtStrc : public StmtStrc
 	struct ExpStrc* exp;
 	struct StmtStrc* stmt;
 	struct StmtStrc* els;
+	struct StmtStrc* elif;
 };
 
 struct ElsStmtStrc :public StmtStrc
@@ -337,11 +339,11 @@ struct ElsStmtStrc :public StmtStrc
 	struct StmtStrc* stmt;
 };
 
-struct ElifStmtStrc : public StmtStrc
-{
-	struct ExpStrc* exp;
-	struct StmtStrc* stmt;
-};
+//struct ElifStmtStrc : public StmtStrc
+//{
+//	struct ExpStrc* exp;
+//	struct StmtStrc* stmt;
+//};
 
 struct IfElsStmtStrc : public StmtStrc
 {

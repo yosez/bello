@@ -50,6 +50,8 @@
 
     extern int chkStmtAlwSubStmt(struct StmtStrc* stmt);
 
+    extern int chkStmtAlwScndStmt(struct StmtStrc* stmt);
+
     //prsStt为1 从标准输入读取 prsStt为2 从源文件读取
     int prsStt;
 
@@ -60,6 +62,7 @@
     //类定义语句的标志，0为不是类定义的状态，1为类定义的状态
     int blnDfnCls=0;
 
+    struct StmtStrc* lstStmt;
 %}
 
 %union
@@ -161,14 +164,17 @@
 %%
 
 statement
-    : statement close_execute_last_statement {$<intVl>$ = 0; } single_statement LF check_indent build_statement execute_statement //执行顶层语句
-    | statement INDENT single_statement LF check_indent build_statement
-    //| statement NULL_STRING close_execute_statement 
+    : //从命令行或源码输入顶层语句并执行
+    statement close_execute_last_statement {$<intVl>$ = 0; } single_statement LF check_indent build_statement_stack execute_single_statement 
+    //从命令行或源码输入子语句
+    | statement INDENT single_statement LF check_indent build_statement_stack
+    //从命令行输入，输入空行之后执行语句栈中的语句
     | statement LF close_execute_statement
+    //从源码输入文件结束
     | statement END_FILE close_execute_last_statement  { return 0; }//需要加上识别空语句，以处理输入结束的情况
     | ;
     | error { yyerrok; }
-
+    //| statement NULL_STRING close_execute_statement 
 
 check_indent
     : { 
@@ -179,21 +185,18 @@ check_indent
         }
       }
 
-build_statement
+build_statement_stack
     : 
     {   
         int indt = $<intVl>-3;
-        //如果是当前句的indent == 上1句的indent + 1，则检查上1句是否有语句体，如上1句允许语句体，语句入栈
 
-        //printf("indt: %d lstIndt: %d\n",indt, lstIndt);
+        //如果是当前句的indent == 上1句的indent + 1，则检查上1句是否有语句体，如上1句允许语句体，语句入栈
         if (indt == lstIndt + 1 )
         {
             if (stmtStk.back()->alwSubStmt)
             {
                 //语句入栈
                 pshStmt(indt, $<stmt>-2);
-
-                //printf("--->>>stmt in stk: %d\n", stmtStk.size());
             }
             else
             {
@@ -203,7 +206,6 @@ build_statement
         else if (indt == lstIndt)
         {
             //语句入栈
-
             pshStmt(indt, $<stmt>-2);
 
         }
@@ -215,22 +217,6 @@ build_statement
 
             //折叠输入的句子以上的缩进大于该输入的句子，结果为栈中缩进最大的句子为输入的句子及其以上同等缩进的句子
             fldStmt(nowIndt);
-
-            // //如果当前输入的语句是else语句，检查同级缩进的上1个语句是不是if语句
-
-            // if (($<stmt>-2)->typ == ELSE_STATEMENT)
-            // {
-            //     if (stmtStk.back()->stmt->typ == IF_STATEMENT)
-            //     {
-                    
-            //     }
-            //     else
-            //     {
-            //         yyclearin;
-            //         yyerrok;
-            //     }
-
-            // }
 
             //输入的句子入栈
             pshStmt(indt, $<stmt>-2);
@@ -267,29 +253,18 @@ close_execute_statement
                 
             }
 
-            //prtStmtStk();
+            printf("执行语句 %d\n", stmtStk.size());
 
             //如果上1条语句为子语句，则闭合上1条顶级语句
             if (stmtStk.back()->indt > 0)
             {
-                //printf("cls top lvl stmt\n");
-
-                int nowIndt = 0;
-
-                int idx;
 
                 fldStmt(0);
 
-                // 如果是双主句语句的情况
-
-
-                //执行上一条顶级语句
+                //如果不允许执行上一条顶级语句
                 exctStmt(envr, stmtStk.back()->stmt);
                 stmtStk.pop_back();
 
-                //printf("cls stk lyr: %d\n", stmtStk.size());
-
-                lstIndt=0;
             }
 
         }
@@ -300,7 +275,7 @@ close_execute_statement
 close_execute_last_statement
     :
     {
-        //如果是标准输入读取数据，则退出此动作
+        //如果是命令行读取数据，则退出此动作
         if (prsStt==1)
         {
             break;
@@ -329,13 +304,9 @@ close_execute_last_statement
             //如果上1条语句为子语句，则闭合上1条顶级语句，并执行该顶级语句
             if (stmtStk.back()->indt > 0)
             {
-                //printf("cls top lvl stmt\n");
-
-                int nowIndt = 0;
-
-                int idx;
 
                 fldStmt(0);
+
                 // 如果是双主句语句的情况
 
 
@@ -343,30 +314,25 @@ close_execute_last_statement
                 exctStmt(envr, stmtStk.back()->stmt);
                 stmtStk.pop_back();
 
-                //printf("cls stk lyr: %d\n", stmtStk.size());
-
-                lstIndt=0;
             }
 
         }
     }
 
-execute_statement
+execute_single_statement
     : 
     { 
         //printf("alw sub stmt: %d\n", stmtStk.back()->alwSubStmt);
 
-        //只在无缩进的情况下执行语句
+        //只在无缩进且不允许第2主句的情况下执行语句
         if ($<intVl>-4 != 0 || stmtStk.back()->alwSubStmt == 1)
         {
-            //YYABORT;
+            break;
         }
         else
         {
             exctStmt(envr, stmtStk.back()->stmt);
             stmtStk.pop_back();
-
-            //printf("exct stmt\n");
         }
   
     }
@@ -865,9 +831,9 @@ else_statement
     }
 
 elseif_statement
-    : ELSEIF
+    : ELSEIF LEFT_PAREN expression RIGHT_PAREN
     {
-        $$ = bldElifStmt();
+        $$ = bldIfStmt($3);
     }
 
 /* for_statement
@@ -1017,6 +983,11 @@ return_statement
 
 void fldStmt(int indt=0)
 {
+    if (stmtStk.size()==0)
+    {
+        return;
+    }
+
     int idx;
 
     while (stmtStk.back()->indt > indt)
@@ -1056,7 +1027,8 @@ void fldStmt(int indt=0)
             {
                 auto ifStmt = static_cast<IfStmtStrc*>(stmtStk.back()->stmt);
                 ifStmt->stmt = blk;
-                ifStmt->els = NULL;
+                ifStmt->els = nullptr;
+                ifStmt->elif = nullptr;
                 break;
             }
             case WHILE_STATEMENT:
@@ -1082,18 +1054,30 @@ void fldStmt(int indt=0)
                 auto elsStmt = static_cast<ElsStmtStrc*>(stmtStk.back()->stmt);
                 elsStmt->stmt = blk;
 
-                //将else语句添加到其上的if语句结构体中
-                //StmtStrc* els = stmtStk.back()->stmt->stmt.elsStmt->stmt;
-
                 stmtStk.pop_back();
 
                 auto ifStmtLst = static_cast<IfStmtStrc*>(stmtStk.back()->stmt);
 
                 ifStmtLst->els = elsStmt->stmt;
+
+                stmtStk.back()->blnScndStmt=1;
+
+                break;
             }
             case ELSEIF_STATEMENT:
             {
+                auto ifStmt = static_cast<IfStmtStrc*>(stmtStk.back()->stmt);
+                ifStmt->stmt = blk;
 
+                stmtStk.pop_back();
+
+                auto ifStmtLst = static_cast<IfStmtStrc*>(stmtStk.back()->stmt);
+
+                ifStmtLst->elif = blk;
+
+                stmtStk.back()->blnScndStmt=1;
+                
+                break;
             }
             case CLASS_STATEMENT:
             {
@@ -1110,22 +1094,6 @@ void fldStmt(int indt=0)
                 break;
             }
         }
-
-
-        /* //如果当前输入的语句是else语句，检查同级缩进的上1个语句是不是if语句 */
-        /* if (($<stmt>-2)->typ == ELSE_STATEMENT)
-        {
-            if (stmtStk.back()->stmt->typ == IF_STATEMENT)
-            {
-                
-            }
-            else
-            {
-                yyclearin;
-                yyerrok;
-            }
-
-        } */
 
     }
 

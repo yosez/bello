@@ -219,7 +219,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 66 "bello.y"
+#line 69 "bello.y"
 
     int blnVl;
     int intVl;
