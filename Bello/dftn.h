@@ -129,6 +129,7 @@ enum StmtTyp
 	IF_STATEMENT,
 	IF_ELSE_STATEMENT,
 	ELSE_STATEMENT,
+	ELSEIF_STATEMENT,
 	FOR_STATEMENT,
 	WHILE_STATEMENT,
 	DO_WHILE_STATEMENT,
@@ -333,6 +334,12 @@ struct IfStmtStrc : public StmtStrc
 
 struct ElsStmtStrc :public StmtStrc
 {
+	struct StmtStrc* stmt;
+};
+
+struct ElifStmtStrc : public StmtStrc
+{
+	struct ExpStrc* exp;
 	struct StmtStrc* stmt;
 };
 

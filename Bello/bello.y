@@ -126,7 +126,7 @@
     object_invoke_expression
 %type <stmt> single_statement expression_statement 
     statement_block block_list null_statement var_statement global_statement
-%type <stmt> if_statement else_statement structure_statement for_statement single_statement_no_semicolon while_statement 
+%type <stmt> if_statement else_statement elseif_statement structure_statement for_statement single_statement_no_semicolon while_statement 
     do_while_statement break_statement continue_statement return_statement nop_statement
 %type <stmt> function_statement class_statement
 %type <prmLst> parameter_list 
@@ -375,7 +375,8 @@ execute_statement
 single_statement
     : expression_statement { $$=$1; }
     | if_statement { $$=$1; }
-    | else_statement {$$=$1; }
+    | else_statement { $$=$1; }
+    | elseif_statement { $$=$1; }
     | for_statement { $$=$1; } 
     | while_statement { $$=$1; }
     /* | do_while_statement { $$=$1; } */
@@ -494,7 +495,6 @@ value_expression
     | STRING_VALUE { $$=bldCnstStrExp($1); } 
     | NULL_VALUE { $$=bldCnstNllExp(); }
     | function_expression
-    //| object_invoke_expression
     | lvalue_expression 
     | NEW IDENTIFER { $$= bldNewExp($2); }
 
@@ -864,6 +864,11 @@ else_statement
         $$ = bldElsStmt();
     }
 
+elseif_statement
+    : ELSEIF
+    {
+        $$ = bldElifStmt();
+    }
 
 /* for_statement
     : FOR LEFT_PAREN single_statement_no_semicolon SEMICOLON expression_statement SEMICOLON single_statement_no_semicolon RIGHT_PAREN structure_statement
@@ -1085,6 +1090,10 @@ void fldStmt(int indt=0)
                 auto ifStmtLst = static_cast<IfStmtStrc*>(stmtStk.back()->stmt);
 
                 ifStmtLst->els = elsStmt->stmt;
+            }
+            case ELSEIF_STATEMENT:
+            {
+
             }
             case CLASS_STATEMENT:
             {
