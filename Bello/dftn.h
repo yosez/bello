@@ -330,8 +330,9 @@ struct IfStmtStrc : public StmtStrc
 {
 	struct ExpStrc* exp;
 	struct StmtStrc* stmt;
-	struct StmtStrc* els;
-	struct StmtStrc* elif;
+	//struct StmtStrc* els;
+	//struct StmtStrc* elif;
+	int expRslt;
 };
 
 struct ElsStmtStrc :public StmtStrc
@@ -339,11 +340,13 @@ struct ElsStmtStrc :public StmtStrc
 	struct StmtStrc* stmt;
 };
 
-//struct ElifStmtStrc : public StmtStrc
-//{
-//	struct ExpStrc* exp;
-//	struct StmtStrc* stmt;
-//};
+struct ElifStmtStrc : public StmtStrc
+{
+	struct ExpStrc* exp;
+	struct StmtStrc* stmt;
+
+	int expRslt;
+};
 
 struct IfElsStmtStrc : public StmtStrc
 {

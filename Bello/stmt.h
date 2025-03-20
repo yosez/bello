@@ -14,7 +14,7 @@ struct StmtStrc* bldIfStmt(struct ExpStrc* exp, struct StmtStrc* stmt);
 struct StmtStrc* bldElsStmt();
 struct StmtStrc* bldElsStmt(struct StmtStrc* stmt);
 struct StmtStrc* bldIfElsStmt(struct ExpStrc* exp, struct StmtStrc* stmt, struct StmtStrc* elsStmt);
-//struct StmtStrc* bldElifStmt(struct ExpStrc* exp);
+struct StmtStrc* bldElifStmt(struct ExpStrc* exp);
 struct StmtStrc* bldForStmt(struct StmtStrc* intl, struct StmtStrc* exp, struct StmtStrc* itr, struct StmtStrc* stmt);
 struct StmtStrc* bldWhlStmt(struct StmtStrc* exp, struct StmtStrc* stmt);
 struct StmtStrc* bldDoWhlStmt(struct StmtStrc* exp, struct StmtStrc* stmt);
@@ -37,6 +37,7 @@ struct StmtStrc* bldWhlStmt();
 struct StmtStrc* bldElsStmt();
 
 extern int chkStmtAlwSubStmt(struct StmtStrc* stmt);
+extern StmtStrc* lstStmt;
 
 
 struct StmtRsltStrc* exctStmt(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct StmtStrc* stmt);
@@ -72,7 +73,10 @@ struct StmtStrc* bldIfStmt(struct ExpStrc* exp, struct StmtStrc* stmt)
 
 	rslt->exp = exp;
 	rslt->stmt = stmt;
-	rslt->els = nullptr;
+
+	rslt->expRslt = 0;
+
+	//rslt->els = nullptr;
 
 	return rslt;
 }
@@ -100,18 +104,20 @@ struct StmtStrc* bldElsStmt()
 }
 
 
+struct StmtStrc* bldElifStmt(struct ExpStrc* exp)
+{
+	struct ElifStmtStrc* rslt = new ElifStmtStrc;
 
+	rslt->typ = ELSEIF_STATEMENT;
 
-//struct StmtStrc* bldElifStmt(struct ExpStrc* exp)
-//{
-//	struct ElifStmtStrc* rslt = new ElifStmtStrc;
-//
-//	rslt->typ = ELSEIF_STATEMENT;
-//
-//	rslt->stmt = nullptr;
-//
-//	return rslt;
-//}
+	rslt->exp = exp;
+
+	rslt->stmt = nullptr;
+
+	rslt->expRslt = 0;
+
+	return rslt;
+}
 
 
 struct StmtStrc* bldIfElsStmt(struct ExpStrc* exp, struct StmtStrc* stmt, struct StmtStrc* elsStmt)
@@ -437,20 +443,113 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 
 			//printf("clcExp(envr, stmt->stmt.ifStmt->exp)->vl.intVl: %d\n", clcExp(envr, stmt->stmt.ifStmt->exp)->vl.intVl);
 
-			if ((clcExp(envr, ifStmt->exp)->vl.intVl) != 0)
+			if ((ifStmt->expRslt = clcExp(envr, ifStmt->exp)->vl.intVl) != 0)
 			{
 				rslt = exctStmt(envr, ifStmt->stmt);
 			}
-			else if (ifStmt->els != nullptr)
-			{
-				rslt = exctStmt(envr, ifStmt->els);
-			}
-			else if (ifStmt->elif != nullptr)
-			{
-				rslt = exctStmt(envr, ifStmt->elif);
-			}
+			//else if (ifStmt->els != nullptr)
+			//{
+			//	rslt = exctStmt(envr, ifStmt->els);
+			//}
+			//else if (ifStmt->elif != nullptr)
+			//{
+			//	rslt = exctStmt(envr, ifStmt->elif);
+			//}
 
 			//删除创建的环境
+			envr.pop_back();
+
+		}
+
+		if (stmt->typ == ELSE_STATEMENT)
+		{
+
+			auto elsStmt = static_cast<ElsStmtStrc*>(stmt);
+
+			if (lstStmt->typ == IF_STATEMENT)
+			{
+				//如果上句已经执行
+				if (static_cast<IfStmtStrc*>(lstStmt)->expRslt == 1)
+				{
+
+					rslt = new StmtRsltStrc;
+					rslt->typ = NORMAL_RESULT;
+
+					return rslt;
+				}
+
+			}
+
+			if (lstStmt->typ == ELSEIF_STATEMENT)
+			{
+				//如果上句已经执行
+				if (static_cast<ElifStmtStrc*>(lstStmt)->expRslt == 1)
+				{
+
+					rslt = new StmtRsltStrc;
+					rslt->typ = NORMAL_RESULT;
+
+					return rslt;
+				}
+
+			}
+
+
+			envr.push_back(new EnvrStrc(STATEMENT_ENVIRONMENT));
+
+			rslt = exctStmt(envr, elsStmt->stmt);
+
+			envr.pop_back();
+		}
+
+		if (stmt->typ == ELSEIF_STATEMENT)
+		{
+
+			auto elifStmt = static_cast<ElifStmtStrc*>(stmt);
+
+
+			if (lstStmt->typ == IF_STATEMENT)
+			{
+				//如果上句已经执行
+				if (static_cast<IfStmtStrc*>(lstStmt)->expRslt == 1)
+				{
+					//本句赋值为无需执行的状态
+					elifStmt->expRslt = 1;
+
+					rslt = new StmtRsltStrc;
+					rslt->typ = NORMAL_RESULT;
+
+					return rslt;
+				}
+
+			}
+
+			if (lstStmt->typ == ELSEIF_STATEMENT)
+			{
+				//如果上句已经执行
+				if (static_cast<ElifStmtStrc*>(lstStmt)->expRslt == 1)
+				{
+					//本句赋值为无需执行的状态
+					elifStmt->expRslt = 1;
+
+					rslt = new StmtRsltStrc;
+					rslt->typ = NORMAL_RESULT;
+
+					return rslt;
+				}
+
+			}
+
+			
+
+			CnstStrc* expRslt = nullptr;
+			envr.push_back(new EnvrStrc(STATEMENT_ENVIRONMENT));
+
+			if ((elifStmt->expRslt = clcExp(envr, elifStmt->exp)->vl.intVl) != 0)
+			{
+				rslt = exctStmt(envr, elifStmt->stmt);
+			}
+
 			envr.pop_back();
 
 		}

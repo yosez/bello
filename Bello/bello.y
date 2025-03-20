@@ -258,14 +258,18 @@ close_execute_statement
             //如果上1条语句为子语句，则闭合上1条顶级语句
             if (stmtStk.back()->indt > 0)
             {
-
                 fldStmt(0);
-
-                //如果不允许执行上一条顶级语句
-                exctStmt(envr, stmtStk.back()->stmt);
-                stmtStk.pop_back();
-
             }
+
+            for (int i=0;i<stmtStk.size();i++)
+            {
+                exctStmt(envr, stmtStk.at(i)->stmt);
+
+                lstStmt = stmtStk.at(i)->stmt;
+                //stmtStk.pop_back();
+            }
+
+            stmtStk.clear();
 
         }
 
@@ -325,7 +329,7 @@ execute_single_statement
         //printf("alw sub stmt: %d\n", stmtStk.back()->alwSubStmt);
 
         //只在无缩进且不允许第2主句的情况下执行语句
-        if ($<intVl>-4 != 0 || stmtStk.back()->alwSubStmt == 1)
+        if ($<intVl>-4 != 0 || stmtStk.back()->alwSubStmt == 1 || chkStmtAlwScndStmt(stmtStk.back()->stmt) )
         {
             break;
         }
@@ -833,7 +837,7 @@ else_statement
 elseif_statement
     : ELSEIF LEFT_PAREN expression RIGHT_PAREN
     {
-        $$ = bldIfStmt($3);
+        $$ = bldElifStmt($3);
     }
 
 /* for_statement
@@ -1027,8 +1031,8 @@ void fldStmt(int indt=0)
             {
                 auto ifStmt = static_cast<IfStmtStrc*>(stmtStk.back()->stmt);
                 ifStmt->stmt = blk;
-                ifStmt->els = nullptr;
-                ifStmt->elif = nullptr;
+                //ifStmt->els = nullptr;
+                //ifStmt->elif = nullptr;
                 break;
             }
             case WHILE_STATEMENT:
@@ -1054,28 +1058,28 @@ void fldStmt(int indt=0)
                 auto elsStmt = static_cast<ElsStmtStrc*>(stmtStk.back()->stmt);
                 elsStmt->stmt = blk;
 
-                stmtStk.pop_back();
+                /* stmtStk.pop_back();
 
                 auto ifStmtLst = static_cast<IfStmtStrc*>(stmtStk.back()->stmt);
 
                 ifStmtLst->els = elsStmt->stmt;
 
-                stmtStk.back()->blnScndStmt=1;
+                stmtStk.back()->blnScndStmt=1; */
 
                 break;
             }
             case ELSEIF_STATEMENT:
             {
-                auto ifStmt = static_cast<IfStmtStrc*>(stmtStk.back()->stmt);
-                ifStmt->stmt = blk;
+                auto elifStmt = static_cast<ElifStmtStrc*>(stmtStk.back()->stmt);
+                elifStmt->stmt = blk;
 
-                stmtStk.pop_back();
+                /* stmtStk.pop_back();
 
                 auto ifStmtLst = static_cast<IfStmtStrc*>(stmtStk.back()->stmt);
 
                 ifStmtLst->elif = blk;
 
-                stmtStk.back()->blnScndStmt=1;
+                stmtStk.back()->blnScndStmt=1; */
                 
                 break;
             }
