@@ -21,7 +21,7 @@ Terminals unused in grammar
 
 State 0 conflicts: 1 shift/reduce
 State 20 conflicts: 1 shift/reduce
-State 35 conflicts: 1 shift/reduce
+State 35 conflicts: 16 shift/reduce
 State 36 conflicts: 1 shift/reduce
 State 37 conflicts: 1 shift/reduce
 State 39 conflicts: 16 shift/reduce
@@ -29,9 +29,12 @@ State 44 conflicts: 2 shift/reduce
 State 51 conflicts: 3 shift/reduce
 State 85 conflicts: 1 shift/reduce
 State 86 conflicts: 1 shift/reduce
+State 87 conflicts: 2 shift/reduce
+State 88 conflicts: 2 shift/reduce
+State 90 conflicts: 2 shift/reduce
 State 94 conflicts: 2 shift/reduce
 State 123 conflicts: 1 shift/reduce
-State 168 conflicts: 1 shift/reduce
+State 165 conflicts: 1 shift/reduce
 
 
 Grammar
@@ -205,15 +208,15 @@ Grammar
   134              | evaluate_list LEFT_QUAD COLON expression COLON expression RIGHT_QUAD
   135              | evaluate_list LEFT_QUAD COLON COLON RIGHT_QUAD
 
-  136 if_statement: IF LEFT_PAREN expression RIGHT_PAREN
+  136 if_statement: IF expression
 
   137 else_statement: ELSE
 
-  138 elseif_statement: ELSEIF LEFT_PAREN expression RIGHT_PAREN
+  138 elseif_statement: ELSEIF expression
 
   139 for_statement: FOR LEFT_PAREN single_statement_no_semicolon SEMICOLON expression_statement SEMICOLON single_statement_no_semicolon RIGHT_PAREN
 
-  140 while_statement: WHILE LEFT_PAREN expression RIGHT_PAREN
+  140 while_statement: WHILE expression
   141                | WHILE
 
   142 do_while_statement: DO structure_statement WHILE LEFT_PAREN expression_statement RIGHT_PAREN SEMICOLON
@@ -270,8 +273,8 @@ Terminals, with rules where they appear
     MOD_ASSIGN (283) 54
     PRINT (284)
     PRINTLN (285)
-    LEFT_PAREN (286) 61 94 104 105 136 138 139 140 142 144 146 149 150 151 152
-    RIGHT_PAREN (287) 61 94 104 105 136 138 139 140 142 144 146 149 150 151 152
+    LEFT_PAREN (286) 61 94 104 105 139 142 144 146 149 150 151 152
+    RIGHT_PAREN (287) 61 94 104 105 139 142 144 146 149 150 151 152
     LEFT_QUAD (288) 92 93 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 129 130 131 132 133 134 135
     RIGHT_QUAD (289) 92 93 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 129 130 131 132 133 134 135
     LEFT_BRACE (290) 36 37
@@ -970,16 +973,70 @@ State 30
 
 State 31
 
-  136 if_statement: IF . LEFT_PAREN expression RIGHT_PAREN
+  136 if_statement: IF . expression
 
-    LEFT_PAREN  shift, and go to state 87
+    NEW            shift, and go to state 11
+    INT_VALUE      shift, and go to state 15
+    BOOLEAN_VALUE  shift, and go to state 16
+    FLOAT_VALUE    shift, and go to state 17
+    STRING_VALUE   shift, and go to state 18
+    NULL_VALUE     shift, and go to state 19
+    IDENTIFER      shift, and go to state 20
+    LEFT_PAREN     shift, and go to state 23
+    LEFT_QUAD      shift, and go to state 24
+    ADD            shift, and go to state 25
+    SUB            shift, and go to state 26
+    NOT            shift, and go to state 27
+    BIT_NOT        shift, and go to state 28
+    INCREMENT      shift, and go to state 29
+    DECREMENT      shift, and go to state 30
+    NEW_ARRAY      shift, and go to state 40
+
+    expression                   go to state 87
+    lvalue_operation_expression  go to state 45
+    assign_expression            go to state 46
+    self_operation_expression    go to state 47
+    unary_expression             go to state 48
+    binary_expression            go to state 49
+    value_expression             go to state 50
+    lvalue_expression            go to state 51
+    array_expression             go to state 52
+    new_array_expression         go to state 53
+    function_expression          go to state 56
 
 
 State 32
 
-  138 elseif_statement: ELSEIF . LEFT_PAREN expression RIGHT_PAREN
+  138 elseif_statement: ELSEIF . expression
 
-    LEFT_PAREN  shift, and go to state 88
+    NEW            shift, and go to state 11
+    INT_VALUE      shift, and go to state 15
+    BOOLEAN_VALUE  shift, and go to state 16
+    FLOAT_VALUE    shift, and go to state 17
+    STRING_VALUE   shift, and go to state 18
+    NULL_VALUE     shift, and go to state 19
+    IDENTIFER      shift, and go to state 20
+    LEFT_PAREN     shift, and go to state 23
+    LEFT_QUAD      shift, and go to state 24
+    ADD            shift, and go to state 25
+    SUB            shift, and go to state 26
+    NOT            shift, and go to state 27
+    BIT_NOT        shift, and go to state 28
+    INCREMENT      shift, and go to state 29
+    DECREMENT      shift, and go to state 30
+    NEW_ARRAY      shift, and go to state 40
+
+    expression                   go to state 88
+    lvalue_operation_expression  go to state 45
+    assign_expression            go to state 46
+    self_operation_expression    go to state 47
+    unary_expression             go to state 48
+    binary_expression            go to state 49
+    value_expression             go to state 50
+    lvalue_expression            go to state 51
+    array_expression             go to state 52
+    new_array_expression         go to state 53
+    function_expression          go to state 56
 
 
 State 33
@@ -998,13 +1055,55 @@ State 34
 
 State 35
 
-  140 while_statement: WHILE . LEFT_PAREN expression RIGHT_PAREN
+  140 while_statement: WHILE . expression
   141                | WHILE .
 
-    LEFT_PAREN  shift, and go to state 90
+    NEW            shift, and go to state 11
+    INT_VALUE      shift, and go to state 15
+    BOOLEAN_VALUE  shift, and go to state 16
+    FLOAT_VALUE    shift, and go to state 17
+    STRING_VALUE   shift, and go to state 18
+    NULL_VALUE     shift, and go to state 19
+    IDENTIFER      shift, and go to state 20
+    LEFT_PAREN     shift, and go to state 23
+    LEFT_QUAD      shift, and go to state 24
+    ADD            shift, and go to state 25
+    SUB            shift, and go to state 26
+    NOT            shift, and go to state 27
+    BIT_NOT        shift, and go to state 28
+    INCREMENT      shift, and go to state 29
+    DECREMENT      shift, and go to state 30
+    NEW_ARRAY      shift, and go to state 40
 
-    LEFT_PAREN  [reduce using rule 141 (while_statement)]
-    $default    reduce using rule 141 (while_statement)
+    NEW            [reduce using rule 141 (while_statement)]
+    INT_VALUE      [reduce using rule 141 (while_statement)]
+    BOOLEAN_VALUE  [reduce using rule 141 (while_statement)]
+    FLOAT_VALUE    [reduce using rule 141 (while_statement)]
+    STRING_VALUE   [reduce using rule 141 (while_statement)]
+    NULL_VALUE     [reduce using rule 141 (while_statement)]
+    IDENTIFER      [reduce using rule 141 (while_statement)]
+    LEFT_PAREN     [reduce using rule 141 (while_statement)]
+    LEFT_QUAD      [reduce using rule 141 (while_statement)]
+    ADD            [reduce using rule 141 (while_statement)]
+    SUB            [reduce using rule 141 (while_statement)]
+    NOT            [reduce using rule 141 (while_statement)]
+    BIT_NOT        [reduce using rule 141 (while_statement)]
+    INCREMENT      [reduce using rule 141 (while_statement)]
+    DECREMENT      [reduce using rule 141 (while_statement)]
+    NEW_ARRAY      [reduce using rule 141 (while_statement)]
+    $default       reduce using rule 141 (while_statement)
+
+    expression                   go to state 90
+    lvalue_operation_expression  go to state 45
+    assign_expression            go to state 46
+    self_operation_expression    go to state 47
+    unary_expression             go to state 48
+    binary_expression            go to state 49
+    value_expression             go to state 50
+    lvalue_expression            go to state 51
+    array_expression             go to state 52
+    new_array_expression         go to state 53
+    function_expression          go to state 56
 
 
 State 36
@@ -1733,70 +1832,86 @@ State 86
 
 State 87
 
-  136 if_statement: IF LEFT_PAREN . expression RIGHT_PAREN
+   64 binary_expression: expression . ADD expression
+   65                  | expression . SUB expression
+   66                  | expression . MUL expression
+   67                  | expression . DIV expression
+   68                  | expression . MOD expression
+   69                  | expression . AND expression
+   70                  | expression . OR expression
+   71                  | expression . EQ expression
+   72                  | expression . NE expression
+   73                  | expression . GT expression
+   74                  | expression . GE expression
+   75                  | expression . LT expression
+   76                  | expression . LE expression
+   77                  | expression . BIT_AND expression
+   78                  | expression . BIT_OR expression
+   79                  | expression . BIT_XOR expression
+  136 if_statement: IF expression .
 
-    NEW            shift, and go to state 11
-    INT_VALUE      shift, and go to state 15
-    BOOLEAN_VALUE  shift, and go to state 16
-    FLOAT_VALUE    shift, and go to state 17
-    STRING_VALUE   shift, and go to state 18
-    NULL_VALUE     shift, and go to state 19
-    IDENTIFER      shift, and go to state 20
-    LEFT_PAREN     shift, and go to state 23
-    LEFT_QUAD      shift, and go to state 24
-    ADD            shift, and go to state 25
-    SUB            shift, and go to state 26
-    NOT            shift, and go to state 27
-    BIT_NOT        shift, and go to state 28
-    INCREMENT      shift, and go to state 29
-    DECREMENT      shift, and go to state 30
-    NEW_ARRAY      shift, and go to state 40
+    ADD      shift, and go to state 97
+    SUB      shift, and go to state 98
+    MUL      shift, and go to state 99
+    DIV      shift, and go to state 100
+    MOD      shift, and go to state 101
+    EQ       shift, and go to state 102
+    NE       shift, and go to state 103
+    GT       shift, and go to state 104
+    GE       shift, and go to state 105
+    LT       shift, and go to state 106
+    LE       shift, and go to state 107
+    AND      shift, and go to state 108
+    OR       shift, and go to state 109
+    BIT_AND  shift, and go to state 110
+    BIT_OR   shift, and go to state 111
+    BIT_XOR  shift, and go to state 112
 
-    expression                   go to state 136
-    lvalue_operation_expression  go to state 45
-    assign_expression            go to state 46
-    self_operation_expression    go to state 47
-    unary_expression             go to state 48
-    binary_expression            go to state 49
-    value_expression             go to state 50
-    lvalue_expression            go to state 51
-    array_expression             go to state 52
-    new_array_expression         go to state 53
-    function_expression          go to state 56
+    ADD       [reduce using rule 136 (if_statement)]
+    SUB       [reduce using rule 136 (if_statement)]
+    $default  reduce using rule 136 (if_statement)
 
 
 State 88
 
-  138 elseif_statement: ELSEIF LEFT_PAREN . expression RIGHT_PAREN
+   64 binary_expression: expression . ADD expression
+   65                  | expression . SUB expression
+   66                  | expression . MUL expression
+   67                  | expression . DIV expression
+   68                  | expression . MOD expression
+   69                  | expression . AND expression
+   70                  | expression . OR expression
+   71                  | expression . EQ expression
+   72                  | expression . NE expression
+   73                  | expression . GT expression
+   74                  | expression . GE expression
+   75                  | expression . LT expression
+   76                  | expression . LE expression
+   77                  | expression . BIT_AND expression
+   78                  | expression . BIT_OR expression
+   79                  | expression . BIT_XOR expression
+  138 elseif_statement: ELSEIF expression .
 
-    NEW            shift, and go to state 11
-    INT_VALUE      shift, and go to state 15
-    BOOLEAN_VALUE  shift, and go to state 16
-    FLOAT_VALUE    shift, and go to state 17
-    STRING_VALUE   shift, and go to state 18
-    NULL_VALUE     shift, and go to state 19
-    IDENTIFER      shift, and go to state 20
-    LEFT_PAREN     shift, and go to state 23
-    LEFT_QUAD      shift, and go to state 24
-    ADD            shift, and go to state 25
-    SUB            shift, and go to state 26
-    NOT            shift, and go to state 27
-    BIT_NOT        shift, and go to state 28
-    INCREMENT      shift, and go to state 29
-    DECREMENT      shift, and go to state 30
-    NEW_ARRAY      shift, and go to state 40
+    ADD      shift, and go to state 97
+    SUB      shift, and go to state 98
+    MUL      shift, and go to state 99
+    DIV      shift, and go to state 100
+    MOD      shift, and go to state 101
+    EQ       shift, and go to state 102
+    NE       shift, and go to state 103
+    GT       shift, and go to state 104
+    GE       shift, and go to state 105
+    LT       shift, and go to state 106
+    LE       shift, and go to state 107
+    AND      shift, and go to state 108
+    OR       shift, and go to state 109
+    BIT_AND  shift, and go to state 110
+    BIT_OR   shift, and go to state 111
+    BIT_XOR  shift, and go to state 112
 
-    expression                   go to state 137
-    lvalue_operation_expression  go to state 45
-    assign_expression            go to state 46
-    self_operation_expression    go to state 47
-    unary_expression             go to state 48
-    binary_expression            go to state 49
-    value_expression             go to state 50
-    lvalue_expression            go to state 51
-    array_expression             go to state 52
-    new_array_expression         go to state 53
-    function_expression          go to state 56
+    ADD       [reduce using rule 138 (elseif_statement)]
+    SUB       [reduce using rule 138 (elseif_statement)]
+    $default  reduce using rule 138 (elseif_statement)
 
 
 State 89
@@ -1821,14 +1936,14 @@ State 89
     IF             shift, and go to state 31
     FOR            shift, and go to state 34
     WHILE          shift, and go to state 35
-    DO             shift, and go to state 138
+    DO             shift, and go to state 136
     NEW_ARRAY      shift, and go to state 40
 
     $default  reduce using rule 34 (null_statement)
 
-    single_statement_no_semicolon  go to state 139
-    null_statement                 go to state 140
-    expression_statement           go to state 141
+    single_statement_no_semicolon  go to state 137
+    null_statement                 go to state 138
+    expression_statement           go to state 139
     expression                     go to state 44
     lvalue_operation_expression    go to state 45
     assign_expression              go to state 46
@@ -1840,44 +1955,52 @@ State 89
     array_expression               go to state 52
     new_array_expression           go to state 53
     function_expression            go to state 56
-    if_statement                   go to state 142
-    for_statement                  go to state 143
-    while_statement                go to state 144
-    do_while_statement             go to state 145
+    if_statement                   go to state 140
+    for_statement                  go to state 141
+    while_statement                go to state 142
+    do_while_statement             go to state 143
 
 
 State 90
 
-  140 while_statement: WHILE LEFT_PAREN . expression RIGHT_PAREN
+   64 binary_expression: expression . ADD expression
+   65                  | expression . SUB expression
+   66                  | expression . MUL expression
+   67                  | expression . DIV expression
+   68                  | expression . MOD expression
+   69                  | expression . AND expression
+   70                  | expression . OR expression
+   71                  | expression . EQ expression
+   72                  | expression . NE expression
+   73                  | expression . GT expression
+   74                  | expression . GE expression
+   75                  | expression . LT expression
+   76                  | expression . LE expression
+   77                  | expression . BIT_AND expression
+   78                  | expression . BIT_OR expression
+   79                  | expression . BIT_XOR expression
+  140 while_statement: WHILE expression .
 
-    NEW            shift, and go to state 11
-    INT_VALUE      shift, and go to state 15
-    BOOLEAN_VALUE  shift, and go to state 16
-    FLOAT_VALUE    shift, and go to state 17
-    STRING_VALUE   shift, and go to state 18
-    NULL_VALUE     shift, and go to state 19
-    IDENTIFER      shift, and go to state 20
-    LEFT_PAREN     shift, and go to state 23
-    LEFT_QUAD      shift, and go to state 24
-    ADD            shift, and go to state 25
-    SUB            shift, and go to state 26
-    NOT            shift, and go to state 27
-    BIT_NOT        shift, and go to state 28
-    INCREMENT      shift, and go to state 29
-    DECREMENT      shift, and go to state 30
-    NEW_ARRAY      shift, and go to state 40
+    ADD      shift, and go to state 97
+    SUB      shift, and go to state 98
+    MUL      shift, and go to state 99
+    DIV      shift, and go to state 100
+    MOD      shift, and go to state 101
+    EQ       shift, and go to state 102
+    NE       shift, and go to state 103
+    GT       shift, and go to state 104
+    GE       shift, and go to state 105
+    LT       shift, and go to state 106
+    LE       shift, and go to state 107
+    AND      shift, and go to state 108
+    OR       shift, and go to state 109
+    BIT_AND  shift, and go to state 110
+    BIT_OR   shift, and go to state 111
+    BIT_XOR  shift, and go to state 112
 
-    expression                   go to state 146
-    lvalue_operation_expression  go to state 45
-    assign_expression            go to state 46
-    self_operation_expression    go to state 47
-    unary_expression             go to state 48
-    binary_expression            go to state 49
-    value_expression             go to state 50
-    lvalue_expression            go to state 51
-    array_expression             go to state 52
-    new_array_expression         go to state 53
-    function_expression          go to state 56
+    ADD       [reduce using rule 140 (while_statement)]
+    SUB       [reduce using rule 140 (while_statement)]
+    $default  reduce using rule 140 (while_statement)
 
 
 State 91
@@ -1901,7 +2024,7 @@ State 91
     DECREMENT      shift, and go to state 30
     NEW_ARRAY      shift, and go to state 40
 
-    expression                   go to state 147
+    expression                   go to state 144
     lvalue_operation_expression  go to state 45
     assign_expression            go to state 46
     self_operation_expression    go to state 47
@@ -1935,7 +2058,7 @@ State 92
     DECREMENT      shift, and go to state 30
     NEW_ARRAY      shift, and go to state 40
 
-    expression                   go to state 148
+    expression                   go to state 145
     lvalue_operation_expression  go to state 45
     assign_expression            go to state 46
     self_operation_expression    go to state 47
@@ -1953,7 +2076,7 @@ State 93
   149 function_statement: FUNC IDENTIFER . LEFT_PAREN parameter_list RIGHT_PAREN
   150                   | FUNC IDENTIFER . LEFT_PAREN RIGHT_PAREN
 
-    LEFT_PAREN  shift, and go to state 149
+    LEFT_PAREN  shift, and go to state 146
 
 
 State 94
@@ -2019,7 +2142,7 @@ State 95
     DECREMENT      shift, and go to state 30
     NEW_ARRAY      shift, and go to state 40
 
-    expression                   go to state 150
+    expression                   go to state 147
     lvalue_operation_expression  go to state 45
     assign_expression            go to state 46
     self_operation_expression    go to state 47
@@ -2038,7 +2161,7 @@ State 96
 
     $default  reduce using rule 8 (check_indent)
 
-    check_indent  go to state 151
+    check_indent  go to state 148
 
 
 State 97
@@ -2062,7 +2185,7 @@ State 97
     DECREMENT      shift, and go to state 30
     NEW_ARRAY      shift, and go to state 40
 
-    expression                   go to state 152
+    expression                   go to state 149
     lvalue_operation_expression  go to state 45
     assign_expression            go to state 46
     self_operation_expression    go to state 47
@@ -2096,7 +2219,7 @@ State 98
     DECREMENT      shift, and go to state 30
     NEW_ARRAY      shift, and go to state 40
 
-    expression                   go to state 153
+    expression                   go to state 150
     lvalue_operation_expression  go to state 45
     assign_expression            go to state 46
     self_operation_expression    go to state 47
@@ -2130,7 +2253,7 @@ State 99
     DECREMENT      shift, and go to state 30
     NEW_ARRAY      shift, and go to state 40
 
-    expression                   go to state 154
+    expression                   go to state 151
     lvalue_operation_expression  go to state 45
     assign_expression            go to state 46
     self_operation_expression    go to state 47
@@ -2164,7 +2287,7 @@ State 100
     DECREMENT      shift, and go to state 30
     NEW_ARRAY      shift, and go to state 40
 
-    expression                   go to state 155
+    expression                   go to state 152
     lvalue_operation_expression  go to state 45
     assign_expression            go to state 46
     self_operation_expression    go to state 47
@@ -2198,7 +2321,7 @@ State 101
     DECREMENT      shift, and go to state 30
     NEW_ARRAY      shift, and go to state 40
 
-    expression                   go to state 156
+    expression                   go to state 153
     lvalue_operation_expression  go to state 45
     assign_expression            go to state 46
     self_operation_expression    go to state 47
@@ -2232,7 +2355,7 @@ State 102
     DECREMENT      shift, and go to state 30
     NEW_ARRAY      shift, and go to state 40
 
-    expression                   go to state 157
+    expression                   go to state 154
     lvalue_operation_expression  go to state 45
     assign_expression            go to state 46
     self_operation_expression    go to state 47
@@ -2266,7 +2389,7 @@ State 103
     DECREMENT      shift, and go to state 30
     NEW_ARRAY      shift, and go to state 40
 
-    expression                   go to state 158
+    expression                   go to state 155
     lvalue_operation_expression  go to state 45
     assign_expression            go to state 46
     self_operation_expression    go to state 47
@@ -2300,7 +2423,7 @@ State 104
     DECREMENT      shift, and go to state 30
     NEW_ARRAY      shift, and go to state 40
 
-    expression                   go to state 159
+    expression                   go to state 156
     lvalue_operation_expression  go to state 45
     assign_expression            go to state 46
     self_operation_expression    go to state 47
@@ -2334,7 +2457,7 @@ State 105
     DECREMENT      shift, and go to state 30
     NEW_ARRAY      shift, and go to state 40
 
-    expression                   go to state 160
+    expression                   go to state 157
     lvalue_operation_expression  go to state 45
     assign_expression            go to state 46
     self_operation_expression    go to state 47
@@ -2368,7 +2491,7 @@ State 106
     DECREMENT      shift, and go to state 30
     NEW_ARRAY      shift, and go to state 40
 
-    expression                   go to state 161
+    expression                   go to state 158
     lvalue_operation_expression  go to state 45
     assign_expression            go to state 46
     self_operation_expression    go to state 47
@@ -2402,7 +2525,7 @@ State 107
     DECREMENT      shift, and go to state 30
     NEW_ARRAY      shift, and go to state 40
 
-    expression                   go to state 162
+    expression                   go to state 159
     lvalue_operation_expression  go to state 45
     assign_expression            go to state 46
     self_operation_expression    go to state 47
@@ -2436,7 +2559,7 @@ State 108
     DECREMENT      shift, and go to state 30
     NEW_ARRAY      shift, and go to state 40
 
-    expression                   go to state 163
+    expression                   go to state 160
     lvalue_operation_expression  go to state 45
     assign_expression            go to state 46
     self_operation_expression    go to state 47
@@ -2470,7 +2593,7 @@ State 109
     DECREMENT      shift, and go to state 30
     NEW_ARRAY      shift, and go to state 40
 
-    expression                   go to state 164
+    expression                   go to state 161
     lvalue_operation_expression  go to state 45
     assign_expression            go to state 46
     self_operation_expression    go to state 47
@@ -2504,7 +2627,7 @@ State 110
     DECREMENT      shift, and go to state 30
     NEW_ARRAY      shift, and go to state 40
 
-    expression                   go to state 165
+    expression                   go to state 162
     lvalue_operation_expression  go to state 45
     assign_expression            go to state 46
     self_operation_expression    go to state 47
@@ -2538,7 +2661,7 @@ State 111
     DECREMENT      shift, and go to state 30
     NEW_ARRAY      shift, and go to state 40
 
-    expression                   go to state 166
+    expression                   go to state 163
     lvalue_operation_expression  go to state 45
     assign_expression            go to state 46
     self_operation_expression    go to state 47
@@ -2572,7 +2695,7 @@ State 112
     DECREMENT      shift, and go to state 30
     NEW_ARRAY      shift, and go to state 40
 
-    expression                   go to state 167
+    expression                   go to state 164
     lvalue_operation_expression  go to state 45
     assign_expression            go to state 46
     self_operation_expression    go to state 47
@@ -2590,9 +2713,9 @@ State 113
    89 lvalue_expression: lvalue_expression DOT . IDENTIFER
    91                  | lvalue_expression DOT . function_expression
 
-    IDENTIFER  shift, and go to state 168
+    IDENTIFER  shift, and go to state 165
 
-    function_expression  go to state 169
+    function_expression  go to state 166
 
 
 State 114
@@ -2616,7 +2739,7 @@ State 114
     DECREMENT      shift, and go to state 30
     NEW_ARRAY      shift, and go to state 40
 
-    expression                   go to state 170
+    expression                   go to state 167
     lvalue_operation_expression  go to state 45
     assign_expression            go to state 46
     self_operation_expression    go to state 47
@@ -2650,7 +2773,7 @@ State 115
     DECREMENT      shift, and go to state 30
     NEW_ARRAY      shift, and go to state 40
 
-    expression                   go to state 171
+    expression                   go to state 168
     lvalue_operation_expression  go to state 45
     assign_expression            go to state 46
     self_operation_expression    go to state 47
@@ -2684,7 +2807,7 @@ State 116
     DECREMENT      shift, and go to state 30
     NEW_ARRAY      shift, and go to state 40
 
-    expression                   go to state 172
+    expression                   go to state 169
     lvalue_operation_expression  go to state 45
     assign_expression            go to state 46
     self_operation_expression    go to state 47
@@ -2718,7 +2841,7 @@ State 117
     DECREMENT      shift, and go to state 30
     NEW_ARRAY      shift, and go to state 40
 
-    expression                   go to state 173
+    expression                   go to state 170
     lvalue_operation_expression  go to state 45
     assign_expression            go to state 46
     self_operation_expression    go to state 47
@@ -2752,7 +2875,7 @@ State 118
     DECREMENT      shift, and go to state 30
     NEW_ARRAY      shift, and go to state 40
 
-    expression                   go to state 174
+    expression                   go to state 171
     lvalue_operation_expression  go to state 45
     assign_expression            go to state 46
     self_operation_expression    go to state 47
@@ -2786,7 +2909,7 @@ State 119
     DECREMENT      shift, and go to state 30
     NEW_ARRAY      shift, and go to state 40
 
-    expression                   go to state 175
+    expression                   go to state 172
     lvalue_operation_expression  go to state 45
     assign_expression            go to state 46
     self_operation_expression    go to state 47
@@ -2822,7 +2945,7 @@ State 120
     IDENTIFER      shift, and go to state 20
     LEFT_PAREN     shift, and go to state 23
     LEFT_QUAD      shift, and go to state 24
-    COLON          shift, and go to state 176
+    COLON          shift, and go to state 173
     ADD            shift, and go to state 25
     SUB            shift, and go to state 26
     NOT            shift, and go to state 27
@@ -2831,7 +2954,7 @@ State 120
     DECREMENT      shift, and go to state 30
     NEW_ARRAY      shift, and go to state 40
 
-    expression                   go to state 177
+    expression                   go to state 174
     lvalue_operation_expression  go to state 45
     assign_expression            go to state 46
     self_operation_expression    go to state 47
@@ -2873,7 +2996,7 @@ State 123
   134              | evaluate_list . LEFT_QUAD COLON expression COLON expression RIGHT_QUAD
   135              | evaluate_list . LEFT_QUAD COLON COLON RIGHT_QUAD
 
-    LEFT_QUAD  shift, and go to state 178
+    LEFT_QUAD  shift, and go to state 175
 
     LEFT_QUAD  [reduce using rule 90 (lvalue_expression)]
     $default   reduce using rule 90 (lvalue_expression)
@@ -2883,7 +3006,7 @@ State 124
 
     2 statement: statement close_execute_last_statement @1 single_statement . LF check_indent build_statement_stack execute_single_statement
 
-    LF  shift, and go to state 179
+    LF  shift, and go to state 176
 
 
 State 125
@@ -2902,7 +3025,7 @@ State 126
   151 function_statement: SHARED FUNC IDENTIFER . LEFT_PAREN parameter_list RIGHT_PAREN
   152                   | SHARED FUNC IDENTIFER . LEFT_PAREN RIGHT_PAREN
 
-    LEFT_PAREN  shift, and go to state 180
+    LEFT_PAREN  shift, and go to state 177
 
 
 State 127
@@ -2913,7 +3036,7 @@ State 127
   107 argument_list: IDENTIFER . COLON expression
 
     LEFT_PAREN  shift, and go to state 72
-    COLON       shift, and go to state 181
+    COLON       shift, and go to state 178
 
     $default  reduce using rule 88 (lvalue_expression)
 
@@ -2971,8 +3094,8 @@ State 130
   108 argument_list: argument_list . COMMA expression
   109              | argument_list . COMMA IDENTIFER COLON expression
 
-    RIGHT_PAREN  shift, and go to state 182
-    COMMA        shift, and go to state 183
+    RIGHT_PAREN  shift, and go to state 179
+    COMMA        shift, and go to state 180
 
 
 State 131
@@ -2996,7 +3119,7 @@ State 131
     DECREMENT      shift, and go to state 30
     NEW_ARRAY      shift, and go to state 40
 
-    expression                   go to state 184
+    expression                   go to state 181
     lvalue_operation_expression  go to state 45
     assign_expression            go to state 46
     self_operation_expression    go to state 47
@@ -3014,7 +3137,7 @@ State 132
   102 assign_list: assign_list COMMA . IDENTIFER
   103            | assign_list COMMA . IDENTIFER ASSIGN expression
 
-    IDENTIFER  shift, and go to state 185
+    IDENTIFER  shift, and go to state 182
 
 
 State 133
@@ -3052,7 +3175,7 @@ State 135
     DECREMENT      shift, and go to state 30
     NEW_ARRAY      shift, and go to state 40
 
-    expression                   go to state 186
+    expression                   go to state 183
     lvalue_operation_expression  go to state 45
     assign_expression            go to state 46
     self_operation_expression    go to state 47
@@ -3066,84 +3189,6 @@ State 135
 
 
 State 136
-
-   64 binary_expression: expression . ADD expression
-   65                  | expression . SUB expression
-   66                  | expression . MUL expression
-   67                  | expression . DIV expression
-   68                  | expression . MOD expression
-   69                  | expression . AND expression
-   70                  | expression . OR expression
-   71                  | expression . EQ expression
-   72                  | expression . NE expression
-   73                  | expression . GT expression
-   74                  | expression . GE expression
-   75                  | expression . LT expression
-   76                  | expression . LE expression
-   77                  | expression . BIT_AND expression
-   78                  | expression . BIT_OR expression
-   79                  | expression . BIT_XOR expression
-  136 if_statement: IF LEFT_PAREN expression . RIGHT_PAREN
-
-    RIGHT_PAREN  shift, and go to state 187
-    ADD          shift, and go to state 97
-    SUB          shift, and go to state 98
-    MUL          shift, and go to state 99
-    DIV          shift, and go to state 100
-    MOD          shift, and go to state 101
-    EQ           shift, and go to state 102
-    NE           shift, and go to state 103
-    GT           shift, and go to state 104
-    GE           shift, and go to state 105
-    LT           shift, and go to state 106
-    LE           shift, and go to state 107
-    AND          shift, and go to state 108
-    OR           shift, and go to state 109
-    BIT_AND      shift, and go to state 110
-    BIT_OR       shift, and go to state 111
-    BIT_XOR      shift, and go to state 112
-
-
-State 137
-
-   64 binary_expression: expression . ADD expression
-   65                  | expression . SUB expression
-   66                  | expression . MUL expression
-   67                  | expression . DIV expression
-   68                  | expression . MOD expression
-   69                  | expression . AND expression
-   70                  | expression . OR expression
-   71                  | expression . EQ expression
-   72                  | expression . NE expression
-   73                  | expression . GT expression
-   74                  | expression . GE expression
-   75                  | expression . LT expression
-   76                  | expression . LE expression
-   77                  | expression . BIT_AND expression
-   78                  | expression . BIT_OR expression
-   79                  | expression . BIT_XOR expression
-  138 elseif_statement: ELSEIF LEFT_PAREN expression . RIGHT_PAREN
-
-    RIGHT_PAREN  shift, and go to state 188
-    ADD          shift, and go to state 97
-    SUB          shift, and go to state 98
-    MUL          shift, and go to state 99
-    DIV          shift, and go to state 100
-    MOD          shift, and go to state 101
-    EQ           shift, and go to state 102
-    NE           shift, and go to state 103
-    GT           shift, and go to state 104
-    GE           shift, and go to state 105
-    LT           shift, and go to state 106
-    LE           shift, and go to state 107
-    AND          shift, and go to state 108
-    OR           shift, and go to state 109
-    BIT_AND      shift, and go to state 110
-    BIT_OR       shift, and go to state 111
-    BIT_XOR      shift, and go to state 112
-
-
-State 138
 
   142 do_while_statement: DO . structure_statement WHILE LEFT_PAREN expression_statement RIGHT_PAREN SEMICOLON
 
@@ -3162,7 +3207,7 @@ State 138
     GLOBAL         shift, and go to state 22
     LEFT_PAREN     shift, and go to state 23
     LEFT_QUAD      shift, and go to state 24
-    LEFT_BRACE     shift, and go to state 189
+    LEFT_BRACE     shift, and go to state 184
     ADD            shift, and go to state 25
     SUB            shift, and go to state 26
     NOT            shift, and go to state 27
@@ -3180,9 +3225,9 @@ State 138
     RETURN         shift, and go to state 39
     NEW_ARRAY      shift, and go to state 40
 
-    single_statement             go to state 190
+    single_statement             go to state 185
     nop_statement                go to state 42
-    statement_block              go to state 191
+    statement_block              go to state 186
     expression_statement         go to state 43
     expression                   go to state 44
     lvalue_operation_expression  go to state 45
@@ -3204,62 +3249,62 @@ State 138
     while_statement              go to state 61
     break_statement              go to state 62
     continue_statement           go to state 63
-    structure_statement          go to state 192
+    structure_statement          go to state 187
     function_statement           go to state 64
     class_statement              go to state 65
     return_statement             go to state 66
 
 
-State 139
+State 137
 
   139 for_statement: FOR LEFT_PAREN single_statement_no_semicolon . SEMICOLON expression_statement SEMICOLON single_statement_no_semicolon RIGHT_PAREN
 
-    SEMICOLON  shift, and go to state 193
+    SEMICOLON  shift, and go to state 188
 
 
-State 140
+State 138
 
    33 single_statement_no_semicolon: null_statement .
 
     $default  reduce using rule 33 (single_statement_no_semicolon)
 
 
-State 141
+State 139
 
    28 single_statement_no_semicolon: expression_statement .
 
     $default  reduce using rule 28 (single_statement_no_semicolon)
 
 
-State 142
+State 140
 
    29 single_statement_no_semicolon: if_statement .
 
     $default  reduce using rule 29 (single_statement_no_semicolon)
 
 
-State 143
+State 141
 
    30 single_statement_no_semicolon: for_statement .
 
     $default  reduce using rule 30 (single_statement_no_semicolon)
 
 
-State 144
+State 142
 
    31 single_statement_no_semicolon: while_statement .
 
     $default  reduce using rule 31 (single_statement_no_semicolon)
 
 
-State 145
+State 143
 
    32 single_statement_no_semicolon: do_while_statement .
 
     $default  reduce using rule 32 (single_statement_no_semicolon)
 
 
-State 146
+State 144
 
    64 binary_expression: expression . ADD expression
    65                  | expression . SUB expression
@@ -3277,9 +3322,9 @@ State 146
    77                  | expression . BIT_AND expression
    78                  | expression . BIT_OR expression
    79                  | expression . BIT_XOR expression
-  140 while_statement: WHILE LEFT_PAREN expression . RIGHT_PAREN
+  146 continue_statement: CONTINUE LEFT_PAREN expression . RIGHT_PAREN
 
-    RIGHT_PAREN  shift, and go to state 194
+    RIGHT_PAREN  shift, and go to state 189
     ADD          shift, and go to state 97
     SUB          shift, and go to state 98
     MUL          shift, and go to state 99
@@ -3296,6 +3341,56 @@ State 146
     BIT_AND      shift, and go to state 110
     BIT_OR       shift, and go to state 111
     BIT_XOR      shift, and go to state 112
+
+
+State 145
+
+   64 binary_expression: expression . ADD expression
+   65                  | expression . SUB expression
+   66                  | expression . MUL expression
+   67                  | expression . DIV expression
+   68                  | expression . MOD expression
+   69                  | expression . AND expression
+   70                  | expression . OR expression
+   71                  | expression . EQ expression
+   72                  | expression . NE expression
+   73                  | expression . GT expression
+   74                  | expression . GE expression
+   75                  | expression . LT expression
+   76                  | expression . LE expression
+   77                  | expression . BIT_AND expression
+   78                  | expression . BIT_OR expression
+   79                  | expression . BIT_XOR expression
+  144 break_statement: BREAK LEFT_PAREN expression . RIGHT_PAREN
+
+    RIGHT_PAREN  shift, and go to state 190
+    ADD          shift, and go to state 97
+    SUB          shift, and go to state 98
+    MUL          shift, and go to state 99
+    DIV          shift, and go to state 100
+    MOD          shift, and go to state 101
+    EQ           shift, and go to state 102
+    NE           shift, and go to state 103
+    GT           shift, and go to state 104
+    GE           shift, and go to state 105
+    LT           shift, and go to state 106
+    LE           shift, and go to state 107
+    AND          shift, and go to state 108
+    OR           shift, and go to state 109
+    BIT_AND      shift, and go to state 110
+    BIT_OR       shift, and go to state 111
+    BIT_XOR      shift, and go to state 112
+
+
+State 146
+
+  149 function_statement: FUNC IDENTIFER LEFT_PAREN . parameter_list RIGHT_PAREN
+  150                   | FUNC IDENTIFER LEFT_PAREN . RIGHT_PAREN
+
+    IDENTIFER    shift, and go to state 191
+    RIGHT_PAREN  shift, and go to state 192
+
+    parameter_list  go to state 193
 
 
 State 147
@@ -3316,9 +3411,9 @@ State 147
    77                  | expression . BIT_AND expression
    78                  | expression . BIT_OR expression
    79                  | expression . BIT_XOR expression
-  146 continue_statement: CONTINUE LEFT_PAREN expression . RIGHT_PAREN
+   94 new_array_expression: NEW_ARRAY LEFT_PAREN expression . RIGHT_PAREN
 
-    RIGHT_PAREN  shift, and go to state 195
+    RIGHT_PAREN  shift, and go to state 194
     ADD          shift, and go to state 97
     SUB          shift, and go to state 98
     MUL          shift, and go to state 99
@@ -3339,103 +3434,14 @@ State 147
 
 State 148
 
-   64 binary_expression: expression . ADD expression
-   65                  | expression . SUB expression
-   66                  | expression . MUL expression
-   67                  | expression . DIV expression
-   68                  | expression . MOD expression
-   69                  | expression . AND expression
-   70                  | expression . OR expression
-   71                  | expression . EQ expression
-   72                  | expression . NE expression
-   73                  | expression . GT expression
-   74                  | expression . GE expression
-   75                  | expression . LT expression
-   76                  | expression . LE expression
-   77                  | expression . BIT_AND expression
-   78                  | expression . BIT_OR expression
-   79                  | expression . BIT_XOR expression
-  144 break_statement: BREAK LEFT_PAREN expression . RIGHT_PAREN
-
-    RIGHT_PAREN  shift, and go to state 196
-    ADD          shift, and go to state 97
-    SUB          shift, and go to state 98
-    MUL          shift, and go to state 99
-    DIV          shift, and go to state 100
-    MOD          shift, and go to state 101
-    EQ           shift, and go to state 102
-    NE           shift, and go to state 103
-    GT           shift, and go to state 104
-    GE           shift, and go to state 105
-    LT           shift, and go to state 106
-    LE           shift, and go to state 107
-    AND          shift, and go to state 108
-    OR           shift, and go to state 109
-    BIT_AND      shift, and go to state 110
-    BIT_OR       shift, and go to state 111
-    BIT_XOR      shift, and go to state 112
-
-
-State 149
-
-  149 function_statement: FUNC IDENTIFER LEFT_PAREN . parameter_list RIGHT_PAREN
-  150                   | FUNC IDENTIFER LEFT_PAREN . RIGHT_PAREN
-
-    IDENTIFER    shift, and go to state 197
-    RIGHT_PAREN  shift, and go to state 198
-
-    parameter_list  go to state 199
-
-
-State 150
-
-   64 binary_expression: expression . ADD expression
-   65                  | expression . SUB expression
-   66                  | expression . MUL expression
-   67                  | expression . DIV expression
-   68                  | expression . MOD expression
-   69                  | expression . AND expression
-   70                  | expression . OR expression
-   71                  | expression . EQ expression
-   72                  | expression . NE expression
-   73                  | expression . GT expression
-   74                  | expression . GE expression
-   75                  | expression . LT expression
-   76                  | expression . LE expression
-   77                  | expression . BIT_AND expression
-   78                  | expression . BIT_OR expression
-   79                  | expression . BIT_XOR expression
-   94 new_array_expression: NEW_ARRAY LEFT_PAREN expression . RIGHT_PAREN
-
-    RIGHT_PAREN  shift, and go to state 200
-    ADD          shift, and go to state 97
-    SUB          shift, and go to state 98
-    MUL          shift, and go to state 99
-    DIV          shift, and go to state 100
-    MOD          shift, and go to state 101
-    EQ           shift, and go to state 102
-    NE           shift, and go to state 103
-    GT           shift, and go to state 104
-    GE           shift, and go to state 105
-    LT           shift, and go to state 106
-    LE           shift, and go to state 107
-    AND          shift, and go to state 108
-    OR           shift, and go to state 109
-    BIT_AND      shift, and go to state 110
-    BIT_OR       shift, and go to state 111
-    BIT_XOR      shift, and go to state 112
-
-
-State 151
-
     3 statement: statement INDENT single_statement LF check_indent . build_statement_stack
 
     $default  reduce using rule 9 (build_statement_stack)
 
-    build_statement_stack  go to state 201
+    build_statement_stack  go to state 195
 
 
-State 152
+State 149
 
    64 binary_expression: expression . ADD expression
    64                  | expression ADD expression .
@@ -3462,7 +3468,7 @@ State 152
     $default  reduce using rule 64 (binary_expression)
 
 
-State 153
+State 150
 
    64 binary_expression: expression . ADD expression
    65                  | expression . SUB expression
@@ -3489,7 +3495,7 @@ State 153
     $default  reduce using rule 65 (binary_expression)
 
 
-State 154
+State 151
 
    64 binary_expression: expression . ADD expression
    65                  | expression . SUB expression
@@ -3512,7 +3518,7 @@ State 154
     $default  reduce using rule 66 (binary_expression)
 
 
-State 155
+State 152
 
    64 binary_expression: expression . ADD expression
    65                  | expression . SUB expression
@@ -3535,7 +3541,7 @@ State 155
     $default  reduce using rule 67 (binary_expression)
 
 
-State 156
+State 153
 
    64 binary_expression: expression . ADD expression
    65                  | expression . SUB expression
@@ -3558,7 +3564,7 @@ State 156
     $default  reduce using rule 68 (binary_expression)
 
 
-State 157
+State 154
 
    64 binary_expression: expression . ADD expression
    65                  | expression . SUB expression
@@ -3587,7 +3593,7 @@ State 157
     $default  reduce using rule 71 (binary_expression)
 
 
-State 158
+State 155
 
    64 binary_expression: expression . ADD expression
    65                  | expression . SUB expression
@@ -3616,7 +3622,7 @@ State 158
     $default  reduce using rule 72 (binary_expression)
 
 
-State 159
+State 156
 
    64 binary_expression: expression . ADD expression
    65                  | expression . SUB expression
@@ -3645,7 +3651,7 @@ State 159
     $default  reduce using rule 73 (binary_expression)
 
 
-State 160
+State 157
 
    64 binary_expression: expression . ADD expression
    65                  | expression . SUB expression
@@ -3674,7 +3680,7 @@ State 160
     $default  reduce using rule 74 (binary_expression)
 
 
-State 161
+State 158
 
    64 binary_expression: expression . ADD expression
    65                  | expression . SUB expression
@@ -3703,7 +3709,7 @@ State 161
     $default  reduce using rule 75 (binary_expression)
 
 
-State 162
+State 159
 
    64 binary_expression: expression . ADD expression
    65                  | expression . SUB expression
@@ -3732,7 +3738,7 @@ State 162
     $default  reduce using rule 76 (binary_expression)
 
 
-State 163
+State 160
 
    64 binary_expression: expression . ADD expression
    65                  | expression . SUB expression
@@ -3770,7 +3776,7 @@ State 163
     $default  reduce using rule 69 (binary_expression)
 
 
-State 164
+State 161
 
    64 binary_expression: expression . ADD expression
    65                  | expression . SUB expression
@@ -3809,7 +3815,7 @@ State 164
     $default  reduce using rule 70 (binary_expression)
 
 
-State 165
+State 162
 
    64 binary_expression: expression . ADD expression
    65                  | expression . SUB expression
@@ -3844,7 +3850,7 @@ State 165
     $default  reduce using rule 77 (binary_expression)
 
 
-State 166
+State 163
 
    64 binary_expression: expression . ADD expression
    65                  | expression . SUB expression
@@ -3881,7 +3887,7 @@ State 166
     $default  reduce using rule 78 (binary_expression)
 
 
-State 167
+State 164
 
    64 binary_expression: expression . ADD expression
    65                  | expression . SUB expression
@@ -3917,7 +3923,7 @@ State 167
     $default  reduce using rule 79 (binary_expression)
 
 
-State 168
+State 165
 
    89 lvalue_expression: lvalue_expression DOT IDENTIFER .
   104 function_expression: IDENTIFER . LEFT_PAREN argument_list RIGHT_PAREN
@@ -3929,14 +3935,14 @@ State 168
     $default    reduce using rule 89 (lvalue_expression)
 
 
-State 169
+State 166
 
    91 lvalue_expression: lvalue_expression DOT function_expression .
 
     $default  reduce using rule 91 (lvalue_expression)
 
 
-State 170
+State 167
 
    49 assign_expression: lvalue_expression ASSIGN expression .
    64 binary_expression: expression . ADD expression
@@ -3976,7 +3982,7 @@ State 170
     $default  reduce using rule 49 (assign_expression)
 
 
-State 171
+State 168
 
    50 assign_expression: lvalue_expression ADD_ASSIGN expression .
    64 binary_expression: expression . ADD expression
@@ -4016,7 +4022,7 @@ State 171
     $default  reduce using rule 50 (assign_expression)
 
 
-State 172
+State 169
 
    51 assign_expression: lvalue_expression SUB_ASSIGN expression .
    64 binary_expression: expression . ADD expression
@@ -4056,7 +4062,7 @@ State 172
     $default  reduce using rule 51 (assign_expression)
 
 
-State 173
+State 170
 
    52 assign_expression: lvalue_expression MUL_ASSIGN expression .
    64 binary_expression: expression . ADD expression
@@ -4096,7 +4102,7 @@ State 173
     $default  reduce using rule 52 (assign_expression)
 
 
-State 174
+State 171
 
    53 assign_expression: lvalue_expression DIV_ASSIGN expression .
    64 binary_expression: expression . ADD expression
@@ -4136,7 +4142,7 @@ State 174
     $default  reduce using rule 53 (assign_expression)
 
 
-State 175
+State 172
 
    54 assign_expression: lvalue_expression MOD_ASSIGN expression .
    64 binary_expression: expression . ADD expression
@@ -4176,7 +4182,7 @@ State 175
     $default  reduce using rule 54 (assign_expression)
 
 
-State 176
+State 173
 
   121 evaluate_list: LEFT_QUAD COLON . expression RIGHT_QUAD
   122              | LEFT_QUAD COLON . expression COLON RIGHT_QUAD
@@ -4192,7 +4198,7 @@ State 176
     IDENTIFER      shift, and go to state 20
     LEFT_PAREN     shift, and go to state 23
     LEFT_QUAD      shift, and go to state 24
-    COLON          shift, and go to state 202
+    COLON          shift, and go to state 196
     ADD            shift, and go to state 25
     SUB            shift, and go to state 26
     NOT            shift, and go to state 27
@@ -4201,7 +4207,7 @@ State 176
     DECREMENT      shift, and go to state 30
     NEW_ARRAY      shift, and go to state 40
 
-    expression                   go to state 203
+    expression                   go to state 197
     lvalue_operation_expression  go to state 45
     assign_expression            go to state 46
     self_operation_expression    go to state 47
@@ -4214,7 +4220,7 @@ State 176
     function_expression          go to state 56
 
 
-State 177
+State 174
 
    64 binary_expression: expression . ADD expression
    65                  | expression . SUB expression
@@ -4240,8 +4246,8 @@ State 177
   119              | LEFT_QUAD expression . COLON COLON RIGHT_QUAD
   120              | LEFT_QUAD expression . COLON COLON expression RIGHT_QUAD
 
-    RIGHT_QUAD  shift, and go to state 204
-    COLON       shift, and go to state 205
+    RIGHT_QUAD  shift, and go to state 198
+    COLON       shift, and go to state 199
     ADD         shift, and go to state 97
     SUB         shift, and go to state 98
     MUL         shift, and go to state 99
@@ -4260,7 +4266,7 @@ State 177
     BIT_XOR     shift, and go to state 112
 
 
-State 178
+State 175
 
   125 evaluate_list: evaluate_list LEFT_QUAD . expression RIGHT_QUAD
   126              | evaluate_list LEFT_QUAD . expression COLON expression RIGHT_QUAD
@@ -4283,7 +4289,103 @@ State 178
     IDENTIFER      shift, and go to state 20
     LEFT_PAREN     shift, and go to state 23
     LEFT_QUAD      shift, and go to state 24
-    COLON          shift, and go to state 206
+    COLON          shift, and go to state 200
+    ADD            shift, and go to state 25
+    SUB            shift, and go to state 26
+    NOT            shift, and go to state 27
+    BIT_NOT        shift, and go to state 28
+    INCREMENT      shift, and go to state 29
+    DECREMENT      shift, and go to state 30
+    NEW_ARRAY      shift, and go to state 40
+
+    expression                   go to state 201
+    lvalue_operation_expression  go to state 45
+    assign_expression            go to state 46
+    self_operation_expression    go to state 47
+    unary_expression             go to state 48
+    binary_expression            go to state 49
+    value_expression             go to state 50
+    lvalue_expression            go to state 51
+    array_expression             go to state 52
+    new_array_expression         go to state 53
+    function_expression          go to state 56
+
+
+State 176
+
+    2 statement: statement close_execute_last_statement @1 single_statement LF . check_indent build_statement_stack execute_single_statement
+
+    $default  reduce using rule 8 (check_indent)
+
+    check_indent  go to state 202
+
+
+State 177
+
+  151 function_statement: SHARED FUNC IDENTIFER LEFT_PAREN . parameter_list RIGHT_PAREN
+  152                   | SHARED FUNC IDENTIFER LEFT_PAREN . RIGHT_PAREN
+
+    IDENTIFER    shift, and go to state 191
+    RIGHT_PAREN  shift, and go to state 203
+
+    parameter_list  go to state 204
+
+
+State 178
+
+  107 argument_list: IDENTIFER COLON . expression
+
+    NEW            shift, and go to state 11
+    INT_VALUE      shift, and go to state 15
+    BOOLEAN_VALUE  shift, and go to state 16
+    FLOAT_VALUE    shift, and go to state 17
+    STRING_VALUE   shift, and go to state 18
+    NULL_VALUE     shift, and go to state 19
+    IDENTIFER      shift, and go to state 20
+    LEFT_PAREN     shift, and go to state 23
+    LEFT_QUAD      shift, and go to state 24
+    ADD            shift, and go to state 25
+    SUB            shift, and go to state 26
+    NOT            shift, and go to state 27
+    BIT_NOT        shift, and go to state 28
+    INCREMENT      shift, and go to state 29
+    DECREMENT      shift, and go to state 30
+    NEW_ARRAY      shift, and go to state 40
+
+    expression                   go to state 205
+    lvalue_operation_expression  go to state 45
+    assign_expression            go to state 46
+    self_operation_expression    go to state 47
+    unary_expression             go to state 48
+    binary_expression            go to state 49
+    value_expression             go to state 50
+    lvalue_expression            go to state 51
+    array_expression             go to state 52
+    new_array_expression         go to state 53
+    function_expression          go to state 56
+
+
+State 179
+
+  104 function_expression: IDENTIFER LEFT_PAREN argument_list RIGHT_PAREN .
+
+    $default  reduce using rule 104 (function_expression)
+
+
+State 180
+
+  108 argument_list: argument_list COMMA . expression
+  109              | argument_list COMMA . IDENTIFER COLON expression
+
+    NEW            shift, and go to state 11
+    INT_VALUE      shift, and go to state 15
+    BOOLEAN_VALUE  shift, and go to state 16
+    FLOAT_VALUE    shift, and go to state 17
+    STRING_VALUE   shift, and go to state 18
+    NULL_VALUE     shift, and go to state 19
+    IDENTIFER      shift, and go to state 206
+    LEFT_PAREN     shift, and go to state 23
+    LEFT_QUAD      shift, and go to state 24
     ADD            shift, and go to state 25
     SUB            shift, and go to state 26
     NOT            shift, and go to state 27
@@ -4305,103 +4407,7 @@ State 178
     function_expression          go to state 56
 
 
-State 179
-
-    2 statement: statement close_execute_last_statement @1 single_statement LF . check_indent build_statement_stack execute_single_statement
-
-    $default  reduce using rule 8 (check_indent)
-
-    check_indent  go to state 208
-
-
-State 180
-
-  151 function_statement: SHARED FUNC IDENTIFER LEFT_PAREN . parameter_list RIGHT_PAREN
-  152                   | SHARED FUNC IDENTIFER LEFT_PAREN . RIGHT_PAREN
-
-    IDENTIFER    shift, and go to state 197
-    RIGHT_PAREN  shift, and go to state 209
-
-    parameter_list  go to state 210
-
-
 State 181
-
-  107 argument_list: IDENTIFER COLON . expression
-
-    NEW            shift, and go to state 11
-    INT_VALUE      shift, and go to state 15
-    BOOLEAN_VALUE  shift, and go to state 16
-    FLOAT_VALUE    shift, and go to state 17
-    STRING_VALUE   shift, and go to state 18
-    NULL_VALUE     shift, and go to state 19
-    IDENTIFER      shift, and go to state 20
-    LEFT_PAREN     shift, and go to state 23
-    LEFT_QUAD      shift, and go to state 24
-    ADD            shift, and go to state 25
-    SUB            shift, and go to state 26
-    NOT            shift, and go to state 27
-    BIT_NOT        shift, and go to state 28
-    INCREMENT      shift, and go to state 29
-    DECREMENT      shift, and go to state 30
-    NEW_ARRAY      shift, and go to state 40
-
-    expression                   go to state 211
-    lvalue_operation_expression  go to state 45
-    assign_expression            go to state 46
-    self_operation_expression    go to state 47
-    unary_expression             go to state 48
-    binary_expression            go to state 49
-    value_expression             go to state 50
-    lvalue_expression            go to state 51
-    array_expression             go to state 52
-    new_array_expression         go to state 53
-    function_expression          go to state 56
-
-
-State 182
-
-  104 function_expression: IDENTIFER LEFT_PAREN argument_list RIGHT_PAREN .
-
-    $default  reduce using rule 104 (function_expression)
-
-
-State 183
-
-  108 argument_list: argument_list COMMA . expression
-  109              | argument_list COMMA . IDENTIFER COLON expression
-
-    NEW            shift, and go to state 11
-    INT_VALUE      shift, and go to state 15
-    BOOLEAN_VALUE  shift, and go to state 16
-    FLOAT_VALUE    shift, and go to state 17
-    STRING_VALUE   shift, and go to state 18
-    NULL_VALUE     shift, and go to state 19
-    IDENTIFER      shift, and go to state 212
-    LEFT_PAREN     shift, and go to state 23
-    LEFT_QUAD      shift, and go to state 24
-    ADD            shift, and go to state 25
-    SUB            shift, and go to state 26
-    NOT            shift, and go to state 27
-    BIT_NOT        shift, and go to state 28
-    INCREMENT      shift, and go to state 29
-    DECREMENT      shift, and go to state 30
-    NEW_ARRAY      shift, and go to state 40
-
-    expression                   go to state 213
-    lvalue_operation_expression  go to state 45
-    assign_expression            go to state 46
-    self_operation_expression    go to state 47
-    unary_expression             go to state 48
-    binary_expression            go to state 49
-    value_expression             go to state 50
-    lvalue_expression            go to state 51
-    array_expression             go to state 52
-    new_array_expression         go to state 53
-    function_expression          go to state 56
-
-
-State 184
 
    64 binary_expression: expression . ADD expression
    65                  | expression . SUB expression
@@ -4441,17 +4447,17 @@ State 184
     $default  reduce using rule 101 (assign_list)
 
 
-State 185
+State 182
 
   102 assign_list: assign_list COMMA IDENTIFER .
   103            | assign_list COMMA IDENTIFER . ASSIGN expression
 
-    ASSIGN  shift, and go to state 214
+    ASSIGN  shift, and go to state 208
 
     $default  reduce using rule 102 (assign_list)
 
 
-State 186
+State 183
 
    64 binary_expression: expression . ADD expression
    65                  | expression . SUB expression
@@ -4491,21 +4497,7 @@ State 186
     $default  reduce using rule 96 (element_list)
 
 
-State 187
-
-  136 if_statement: IF LEFT_PAREN expression RIGHT_PAREN .
-
-    $default  reduce using rule 136 (if_statement)
-
-
-State 188
-
-  138 elseif_statement: ELSEIF LEFT_PAREN expression RIGHT_PAREN .
-
-    $default  reduce using rule 138 (elseif_statement)
-
-
-State 189
+State 184
 
    36 statement_block: LEFT_BRACE . block_list RIGHT_BRACE
    37                | LEFT_BRACE . RIGHT_BRACE
@@ -4525,7 +4517,7 @@ State 189
     GLOBAL         shift, and go to state 22
     LEFT_PAREN     shift, and go to state 23
     LEFT_QUAD      shift, and go to state 24
-    RIGHT_BRACE    shift, and go to state 215
+    RIGHT_BRACE    shift, and go to state 209
     ADD            shift, and go to state 25
     SUB            shift, and go to state 26
     NOT            shift, and go to state 27
@@ -4543,9 +4535,9 @@ State 189
     RETURN         shift, and go to state 39
     NEW_ARRAY      shift, and go to state 40
 
-    single_statement             go to state 216
+    single_statement             go to state 210
     nop_statement                go to state 42
-    block_list                   go to state 217
+    block_list                   go to state 211
     expression_statement         go to state 43
     expression                   go to state 44
     lvalue_operation_expression  go to state 45
@@ -4572,28 +4564,28 @@ State 189
     return_statement             go to state 66
 
 
-State 190
+State 185
 
   147 structure_statement: single_statement .
 
     $default  reduce using rule 147 (structure_statement)
 
 
-State 191
+State 186
 
   148 structure_statement: statement_block .
 
     $default  reduce using rule 148 (structure_statement)
 
 
-State 192
+State 187
 
   142 do_while_statement: DO structure_statement . WHILE LEFT_PAREN expression_statement RIGHT_PAREN SEMICOLON
 
-    WHILE  shift, and go to state 218
+    WHILE  shift, and go to state 212
 
 
-State 193
+State 188
 
   139 for_statement: FOR LEFT_PAREN single_statement_no_semicolon SEMICOLON . expression_statement SEMICOLON single_statement_no_semicolon RIGHT_PAREN
 
@@ -4614,7 +4606,7 @@ State 193
     DECREMENT      shift, and go to state 30
     NEW_ARRAY      shift, and go to state 40
 
-    expression_statement         go to state 219
+    expression_statement         go to state 213
     expression                   go to state 44
     lvalue_operation_expression  go to state 45
     assign_expression            go to state 46
@@ -4628,76 +4620,69 @@ State 193
     function_expression          go to state 56
 
 
-State 194
-
-  140 while_statement: WHILE LEFT_PAREN expression RIGHT_PAREN .
-
-    $default  reduce using rule 140 (while_statement)
-
-
-State 195
+State 189
 
   146 continue_statement: CONTINUE LEFT_PAREN expression RIGHT_PAREN .
 
     $default  reduce using rule 146 (continue_statement)
 
 
-State 196
+State 190
 
   144 break_statement: BREAK LEFT_PAREN expression RIGHT_PAREN .
 
     $default  reduce using rule 144 (break_statement)
 
 
-State 197
+State 191
 
   110 parameter_list: IDENTIFER .
   111               | IDENTIFER . ASSIGN expression
 
-    ASSIGN  shift, and go to state 220
+    ASSIGN  shift, and go to state 214
 
     $default  reduce using rule 110 (parameter_list)
 
 
-State 198
+State 192
 
   150 function_statement: FUNC IDENTIFER LEFT_PAREN RIGHT_PAREN .
 
     $default  reduce using rule 150 (function_statement)
 
 
-State 199
+State 193
 
   112 parameter_list: parameter_list . COMMA IDENTIFER
   113               | parameter_list . COMMA IDENTIFER ASSIGN expression
   149 function_statement: FUNC IDENTIFER LEFT_PAREN parameter_list . RIGHT_PAREN
 
-    RIGHT_PAREN  shift, and go to state 221
-    COMMA        shift, and go to state 222
+    RIGHT_PAREN  shift, and go to state 215
+    COMMA        shift, and go to state 216
 
 
-State 200
+State 194
 
    94 new_array_expression: NEW_ARRAY LEFT_PAREN expression RIGHT_PAREN .
 
     $default  reduce using rule 94 (new_array_expression)
 
 
-State 201
+State 195
 
     3 statement: statement INDENT single_statement LF check_indent build_statement_stack .
 
     $default  reduce using rule 3 (statement)
 
 
-State 202
+State 196
 
   124 evaluate_list: LEFT_QUAD COLON COLON . RIGHT_QUAD
 
-    RIGHT_QUAD  shift, and go to state 223
+    RIGHT_QUAD  shift, and go to state 217
 
 
-State 203
+State 197
 
    64 binary_expression: expression . ADD expression
    65                  | expression . SUB expression
@@ -4719,8 +4704,8 @@ State 203
   122              | LEFT_QUAD COLON expression . COLON RIGHT_QUAD
   123              | LEFT_QUAD COLON expression . COLON expression RIGHT_QUAD
 
-    RIGHT_QUAD  shift, and go to state 224
-    COLON       shift, and go to state 225
+    RIGHT_QUAD  shift, and go to state 218
+    COLON       shift, and go to state 219
     ADD         shift, and go to state 97
     SUB         shift, and go to state 98
     MUL         shift, and go to state 99
@@ -4739,14 +4724,14 @@ State 203
     BIT_XOR     shift, and go to state 112
 
 
-State 204
+State 198
 
   114 evaluate_list: LEFT_QUAD expression RIGHT_QUAD .
 
     $default  reduce using rule 114 (evaluate_list)
 
 
-State 205
+State 199
 
   115 evaluate_list: LEFT_QUAD expression COLON . expression RIGHT_QUAD
   116              | LEFT_QUAD expression COLON . expression COLON RIGHT_QUAD
@@ -4764,8 +4749,8 @@ State 205
     IDENTIFER      shift, and go to state 20
     LEFT_PAREN     shift, and go to state 23
     LEFT_QUAD      shift, and go to state 24
-    RIGHT_QUAD     shift, and go to state 226
-    COLON          shift, and go to state 227
+    RIGHT_QUAD     shift, and go to state 220
+    COLON          shift, and go to state 221
     ADD            shift, and go to state 25
     SUB            shift, and go to state 26
     NOT            shift, and go to state 27
@@ -4774,7 +4759,7 @@ State 205
     DECREMENT      shift, and go to state 30
     NEW_ARRAY      shift, and go to state 40
 
-    expression                   go to state 228
+    expression                   go to state 222
     lvalue_operation_expression  go to state 45
     assign_expression            go to state 46
     self_operation_expression    go to state 47
@@ -4787,7 +4772,7 @@ State 205
     function_expression          go to state 56
 
 
-State 206
+State 200
 
   132 evaluate_list: evaluate_list LEFT_QUAD COLON . expression RIGHT_QUAD
   133              | evaluate_list LEFT_QUAD COLON . expression COLON RIGHT_QUAD
@@ -4803,7 +4788,7 @@ State 206
     IDENTIFER      shift, and go to state 20
     LEFT_PAREN     shift, and go to state 23
     LEFT_QUAD      shift, and go to state 24
-    COLON          shift, and go to state 229
+    COLON          shift, and go to state 223
     ADD            shift, and go to state 25
     SUB            shift, and go to state 26
     NOT            shift, and go to state 27
@@ -4812,7 +4797,7 @@ State 206
     DECREMENT      shift, and go to state 30
     NEW_ARRAY      shift, and go to state 40
 
-    expression                   go to state 230
+    expression                   go to state 224
     lvalue_operation_expression  go to state 45
     assign_expression            go to state 46
     self_operation_expression    go to state 47
@@ -4825,7 +4810,7 @@ State 206
     function_expression          go to state 56
 
 
-State 207
+State 201
 
    64 binary_expression: expression . ADD expression
    65                  | expression . SUB expression
@@ -4851,8 +4836,8 @@ State 207
   130              | evaluate_list LEFT_QUAD expression . COLON COLON RIGHT_QUAD
   131              | evaluate_list LEFT_QUAD expression . COLON COLON expression RIGHT_QUAD
 
-    RIGHT_QUAD  shift, and go to state 231
-    COLON       shift, and go to state 232
+    RIGHT_QUAD  shift, and go to state 225
+    COLON       shift, and go to state 226
     ADD         shift, and go to state 97
     SUB         shift, and go to state 98
     MUL         shift, and go to state 99
@@ -4871,33 +4856,33 @@ State 207
     BIT_XOR     shift, and go to state 112
 
 
-State 208
+State 202
 
     2 statement: statement close_execute_last_statement @1 single_statement LF check_indent . build_statement_stack execute_single_statement
 
     $default  reduce using rule 9 (build_statement_stack)
 
-    build_statement_stack  go to state 233
+    build_statement_stack  go to state 227
 
 
-State 209
+State 203
 
   152 function_statement: SHARED FUNC IDENTIFER LEFT_PAREN RIGHT_PAREN .
 
     $default  reduce using rule 152 (function_statement)
 
 
-State 210
+State 204
 
   112 parameter_list: parameter_list . COMMA IDENTIFER
   113               | parameter_list . COMMA IDENTIFER ASSIGN expression
   151 function_statement: SHARED FUNC IDENTIFER LEFT_PAREN parameter_list . RIGHT_PAREN
 
-    RIGHT_PAREN  shift, and go to state 234
-    COMMA        shift, and go to state 222
+    RIGHT_PAREN  shift, and go to state 228
+    COMMA        shift, and go to state 216
 
 
-State 211
+State 205
 
    64 binary_expression: expression . ADD expression
    65                  | expression . SUB expression
@@ -4937,7 +4922,7 @@ State 211
     $default  reduce using rule 107 (argument_list)
 
 
-State 212
+State 206
 
    88 lvalue_expression: IDENTIFER .
   104 function_expression: IDENTIFER . LEFT_PAREN argument_list RIGHT_PAREN
@@ -4945,12 +4930,12 @@ State 212
   109 argument_list: argument_list COMMA IDENTIFER . COLON expression
 
     LEFT_PAREN  shift, and go to state 72
-    COLON       shift, and go to state 235
+    COLON       shift, and go to state 229
 
     $default  reduce using rule 88 (lvalue_expression)
 
 
-State 213
+State 207
 
    64 binary_expression: expression . ADD expression
    65                  | expression . SUB expression
@@ -4990,7 +4975,7 @@ State 213
     $default  reduce using rule 108 (argument_list)
 
 
-State 214
+State 208
 
   103 assign_list: assign_list COMMA IDENTIFER ASSIGN . expression
 
@@ -5011,7 +4996,7 @@ State 214
     DECREMENT      shift, and go to state 30
     NEW_ARRAY      shift, and go to state 40
 
-    expression                   go to state 236
+    expression                   go to state 230
     lvalue_operation_expression  go to state 45
     assign_expression            go to state 46
     self_operation_expression    go to state 47
@@ -5024,21 +5009,21 @@ State 214
     function_expression          go to state 56
 
 
-State 215
+State 209
 
    37 statement_block: LEFT_BRACE RIGHT_BRACE .
 
     $default  reduce using rule 37 (statement_block)
 
 
-State 216
+State 210
 
    38 block_list: single_statement .
 
     $default  reduce using rule 38 (block_list)
 
 
-State 217
+State 211
 
    36 statement_block: LEFT_BRACE block_list . RIGHT_BRACE
    39 block_list: block_list . single_statement
@@ -5058,7 +5043,7 @@ State 217
     GLOBAL         shift, and go to state 22
     LEFT_PAREN     shift, and go to state 23
     LEFT_QUAD      shift, and go to state 24
-    RIGHT_BRACE    shift, and go to state 237
+    RIGHT_BRACE    shift, and go to state 231
     ADD            shift, and go to state 25
     SUB            shift, and go to state 26
     NOT            shift, and go to state 27
@@ -5076,7 +5061,7 @@ State 217
     RETURN         shift, and go to state 39
     NEW_ARRAY      shift, and go to state 40
 
-    single_statement             go to state 238
+    single_statement             go to state 232
     nop_statement                go to state 42
     expression_statement         go to state 43
     expression                   go to state 44
@@ -5104,21 +5089,21 @@ State 217
     return_statement             go to state 66
 
 
-State 218
+State 212
 
   142 do_while_statement: DO structure_statement WHILE . LEFT_PAREN expression_statement RIGHT_PAREN SEMICOLON
 
-    LEFT_PAREN  shift, and go to state 239
+    LEFT_PAREN  shift, and go to state 233
 
 
-State 219
+State 213
 
   139 for_statement: FOR LEFT_PAREN single_statement_no_semicolon SEMICOLON expression_statement . SEMICOLON single_statement_no_semicolon RIGHT_PAREN
 
-    SEMICOLON  shift, and go to state 240
+    SEMICOLON  shift, and go to state 234
 
 
-State 220
+State 214
 
   111 parameter_list: IDENTIFER ASSIGN . expression
 
@@ -5139,7 +5124,7 @@ State 220
     DECREMENT      shift, and go to state 30
     NEW_ARRAY      shift, and go to state 40
 
-    expression                   go to state 241
+    expression                   go to state 235
     lvalue_operation_expression  go to state 45
     assign_expression            go to state 46
     self_operation_expression    go to state 47
@@ -5152,36 +5137,36 @@ State 220
     function_expression          go to state 56
 
 
-State 221
+State 215
 
   149 function_statement: FUNC IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN .
 
     $default  reduce using rule 149 (function_statement)
 
 
-State 222
+State 216
 
   112 parameter_list: parameter_list COMMA . IDENTIFER
   113               | parameter_list COMMA . IDENTIFER ASSIGN expression
 
-    IDENTIFER  shift, and go to state 242
+    IDENTIFER  shift, and go to state 236
 
 
-State 223
+State 217
 
   124 evaluate_list: LEFT_QUAD COLON COLON RIGHT_QUAD .
 
     $default  reduce using rule 124 (evaluate_list)
 
 
-State 224
+State 218
 
   121 evaluate_list: LEFT_QUAD COLON expression RIGHT_QUAD .
 
     $default  reduce using rule 121 (evaluate_list)
 
 
-State 225
+State 219
 
   122 evaluate_list: LEFT_QUAD COLON expression COLON . RIGHT_QUAD
   123              | LEFT_QUAD COLON expression COLON . expression RIGHT_QUAD
@@ -5195,7 +5180,7 @@ State 225
     IDENTIFER      shift, and go to state 20
     LEFT_PAREN     shift, and go to state 23
     LEFT_QUAD      shift, and go to state 24
-    RIGHT_QUAD     shift, and go to state 243
+    RIGHT_QUAD     shift, and go to state 237
     ADD            shift, and go to state 25
     SUB            shift, and go to state 26
     NOT            shift, and go to state 27
@@ -5204,7 +5189,7 @@ State 225
     DECREMENT      shift, and go to state 30
     NEW_ARRAY      shift, and go to state 40
 
-    expression                   go to state 244
+    expression                   go to state 238
     lvalue_operation_expression  go to state 45
     assign_expression            go to state 46
     self_operation_expression    go to state 47
@@ -5217,14 +5202,14 @@ State 225
     function_expression          go to state 56
 
 
-State 226
+State 220
 
   118 evaluate_list: LEFT_QUAD expression COLON RIGHT_QUAD .
 
     $default  reduce using rule 118 (evaluate_list)
 
 
-State 227
+State 221
 
   119 evaluate_list: LEFT_QUAD expression COLON COLON . RIGHT_QUAD
   120              | LEFT_QUAD expression COLON COLON . expression RIGHT_QUAD
@@ -5238,7 +5223,7 @@ State 227
     IDENTIFER      shift, and go to state 20
     LEFT_PAREN     shift, and go to state 23
     LEFT_QUAD      shift, and go to state 24
-    RIGHT_QUAD     shift, and go to state 245
+    RIGHT_QUAD     shift, and go to state 239
     ADD            shift, and go to state 25
     SUB            shift, and go to state 26
     NOT            shift, and go to state 27
@@ -5247,7 +5232,7 @@ State 227
     DECREMENT      shift, and go to state 30
     NEW_ARRAY      shift, and go to state 40
 
-    expression                   go to state 246
+    expression                   go to state 240
     lvalue_operation_expression  go to state 45
     assign_expression            go to state 46
     self_operation_expression    go to state 47
@@ -5260,7 +5245,7 @@ State 227
     function_expression          go to state 56
 
 
-State 228
+State 222
 
    64 binary_expression: expression . ADD expression
    65                  | expression . SUB expression
@@ -5282,8 +5267,8 @@ State 228
   116              | LEFT_QUAD expression COLON expression . COLON RIGHT_QUAD
   117              | LEFT_QUAD expression COLON expression . COLON expression RIGHT_QUAD
 
-    RIGHT_QUAD  shift, and go to state 247
-    COLON       shift, and go to state 248
+    RIGHT_QUAD  shift, and go to state 241
+    COLON       shift, and go to state 242
     ADD         shift, and go to state 97
     SUB         shift, and go to state 98
     MUL         shift, and go to state 99
@@ -5302,14 +5287,14 @@ State 228
     BIT_XOR     shift, and go to state 112
 
 
-State 229
+State 223
 
   135 evaluate_list: evaluate_list LEFT_QUAD COLON COLON . RIGHT_QUAD
 
-    RIGHT_QUAD  shift, and go to state 249
+    RIGHT_QUAD  shift, and go to state 243
 
 
-State 230
+State 224
 
    64 binary_expression: expression . ADD expression
    65                  | expression . SUB expression
@@ -5331,8 +5316,8 @@ State 230
   133              | evaluate_list LEFT_QUAD COLON expression . COLON RIGHT_QUAD
   134              | evaluate_list LEFT_QUAD COLON expression . COLON expression RIGHT_QUAD
 
-    RIGHT_QUAD  shift, and go to state 250
-    COLON       shift, and go to state 251
+    RIGHT_QUAD  shift, and go to state 244
+    COLON       shift, and go to state 245
     ADD         shift, and go to state 97
     SUB         shift, and go to state 98
     MUL         shift, and go to state 99
@@ -5351,14 +5336,14 @@ State 230
     BIT_XOR     shift, and go to state 112
 
 
-State 231
+State 225
 
   125 evaluate_list: evaluate_list LEFT_QUAD expression RIGHT_QUAD .
 
     $default  reduce using rule 125 (evaluate_list)
 
 
-State 232
+State 226
 
   126 evaluate_list: evaluate_list LEFT_QUAD expression COLON . expression RIGHT_QUAD
   127              | evaluate_list LEFT_QUAD expression COLON . expression COLON RIGHT_QUAD
@@ -5376,8 +5361,8 @@ State 232
     IDENTIFER      shift, and go to state 20
     LEFT_PAREN     shift, and go to state 23
     LEFT_QUAD      shift, and go to state 24
-    RIGHT_QUAD     shift, and go to state 252
-    COLON          shift, and go to state 253
+    RIGHT_QUAD     shift, and go to state 246
+    COLON          shift, and go to state 247
     ADD            shift, and go to state 25
     SUB            shift, and go to state 26
     NOT            shift, and go to state 27
@@ -5386,7 +5371,7 @@ State 232
     DECREMENT      shift, and go to state 30
     NEW_ARRAY      shift, and go to state 40
 
-    expression                   go to state 254
+    expression                   go to state 248
     lvalue_operation_expression  go to state 45
     assign_expression            go to state 46
     self_operation_expression    go to state 47
@@ -5399,23 +5384,23 @@ State 232
     function_expression          go to state 56
 
 
-State 233
+State 227
 
     2 statement: statement close_execute_last_statement @1 single_statement LF check_indent build_statement_stack . execute_single_statement
 
     $default  reduce using rule 12 (execute_single_statement)
 
-    execute_single_statement  go to state 255
+    execute_single_statement  go to state 249
 
 
-State 234
+State 228
 
   151 function_statement: SHARED FUNC IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN .
 
     $default  reduce using rule 151 (function_statement)
 
 
-State 235
+State 229
 
   109 argument_list: argument_list COMMA IDENTIFER COLON . expression
 
@@ -5436,7 +5421,7 @@ State 235
     DECREMENT      shift, and go to state 30
     NEW_ARRAY      shift, and go to state 40
 
-    expression                   go to state 256
+    expression                   go to state 250
     lvalue_operation_expression  go to state 45
     assign_expression            go to state 46
     self_operation_expression    go to state 47
@@ -5449,7 +5434,7 @@ State 235
     function_expression          go to state 56
 
 
-State 236
+State 230
 
    64 binary_expression: expression . ADD expression
    65                  | expression . SUB expression
@@ -5489,21 +5474,21 @@ State 236
     $default  reduce using rule 103 (assign_list)
 
 
-State 237
+State 231
 
    36 statement_block: LEFT_BRACE block_list RIGHT_BRACE .
 
     $default  reduce using rule 36 (statement_block)
 
 
-State 238
+State 232
 
    39 block_list: block_list single_statement .
 
     $default  reduce using rule 39 (block_list)
 
 
-State 239
+State 233
 
   142 do_while_statement: DO structure_statement WHILE LEFT_PAREN . expression_statement RIGHT_PAREN SEMICOLON
 
@@ -5524,7 +5509,7 @@ State 239
     DECREMENT      shift, and go to state 30
     NEW_ARRAY      shift, and go to state 40
 
-    expression_statement         go to state 257
+    expression_statement         go to state 251
     expression                   go to state 44
     lvalue_operation_expression  go to state 45
     assign_expression            go to state 46
@@ -5538,7 +5523,7 @@ State 239
     function_expression          go to state 56
 
 
-State 240
+State 234
 
   139 for_statement: FOR LEFT_PAREN single_statement_no_semicolon SEMICOLON expression_statement SEMICOLON . single_statement_no_semicolon RIGHT_PAREN
 
@@ -5560,14 +5545,14 @@ State 240
     IF             shift, and go to state 31
     FOR            shift, and go to state 34
     WHILE          shift, and go to state 35
-    DO             shift, and go to state 138
+    DO             shift, and go to state 136
     NEW_ARRAY      shift, and go to state 40
 
     $default  reduce using rule 34 (null_statement)
 
-    single_statement_no_semicolon  go to state 258
-    null_statement                 go to state 140
-    expression_statement           go to state 141
+    single_statement_no_semicolon  go to state 252
+    null_statement                 go to state 138
+    expression_statement           go to state 139
     expression                     go to state 44
     lvalue_operation_expression    go to state 45
     assign_expression              go to state 46
@@ -5579,13 +5564,13 @@ State 240
     array_expression               go to state 52
     new_array_expression           go to state 53
     function_expression            go to state 56
-    if_statement                   go to state 142
-    for_statement                  go to state 143
-    while_statement                go to state 144
-    do_while_statement             go to state 145
+    if_statement                   go to state 140
+    for_statement                  go to state 141
+    while_statement                go to state 142
+    do_while_statement             go to state 143
 
 
-State 241
+State 235
 
    64 binary_expression: expression . ADD expression
    65                  | expression . SUB expression
@@ -5625,24 +5610,24 @@ State 241
     $default  reduce using rule 111 (parameter_list)
 
 
-State 242
+State 236
 
   112 parameter_list: parameter_list COMMA IDENTIFER .
   113               | parameter_list COMMA IDENTIFER . ASSIGN expression
 
-    ASSIGN  shift, and go to state 259
+    ASSIGN  shift, and go to state 253
 
     $default  reduce using rule 112 (parameter_list)
 
 
-State 243
+State 237
 
   122 evaluate_list: LEFT_QUAD COLON expression COLON RIGHT_QUAD .
 
     $default  reduce using rule 122 (evaluate_list)
 
 
-State 244
+State 238
 
    64 binary_expression: expression . ADD expression
    65                  | expression . SUB expression
@@ -5662,7 +5647,7 @@ State 244
    79                  | expression . BIT_XOR expression
   123 evaluate_list: LEFT_QUAD COLON expression COLON expression . RIGHT_QUAD
 
-    RIGHT_QUAD  shift, and go to state 260
+    RIGHT_QUAD  shift, and go to state 254
     ADD         shift, and go to state 97
     SUB         shift, and go to state 98
     MUL         shift, and go to state 99
@@ -5681,14 +5666,14 @@ State 244
     BIT_XOR     shift, and go to state 112
 
 
-State 245
+State 239
 
   119 evaluate_list: LEFT_QUAD expression COLON COLON RIGHT_QUAD .
 
     $default  reduce using rule 119 (evaluate_list)
 
 
-State 246
+State 240
 
    64 binary_expression: expression . ADD expression
    65                  | expression . SUB expression
@@ -5708,7 +5693,7 @@ State 246
    79                  | expression . BIT_XOR expression
   120 evaluate_list: LEFT_QUAD expression COLON COLON expression . RIGHT_QUAD
 
-    RIGHT_QUAD  shift, and go to state 261
+    RIGHT_QUAD  shift, and go to state 255
     ADD         shift, and go to state 97
     SUB         shift, and go to state 98
     MUL         shift, and go to state 99
@@ -5727,14 +5712,14 @@ State 246
     BIT_XOR     shift, and go to state 112
 
 
-State 247
+State 241
 
   115 evaluate_list: LEFT_QUAD expression COLON expression RIGHT_QUAD .
 
     $default  reduce using rule 115 (evaluate_list)
 
 
-State 248
+State 242
 
   116 evaluate_list: LEFT_QUAD expression COLON expression COLON . RIGHT_QUAD
   117              | LEFT_QUAD expression COLON expression COLON . expression RIGHT_QUAD
@@ -5748,7 +5733,7 @@ State 248
     IDENTIFER      shift, and go to state 20
     LEFT_PAREN     shift, and go to state 23
     LEFT_QUAD      shift, and go to state 24
-    RIGHT_QUAD     shift, and go to state 262
+    RIGHT_QUAD     shift, and go to state 256
     ADD            shift, and go to state 25
     SUB            shift, and go to state 26
     NOT            shift, and go to state 27
@@ -5757,7 +5742,7 @@ State 248
     DECREMENT      shift, and go to state 30
     NEW_ARRAY      shift, and go to state 40
 
-    expression                   go to state 263
+    expression                   go to state 257
     lvalue_operation_expression  go to state 45
     assign_expression            go to state 46
     self_operation_expression    go to state 47
@@ -5770,21 +5755,21 @@ State 248
     function_expression          go to state 56
 
 
-State 249
+State 243
 
   135 evaluate_list: evaluate_list LEFT_QUAD COLON COLON RIGHT_QUAD .
 
     $default  reduce using rule 135 (evaluate_list)
 
 
-State 250
+State 244
 
   132 evaluate_list: evaluate_list LEFT_QUAD COLON expression RIGHT_QUAD .
 
     $default  reduce using rule 132 (evaluate_list)
 
 
-State 251
+State 245
 
   133 evaluate_list: evaluate_list LEFT_QUAD COLON expression COLON . RIGHT_QUAD
   134              | evaluate_list LEFT_QUAD COLON expression COLON . expression RIGHT_QUAD
@@ -5798,7 +5783,7 @@ State 251
     IDENTIFER      shift, and go to state 20
     LEFT_PAREN     shift, and go to state 23
     LEFT_QUAD      shift, and go to state 24
-    RIGHT_QUAD     shift, and go to state 264
+    RIGHT_QUAD     shift, and go to state 258
     ADD            shift, and go to state 25
     SUB            shift, and go to state 26
     NOT            shift, and go to state 27
@@ -5807,7 +5792,7 @@ State 251
     DECREMENT      shift, and go to state 30
     NEW_ARRAY      shift, and go to state 40
 
-    expression                   go to state 265
+    expression                   go to state 259
     lvalue_operation_expression  go to state 45
     assign_expression            go to state 46
     self_operation_expression    go to state 47
@@ -5820,14 +5805,14 @@ State 251
     function_expression          go to state 56
 
 
-State 252
+State 246
 
   129 evaluate_list: evaluate_list LEFT_QUAD expression COLON RIGHT_QUAD .
 
     $default  reduce using rule 129 (evaluate_list)
 
 
-State 253
+State 247
 
   130 evaluate_list: evaluate_list LEFT_QUAD expression COLON COLON . RIGHT_QUAD
   131              | evaluate_list LEFT_QUAD expression COLON COLON . expression RIGHT_QUAD
@@ -5841,7 +5826,7 @@ State 253
     IDENTIFER      shift, and go to state 20
     LEFT_PAREN     shift, and go to state 23
     LEFT_QUAD      shift, and go to state 24
-    RIGHT_QUAD     shift, and go to state 266
+    RIGHT_QUAD     shift, and go to state 260
     ADD            shift, and go to state 25
     SUB            shift, and go to state 26
     NOT            shift, and go to state 27
@@ -5850,7 +5835,7 @@ State 253
     DECREMENT      shift, and go to state 30
     NEW_ARRAY      shift, and go to state 40
 
-    expression                   go to state 267
+    expression                   go to state 261
     lvalue_operation_expression  go to state 45
     assign_expression            go to state 46
     self_operation_expression    go to state 47
@@ -5863,7 +5848,7 @@ State 253
     function_expression          go to state 56
 
 
-State 254
+State 248
 
    64 binary_expression: expression . ADD expression
    65                  | expression . SUB expression
@@ -5885,8 +5870,8 @@ State 254
   127              | evaluate_list LEFT_QUAD expression COLON expression . COLON RIGHT_QUAD
   128              | evaluate_list LEFT_QUAD expression COLON expression . COLON expression RIGHT_QUAD
 
-    RIGHT_QUAD  shift, and go to state 268
-    COLON       shift, and go to state 269
+    RIGHT_QUAD  shift, and go to state 262
+    COLON       shift, and go to state 263
     ADD         shift, and go to state 97
     SUB         shift, and go to state 98
     MUL         shift, and go to state 99
@@ -5905,14 +5890,14 @@ State 254
     BIT_XOR     shift, and go to state 112
 
 
-State 255
+State 249
 
     2 statement: statement close_execute_last_statement @1 single_statement LF check_indent build_statement_stack execute_single_statement .
 
     $default  reduce using rule 2 (statement)
 
 
-State 256
+State 250
 
    64 binary_expression: expression . ADD expression
    65                  | expression . SUB expression
@@ -5952,21 +5937,21 @@ State 256
     $default  reduce using rule 109 (argument_list)
 
 
-State 257
+State 251
 
   142 do_while_statement: DO structure_statement WHILE LEFT_PAREN expression_statement . RIGHT_PAREN SEMICOLON
 
-    RIGHT_PAREN  shift, and go to state 270
+    RIGHT_PAREN  shift, and go to state 264
 
 
-State 258
+State 252
 
   139 for_statement: FOR LEFT_PAREN single_statement_no_semicolon SEMICOLON expression_statement SEMICOLON single_statement_no_semicolon . RIGHT_PAREN
 
-    RIGHT_PAREN  shift, and go to state 271
+    RIGHT_PAREN  shift, and go to state 265
 
 
-State 259
+State 253
 
   113 parameter_list: parameter_list COMMA IDENTIFER ASSIGN . expression
 
@@ -5987,7 +5972,7 @@ State 259
     DECREMENT      shift, and go to state 30
     NEW_ARRAY      shift, and go to state 40
 
-    expression                   go to state 272
+    expression                   go to state 266
     lvalue_operation_expression  go to state 45
     assign_expression            go to state 46
     self_operation_expression    go to state 47
@@ -6000,28 +5985,28 @@ State 259
     function_expression          go to state 56
 
 
-State 260
+State 254
 
   123 evaluate_list: LEFT_QUAD COLON expression COLON expression RIGHT_QUAD .
 
     $default  reduce using rule 123 (evaluate_list)
 
 
-State 261
+State 255
 
   120 evaluate_list: LEFT_QUAD expression COLON COLON expression RIGHT_QUAD .
 
     $default  reduce using rule 120 (evaluate_list)
 
 
-State 262
+State 256
 
   116 evaluate_list: LEFT_QUAD expression COLON expression COLON RIGHT_QUAD .
 
     $default  reduce using rule 116 (evaluate_list)
 
 
-State 263
+State 257
 
    64 binary_expression: expression . ADD expression
    65                  | expression . SUB expression
@@ -6041,7 +6026,7 @@ State 263
    79                  | expression . BIT_XOR expression
   117 evaluate_list: LEFT_QUAD expression COLON expression COLON expression . RIGHT_QUAD
 
-    RIGHT_QUAD  shift, and go to state 273
+    RIGHT_QUAD  shift, and go to state 267
     ADD         shift, and go to state 97
     SUB         shift, and go to state 98
     MUL         shift, and go to state 99
@@ -6060,14 +6045,14 @@ State 263
     BIT_XOR     shift, and go to state 112
 
 
-State 264
+State 258
 
   133 evaluate_list: evaluate_list LEFT_QUAD COLON expression COLON RIGHT_QUAD .
 
     $default  reduce using rule 133 (evaluate_list)
 
 
-State 265
+State 259
 
    64 binary_expression: expression . ADD expression
    65                  | expression . SUB expression
@@ -6087,7 +6072,7 @@ State 265
    79                  | expression . BIT_XOR expression
   134 evaluate_list: evaluate_list LEFT_QUAD COLON expression COLON expression . RIGHT_QUAD
 
-    RIGHT_QUAD  shift, and go to state 274
+    RIGHT_QUAD  shift, and go to state 268
     ADD         shift, and go to state 97
     SUB         shift, and go to state 98
     MUL         shift, and go to state 99
@@ -6106,14 +6091,14 @@ State 265
     BIT_XOR     shift, and go to state 112
 
 
-State 266
+State 260
 
   130 evaluate_list: evaluate_list LEFT_QUAD expression COLON COLON RIGHT_QUAD .
 
     $default  reduce using rule 130 (evaluate_list)
 
 
-State 267
+State 261
 
    64 binary_expression: expression . ADD expression
    65                  | expression . SUB expression
@@ -6133,7 +6118,7 @@ State 267
    79                  | expression . BIT_XOR expression
   131 evaluate_list: evaluate_list LEFT_QUAD expression COLON COLON expression . RIGHT_QUAD
 
-    RIGHT_QUAD  shift, and go to state 275
+    RIGHT_QUAD  shift, and go to state 269
     ADD         shift, and go to state 97
     SUB         shift, and go to state 98
     MUL         shift, and go to state 99
@@ -6152,14 +6137,14 @@ State 267
     BIT_XOR     shift, and go to state 112
 
 
-State 268
+State 262
 
   126 evaluate_list: evaluate_list LEFT_QUAD expression COLON expression RIGHT_QUAD .
 
     $default  reduce using rule 126 (evaluate_list)
 
 
-State 269
+State 263
 
   127 evaluate_list: evaluate_list LEFT_QUAD expression COLON expression COLON . RIGHT_QUAD
   128              | evaluate_list LEFT_QUAD expression COLON expression COLON . expression RIGHT_QUAD
@@ -6173,7 +6158,7 @@ State 269
     IDENTIFER      shift, and go to state 20
     LEFT_PAREN     shift, and go to state 23
     LEFT_QUAD      shift, and go to state 24
-    RIGHT_QUAD     shift, and go to state 276
+    RIGHT_QUAD     shift, and go to state 270
     ADD            shift, and go to state 25
     SUB            shift, and go to state 26
     NOT            shift, and go to state 27
@@ -6182,7 +6167,7 @@ State 269
     DECREMENT      shift, and go to state 30
     NEW_ARRAY      shift, and go to state 40
 
-    expression                   go to state 277
+    expression                   go to state 271
     lvalue_operation_expression  go to state 45
     assign_expression            go to state 46
     self_operation_expression    go to state 47
@@ -6195,21 +6180,21 @@ State 269
     function_expression          go to state 56
 
 
-State 270
+State 264
 
   142 do_while_statement: DO structure_statement WHILE LEFT_PAREN expression_statement RIGHT_PAREN . SEMICOLON
 
-    SEMICOLON  shift, and go to state 278
+    SEMICOLON  shift, and go to state 272
 
 
-State 271
+State 265
 
   139 for_statement: FOR LEFT_PAREN single_statement_no_semicolon SEMICOLON expression_statement SEMICOLON single_statement_no_semicolon RIGHT_PAREN .
 
     $default  reduce using rule 139 (for_statement)
 
 
-State 272
+State 266
 
    64 binary_expression: expression . ADD expression
    65                  | expression . SUB expression
@@ -6249,35 +6234,35 @@ State 272
     $default  reduce using rule 113 (parameter_list)
 
 
-State 273
+State 267
 
   117 evaluate_list: LEFT_QUAD expression COLON expression COLON expression RIGHT_QUAD .
 
     $default  reduce using rule 117 (evaluate_list)
 
 
-State 274
+State 268
 
   134 evaluate_list: evaluate_list LEFT_QUAD COLON expression COLON expression RIGHT_QUAD .
 
     $default  reduce using rule 134 (evaluate_list)
 
 
-State 275
+State 269
 
   131 evaluate_list: evaluate_list LEFT_QUAD expression COLON COLON expression RIGHT_QUAD .
 
     $default  reduce using rule 131 (evaluate_list)
 
 
-State 276
+State 270
 
   127 evaluate_list: evaluate_list LEFT_QUAD expression COLON expression COLON RIGHT_QUAD .
 
     $default  reduce using rule 127 (evaluate_list)
 
 
-State 277
+State 271
 
    64 binary_expression: expression . ADD expression
    65                  | expression . SUB expression
@@ -6297,7 +6282,7 @@ State 277
    79                  | expression . BIT_XOR expression
   128 evaluate_list: evaluate_list LEFT_QUAD expression COLON expression COLON expression . RIGHT_QUAD
 
-    RIGHT_QUAD  shift, and go to state 279
+    RIGHT_QUAD  shift, and go to state 273
     ADD         shift, and go to state 97
     SUB         shift, and go to state 98
     MUL         shift, and go to state 99
@@ -6316,14 +6301,14 @@ State 277
     BIT_XOR     shift, and go to state 112
 
 
-State 278
+State 272
 
   142 do_while_statement: DO structure_statement WHILE LEFT_PAREN expression_statement RIGHT_PAREN SEMICOLON .
 
     $default  reduce using rule 142 (do_while_statement)
 
 
-State 279
+State 273
 
   128 evaluate_list: evaluate_list LEFT_QUAD expression COLON expression COLON expression RIGHT_QUAD .
 

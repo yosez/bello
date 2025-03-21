@@ -822,11 +822,16 @@ evaluate_list
     } */
 
 if_statement
-    : IF LEFT_PAREN expression RIGHT_PAREN 
+    : IF expression  
+    {
+        $$=bldIfStmt($2);
+        //printf("bld if stmt\n");
+    }
+    /* : IF LEFT_PAREN expression RIGHT_PAREN 
     {
         $$=bldIfStmt($3);
         //printf("bld if stmt\n");
-    }
+    } */
     /* | IF LEFT_PAREN expression RIGHT_PAREN structure_statement ELSE structure_statement 
     {
         $$=bldIfElsStmt($3, $5, $7);
@@ -839,10 +844,14 @@ else_statement
     }
 
 elseif_statement
-    : ELSEIF LEFT_PAREN expression RIGHT_PAREN
+    : ELSEIF expression 
+    {
+        $$ = bldElifStmt($2);
+    }
+    /* : ELSEIF LEFT_PAREN expression RIGHT_PAREN
     {
         $$ = bldElifStmt($3);
-    }
+    } */
 
 /* for_statement
     : FOR LEFT_PAREN single_statement_no_semicolon SEMICOLON expression_statement SEMICOLON single_statement_no_semicolon RIGHT_PAREN structure_statement
@@ -863,10 +872,14 @@ for_statement
     } */
 
 while_statement
-    : WHILE LEFT_PAREN expression RIGHT_PAREN
+    : WHILE expression 
+    {
+        $$ = bldWhlStmt($2);
+    }
+    /* : WHILE LEFT_PAREN expression RIGHT_PAREN
     {
         $$ = bldWhlStmt($3);
-    }
+    } */
     | WHILE 
     {
         $$ = bldWhlStmt();
