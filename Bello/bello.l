@@ -111,7 +111,7 @@
 "var"                       { return VAR; }
 "global"                    { return GLOBAL; }
 "if"                        { return IF; }
-"elseif"                    { return ELSEIF; }
+"elif"                      { return ELSEIF; }
 "else"                      { return ELSE; }
 "for"                       { return FOR; }
 "do"                        { return DO; }

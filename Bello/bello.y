@@ -190,13 +190,17 @@ build_statement_stack
     {   
         int indt = $<intVl>-3;
 
+        StmtStrc* stmt=$<stmt>-2;
+
+        stmt->indt= indt;
+
         //如果是当前句的indent == 上1句的indent + 1，则检查上1句是否有语句体，如上1句允许语句体，语句入栈
         if (indt == lstIndt + 1 )
         {
             if (stmtStk.back()->alwSubStmt)
             {
                 //语句入栈
-                pshStmt(indt, $<stmt>-2);
+                pshStmt(indt, stmt);
             }
             else
             {
@@ -206,7 +210,7 @@ build_statement_stack
         else if (indt == lstIndt)
         {
             //语句入栈
-            pshStmt(indt, $<stmt>-2);
+            pshStmt(indt, stmt);
 
         }
         else if (indt < lstIndt)
@@ -219,7 +223,7 @@ build_statement_stack
             fldStmt(nowIndt);
 
             //输入的句子入栈
-            pshStmt(indt, $<stmt>-2);
+            pshStmt(indt, stmt);
             
         }
 

@@ -171,7 +171,7 @@ struct StmtStrc
 {
 public:
 	int typ;
-
+	int indt;
 };
 
 struct StmtStkItmStrc
@@ -184,6 +184,11 @@ struct StmtStkItmStrc
 };
 
 std::vector<StmtStkItmStrc*> stmtStk;
+
+/// <summary>
+///	多主句语句的栈
+/// </summary>
+std::vector<StmtStrc*> mltStmtStk;
 
 struct VrbStrc
 {

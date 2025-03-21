@@ -37,6 +37,7 @@ struct StmtStrc* bldWhlStmt();
 struct StmtStrc* bldElsStmt();
 
 extern int chkStmtAlwSubStmt(struct StmtStrc* stmt);
+extern int chkStmtAlwScndStmt(struct StmtStrc* stmt);
 extern StmtStrc* lstStmt;
 
 
@@ -345,7 +346,27 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 
 	rslt->typ = NORMAL_RESULT;
 
-	struct StmtRsltStrc* stt;
+	if (chkStmtAlwScndStmt(stmt) == 0 || chkStmtAlwScndStmt(stmt) == 1)
+	{
+		while (mltStmtStk.size() > 0 && mltStmtStk.back()->indt >= stmt->indt)
+		{
+			mltStmtStk.pop_back();
+		}
+	}
+	//else if (chkStmtAlwScndStmt(stmt) == 1)
+	//{
+	//	while (mltStmtStk.size() > 0 && mltStmtStk.back()->indt >= stmt->indt)
+	//	{
+	//		mltStmtStk.pop_back();
+	//	}
+	//}
+	else if (chkStmtAlwScndStmt(stmt) == 2 || chkStmtAlwScndStmt(stmt) == 3)
+	{
+		while (mltStmtStk.size() > 0 && mltStmtStk.back()->indt > stmt->indt)
+		{
+			mltStmtStk.pop_back();
+		}
+	}
 
 	try
 	{
@@ -459,12 +480,17 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 			//删除创建的环境
 			envr.pop_back();
 
+			//语句加入多主句语句栈
+			mltStmtStk.push_back(stmt);
+
 		}
 
 		if (stmt->typ == ELSE_STATEMENT)
 		{
 
 			auto elsStmt = static_cast<ElsStmtStrc*>(stmt);
+
+			auto lstStmt = mltStmtStk.back();
 
 			if (lstStmt->typ == IF_STATEMENT)
 			{
@@ -507,6 +533,7 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 
 			auto elifStmt = static_cast<ElifStmtStrc*>(stmt);
 
+			auto lstStmt = mltStmtStk.back();
 
 			if (lstStmt->typ == IF_STATEMENT)
 			{
@@ -540,7 +567,7 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 
 			}
 
-			
+
 
 			CnstStrc* expRslt = nullptr;
 			envr.push_back(new EnvrStrc(STATEMENT_ENVIRONMENT));
@@ -551,6 +578,9 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 			}
 
 			envr.pop_back();
+
+			//语句加入多主句语句栈
+			mltStmtStk.push_back(stmt);
 
 		}
 
@@ -993,11 +1023,23 @@ int chkStmtAlwScndStmt(struct StmtStrc* stmt)
 {
 	switch (stmt->typ)
 	{
+		//多主句起始语句
 	case IF_STATEMENT:
 	case DO_WHILE_STATEMENT:
-	case ELSEIF_STATEMENT:
 	{
 		return 1;
+		break;
+	}
+	//多主句中间语句
+	case ELSEIF_STATEMENT:
+	{
+		return 2;
+		break;
+	}
+	//多主句结束语句
+	case ELSE_STATEMENT:
+	{
+		return 3;
 		break;
 	}
 	default:
