@@ -57,6 +57,7 @@ struct ExpStrc* bldCnstNllExp();
 struct ExpStrc* bldAsgnExp(struct ExpStrc* lvl, struct ExpStrc* exp);
 struct ExpStrc* bldVrbExp(char* idtf);
 struct ExpStrc* bldBnrExp(int opr, struct ExpStrc* lftExp, struct ExpStrc* rghtExp);
+struct ExpStrc* blnTrpExp(int opr, ExpStrc* frstExp, ExpStrc* scndExp, ExpStrc* trdExp);
 struct ExpStrc* bldUnrExp(int opr, struct ExpStrc* exp);
 struct ExpStrc* bldFcnExp(char* nm, struct ArgLstStrc* argLst);
 struct ExpStrc* bldArrExp(struct ElmtLstStrc* elmtLst);
@@ -82,6 +83,9 @@ struct CnstStrc* clcBnrExpLe(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp);
 struct CnstStrc* clcBnrExpBitAnd(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp);
 struct CnstStrc* clcBnrExpBitOr(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp);
 struct CnstStrc* clcBnrExpBitXor(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp);
+
+CnstStrc* clcTnrExp(vector<EnvrStrc*>& envr, TnrExpStrc* exp);
+struct CnstStrc* clcTnrExpQm(vector<EnvrStrc*>& envr, struct TnrExpStrc* exp);
 struct CnstStrc* clcAsgnExp(vector<EnvrStrc*>& envr, struct AsgnExpStrc* exp);
 struct CnstStrc* clcUnrExpPfxInc(vector<EnvrStrc*>& envr, struct UnrExpStrc* exp);
 struct CnstStrc* clcUnrExpPfxDec(vector<EnvrStrc*>& envr, struct UnrExpStrc* exp);
@@ -263,6 +267,21 @@ struct ExpStrc* bldBnrExp(int opr, struct ExpStrc* lftExp, struct ExpStrc* rghtE
 	exp->lftExp = lftExp;
 	exp->rghtExp = rghtExp;
 	exp->oprTyp = opr;
+
+	return exp;
+}
+
+struct ExpStrc* bldTnrExp(int opr, ExpStrc* frstExp, ExpStrc* scndExp, ExpStrc* trdExp)
+{
+	TnrExpStrc* exp = new TnrExpStrc;
+
+	exp->typ = TERNARY_EXPRESSION;
+
+	exp->oprTyp = opr;
+
+	exp->frstExp = frstExp;
+	exp->scndExp = scndExp;
+	exp->trdExp = trdExp;
 
 	return exp;
 }
@@ -987,6 +1006,38 @@ struct CnstStrc* clcBnrExp(vector<EnvrStrc*>& envr, struct BnrExpStrc* exp)
 		rslt = clcBnrExpBitXor(envr, exp);
 	}
 
+	}
+
+	return rslt;
+}
+
+CnstStrc* clcTnrExp(vector<EnvrStrc*>& envr, TnrExpStrc* exp)
+{
+	CnstStrc* rslt = nullptr;
+	switch (exp->oprTyp)
+	{
+	case QM:
+	{
+		rslt = clcTnrExpQm(envr, exp);
+		break;
+	}
+	}
+
+	return rslt;
+}
+
+CnstStrc* clcTnrExpQm(vector<EnvrStrc*>& envr, TnrExpStrc* exp)
+{
+	CnstStrc* rslt;
+
+	if (clcExp(envr, exp->frstExp)->vl.intVl != 0)
+	{
+		rslt = clcExp(envr, exp->scndExp);
+	}
+	else
+	{
+
+		rslt = clcExp(envr, exp->trdExp);
 	}
 
 	return rslt;
@@ -2296,6 +2347,11 @@ struct CnstStrc* clcExp(vector<EnvrStrc*>& envr, struct ExpStrc* exp)
 	if (exp->typ == BINARY_EXPRESSION)
 	{
 		rslt = clcBnrExp(envr, static_cast<BnrExpStrc*>(exp));
+	}
+
+	if (exp->typ == TERNARY_EXPRESSION)
+	{
+		rslt = clcTnrExp(envr, static_cast<TnrExpStrc*>(exp));
 	}
 
 	if (exp->typ == ASSIGN_EXPRESSION)

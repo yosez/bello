@@ -87,6 +87,7 @@ enum ExpTyp
 	CONST_EXPRESSION = 1,
 	VARIABLE_EXPRESSION,
 	BINARY_EXPRESSION,
+	TERNARY_EXPRESSION,
 	ASSIGN_EXPRESSION,
 	UNARY_EXPRESSION,
 	FUNCTION_EXPRESSION,
@@ -263,6 +264,12 @@ struct UnrExpStrc : public ExpStrc
 {
 	int oprTyp;
 	struct LvlExpStrc* exp;
+};
+
+struct TnrExpStrc : public ExpStrc
+{
+	int oprTyp;
+	struct ExpStrc* frstExp, * scndExp, * trdExp;
 };
 
 struct FcnExpStrc : public ExpStrc

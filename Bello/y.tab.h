@@ -125,11 +125,7 @@ extern int yydebug;
     NEW_ARRAY = 326,               /* NEW_ARRAY  */
     MINUS_SIGN = 327,              /* MINUS_SIGN  */
     PLUS_SIGN = 328,               /* PLUS_SIGN  */
-    READ_INT = 329,                /* READ_INT  */
-    READ_FLOAT = 330,              /* READ_FLOAT  */
-    READ = 331,                    /* READ  */
-    READ_BOOL = 332,               /* READ_BOOL  */
-    READ_LINE = 333                /* READ_LINE  */
+    QM = 329                       /* QM  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -209,11 +205,7 @@ extern int yydebug;
 #define NEW_ARRAY 326
 #define MINUS_SIGN 327
 #define PLUS_SIGN 328
-#define READ_INT 329
-#define READ_FLOAT 330
-#define READ 331
-#define READ_BOOL 332
-#define READ_LINE 333
+#define QM 329
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -242,7 +234,7 @@ union YYSTYPE
     char *idtf;
     //string idtf;
 
-#line 246 "y.tab.h"
+#line 238 "y.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

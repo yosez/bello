@@ -158,7 +158,9 @@
 
 %right BIT_NOT NOT MINUS_SIGN PLUS_SIGN
 
-%left INCREMENT DECREMENT READ_INT READ_FLOAT READ READ_BOOL READ_LINE
+%left INCREMENT DECREMENT
+
+%left QM
 
 
 %%
@@ -460,6 +462,7 @@ binary_expression
     | expression BIT_AND expression { $$=bldBnrExp(BIT_AND, $1, $3); }
     | expression BIT_OR expression { $$=bldBnrExp(BIT_OR, $1, $3); }
     | expression BIT_XOR expression { $$=bldBnrExp(BIT_XOR, $1, $3); }
+    | expression QM expression COLON expression { $$ = bldTnrExp(QM, $1, $3, $5); }
 
 
 value_expression

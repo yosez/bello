@@ -106,6 +106,7 @@
 "~"                         { return BIT_NOT; }
 "!"                         { return NOT; }
 "."                         { return DOT; }
+"?"                         { return QM; }
 "nop"                       { return NOP; }
 "new"                       { return NEW; }
 "var"                       { return VAR; }
