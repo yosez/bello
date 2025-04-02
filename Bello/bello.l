@@ -107,6 +107,7 @@
 "!"                         { return NOT; }
 "."                         { return DOT; }
 "?"                         { return QM; }
+":::"                       { return SHORTCUT_PRINTLN; }
 "nop"                       { return NOP; }
 "new"                       { return NEW; }
 "var"                       { return VAR; }

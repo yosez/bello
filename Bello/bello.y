@@ -104,6 +104,7 @@
 %token <objVl> OBJECT_VALUE
 %token NULL_VALUE
 %token ARRAY_VALUE
+%token SHORTCUT_PRINTLN
 %token <idtf> IDENTIFER
 %token ASSIGN
 %token VAR GLOBAL
@@ -126,7 +127,7 @@
 %type <exp> expression value_expression function_expression  array_expression
     new_array_expression assign_expression unary_expression binary_expression 
     lvalue_operation_expression self_operation_expression lvalue_expression
-    object_invoke_expression
+    object_invoke_expression shortcut_expression
 %type <stmt> single_statement expression_statement 
     statement_block block_list null_statement var_statement global_statement
 %type <stmt> if_statement else_statement elseif_statement structure_statement for_statement single_statement_no_semicolon while_statement 
@@ -414,10 +415,11 @@ expression_statement
 expression
     : value_expression 
     | lvalue_operation_expression
-    | unary_expression { $$=$1; }
-    | binary_expression { $$=$1; }
-    | array_expression { $$=$1; }
+    | unary_expression { $$ = $1; }
+    | binary_expression { $$ = $1; }
+    | array_expression { $$ = $1; }
     | new_array_expression { $$ = $1; }
+    | shortcut_expression { $$ = $1; }
 
 lvalue_operation_expression
     : assign_expression
@@ -464,6 +466,11 @@ binary_expression
     | expression BIT_XOR expression { $$=bldBnrExp(BIT_XOR, $1, $3); }
     | expression QM expression COLON expression { $$ = bldTnrExp(QM, $1, $3, $5); }
 
+shortcut_expression
+    : SHORTCUT_PRINTLN element_list
+    {
+        
+    }
 
 value_expression
     : INT_VALUE { $$=bldCnstIntExp($1); /*printf("Get data: %d\n",$1);*/ }
