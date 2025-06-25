@@ -1,7 +1,7 @@
 #pragma once
 #pragma once
 #pragma once
-#include <malloc.h>
+//#include <malloc.h>
 #include "dftn.h"
 #include "expt.h"
 #include "cnst.h"

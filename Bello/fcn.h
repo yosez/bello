@@ -1,7 +1,7 @@
 #pragma once
 
 #include <stdio.h>
-#include <malloc.h>
+//#include <malloc.h>
 #include "y.tab.h"
 #include "dftn.h"
 //#include "envr.h"

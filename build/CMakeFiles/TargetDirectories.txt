@@ -1,0 +1,3 @@
+/Users/yosezang/Progetti/Personale/bello/build/CMakeFiles/bello.dir
+/Users/yosezang/Progetti/Personale/bello/build/CMakeFiles/edit_cache.dir
+/Users/yosezang/Progetti/Personale/bello/build/CMakeFiles/rebuild_cache.dir

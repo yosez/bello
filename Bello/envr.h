@@ -1,7 +1,7 @@
 #pragma once
 
 #include <stdio.h>
-#include <malloc.h>
+//#include <malloc.h>
 #include <vector>
 #include <algorithm>
 
@@ -114,7 +114,7 @@ struct VrbStrc* getVrb(vector<EnvrStrc*>& envr, struct VrbExpStrc* vrbExp)
 
 	int lyrBfrFcn = 0;
 
-	//´Ó×îÄÚ1²ã»·¾³ÏòÍâÕÒµ½µÚ1¸öº¯Êý»·¾³
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½1ï¿½ã»·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òµï¿½ï¿½ï¿½1ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	while (true)
 	{
 		tmp = envr[lyr];
@@ -139,7 +139,7 @@ struct VrbStrc* getVrb(vector<EnvrStrc*>& envr, struct VrbExpStrc* vrbExp)
 		lyr--;
 	}
 
-	//´ÓÍâÏòÄÚÕÒµ½µÚ1¸öº¯Êý»·¾³Ö®Ç°µÄ»·¾³
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òµï¿½ï¿½ï¿½1ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö®Ç°ï¿½Ä»ï¿½ï¿½ï¿½
 	while (lyrBfrFcn + 1 < lyr && envr[lyrBfrFcn + 1]->typ != FUNCTION_ENVIRONMENT)
 	{
 		lyrBfrFcn++;
@@ -147,7 +147,7 @@ struct VrbStrc* getVrb(vector<EnvrStrc*>& envr, struct VrbExpStrc* vrbExp)
 
 	lyr = lyrBfrFcn;
 
-	//´ÓÍâÏòÄÚµÄµÚ1¸öº¯Êý»·¾³Ö®Ç°µÄ»·¾³ÏòÍâÕÒµ½¶¥²ã¿Õ¼ä»·¾³
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÚµÄµï¿½1ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö®Ç°ï¿½Ä»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òµï¿½ï¿½ï¿½ï¿½ï¿½Õ¼ä»·ï¿½ï¿½
 	while (true)
 	{
 		tmp = envr[lyr];
@@ -422,7 +422,7 @@ int prtEnvrFcn(struct EnvrStrc* envr)
 
 	for (i = 0; i < envr->fcnArr.size(); i++)
 	{
-		printf("%2d:\t%s\n", i, envr->fcnArr[i]->nm);
+		printf("%2d:\t%s\n", i, envr->fcnArr[i]->nm.c_str());
 	}
 
 	return 0;
