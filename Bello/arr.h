@@ -9,7 +9,7 @@
 // #define EXP_H
 // #endif
 
-//´Ë²¿·ÖÒýÈëµÄ±äÁ¿¼°º¯Êý¿ÉÒÔÉ¾³ý
+//ï¿½Ë²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¾ï¿½ï¿½
 extern struct ExpStrc* bldCnstIntExp(int intVl);
 extern struct CnstStrc* clcExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct ExpStrc* exp);
 //extern struct EnvrStrc* glbEnvr;

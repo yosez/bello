@@ -82,7 +82,7 @@ CnstStrc* istObj(ClsStrc* cls)
 		printf("var: %s typ: %d tgt typ: %d\n", obj->vrb.back()->nm->c_str(), obj->vrb.back()->typ, cls->vrb.at(i)->typ);
 	}
 
-	//╫╚╨╞йЩ╥е╣╫obj╣д╫А╧╧лЕжп
+	//О©╫О©╫О©╫О©╫О©╫О©╫О©╫е╣О©╫objО©╫д╫А╧╧О©╫О©╫О©╫О©╫
 	for (int i = 0; i < cls->fcn.size(); i++)
 	{
 		obj->fcn.push_back(cls->fcn.at(i));
@@ -92,7 +92,7 @@ CnstStrc* istObj(ClsStrc* cls)
 }
 
 /// <summary>
-/// ╩Ях║╤тоСжп╣д╠Да©ё╛╤тоС©иртсп╦╦вс╡Ц╪╤╧ьо╣
+/// О©╫О©╫х║О©╫О©╫О©╫О©╫О©╫п╣д╠О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫п╦О©╫О©╫с╡Ц╪╤О©╫О©╫о╣
 /// </summary>
 /// <param name="vrb"></param>
 /// <param name="lvl"></param>
@@ -116,7 +116,7 @@ VrbStrc* getObjVrb(VrbStrc* vrb, LvlExpStrc* lvl)
 		}
 	}
 
-	//хГ╧ШвСж╣╠М╢Ой╫н╢мЙх╚ур╣╫ё╛тР╥╣╩ь©уж╦уК
+	//О©╫О©╫О©╫О©╫О©╫ж╣О©╫О©╫О©╫й╫н╢О©╫О©╫х╚О©╫р╣О©╫О©╫О©╫О©╫Р╥╣╩ь©О©╫ж╦О©╫О©╫
 	if (lvl->hasAtb == 1)
 	{
 		return nullptr;
@@ -128,7 +128,7 @@ VrbStrc* getObjVrb(VrbStrc* vrb, LvlExpStrc* lvl)
 }
 
 /// <summary>
-/// ╢с╠Да©╫А╧╧лЕжпя╟ур╨╞йЩ╫А╧╧лЕё╛©ирт╣щ╧И╫Ьппя╟ур
+/// О©╫с╠О©╫О©╫О©╫О©╫А╧╧О©╫О©╫О©╫О©╫я╟О©╫р╨О©╫О©╫О©╫О©╫А╧╧О©╫Её╛О©╫О©╫О©╫т╣щ╧О©╫О©╫О©╫О©╫я╟О©╫О©╫
 /// </summary>
 /// <param name="vrb"></param>
 /// <param name="lvl"></param>
@@ -152,7 +152,7 @@ FcnStrc* getObjFcn(VrbStrc* vrb, LvlExpStrc* lvl)
 		return rslt;
 	}
 
-	//хГ╧ШвСж╣╠М╢Ой╫н╢мЙх╚ур╣╫ё╛тР╥╣╩ь©уж╦уК
+	//О©╫О©╫О©╫О©╫О©╫ж╣О©╫О©╫О©╫й╫н╢О©╫О©╫х╚О©╫р╣О©╫О©╫О©╫О©╫Р╥╣╩ь©О©╫ж╦О©╫О©╫
 	if (lvl->hasAtb == 1)
 	{
 		return nullptr;
@@ -163,7 +163,7 @@ FcnStrc* getObjFcn(VrbStrc* vrb, LvlExpStrc* lvl)
 }
 
 /// <summary>
-/// тз╤тоСжпгЁ╡Ця╟урж╦╤╗цШЁф╣д╨╞йЩ
+/// О©╫з╤О©╫О©╫О©╫О©╫О©╫гЁО©╫О©╫я╟О©╫О©╫ж╦О©╫О©╫О©╫О©╫О©╫ф╣д╨О©╫О©╫О©╫
 /// </summary>
 /// <param name="obj"></param>
 /// <param name="nm"></param>
@@ -185,7 +185,7 @@ FcnStrc* getObjFcnDrct(ObjStrc* obj, string nm)
 }
 
 /// <summary>
-/// тзр╩╦Ж╤тоСжпя╟урж╦╤╗╠Да©цШЁф╣д╠Да©
+/// О©╫О©╫р╩О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫я╟О©╫О©╫ж╦О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ф╣д╠О©╫О©╫О©╫
 /// </summary>
 /// <param name="obj"></param>
 /// <param name="nm"></param>

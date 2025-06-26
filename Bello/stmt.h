@@ -608,7 +608,7 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 		if (stmt->typ == FOR_STATEMENT)
 		{
 			std::chrono::steady_clock::time_point tmStrt;
-			tmStrt = std::chrono::high_resolution_clock::now();
+			tmStrt = std::chrono::steady_clock::now();
 
 			envr.push_back(new EnvrStrc(STATEMENT_ENVIRONMENT));
 
@@ -682,7 +682,7 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 			envr.pop_back();
 
 			std::chrono::steady_clock::time_point tmEnd;
-			tmEnd = std::chrono::high_resolution_clock::now();
+			tmEnd = std::chrono::steady_clock::now();
 
 			//printf("tm: %d\n", chrono::duration_cast<chrono::microseconds>(tmEnd - tmStrt));
 		}

@@ -24,8 +24,8 @@
     #include "cls.h"
     #include "envr.h"
     #include "err.h"
-    #ifndef LEX_YY_C
-    #define LEX_YY_C
+    #ifndef LEX_YY_CPP
+    #define LEX_YY_CPP
     #endif
     #include "ntv.h"
 
@@ -44,7 +44,7 @@
 
     extern int lstIndt;
 
-    extern struct StmtStkItemStrc;
+    //extern struct StmtStkItemStrc;
 
     extern std::vector<StmtStkItmStrc*> stmtStk;
 

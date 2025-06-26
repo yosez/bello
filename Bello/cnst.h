@@ -10,7 +10,7 @@
 // #endif
 
 //extern struct CnstStrc;
-extern enum ExpTyp;
+//extern enum ExpTyp;
 
 struct CnstStrc* bldIntCnst(int vl)
 {

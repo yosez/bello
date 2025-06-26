@@ -26,7 +26,7 @@
 
 
 
-extern enum ExpTyp;
+//extern enum ExpTyp;
 
 extern struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt);
 

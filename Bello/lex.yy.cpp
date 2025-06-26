@@ -1,5 +1,6 @@
+#line 1 "lex.yy.cpp"
 
-#line 2 "lex.yy.c"
+#line 3 "lex.yy.cpp"
 
 #define  YY_INT_ALIGNED short int
 
@@ -624,9 +625,9 @@ char *yytext;
 
     int lstStt=0,stt=0;
 
-#line 627 "lex.yy.c"
+#line 628 "lex.yy.cpp"
  
-#line 629 "lex.yy.c"
+#line 630 "lex.yy.cpp"
 
 #define INITIAL 0
 #define STRING 1
@@ -852,7 +853,7 @@ YY_DECL
 #line 52 "bello.l"
 
 
-#line 855 "lex.yy.c"
+#line 856 "lex.yy.cpp"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -1399,7 +1400,7 @@ YY_RULE_SETUP
 #line 172 "bello.l"
 YY_FATAL_ERROR( "flex scanner jammed" );
 	YY_BREAK
-#line 1402 "lex.yy.c"
+#line 1403 "lex.yy.cpp"
 
 	case YY_END_OF_BUFFER:
 		{

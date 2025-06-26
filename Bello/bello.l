@@ -7,9 +7,6 @@
     #include <stdlib.h>
     #include <string>
     #include "y.tab.h"
-    // #ifndef Y_TAB_C
-    // #define Y_TAB_C
-    // #endif
     #ifndef DFTN_H
     #define DFTN_H
     #endif
