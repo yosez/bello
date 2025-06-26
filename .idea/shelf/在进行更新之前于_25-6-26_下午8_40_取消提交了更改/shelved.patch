@@ -1,0 +1,159 @@
+Index: .idea/vcs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/vcs.xml b/.idea/vcs.xml
+new file mode 100644
+--- /dev/null	(date 1750941527573)
++++ b/.idea/vcs.xml	(date 1750941527573)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="VcsDirectoryMappings">
++    <mapping directory="$PROJECT_DIR$" vcs="Git" />
++  </component>
++</project>
+\ No newline at end of file
+Index: build/.cmake/api/v1/reply/index-2025-06-25T15-52-36-0206.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/build/.cmake/api/v1/reply/index-2025-06-25T15-52-36-0206.json b/build/.cmake/api/v1/reply/index-2025-06-25T15-52-36-0206.json
+new file mode 100644
+--- /dev/null	(date 1750866756206)
++++ b/build/.cmake/api/v1/reply/index-2025-06-25T15-52-36-0206.json	(date 1750866756206)
+@@ -0,0 +1,132 @@
++{
++	"cmake" : 
++	{
++		"generator" : 
++		{
++			"multiConfig" : false,
++			"name" : "Unix Makefiles"
++		},
++		"paths" : 
++		{
++			"cmake" : "/opt/homebrew/bin/cmake",
++			"cpack" : "/opt/homebrew/bin/cpack",
++			"ctest" : "/opt/homebrew/bin/ctest",
++			"root" : "/opt/homebrew/share/cmake"
++		},
++		"version" : 
++		{
++			"isDirty" : false,
++			"major" : 4,
++			"minor" : 0,
++			"patch" : 3,
++			"string" : "4.0.3",
++			"suffix" : ""
++		}
++	},
++	"objects" : 
++	[
++		{
++			"jsonFile" : "codemodel-v2-3f2f30a10ca98c40f486.json",
++			"kind" : "codemodel",
++			"version" : 
++			{
++				"major" : 2,
++				"minor" : 8
++			}
++		},
++		{
++			"jsonFile" : "cache-v2-172aa41a5a205ec9eb8a.json",
++			"kind" : "cache",
++			"version" : 
++			{
++				"major" : 2,
++				"minor" : 0
++			}
++		},
++		{
++			"jsonFile" : "cmakeFiles-v1-25b1521dfcb348644193.json",
++			"kind" : "cmakeFiles",
++			"version" : 
++			{
++				"major" : 1,
++				"minor" : 1
++			}
++		},
++		{
++			"jsonFile" : "toolchains-v1-90a52bb98c4c6bf9b482.json",
++			"kind" : "toolchains",
++			"version" : 
++			{
++				"major" : 1,
++				"minor" : 0
++			}
++		}
++	],
++	"reply" : 
++	{
++		"client-vscode" : 
++		{
++			"query.json" : 
++			{
++				"requests" : 
++				[
++					{
++						"kind" : "cache",
++						"version" : 2
++					},
++					{
++						"kind" : "codemodel",
++						"version" : 2
++					},
++					{
++						"kind" : "toolchains",
++						"version" : 1
++					},
++					{
++						"kind" : "cmakeFiles",
++						"version" : 1
++					}
++				],
++				"responses" : 
++				[
++					{
++						"jsonFile" : "cache-v2-172aa41a5a205ec9eb8a.json",
++						"kind" : "cache",
++						"version" : 
++						{
++							"major" : 2,
++							"minor" : 0
++						}
++					},
++					{
++						"jsonFile" : "codemodel-v2-3f2f30a10ca98c40f486.json",
++						"kind" : "codemodel",
++						"version" : 
++						{
++							"major" : 2,
++							"minor" : 8
++						}
++					},
++					{
++						"jsonFile" : "toolchains-v1-90a52bb98c4c6bf9b482.json",
++						"kind" : "toolchains",
++						"version" : 
++						{
++							"major" : 1,
++							"minor" : 0
++						}
++					},
++					{
++						"jsonFile" : "cmakeFiles-v1-25b1521dfcb348644193.json",
++						"kind" : "cmakeFiles",
++						"version" : 
++						{
++							"major" : 1,
++							"minor" : 1
++						}
++					}
++				]
++			}
++		}
++	}
++}

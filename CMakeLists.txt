@@ -56,7 +56,7 @@ set(SOURCES
         ${PROJECT_SOURCE_DIR}/Bello/lex.yy.cpp
 )
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin")
 
 add_executable(bello ${SOURCES})
 
@@ -74,5 +74,5 @@ endif()
 
 
 target_include_directories(bello PRIVATE
-        ${PROJECT_SOURCE_DIR}/Bello
+        ${PROJECT_SOURCE_DIR}
 )

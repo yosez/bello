@@ -1609,15 +1609,15 @@ struct CnstStrc* clcFcnExp(vector<EnvrStrc*>& envr, struct FcnExpStrc* exp)
 		//struct CnstStrc** argArr = (struct CnstStrc**)malloc(sizeof(struct CnstStrc*) * ntvFcn->prmCnt);
 		vector<CnstStrc*> argArr;
 
-		printf("clc fcn prm cnt: %d\n", exp->argLst->argArr.size());
+		//printf("clc fcn prm cnt: %d\n", exp->argLst->argArr.size());
 
 		for (i = 0; i < exp->argLst->argArr.size(); i++)
 		{
-			printf("ntvFcn arg[%2d] typ: %d\n", i, exp->argLst->argArr.at(i)->typ);
+			//printf("ntvFcn arg[%2d] typ: %d\n", i, exp->argLst->argArr.at(i)->typ);
 
 			arg = clcExp(envr, exp->argLst->argArr[i]);
 
-			printf("aft clc ntvFcn arg[%2d] typ: %d\n", i, exp->argLst->argArr.at(i)->typ);
+			//printf("aft clc ntvFcn arg[%2d] typ: %d\n", i, exp->argLst->argArr.at(i)->typ);
 
 			argArr.push_back(arg);
 		}
@@ -2136,7 +2136,7 @@ struct CnstStrc* clcLvlExp(vector<EnvrStrc*>& envr, struct LvlExpStrc* exp)
 
 	vrb = getVrb(envr, exp->vrb);
 
-	printf("vrb == nullptr: %d typ: %d\n", vrb == nullptr, vrb->typ);
+	//printf("vrb == nullptr: %d typ: %d\n", vrb == nullptr, vrb->typ);
 
 	if (vrb == nullptr)
 	{
@@ -2180,11 +2180,11 @@ struct CnstStrc* clcLvlExp(vector<EnvrStrc*>& envr, struct LvlExpStrc* exp)
 	//如果是变量名的情况
 	if (exp->hasAcsLst == 0)
 	{
-		printf("hasAcsLst == 0 vrb typ: %d\n", vrb->typ);
+		//printf("hasAcsLst == 0 vrb typ: %d\n", vrb->typ);
 
 		rslt = bldCnstFrmVrb(vrb);
 
-		printf("hasAcsLst == 0 rslt typ: %d\n", rslt->typ);
+		//printf("hasAcsLst == 0 rslt typ: %d\n", rslt->typ);
 
 		if (rslt->typ == -842150451)
 		{
