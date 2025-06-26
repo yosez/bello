@@ -41,9 +41,6 @@
 #        ${PROJECT_SOURCE_DIR}/Bello
 #)
 #
-#if (MINGW)
-#    target_link_options(bello PRIVATE "-Wl,-subsystem,console")
-#endif()
 #
 ##target_link_libraries(${PROJECT_NAME})
 
@@ -57,10 +54,24 @@ set(CMAKE_CXX_STANDARD 17)
 set(SOURCES
         ${PROJECT_SOURCE_DIR}/Bello/y.tab.cpp
         ${PROJECT_SOURCE_DIR}/Bello/lex.yy.cpp
-        # …其他 .c/.cpp
 )
 
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})
+
 add_executable(bello ${SOURCES})
+
+if (MSVC)
+    target_compile_options(bello PRIVATE /MT)
+elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    target_compile_options(bello PRIVATE -static-libgcc -static-libstdc++)
+elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+    if (APPLE)
+    else()
+        # linux的情况
+        target_compile_options(bello PRIVATE -static-libgcc -static-libstdc++)
+    endif()
+endif()
+
 
 target_include_directories(bello PRIVATE
         ${PROJECT_SOURCE_DIR}/Bello
