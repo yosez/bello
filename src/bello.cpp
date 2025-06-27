@@ -6,7 +6,9 @@
 using namespace std;
 
 #ifndef _WIN32
-#include "linenoise.h"
+//#include "linenoise.h"
+#include <readline/readline.h>
+#include <readline/history.h>
 #endif
 
 
@@ -45,6 +47,12 @@ extern int initGlbEnvr(vector<EnvrStrc*>& envr);
 
 extern int yyparse(void);
 
+extern void yylex_destroy();
+
+typedef struct yy_buffer_state *YY_BUFFER_STATE;
+
+extern YY_BUFFER_STATE yy_scan_string(const char*);
+
 int main(int argc, char * argv[])
 {
 
@@ -70,15 +78,23 @@ int main(int argc, char * argv[])
     char *ipt;
 
 #ifndef _WIN32
-    while ((ipt = linenoise(">> "))!=nullptr)
+    rl_attempted_completion_function = nullptr;
+
+    rl_bind_key('\t', rl_insert);
+
+    while ((ipt = readline(""))!=nullptr)
     {
-        if (*ipt)
-        {
-            linenoiseHistoryAdd(ipt);
-            yy_scan_string(ipt);
-            yyparse();
-            free(ipt);
-        }
+        add_history(ipt);
+
+        string iptRtn(ipt);
+
+        iptRtn+="\n";
+
+        yy_scan_string(iptRtn.c_str());
+
+        yyparse();
+
+        yylex_destroy();
     }
 #else
 

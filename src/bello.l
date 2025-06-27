@@ -68,7 +68,7 @@
 <<EOF>>                     { return END_FILE; }
 ^"\t"+                       { 
                                 yylval.intVl = strlen(yytext); 
-                                //printf("yytext \\t: |%s|\n", yytext);
+                                //printf("yytext \\t: |%s|, %d\n", yytext, strlen(yytext));
                                 return INDENT; 
                             }
 ^([ ]{4})+                   { 

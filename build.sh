@@ -1,4 +1,4 @@
-cd Bello
+cd src
 bison -dv --yacc bello.y
-flex  bello.l 
+flex bello.l
 cd ..

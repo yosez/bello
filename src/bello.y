@@ -130,7 +130,7 @@
 %type <exp> expression value_expression function_expression  array_expression
     new_array_expression assign_expression unary_expression binary_expression 
     lvalue_operation_expression self_operation_expression lvalue_expression
-    object_invoke_expression shortcut_expression
+    shortcut_expression
 %type <stmt> single_statement expression_statement 
     statement_block block_list null_statement var_statement global_statement
 %type <stmt> if_statement else_statement elseif_statement structure_statement for_statement single_statement_no_semicolon while_statement 
