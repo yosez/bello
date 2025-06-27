@@ -3,7 +3,7 @@
 #include <stdio.h>
 //#include <malloc.h>
 #include <chrono>
-#include "y.tab.hpp"
+#include "y.tab.h"
 #include "dftn.h"
 #include "expt.h"
 

@@ -27,8 +27,8 @@
     #include "cls.h"
     #include "envr.h"
     #include "err.h"
-    #ifndef LEX_YY_CPP
-    #define LEX_YY_CPP
+    #ifndef LEX_YY_C
+    #define LEX_YY_C
     #endif
     #include "ntv.h"
 

@@ -4,7 +4,7 @@
 #include <string.h>
 #include <math.h>
 
-#include "y.tab.hpp"
+#include "y.tab.h"
 #include "dftn.h"
 #ifndef VRB_H
 #define VRB_H

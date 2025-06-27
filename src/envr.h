@@ -5,7 +5,7 @@
 #include <vector>
 #include <algorithm>
 
-#include "y.tab.hpp"
+#include "y.tab.h"
 #include "dftn.h"
 #include "vrb.h"
 #include "fcn.h"

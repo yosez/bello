@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "y.tab.hpp"
+#include "y.tab.h"
 #include "dftn.h"
 // #ifndef EXP_H
 // #define EXP_H

@@ -1,3 +1,3 @@
-bison -dv --yacc --output=y.tab.cpp bello.y 
-flex --outfile=lex.yy.cpp bello.l 
+bison -dv --yacc bello.y
+flex bello.l
 

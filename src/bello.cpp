@@ -21,8 +21,8 @@ using namespace std;
 #endif
 
 
-//#include "y.tab.hpp"
-//#include "lex.yy.cpp"
+//#include "y.tab.h"
+//#include "lex.yy.c"
 
 // #include "dftn.h"
 // #include "vrb.h"

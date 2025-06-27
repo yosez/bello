@@ -6,7 +6,7 @@
     #include <stdio.h>
     #include <stdlib.h>
     #include <string>
-    #include "y.tab.hpp"
+    #include "y.tab.h"
     #ifndef DFTN_H
     #define DFTN_H
     #endif
