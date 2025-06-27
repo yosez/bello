@@ -3,11 +3,8 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "y.tab.h"
+#include "y.tab.hpp"
 #include "dftn.h"
-// #ifndef DFTN_H
-// #define DFTN_H
-// #endif
 
 //extern struct CnstStrc;
 //extern enum ExpTyp;

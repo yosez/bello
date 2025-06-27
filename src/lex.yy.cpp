@@ -586,7 +586,7 @@ char *yytext;
     #include <stdio.h>
     #include <stdlib.h>
     #include <string>
-    #include "y.tab.h"
+    #include "y.tab.hpp"
     #ifndef DFTN_H
     #define DFTN_H
     #endif

@@ -2,7 +2,7 @@
 
 #include <stdio.h>
 //#include <malloc.h>
-#include "y.tab.h"
+#include "y.tab.hpp"
 #include "dftn.h"
 //#include "envr.h"
 #ifndef ENVR_H

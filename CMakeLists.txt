@@ -45,25 +45,34 @@
 ##target_link_libraries(${PROJECT_NAME})
 
 cmake_minimum_required(VERSION 3.22)
-project(bello LANGUAGES C CXX)
+project(src LANGUAGES C CXX)
+
+message(STATUS ${CMAKE_CXX_COMPILER_ID})
 
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 17)
 
 # —— 手动列出所有必需的源文件 ——
 set(SOURCES
-        ${PROJECT_SOURCE_DIR}/Bello/y.tab.cpp
-        ${PROJECT_SOURCE_DIR}/Bello/lex.yy.cpp
+        ${PROJECT_SOURCE_DIR}/src/y.tab.cpp
+        ${PROJECT_SOURCE_DIR}/src/lex.yy.cpp
+        ${PROJECT_SOURCE_DIR}/src/bello.cpp
 )
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin")
+
+if (NOT WIN32)
+    add_library(linenoise STATIC lbr/linenoise.c)
+    target_include_directories(linenoise PUBLIC lbr)
+endif()
 
 add_executable(bello ${SOURCES})
 
 if (MSVC)
     target_compile_options(bello PRIVATE /MT)
 elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-    target_compile_options(bello PRIVATE -static-libgcc -static-libstdc++)
+    target_link_options(bello PRIVATE -static)
+    #target_compile_options(bello PRIVATE -static-libgcc -static-libstdc++)
 elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     if (APPLE)
     else()
@@ -73,6 +82,6 @@ elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 endif()
 
 
-target_include_directories(bello PRIVATE
-        ${PROJECT_SOURCE_DIR}
-)
+if (NOT WIN32)
+    target_link_libraries(bello PRIVATE linenoise)
+endif()
