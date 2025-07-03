@@ -582,7 +582,7 @@ int yy_flex_debug = 0;
 char *yytext;
 #line 1 "bello.l"
 #line 5 "bello.l"
-
+    #pragma once
     #include <stdio.h>
     #include <stdlib.h>
     #include <string>

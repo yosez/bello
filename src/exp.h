@@ -1717,7 +1717,7 @@ struct CnstStrc* clcFcnExp(vector<EnvrStrc*>& envr, struct FcnExpStrc* exp)
 
 		stmtRslt = exctStmt(envr, fcn->stmt);
 
-		if (stmtRslt->typ == RETURN_RESULT && stmtRslt->rslt.rtnRslt->blnRslt == 1)
+		if (stmtRslt->typ == RtnEnm::Rtn && stmtRslt->rslt.rtnRslt->blnRslt == 1)
 		{
 			rslt = stmtRslt->rslt.rtnRslt->rslt;
 		}
@@ -1820,7 +1820,7 @@ struct CnstStrc* clcFcnExp(vector<EnvrStrc*>& envr, struct FcnStrc* fcn, struct 
 
 		stmtRslt = exctStmt(envr, fcn->stmt);
 
-		if (stmtRslt->typ == RETURN_RESULT && stmtRslt->rslt.rtnRslt->blnRslt == 1)
+		if (stmtRslt->typ == RtnEnm::Rtn && stmtRslt->rslt.rtnRslt->blnRslt == 1)
 		{
 			rslt = stmtRslt->rslt.rtnRslt->rslt;
 		}

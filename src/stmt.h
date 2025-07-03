@@ -47,7 +47,7 @@ struct StmtStrc* bldExpStmt(struct ExpStrc* exp)
 {
 	struct ExpStmtStrc* rslt = new ExpStmtStrc;
 
-	rslt->typ = EXPRESSION_STATEMENT;
+	rslt->typ = StmtEnm::Exp;
 
 	rslt->exp = exp;
 
@@ -58,7 +58,7 @@ struct StmtStrc* bldIfStmt(struct ExpStrc* exp)
 {
 	struct IfStmtStrc* rslt = new IfStmtStrc;
 
-	rslt->typ = IF_STATEMENT;
+	rslt->typ = StmtEnm::If;
 
 	rslt->exp = exp;
 	rslt->stmt = nullptr;
@@ -70,7 +70,7 @@ struct StmtStrc* bldIfStmt(struct ExpStrc* exp, struct StmtStrc* stmt)
 {
 	struct IfStmtStrc* rslt = new IfStmtStrc;
 
-	rslt->typ = IF_STATEMENT;
+	rslt->typ = StmtEnm::If;
 
 	rslt->exp = exp;
 	rslt->stmt = stmt;
@@ -86,7 +86,7 @@ struct StmtStrc* bldElsStmt(struct StmtStrc* stmt)
 {
 	struct ElsStmtStrc* rslt = new ElsStmtStrc;
 
-	rslt->typ = ELSE_STATEMENT;
+	rslt->typ = StmtEnm::Els;
 
 	rslt->stmt = stmt;
 
@@ -97,7 +97,7 @@ struct StmtStrc* bldElsStmt()
 {
 	struct ElsStmtStrc* rslt = new ElsStmtStrc;
 
-	rslt->typ = ELSE_STATEMENT;
+	rslt->typ = StmtEnm::Els;
 
 	rslt->stmt = nullptr;
 
@@ -109,7 +109,7 @@ struct StmtStrc* bldElifStmt(struct ExpStrc* exp)
 {
 	struct ElifStmtStrc* rslt = new ElifStmtStrc;
 
-	rslt->typ = ELSEIF_STATEMENT;
+	rslt->typ = StmtEnm::Elsif;
 
 	rslt->exp = exp;
 
@@ -125,7 +125,7 @@ struct StmtStrc* bldIfElsStmt(struct ExpStrc* exp, struct StmtStrc* stmt, struct
 {
 	struct IfElsStmtStrc* rslt = new IfElsStmtStrc;
 
-	rslt->typ = IF_ELSE_STATEMENT;
+	rslt->typ = StmtEnm::IfEls;
 
 	rslt->exp = exp;
 	rslt->stmt = stmt;
@@ -138,7 +138,7 @@ struct StmtStrc* bldForStmt(struct StmtStrc* intl, struct StmtStrc* exp, struct 
 {
 	struct ForStmtStrc* rslt = new ForStmtStrc;
 
-	rslt->typ = FOR_STATEMENT;
+	rslt->typ = StmtEnm::For;
 
 	rslt->intl = intl;
 	rslt->exp = exp;
@@ -152,7 +152,7 @@ struct StmtStrc* bldForStmt(struct StmtStrc* intl, struct StmtStrc* exp, struct 
 {
 	struct ForStmtStrc* rslt = new ForStmtStrc;
 
-	rslt->typ = FOR_STATEMENT;
+	rslt->typ = StmtEnm::For;
 
 	rslt->intl = intl;
 	rslt->exp = exp;
@@ -166,7 +166,7 @@ struct StmtStrc* bldWhlStmt(struct ExpStrc* exp, struct StmtStrc* stmt)
 {
 	struct WhlStmtStrc* rslt = new WhlStmtStrc;
 
-	rslt->typ = WHILE_STATEMENT;
+	rslt->typ = StmtEnm::Whl;
 
 	rslt->exp = exp;
 	rslt->stmt = stmt;
@@ -178,7 +178,7 @@ struct StmtStrc* bldWhlStmt(struct ExpStrc* exp)
 {
 	struct WhlStmtStrc* rslt = new WhlStmtStrc;
 
-	rslt->typ = WHILE_STATEMENT;
+	rslt->typ = StmtEnm::Whl;
 
 	rslt->exp = exp;
 	rslt->stmt = nullptr;
@@ -190,7 +190,7 @@ struct StmtStrc* bldWhlStmt()
 {
 	auto rslt = new WhlStmtStrc;
 
-	rslt->typ = WHILE_STATEMENT;
+	rslt->typ = StmtEnm::Whl;
 
 	rslt->exp = nullptr;
 
@@ -203,7 +203,7 @@ struct StmtStrc* bldDoWhlStmt(struct StmtStrc* exp, struct StmtStrc* stmt)
 {
 	struct DoWhlStmtStrc* rslt = new DoWhlStmtStrc;
 
-	rslt->typ = DO_WHILE_STATEMENT;
+	rslt->typ = StmtEnm::DoWhl;
 
 	rslt->exp = static_cast<ExpStmtStrc*>(exp);
 	rslt->stmt = stmt;
@@ -215,7 +215,7 @@ struct StmtStrc* bldStmtBlk()
 {
 	struct StmtBlkStrc* rslt = new StmtBlkStrc;
 
-	rslt->typ = STATEMENT_BLOCK;
+	rslt->typ = StmtEnm::Blk;
 
 	return rslt;
 }
@@ -235,7 +235,7 @@ struct StmtStrc* bldBrkStmt(struct ExpStrc* exp)
 {
 	struct BrkStmtStrc* rslt = new BrkStmtStrc;
 
-	rslt->typ = BREAK_STATEMENT;
+	rslt->typ = StmtEnm::Brk;
 
 	rslt->exp = exp;
 
@@ -246,7 +246,7 @@ struct StmtStrc* bldCntnStmt(struct ExpStrc* exp)
 {
 	struct CntnStmtStrc* rslt = new CntnStmtStrc;
 
-	rslt->typ = CONTINUE_STATEMENT;
+	rslt->typ = StmtEnm::Cntn;
 
 	rslt->exp = exp;
 
@@ -257,7 +257,7 @@ struct StmtStrc* bldFcnStmt(struct FcnStrc* fcn)
 {
 	struct FcnStmtStrc* rslt = new FcnStmtStrc;
 
-	rslt->typ = FUNCTION_STATEMENT;
+	rslt->typ = StmtEnm::DfnFcn;
 
 	rslt->fcn = fcn;
 
@@ -268,7 +268,7 @@ struct StmtStrc* bldRtnStmt(struct ExpStrc* exp)
 {
 	struct RtnStmtStrc* rslt = new RtnStmtStrc;
 
-	rslt->typ = RETURN_STATEMENT;
+	rslt->typ = StmtEnm::Rtn;
 
 	if (exp == NULL)
 	{
@@ -288,7 +288,7 @@ struct StmtStrc* bldVarStmt(struct AsgnLstStrc* asgnLst)
 {
 	struct VarStmtStrc* rslt = new VarStmtStrc;
 
-	rslt->typ = VAR_STATEMENT;
+	rslt->typ = StmtEnm::Var;
 
 	rslt->asgnLst = asgnLst;
 
@@ -300,7 +300,7 @@ struct StmtStrc* bldVarStmt(int typ, struct AsgnLstStrc* asgnLst)
 {
 	struct VarStmtStrc* rslt = new VarStmtStrc;
 
-	rslt->typ = typ;
+	rslt->typ = StmtEnm::Var;
 
 	rslt->asgnLst = asgnLst;
 
@@ -313,7 +313,7 @@ struct StmtStrc* bldGlbStmt(AsgnLstStrc* asgnLst)
 
 	GlbStmtStrc* rslt = new GlbStmtStrc;
 
-	rslt->typ = GLOBAL_STATEMENT;
+	rslt->typ = StmtEnm::Glb;
 
 	rslt->asgnLst = asgnLst;
 
@@ -323,7 +323,7 @@ struct StmtStrc* bldGlbStmt(AsgnLstStrc* asgnLst)
 struct StmtStrc* bldNllStmt()
 {
 	NllStmtStrc* rslt = new NllStmtStrc;
-	rslt->typ = NULL_STATEMENT;
+	rslt->typ = StmtEnm::Nll;
 
 	return rslt;
 }
@@ -332,7 +332,7 @@ struct StmtStrc* bldClsStmt(ClsStrc* cls)
 {
 	struct ClsStmtStrc* rslt = new ClsStmtStrc;
 
-	rslt->typ = CLASS_STATEMENT;
+	rslt->typ = StmtEnm::Cls;
 
 	rslt->cls = cls;
 
@@ -344,7 +344,7 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 {
 	struct StmtRsltStrc* rslt = new StmtRsltStrc;
 
-	rslt->typ = NORMAL_RESULT;
+	rslt->typ = RtnEnm::Nrm;
 
 	if (chkStmtAlwScndStmt(stmt) == 0 || chkStmtAlwScndStmt(stmt) == 1)
 	{
@@ -371,7 +371,7 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 	try
 	{
 
-		if (stmt->typ == EXPRESSION_STATEMENT)
+		if (stmt->typ == StmtEnm::Exp)
 		{
 			struct CnstStrc* rsltExp;
 
@@ -379,7 +379,7 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 
 		}
 
-		if (stmt->typ == VAR_STATEMENT)
+		if (stmt->typ == StmtEnm::Var)
 		{
 			VarStmtStrc* varStmt = static_cast<VarStmtStrc*>(stmt);
 
@@ -420,7 +420,7 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 			return rslt;
 		}
 
-		if (stmt->typ == GLOBAL_STATEMENT)
+		if (stmt->typ == StmtEnm::Glb)
 		{
 			GlbStmtStrc* glbStmt = static_cast<GlbStmtStrc*>(stmt);
 
@@ -456,7 +456,7 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 			return rslt;
 		}
 
-		if (stmt->typ == IF_STATEMENT)
+		if (stmt->typ == StmtEnm::If)
 		{
 			auto ifStmt = static_cast<IfStmtStrc*>(stmt);
 
@@ -485,35 +485,35 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 
 		}
 
-		if (stmt->typ == ELSE_STATEMENT)
+		if (stmt->typ == StmtEnm::Els)
 		{
 
 			auto elsStmt = static_cast<ElsStmtStrc*>(stmt);
 
 			auto lstStmt = mltStmtStk.back();
 
-			if (lstStmt->typ == IF_STATEMENT)
+			if (lstStmt->typ == StmtEnm::If)
 			{
 				//如果上句已经执行
 				if (static_cast<IfStmtStrc*>(lstStmt)->expRslt == 1)
 				{
 
 					rslt = new StmtRsltStrc;
-					rslt->typ = NORMAL_RESULT;
+					rslt->typ = RtnEnm::Nrm;
 
 					return rslt;
 				}
 
 			}
 
-			if (lstStmt->typ == ELSEIF_STATEMENT)
+			if (lstStmt->typ == StmtEnm::Elsif)
 			{
 				//如果上句已经执行
 				if (static_cast<ElifStmtStrc*>(lstStmt)->expRslt == 1)
 				{
 
 					rslt = new StmtRsltStrc;
-					rslt->typ = NORMAL_RESULT;
+					rslt->typ = RtnEnm::Nrm;
 
 					return rslt;
 				}
@@ -528,14 +528,14 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 			envr.pop_back();
 		}
 
-		if (stmt->typ == ELSEIF_STATEMENT)
+		if (stmt->typ == StmtEnm::Elsif)
 		{
 
 			auto elifStmt = static_cast<ElifStmtStrc*>(stmt);
 
 			auto lstStmt = mltStmtStk.back();
 
-			if (lstStmt->typ == IF_STATEMENT)
+			if (lstStmt->typ == StmtEnm::If)
 			{
 				//如果上句已经执行
 				if (static_cast<IfStmtStrc*>(lstStmt)->expRslt == 1)
@@ -544,14 +544,14 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 					elifStmt->expRslt = 1;
 
 					rslt = new StmtRsltStrc;
-					rslt->typ = NORMAL_RESULT;
+					rslt->typ = RtnEnm::Nrm;
 
 					return rslt;
 				}
 
 			}
 
-			if (lstStmt->typ == ELSEIF_STATEMENT)
+			if (lstStmt->typ == StmtEnm::Elsif)
 			{
 				//如果上句已经执行
 				if (static_cast<ElifStmtStrc*>(lstStmt)->expRslt == 1)
@@ -560,7 +560,7 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 					elifStmt->expRslt = 1;
 
 					rslt = new StmtRsltStrc;
-					rslt->typ = NORMAL_RESULT;
+					rslt->typ = RtnEnm::Nrm;
 
 					return rslt;
 				}
@@ -584,7 +584,7 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 
 		}
 
-		if (stmt->typ == IF_ELSE_STATEMENT)
+		if (stmt->typ == StmtEnm::IfEls)
 		{
 			//prtCnst(clcExp(stmt->stmt.ifStmt->exp)); 
 
@@ -605,7 +605,7 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 			envr.pop_back();
 		}
 
-		if (stmt->typ == FOR_STATEMENT)
+		if (stmt->typ == StmtEnm::For)
 		{
 			std::chrono::steady_clock::time_point tmStrt;
 			tmStrt = std::chrono::steady_clock::now();
@@ -619,13 +619,13 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 			while ((clcExp(envr, static_cast<ExpStmtStrc*>(forStmt->exp)->exp)->vl.intVl) != 0)
 			{
 				//上一次循环中使用了continue语句
-				if (rslt->typ == CONTINUE_RESULT)
+				if (rslt->typ == RtnEnm::Cntn)
 				{
 					rslt->rslt.cntnRslt->cntnCnt--;
 
 					if (rslt->rslt.cntnRslt->cntnCnt == 0)
 					{
-						rslt->typ = NORMAL_RESULT;
+						rslt->typ = RtnEnm::Nrm;
 					}
 
 					exctStmt(envr, forStmt->itr);
@@ -635,30 +635,30 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 
 				rslt = exctStmt(envr, forStmt->stmt);
 
-				if (rslt->typ == RETURN_RESULT)
+				if (rslt->typ == RtnEnm::Rtn)
 				{
 					break;
 				}
 
-				if (rslt->typ == BREAK_RESULT)
+				if (rslt->typ == RtnEnm::Brk)
 				{
 					rslt->rslt.brkRslt->brkCnt--;
 
 					if (rslt->rslt.brkRslt->brkCnt == 0)
 					{
-						rslt->typ = NORMAL_RESULT;
+						rslt->typ = RtnEnm::Nrm;
 					}
 
 					break;
 				}
 
-				if (rslt->typ == CONTINUE_RESULT)
+				if (rslt->typ == RtnEnm::Cntn)
 				{
 					rslt->rslt.cntnRslt->cntnCnt--;
 
 					if (rslt->rslt.cntnRslt->cntnCnt == 0)
 					{
-						rslt->typ = NORMAL_RESULT;
+						rslt->typ = RtnEnm::Nrm;
 					}
 
 					exctStmt(envr, forStmt->itr);
@@ -672,10 +672,10 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 			}
 
 			//continue语句对本层循环有效
-			if (rslt->typ == CONTINUE_RESULT)
+			if (rslt->typ == RtnEnm::Cntn)
 			{
 				rslt->rslt.cntnRslt->cntnCnt = 0;
-				rslt->typ = NORMAL_RESULT;
+				rslt->typ = RtnEnm::Nrm;
 
 			}
 
@@ -687,7 +687,7 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 			//printf("tm: %d\n", chrono::duration_cast<chrono::microseconds>(tmEnd - tmStrt));
 		}
 
-		if (stmt->typ == WHILE_STATEMENT)
+		if (stmt->typ == StmtEnm::Whl)
 		{
 
 			auto whlStmt = static_cast<WhlStmtStrc*>(stmt);
@@ -696,13 +696,13 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 
 			while (whlStmt->exp == nullptr || clcExp(envr, (whlStmt->exp))->vl.intVl != 0)
 			{
-				if (rslt->typ == CONTINUE_RESULT)
+				if (rslt->typ == RtnEnm::Cntn)
 				{
 					rslt->rslt.cntnRslt->cntnCnt--;
 
 					if (rslt->rslt.cntnRslt->cntnCnt == 0)
 					{
-						rslt->typ = NORMAL_RESULT;
+						rslt->typ = RtnEnm::Nrm;
 					}
 
 					continue;
@@ -710,58 +710,58 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 
 				rslt = exctStmt(envr, whlStmt->stmt);
 
-				if (rslt->typ == RETURN_RESULT)
+				if (rslt->typ == RtnEnm::Rtn)
 				{
 					break;
 				}
 
-				if (rslt->typ == BREAK_RESULT)
+				if (rslt->typ == RtnEnm::Brk)
 				{
 					rslt->rslt.brkRslt->brkCnt--;
 					if (rslt->rslt.brkRslt->brkCnt == 0)
 					{
-						rslt->typ = NORMAL_RESULT;
+						rslt->typ = RtnEnm::Nrm;
 					}
 
 					break;
 				}
 
-				if (rslt->typ == CONTINUE_RESULT)
+				if (rslt->typ == RtnEnm::Cntn)
 				{
 
 					rslt->rslt.cntnRslt->cntnCnt--;
 
 					if (rslt->rslt.cntnRslt->cntnCnt == 0)
 					{
-						rslt->typ = NORMAL_RESULT;
+						rslt->typ = RtnEnm::Nrm;
 					}
 
 					continue;
 				}
 			}
 
-			if (rslt->typ == CONTINUE_RESULT)
+			if (rslt->typ == RtnEnm::Cntn)
 			{
 				rslt->rslt.cntnRslt->cntnCnt = 0;
-				rslt->typ = NORMAL_RESULT;
+				rslt->typ = RtnEnm::Nrm;
 			}
 
 			envr.pop_back();
 		}
 
-		if (stmt->typ == DO_WHILE_STATEMENT)
+		if (stmt->typ == StmtEnm::DoWhl)
 		{
 			auto doWhlStmt = static_cast<DoWhlStmtStrc*>(stmt);
 
 			do
 			{
-				if (rslt->typ == CONTINUE_RESULT)
+				if (rslt->typ == RtnEnm::Cntn)
 				{
 					rslt->rslt.cntnRslt->cntnCnt--;
 
 					if (rslt->rslt.cntnRslt->cntnCnt == 0)
 					{
-						rslt->typ = NORMAL_RESULT;
+						rslt->typ = RtnEnm::Nrm;
 					}
 
 					continue;
@@ -769,45 +769,45 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 
 				rslt = exctStmt(envr, doWhlStmt);
 
-				if (rslt->typ == RETURN_RESULT)
+				if (rslt->typ == RtnEnm::Rtn)
 				{
 					break;
 				}
 
-				if (rslt->typ == BREAK_RESULT)
+				if (rslt->typ == RtnEnm::Brk)
 				{
 					rslt->rslt.brkRslt->brkCnt--;
 
 					if (rslt->rslt.brkRslt->brkCnt == 0)
 					{
-						rslt->typ = NORMAL_RESULT;
+						rslt->typ = RtnEnm::Nrm;
 					}
 
 					break;
 				}
 
-				if (rslt->typ == CONTINUE_RESULT)
+				if (rslt->typ == RtnEnm::Cntn)
 				{
 					rslt->rslt.cntnRslt->cntnCnt--;
 
 					if (rslt->rslt.cntnRslt->cntnCnt == 0)
 					{
-						rslt->typ = NORMAL_RESULT;
+						rslt->typ = RtnEnm::Nrm;
 					}
 
 					continue;
 				}
 			} while (clcExp(envr, doWhlStmt->exp->exp)->vl.intVl != 0);
 
-			if (rslt->typ == CONTINUE_RESULT)
+			if (rslt->typ == RtnEnm::Cntn)
 			{
 				rslt->rslt.cntnRslt->cntnCnt = 0;
-				rslt->typ = NORMAL_RESULT;
+				rslt->typ = RtnEnm::Nrm;
 			}
 
 		}
 
-		if (stmt->typ == STATEMENT_BLOCK)
+		if (stmt->typ == StmtEnm::Blk)
 		{
 			auto stmtBlk = static_cast<StmtBlkStrc*>(stmt);
 
@@ -819,12 +819,12 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 			{
 				rslt = exctStmt(envr, stmtBlk->stmtArr[i]);
 
-				if (rslt->typ == RETURN_RESULT)
+				if (rslt->typ == RtnEnm::Rtn)
 				{
 					break;
 				}
 
-				if (rslt->typ == BREAK_RESULT || rslt->typ == CONTINUE_RESULT)
+				if (rslt->typ == RtnEnm::Brk || rslt->typ == RtnEnm::Cntn)
 				{
 					break;
 				}
@@ -833,29 +833,29 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 			envr.pop_back();
 		}
 
-		if (stmt->typ == BREAK_STATEMENT)
+		if (stmt->typ == StmtEnm::Brk)
 		{
 			auto brkStmt = static_cast<BrkStmtStrc*>(stmt);
 
-			rslt->typ = BREAK_RESULT;
+			rslt->typ = RtnEnm::Nrm;
 
 			rslt->rslt.brkRslt = new BrkRsltStrc;
 
 			rslt->rslt.brkRslt->brkCnt = clcExp(envr, brkStmt->exp)->vl.intVl;
 		}
 
-		if (stmt->typ == CONTINUE_STATEMENT)
+		if (stmt->typ == StmtEnm::Cntn)
 		{
 			auto cntnStmt = static_cast<CntnStmtStrc*>(stmt);
 
-			rslt->typ = CONTINUE_RESULT;
+			rslt->typ = RtnEnm::Cntn;
 
 			rslt->rslt.cntnRslt = new CntnRsltStrc;
 
 			rslt->rslt.cntnRslt->cntnCnt = clcExp(envr, cntnStmt->exp)->vl.intVl;
 		}
 
-		if (stmt->typ == FUNCTION_STATEMENT)
+		if (stmt->typ == StmtEnm::DfnFcn)
 		{
 			auto fcnStmt = static_cast<FcnStmtStrc*>(stmt);
 
@@ -872,7 +872,7 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 			addFcn(envr[envr.size() - 1], fcnStmt->fcn);
 		}
 
-		if (stmt->typ == CLASS_STATEMENT)
+		if (stmt->typ == StmtEnm::Cls)
 		{
 			auto clsStmt = static_cast<ClsStmtStrc*>(stmt);
 
@@ -886,7 +886,7 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 			{
 				switch (stmtArr.at(i)->typ)
 				{
-				case VAR_STATEMENT:
+				case StmtEnm::Var:
 				{
 					for (int j = 0; j < static_cast<VarStmtStrc*>(stmtArr.at(i))->asgnLst->asgnArr.size(); j++)
 					{
@@ -906,7 +906,7 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 
 					break;
 				}
-				case FUNCTION_STATEMENT:
+				case StmtEnm::DfnFcn:
 				{
 					//将函数定义语句添加到类结构体中
 					cls->fcn.push_back(static_cast<FcnStmtStrc*>(stmtArr.at(i))->fcn);
@@ -925,11 +925,11 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 			//printf("var: %s\n", envr.back()->clsArr.front()->vrb.front()->nm->c_str());
 		}
 
-		if (stmt->typ == RETURN_STATEMENT)
+		if (stmt->typ == StmtEnm::Rtn)
 		{
 			auto rtnStmt = static_cast<RtnStmtStrc*>(stmt);
 
-			rslt->typ = RETURN_RESULT;
+			rslt->typ = RtnEnm::Rtn;
 
 			rslt->rslt.rtnRslt = new RtnRsltStrc;
 
@@ -999,14 +999,14 @@ int chkStmtAlwSubStmt(struct StmtStrc* stmt)
 {
 	switch (stmt->typ)
 	{
-	case IF_STATEMENT:
-	case FOR_STATEMENT:
-	case WHILE_STATEMENT:
-	case DO_WHILE_STATEMENT:
-	case FUNCTION_STATEMENT:
-	case ELSE_STATEMENT:
-	case CLASS_STATEMENT:
-	case ELSEIF_STATEMENT:
+	case StmtEnm::If:
+	case StmtEnm::For:
+	case StmtEnm::Whl:
+	case StmtEnm::DoWhl:
+	case StmtEnm::DfnFcn:
+	case StmtEnm::Els:
+	case StmtEnm::Cls:
+	case StmtEnm::Elsif:
 	{
 		return 1;
 		break;
@@ -1024,20 +1024,20 @@ int chkStmtAlwScndStmt(struct StmtStrc* stmt)
 	switch (stmt->typ)
 	{
 		//多主句起始语句
-	case IF_STATEMENT:
-	case DO_WHILE_STATEMENT:
+	case StmtEnm::If:
+	case StmtEnm::DoWhl:
 	{
 		return 1;
 		break;
 	}
 	//多主句中间语句
-	case ELSEIF_STATEMENT:
+	case StmtEnm::Elsif:
 	{
 		return 2;
 		break;
 	}
 	//多主句结束语句
-	case ELSE_STATEMENT:
+	case StmtEnm::Els:
 	{
 		return 3;
 		break;

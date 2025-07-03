@@ -124,40 +124,40 @@ enum Unrtyp
 	SUFFIX_DECREMENT
 };
 
-enum StmtTyp
+enum class StmtEnm: int
 {
-	EXPRESSION_STATEMENT = 1,
-	IF_STATEMENT,
-	IF_ELSE_STATEMENT,
-	ELSE_STATEMENT,
-	ELSEIF_STATEMENT,
-	FOR_STATEMENT,
-	WHILE_STATEMENT,
-	DO_WHILE_STATEMENT,
-	STATEMENT_BLOCK,
-	BREAK_STATEMENT,
-	CONTINUE_STATEMENT,
+	Exp = 1,
+	If,
+	IfEls,
+	Els,
+	Elsif,
+	For,
+	Whl,
+	DoWhl,
+	Blk,
+	Brk,
+	Cntn,
 	/// <summary>
 	/// 函数定义语句
 	/// </summary>
-	FUNCTION_STATEMENT,
-	RETURN_STATEMENT,
-	VAR_STATEMENT,
-	CLASS_VAR_STATEMENT,
-	CLASS_FUNCTION_STATEMENT,
-	CLASS_SHARED_VAR_STATEMENT,
-	CLASS_SHARED_FUNCTION_STATEMENT,
-	GLOBAL_STATEMENT,
-	NULL_STATEMENT,
-	CLASS_STATEMENT
+	DfnFcn,
+	Rtn,
+	Var,
+	ClsVar,
+	ClsFcn,
+	ClsShrVar,
+	ClsShrFcn,
+	Glb,
+	Nll,
+	Cls
 };
 
-enum StmtRsltTyp
+enum class RtnEnm
 {
-	NORMAL_RESULT = 1,
-	BREAK_RESULT,
-	CONTINUE_RESULT,
-	RETURN_RESULT
+	Nrm = 1,
+	Brk,
+	Cntn,
+	Rtn
 };
 
 enum EnvrTyp
@@ -171,7 +171,7 @@ enum EnvrTyp
 struct StmtStrc
 {
 public:
-	int typ;
+	StmtEnm typ;
 	int indt;
 };
 
@@ -461,7 +461,7 @@ struct CntnRsltStrc
 //语句返回类型结构体
 struct StmtRsltStrc
 {
-	int typ;
+	RtnEnm typ;
 	union
 	{
 		struct RtnRsltStrc* rtnRslt;

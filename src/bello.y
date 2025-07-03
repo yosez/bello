@@ -1,14 +1,10 @@
 %{
-    //#pragma once
+    #pragma once
     #include <stdio.h>
     #include <string.h>
     #include <stdlib.h>
     #include <stdbool.h>
     #include <stack>
-    //#ifndef _WIN32
-    //#include "linenoise.h"
-    //#endif
-    //#include "dftn.h"
     #ifndef DFTN_H
     #define DFTN_H
     #endif
@@ -54,6 +50,7 @@
     extern int chkStmtAlwSubStmt(struct StmtStrc* stmt);
 
     extern int chkStmtAlwScndStmt(struct StmtStrc* stmt);
+
 
     //prsStt为1 从标准输入读取 prsStt为2 从源文件读取
     int prsStt;
@@ -609,7 +606,7 @@ var_statement
         }
         else
         {
-            $$=bldVarStmt(CLASS_VAR_STATEMENT, $2);
+            $$=bldVarStmt(StmtEnm::ClsVar, $2);
         }
     }
     | SHARED VAR assign_list 
@@ -617,7 +614,7 @@ var_statement
         //需要是类定义状态
         if (blnDfnCls==1)
         {
-            $$ = bldVarStmt(CLASS_SHARED_VAR_STATEMENT, $3); 
+            $$ = bldVarStmt(StmtEnm::ClsShrVar, $3);
         } 
         else
         {
@@ -1015,226 +1012,5 @@ return_statement
 %%
 
 
-void fldStmt(int indt=0)
-{
-    if (stmtStk.size()==0)
-    {
-        return;
-    }
-
-    int idx;
-
-    while (stmtStk.back()->indt > indt)
-    {
-        
-
-        idx = stmtStk.size()-1;
-
-        while (idx>0 && stmtStk.back()->indt == stmtStk.at(idx-1)->indt)
-        {
-            idx--;
-        }
-
-        int i = idx;
-
-        StmtStrc* blk = bldStmtBlk();
-
-        while (i < stmtStk.size())
-        {
-            stmtBlkAdd(blk, stmtStk.at(i)->stmt);
-
-            i++;
-        }
-
-        //子语句出栈
-        int nbrPop = stmtStk.size() - idx;
-
-        for (i=0;i<nbrPop;i++)
-        {
-            stmtStk.pop_back();
-        }
-
-        //将语句体附加到上1级语句中
-        switch(stmtStk.back()->stmt->typ)
-        {
-            case IF_STATEMENT:
-            {
-                auto ifStmt = static_cast<IfStmtStrc*>(stmtStk.back()->stmt);
-                ifStmt->stmt = blk;
-                //ifStmt->els = nullptr;
-                //ifStmt->elif = nullptr;
-                break;
-            }
-            case WHILE_STATEMENT:
-            {
-                auto whlStmt = static_cast<WhlStmtStrc*>(stmtStk.back()->stmt);
-                whlStmt->stmt = blk;
-                break;
-            }
-            case FOR_STATEMENT:
-            {
-                auto forStmt = static_cast<ForStmtStrc*>(stmtStk.back()->stmt);
-                forStmt->stmt = blk;
-                break;
-            }
-            case FUNCTION_STATEMENT:
-            {
-                auto fcnStmt = static_cast<FcnStmtStrc*>(stmtStk.back()->stmt);
-                fcnStmt->fcn->stmt = blk;
-                break;
-            }
-            case ELSE_STATEMENT:
-            {
-                auto elsStmt = static_cast<ElsStmtStrc*>(stmtStk.back()->stmt);
-                elsStmt->stmt = blk;
-
-                /* stmtStk.pop_back();
-
-                auto ifStmtLst = static_cast<IfStmtStrc*>(stmtStk.back()->stmt);
-
-                ifStmtLst->els = elsStmt->stmt;
-
-                stmtStk.back()->blnScndStmt=1; */
-
-                break;
-            }
-            case ELSEIF_STATEMENT:
-            {
-                auto elifStmt = static_cast<ElifStmtStrc*>(stmtStk.back()->stmt);
-                elifStmt->stmt = blk;
-
-                /* stmtStk.pop_back();
-
-                auto ifStmtLst = static_cast<IfStmtStrc*>(stmtStk.back()->stmt);
-
-                ifStmtLst->elif = blk;
-
-                stmtStk.back()->blnScndStmt=1; */
-                
-                break;
-            }
-            case CLASS_STATEMENT:
-            {
-                
-                //此处未完成
-                //根据类中的语句填充类
-
-                auto clsStmt = static_cast<ClsStmtStrc*>(stmtStk.back()->stmt);
-
-                int lnt = static_cast<StmtBlkStrc*>(blk)->stmtArr.size();
-
-                clsStmt->cls->dfn = blk;
-
-                break;
-            }
-        }
-
-    }
-
-}
-
-//当前读入的语句入栈
-void pshStmt(int indt, StmtStrc* stmt)
-{
-    StmtStkItmStrc * itm =new StmtStkItmStrc;
-
-    itm->indt = indt;
-    itm->stmt = stmt;
-    itm->alwSubStmt = chkStmtAlwSubStmt(stmt);
-
-    stmtStk.push_back(itm);
-}
-
-//打印语句栈中的语句信息的函数
-void prtStmtStk()
-{
-    for (int i=0;i<stmtStk.size();i++)
-    {
-        StmtStkItmStrc* stmt =stmtStk.at(i);
-
-        for (int j=0;j<stmt->indt;j++)
-        {
-            printf("\t");
-        } 
-
-        switch (stmt->stmt->typ)
-        {
-            case EXPRESSION_STATEMENT:
-            {
-                printf("expStmt\n");
-                break;
-            }
-            case IF_STATEMENT:
-            {
-                printf("ifStmt\n");
-                break;
-            }
-            case IF_ELSE_STATEMENT:
-            {
-                printf("ifElsStmt\n");
-                break;
-            }
-            case ELSE_STATEMENT:
-            {
-                printf("elsStmt\n");                
-            }
-            case FOR_STATEMENT:
-            {
-                printf("forStmt\n");
-                break;
-            }
-            case WHILE_STATEMENT:
-            {
-                printf("whlStmt\n");
-                break;
-            }
-            case DO_WHILE_STATEMENT:
-            {
-                printf("doWhlStmt\n");
-                break;
-            }
-            case STATEMENT_BLOCK:
-            {
-                printf("stmtBlk\n");
-                break;
-            }
-            case BREAK_STATEMENT:
-            {
-                printf("brkStmt\n");
-                break;
-            }
-            case CONTINUE_STATEMENT:
-            {
-                printf("cntnStmt\n");
-                break;
-            }
-            case VAR_STATEMENT:
-            {
-                printf("varStmt\n");
-                break;
-            }
-            case FUNCTION_STATEMENT:
-            {
-                printf("fcnStmt\n");
-                break;
-            }
-            case CLASS_STATEMENT:
-            {
-                printf("clsStmt\n");
-                break;
-            }
-            case GLOBAL_STATEMENT:
-            {
-                printf("glbStmt\n");
-                break;
-            }
-            case RETURN_STATEMENT:
-            {
-                printf("rtnStmt\n");
-                break;
-            }
-        }
-    }
-}
 
 
