@@ -5,9 +5,9 @@
     #include <stdlib.h>
     #include <stdbool.h>
     #include <stack>
-    #ifndef _WIN32
-    #include "linenoise.h"
-    #endif
+    //#ifndef _WIN32
+    //#include "linenoise.h"
+    //#endif
     //#include "dftn.h"
     #ifndef DFTN_H
     #define DFTN_H

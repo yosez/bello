@@ -17,14 +17,15 @@ set_source_files_properties(
         ${PROJECT_SOURCE_DIR}/src/y.tab.c
         ${PROJECT_SOURCE_DIR}/src/lex.yy.c
         PROPERTIES LANGUAGE CXX
+
 )
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin")
 
-if (NOT WIN32)
-    add_library(linenoise STATIC lbr/linenoise.c)
-    target_include_directories(linenoise PUBLIC lbr)
-endif()
+#if (NOT WIN32)
+#    add_library(linenoise STATIC lbr/linenoise.c)
+#    target_include_directories(linenoise PUBLIC lbr)
+#endif()
 
 add_executable(bello ${SOURCES})
 
@@ -44,6 +45,6 @@ elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 endif()
 
 
-if (NOT WIN32)
-    target_link_libraries(bello PRIVATE linenoise)
-endif()
+#if (NOT WIN32)
+#    target_link_libraries(bello PRIVATE linenoise)
+#endif()

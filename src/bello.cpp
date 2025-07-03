@@ -73,6 +73,10 @@ int main(int argc, char * argv[])
         prsStt = 2;
         f= fopen(argv[1],"r");
         yyin= f;
+
+        yyparse();
+
+        return 0;
     }
 
     char *ipt;
