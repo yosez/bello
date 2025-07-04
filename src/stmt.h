@@ -1,44 +1,56 @@
 #pragma once
 
+#ifndef STMT_H
+#define STMT_H
+
 #include <stdio.h>
-//#include <malloc.h>
 #include <chrono>
-#include "y.tab.h"
 #include "dftn.h"
 #include "expt.h"
-
-
-//语句系列函数，参数为语句的内容部分，如创建if语句结构体的bldIfStmt函数的参数exp为if的条件表达式，stmt参数为if的条件为真执行的语句块
-struct StmtStrc* bldExpStmt(struct ExpStrc* exp);
-struct StmtStrc* bldIfStmt(struct ExpStrc* exp, struct StmtStrc* stmt);
-struct StmtStrc* bldElsStmt();
-struct StmtStrc* bldElsStmt(struct StmtStrc* stmt);
-struct StmtStrc* bldIfElsStmt(struct ExpStrc* exp, struct StmtStrc* stmt, struct StmtStrc* elsStmt);
-struct StmtStrc* bldElifStmt(struct ExpStrc* exp);
-struct StmtStrc* bldForStmt(struct StmtStrc* intl, struct StmtStrc* exp, struct StmtStrc* itr, struct StmtStrc* stmt);
-struct StmtStrc* bldWhlStmt(struct StmtStrc* exp, struct StmtStrc* stmt);
-struct StmtStrc* bldDoWhlStmt(struct StmtStrc* exp, struct StmtStrc* stmt);
-struct StmtStrc* bldStmtBlk();
-struct StmtStrc* stmtBlkAdd(struct StmtStrc* stmtBlk, struct StmtStrc* stmt);
-struct StmtStrc* bldBrkStmt(struct ExpStrc* exp);
-struct StmtStrc* bldCntnStmt(struct ExpStrc* exp);
-struct StmtStrc* bldFcnStmt(struct FcnStrc* fcn);
-struct StmtStrc* bldRtnStmt(struct ExpStrc* exp);
-struct StmtStrc* bldVarStmt(struct AsgnLstStrc* asgnLst);
-struct StmtStrc* bldVarStmt(int typ, struct AsgnLstStrc* asgnLst);
-struct StmtStrc* bldGlbStmt(AsgnLstStrc* asgnLst);
-struct StmtStrc* bldNllStmt();
-struct StmtStrc* bldClsStmt(struct ClsStrc* cls);
-
-struct StmtStrc* bldIfStmt(struct ExpStrc* exp);
-struct StmtStrc* bldForStmt(struct StmtStrc* intl, struct StmtStrc* exp, struct StmtStrc* itr);
-struct StmtStrc* bldWhlStmt(struct StmtStrc* exp);
-struct StmtStrc* bldWhlStmt();
-struct StmtStrc* bldElsStmt();
+#include "exp.h"
+#include "vrb.h"
 
 extern int chkStmtAlwSubStmt(struct StmtStrc* stmt);
 extern int chkStmtAlwScndStmt(struct StmtStrc* stmt);
+extern int asgnVrb(struct VrbStrc* vrb, struct CnstStrc* vl);
 extern StmtStrc* lstStmt;
+extern ExpStrc* bldVrbExp(char* idtf);
+extern CnstStrc* clcExp(vector<EnvrStrc*>& envr, struct ExpStrc* exp);
+extern VrbStrc* getVrb(vector<EnvrStrc*>& envr, struct VrbExpStrc* vrbExp);
+extern VrbStrc* addVrb(struct EnvrStrc* envr, struct VrbExpStrc* vrbExp);
+extern VrbStrc* addVrbGlb(vector<EnvrStrc*>& envr, VrbExpStrc* vrbExp);
+extern ExpStrc* bldFcnExp(char* nm, struct ArgLstStrc* argLst);
+extern FcnStrc* getFcn(vector<EnvrStrc*> envr, struct FcnExpStrc* fcnExp);
+extern int addFcn(struct EnvrStrc* envr, struct FcnStrc* fcn);
+
+//语句系列函数，参数为语句的内容部分，如创建if语句结构体的bldIfStmt函数的参数exp为if的条件表达式，stmt参数为if的条件为真执行的语句块
+StmtStrc* bldExpStmt(struct ExpStrc* exp);
+StmtStrc* bldIfStmt(struct ExpStrc* exp, struct StmtStrc* stmt);
+StmtStrc* bldElsStmt();
+StmtStrc* bldElsStmt(struct StmtStrc* stmt);
+StmtStrc* bldIfElsStmt(struct ExpStrc* exp, struct StmtStrc* stmt, struct StmtStrc* elsStmt);
+StmtStrc* bldElifStmt(struct ExpStrc* exp);
+StmtStrc* bldForStmt(struct StmtStrc* intl, struct StmtStrc* exp, struct StmtStrc* itr, struct StmtStrc* stmt);
+StmtStrc* bldWhlStmt(struct StmtStrc* exp, struct StmtStrc* stmt);
+StmtStrc* bldDoWhlStmt(struct StmtStrc* exp, struct StmtStrc* stmt);
+StmtStrc* bldStmtBlk();
+StmtStrc* stmtBlkAdd(struct StmtStrc* stmtBlk, struct StmtStrc* stmt);
+StmtStrc* bldBrkStmt(struct ExpStrc* exp);
+StmtStrc* bldCntnStmt(struct ExpStrc* exp);
+StmtStrc* bldFcnStmt(struct FcnStrc* fcn);
+StmtStrc* bldRtnStmt(struct ExpStrc* exp);
+StmtStrc* bldVarStmt(struct AsgnLstStrc* asgnLst);
+StmtStrc* bldVarStmt(int typ, struct AsgnLstStrc* asgnLst);
+StmtStrc* bldGlbStmt(AsgnLstStrc* asgnLst);
+StmtStrc* bldNllStmt();
+StmtStrc* bldClsStmt(struct ClsStrc* cls);
+
+StmtStrc* bldIfStmt(struct ExpStrc* exp);
+StmtStrc* bldForStmt(struct StmtStrc* intl, struct StmtStrc* exp, struct StmtStrc* itr);
+StmtStrc* bldWhlStmt(struct StmtStrc* exp);
+StmtStrc* bldWhlStmt();
+StmtStrc* bldElsStmt();
+
 
 
 struct StmtRsltStrc* exctStmt(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct StmtStrc* stmt);
@@ -1050,3 +1062,4 @@ int chkStmtAlwScndStmt(struct StmtStrc* stmt)
 	}
 }
 
+#endif

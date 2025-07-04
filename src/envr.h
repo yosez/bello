@@ -1,43 +1,41 @@
 #pragma once
 
-#include <stdio.h>
-//#include <malloc.h>
-#include <vector>
+#ifndef ENVR_H
+#define ENVR_H
+
 #include <algorithm>
+#include <stdio.h>
+#include <vector>
 
-#include "y.tab.h"
 #include "dftn.h"
+#include "exp.h"
+#include "ntv.h"
 #include "vrb.h"
-#include "fcn.h"
-#ifndef NTV_H
-#define NTV_H
-#endif
+#include "y.tab.h"
 
-#ifndef EXP_H
-#define EXP_H        
-#endif              
+extern VrbStrc* bldVrb(string nm);
 
 using namespace std;
 
-//typedef struct CnstStrc* ntvFcnDfn(vector<EnvrStrc*>& envr, int prmCnt, vector <CnstStrc*> prmArr);
-
 extern struct ExpStrc* bldFcnExp(char* nm, struct ArgLstStrc* argLst);
 
-struct VrbStrc* addVrb(struct EnvrStrc* envr, struct VrbExpStrc* vrbExp);
-struct VrbStrc* getEnvrVrb(struct EnvrStrc* envr, struct VrbExpStrc* vrbExp);
-struct VrbStrc* addVrbGlb(vector<EnvrStrc*>& envr, VrbExpStrc* vrbExp);
-struct VrbStrc* getVrb(vector<EnvrStrc*>& envr, struct VrbExpStrc* vrbExp);
-struct VrbStrc* getVrb(vector<EnvrStrc*>& envr, struct LvlExpStrc* lvl);
+VrbStrc* addVrb(struct EnvrStrc* envr, struct VrbExpStrc* vrbExp);
+VrbStrc* getEnvrVrb(struct EnvrStrc* envr, struct VrbExpStrc* vrbExp);
+VrbStrc* addVrbGlb(vector<EnvrStrc*>& envr, VrbExpStrc* vrbExp);
+VrbStrc* getVrb(vector<EnvrStrc*>& envr, struct VrbExpStrc* vrbExp);
+VrbStrc* getVrb(vector<EnvrStrc*>& envr, struct LvlExpStrc* lvl);
 int prtEnvrVrb(struct EnvrStrc* envr);
 
 int addFcn(struct EnvrStrc* envr, struct FcnStrc* fcn);
-struct FcnStrc* getEnvrFcn(struct EnvrStrc* envr, struct FcnExpStrc* fcnExp);
+FcnStrc* getFcn(vector<EnvrStrc*> envr, struct FcnExpStrc* fcnExp);
+FcnStrc* getEnvrFcn(struct EnvrStrc* envr, struct FcnExpStrc* fcnExp);
 
-struct ClsStrc* getEnvrCls(EnvrStrc* envr, string nm);
-struct ClsStrc* getGlbCls(vector<EnvrStrc*>& envr, string nm);
+ClsStrc* getEnvrCls(EnvrStrc* envr, string nm);
+ClsStrc* getGlbCls(vector<EnvrStrc*>& envr, string nm);
 
 int addNtvFcn(struct EnvrStrc* envr, string fcnNm, ntvFcnDfn* fcn, int prmCnt);
-struct NtvFcnStrc* getNtvFcn(struct EnvrStrc* envr, struct FcnExpStrc* fcn);
+NtvFcnStrc* getNtvFcn(struct EnvrStrc* envr, struct FcnExpStrc* fcn);
+NtvFcnStrc* getNtvFcn(vector<EnvrStrc*> envr, struct FcnExpStrc* fcn);
 
 int addCls(struct EnvrStrc* envr, struct ClsStrc* cls);
 struct ClsStrc* getEnvrCls(struct EnvrStrc* envr, string nm);
@@ -376,7 +374,7 @@ struct ClsStrc* getEnvrCls(EnvrStrc* envr, string nm)
 }
 
 
-struct ClsStrc* getGlbCls(vector<EnvrStrc*>& envr, string nm)
+ClsStrc* getGlbCls(vector<EnvrStrc*>& envr, string nm)
 {
 	ClsStrc* rslt = nullptr;
 
@@ -457,5 +455,5 @@ int intlEnvr(struct EnvrStrc** envr)
 	return 0;
 }
 
-
+#endif
 

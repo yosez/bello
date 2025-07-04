@@ -3,13 +3,14 @@
 
 %{ 
     #pragma once
+    #ifndef LEX_YY_C
+    #define LEX_YY_C
+
     #include <stdio.h>
     #include <stdlib.h>
     #include <string>
     #include "y.tab.h"
-    #ifndef DFTN_H
-    #define DFTN_H
-    #endif
+    #include "dftn.h"
 
     using namespace std;
 
@@ -170,3 +171,5 @@
 
 
 %%
+
+#endif

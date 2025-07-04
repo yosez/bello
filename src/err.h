@@ -1,4 +1,7 @@
 #pragma once
+
+#ifndef ERR_H
+#define ERR_H
 #include <stdio.h>
 
 
@@ -15,3 +18,5 @@ int errRpt(int err)
 
     return 0;
 }
+
+#endif

@@ -2,8 +2,6 @@
 #include <string>
 #include <vector>
 
-#include "dftn.h"
-
 using namespace std;
 
 #ifndef _WIN32
@@ -12,15 +10,11 @@ using namespace std;
 #endif
 
 
-#ifndef DFTN_H
-#define DFTN_H
-#endif
-#ifndef ENVR_H
-#define ENVR_H
-#endif
-#ifndef CNST_H
-#define CNST_H
-#endif
+#include "dftn.h"
+#include "envr.h"
+
+#include "lex.yy.c"
+#include "y.tab.c"
 
 extern int prsStt;
 struct EnvrStrc;
@@ -31,7 +25,7 @@ extern int initGlbEnvr(vector<EnvrStrc*>& envr);
 
 extern int yyparse(void);
 
-extern void yylex_destroy();
+extern int yylex_destroy();
 
 typedef struct yy_buffer_state *YY_BUFFER_STATE;
 

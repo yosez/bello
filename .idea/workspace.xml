@@ -57,7 +57,8 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/src/y.tab.c" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/lex.yy.c" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/y.tab.c" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
@@ -122,13 +123,13 @@
     </key>
   </component>
   <component name="RunManager" selected="CMake 应用程序.belloMacOs">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="bello" type="CMakeListConfigurationType" factoryName="CMakeListConfigurationFactory" temporary="true">
       <method v="2" />
-    </configuration>
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
     </configuration>
     <configuration name="bello" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="src" TARGET_NAME="bello" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="src" RUN_TARGET_NAME="bello">
       <method v="2">
@@ -178,7 +179,8 @@
       <workItem from="1751548694046" duration="73000" />
       <workItem from="1751548787328" duration="136000" />
       <workItem from="1751548980175" duration="189000" />
-      <workItem from="1751549220903" duration="5158000" />
+      <workItem from="1751549220903" duration="5224000" />
+      <workItem from="1751637849047" duration="3394000" />
     </task>
     <task id="LOCAL-00001" summary="测试提交">
       <option name="closed" value="true" />
@@ -260,7 +262,15 @@
       <option name="project" value="LOCAL" />
       <updated>1751549156819</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="正在将枚举类型的数据修改为c++枚举类的类型,并进行相关的修正.">
+      <option name="closed" value="true" />
+      <created>1751555018049</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1751555018049</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -280,7 +290,8 @@
     <MESSAGE value="修改了项目结构。&#10;正在修改使得可以在macos上使用键盘移动输入光标。" />
     <MESSAGE value="修改使得支持macOS系统上使用箭头控制光标,并进行了相关修正." />
     <MESSAGE value="删除了linenoise类库的编译选项,并进行了相关修正.&#10;增加了接收命令行参数运行的功能." />
-    <option name="LAST_COMMIT_MESSAGE" value="删除了linenoise类库的编译选项,并进行了相关修正.&#10;增加了接收命令行参数运行的功能." />
+    <MESSAGE value="正在将枚举类型的数据修改为c++枚举类的类型,并进行相关的修正." />
+    <option name="LAST_COMMIT_MESSAGE" value="正在将枚举类型的数据修改为c++枚举类的类型,并进行相关的修正." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

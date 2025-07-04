@@ -1,37 +1,33 @@
 #pragma once
 
+#ifndef EXP_H
+#define EXP_H
+
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
 
-#include "y.tab.h"
 #include "dftn.h"
-#ifndef VRB_H
-#define VRB_H
-#endif
 #include "cnst.h"
 #include "envr.h"
-#ifndef ARR_H
-#define ARR_H
-#endif
-#ifndef STMT_H
-#define STMT_H
-#endif
-#ifndef ERR_H
-#define ERR_H
-#endif
-#include "err.h"
+#include "arr.h"
+#include "stmt.h"
 #include "expt.h"
 #include "cls.h"
-
-
-
-//extern enum ExpTyp;
+#include "vrb.h"
 
 extern struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt);
 
 extern VrbStrc* getObjVrb(VrbStrc* vrb, LvlExpStrc* lvl);
-
+extern CnstStrc* bldCnstFrmVrb(struct VrbStrc* vrb);
+extern VrbStrc* getEnvrVrb(struct EnvrStrc* envr, struct VrbExpStrc* vrbExp);
+extern NtvFcnStrc* getNtvFcn(struct EnvrStrc* envr, struct FcnExpStrc* fcn);
+extern NtvFcnStrc* getNtvFcn(vector<EnvrStrc*> envr, struct FcnExpStrc* fcn);
+extern FcnStrc* getFcn(vector<EnvrStrc*> envr, struct FcnExpStrc* fcnExp);
+extern VrbStrc* getVrb(vector<EnvrStrc*>& envr, struct VrbExpStrc* vrbExp);
+extern VrbStrc* getVrb(vector<EnvrStrc*>& envr, struct LvlExpStrc* lvl);
+extern int addFcn(struct EnvrStrc* envr, struct FcnStrc* fcn);
+extern struct ClsStrc* getGlbCls(vector<EnvrStrc*>& envr, string nm);
 
 //struct CnstStrc* bldCnstIntExp(int intVl);
 //struct CnstStrc* bldCnstFltExp(float fltVl);
@@ -2424,3 +2420,6 @@ struct CnstStrc* clcExp(vector<EnvrStrc*>& envr, struct ExpStrc* exp)
 
 	return rslt;
 }
+
+
+#endif

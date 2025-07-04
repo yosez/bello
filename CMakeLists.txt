@@ -8,17 +8,16 @@ set(CMAKE_CXX_STANDARD 17)
 
 # —— 手动列出所有必需的源文件 ——
 set(SOURCES
-        ${PROJECT_SOURCE_DIR}/src/y.tab.c
-        ${PROJECT_SOURCE_DIR}/src/lex.yy.c
+#        ${PROJECT_SOURCE_DIR}/src/y.tab.c
+#        ${PROJECT_SOURCE_DIR}/src/lex.yy.c
         ${PROJECT_SOURCE_DIR}/src/bello.cpp
 )
 
-set_source_files_properties(
-        ${PROJECT_SOURCE_DIR}/src/y.tab.c
-        ${PROJECT_SOURCE_DIR}/src/lex.yy.c
-        PROPERTIES LANGUAGE CXX
-
-)
+#set_source_files_properties(
+#        ${PROJECT_SOURCE_DIR}/src/y.tab.c
+#        ${PROJECT_SOURCE_DIR}/src/lex.yy.c
+#        PROPERTIES LANGUAGE CXX
+#)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin")
 

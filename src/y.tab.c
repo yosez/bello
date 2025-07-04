@@ -223,33 +223,28 @@
 #line 1 "bello.y"
 
     #pragma once
+
+    #ifndef Y_TAB_C
+    #define Y_TAB_C
     #include <stdio.h>
     #include <string.h>
     #include <stdlib.h>
     #include <stdbool.h>
     #include <stack>
-    #ifndef DFTN_H
-    #define DFTN_H
-    #endif
+    #include "dftn.h"
     #include "vrb.h"
     #include "cnst.h"
-    #ifndef EXP_H
-    #define EXP_H
-    #endif
-    #ifndef STMT_H
-    #define STMT_H
-    #endif
-    #include "arr.h"
     #include "exp.h"
+    #include "stmt.h"
+    #include "arr.h"
     #include "stmt.h"
     #include "fcn.h"
     #include "cls.h"
     #include "envr.h"
     #include "err.h"
-    #ifndef LEX_YY_C
-    #define LEX_YY_C
-    #endif
     #include "ntv.h"
+    #include "lex.yy.c"
+
 
 
     extern char* yytext;
@@ -308,7 +303,7 @@
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 69 "bello.y"
+#line 64 "bello.y"
 {
     int blnVl;
     int intVl;
@@ -332,7 +327,7 @@ typedef union YYSTYPE
     //string idtf;
 }
 /* Line 193 of yacc.c.  */
-#line 336 "y.tab.c"
+#line 331 "y.tab.c"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
@@ -345,7 +340,7 @@ typedef union YYSTYPE
 
 
 /* Line 216 of yacc.c.  */
-#line 349 "y.tab.c"
+#line 344 "y.tab.c"
 
 #ifdef short
 # undef short
@@ -706,22 +701,22 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   171,   171,   171,   173,   175,   177,   178,   179,   183,
-     193,   239,   288,   335,   353,   354,   355,   356,   357,   358,
-     360,   361,   362,   363,   365,   366,   367,   368,   369,   379,
-     380,   381,   382,   383,   384,   388,   391,   394,   395,   398,
-     403,   410,   416,   417,   418,   419,   420,   421,   422,   425,
-     426,   429,   430,   431,   432,   433,   434,   438,   439,   440,
-     441,   444,   445,   446,   447,   448,   451,   452,   453,   454,
-     455,   456,   457,   458,   459,   460,   461,   462,   463,   464,
-     465,   466,   467,   470,   476,   477,   478,   479,   480,   481,
-     482,   483,   486,   487,   502,   507,   571,   575,   581,   587,
-     592,   600,   612,   627,   630,   635,   640,   645,   656,   660,
-     666,   671,   676,   681,   688,   693,   698,   703,   712,   717,
-     722,   727,   732,   737,   742,   747,   752,   757,   762,   767,
-     772,   777,   782,   787,   792,   797,   802,   807,   812,   817,
-     835,   851,   857,   873,   885,   893,   899,   905,   906,   909,
-     910,   913,   914,   951,   959,   967,   984,   994,  1008,  1009
+       0,   166,   166,   166,   168,   170,   172,   173,   174,   178,
+     188,   234,   283,   330,   348,   349,   350,   351,   352,   353,
+     355,   356,   357,   358,   360,   361,   362,   363,   364,   374,
+     375,   376,   377,   378,   379,   383,   386,   389,   390,   393,
+     398,   405,   411,   412,   413,   414,   415,   416,   417,   420,
+     421,   424,   425,   426,   427,   428,   429,   433,   434,   435,
+     436,   439,   440,   441,   442,   443,   446,   447,   448,   449,
+     450,   451,   452,   453,   454,   455,   456,   457,   458,   459,
+     460,   461,   462,   465,   471,   472,   473,   474,   475,   476,
+     477,   478,   481,   482,   497,   502,   566,   570,   576,   582,
+     587,   595,   607,   622,   625,   630,   635,   640,   651,   655,
+     661,   666,   671,   676,   683,   688,   693,   698,   707,   712,
+     717,   722,   727,   732,   737,   742,   747,   752,   757,   762,
+     767,   772,   777,   782,   787,   792,   797,   802,   807,   812,
+     830,   846,   852,   868,   880,   888,   894,   900,   901,   904,
+     905,   908,   909,   946,   954,   962,   979,   989,  1003,  1004
 };
 #endif
 
@@ -2108,22 +2103,22 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 171 "bello.y"
+#line 166 "bello.y"
     {(yyval.intVl) = 0; }
     break;
 
   case 6:
-#line 177 "bello.y"
+#line 172 "bello.y"
     { return 0; }
     break;
 
   case 8:
-#line 179 "bello.y"
+#line 174 "bello.y"
     { yyerrok; }
     break;
 
   case 9:
-#line 183 "bello.y"
+#line 178 "bello.y"
     { 
         if (((yyvsp[(-2) - (0)].intVl))>lstIndt+1) 
         {
@@ -2134,7 +2129,7 @@ yyreduce:
     break;
 
   case 10:
-#line 193 "bello.y"
+#line 188 "bello.y"
     {   
         int indt = (yyvsp[(-3) - (0)].intVl);
 
@@ -2180,7 +2175,7 @@ yyreduce:
     break;
 
   case 11:
-#line 239 "bello.y"
+#line 234 "bello.y"
     { 
         //如果是从源代码输入，则不执行此动作
         if (prsStt==2)
@@ -2229,7 +2224,7 @@ yyreduce:
     break;
 
   case 12:
-#line 288 "bello.y"
+#line 283 "bello.y"
     {
         //如果是命令行读取数据，则退出此动作
         if (prsStt==1)
@@ -2277,7 +2272,7 @@ yyreduce:
     break;
 
   case 13:
-#line 335 "bello.y"
+#line 330 "bello.y"
     { 
         //printf("alw sub stmt: %d\n", stmtStk.back()->alwSubStmt);
 
@@ -2296,77 +2291,77 @@ yyreduce:
     break;
 
   case 14:
-#line 353 "bello.y"
+#line 348 "bello.y"
     { (yyval.stmt)=(yyvsp[(1) - (1)].stmt); }
     break;
 
   case 15:
-#line 354 "bello.y"
+#line 349 "bello.y"
     { (yyval.stmt)=(yyvsp[(1) - (1)].stmt); }
     break;
 
   case 16:
-#line 355 "bello.y"
+#line 350 "bello.y"
     { (yyval.stmt)=(yyvsp[(1) - (1)].stmt); }
     break;
 
   case 17:
-#line 356 "bello.y"
+#line 351 "bello.y"
     { (yyval.stmt)=(yyvsp[(1) - (1)].stmt); }
     break;
 
   case 18:
-#line 357 "bello.y"
+#line 352 "bello.y"
     { (yyval.stmt)=(yyvsp[(1) - (1)].stmt); }
     break;
 
   case 19:
-#line 358 "bello.y"
+#line 353 "bello.y"
     { (yyval.stmt)=(yyvsp[(1) - (1)].stmt); }
     break;
 
   case 20:
-#line 360 "bello.y"
+#line 355 "bello.y"
     { (yyval.stmt)=(yyvsp[(1) - (1)].stmt); }
     break;
 
   case 21:
-#line 361 "bello.y"
+#line 356 "bello.y"
     { (yyval.stmt)=(yyvsp[(1) - (1)].stmt); }
     break;
 
   case 22:
-#line 362 "bello.y"
+#line 357 "bello.y"
     { (yyval.stmt)=(yyvsp[(1) - (1)].stmt); }
     break;
 
   case 23:
-#line 363 "bello.y"
+#line 358 "bello.y"
     { (yyval.stmt)=(yyvsp[(1) - (1)].stmt); }
     break;
 
   case 24:
-#line 365 "bello.y"
+#line 360 "bello.y"
     { (yyval.stmt)=(yyvsp[(1) - (1)].stmt); }
     break;
 
   case 25:
-#line 366 "bello.y"
+#line 361 "bello.y"
     { (yyval.stmt) = (yyvsp[(1) - (1)].stmt);}
     break;
 
   case 26:
-#line 367 "bello.y"
+#line 362 "bello.y"
     { (yyval.stmt) = (yyvsp[(1) - (1)].stmt); }
     break;
 
   case 27:
-#line 368 "bello.y"
+#line 363 "bello.y"
     { (yyval.stmt)= (yyvsp[(1) - (1)].stmt); }
     break;
 
   case 28:
-#line 370 "bello.y"
+#line 365 "bello.y"
     { 
         (yyval.stmt)=bldNllStmt(); 
         yyclearin; 
@@ -2375,27 +2370,27 @@ yyreduce:
     break;
 
   case 35:
-#line 388 "bello.y"
+#line 383 "bello.y"
     { (yyval.stmt)=bldNllStmt(); }
     break;
 
   case 36:
-#line 391 "bello.y"
+#line 386 "bello.y"
     { (yyval.stmt)=bldNllStmt(); }
     break;
 
   case 37:
-#line 394 "bello.y"
+#line 389 "bello.y"
     { (yyval.stmt)=(yyvsp[(2) - (3)].stmt); }
     break;
 
   case 38:
-#line 395 "bello.y"
+#line 390 "bello.y"
     { (yyval.stmt)=bldNllStmt(); }
     break;
 
   case 39:
-#line 399 "bello.y"
+#line 394 "bello.y"
     { 
         (yyval.stmt)=bldStmtBlk(); 
         stmtBlkAdd((yyval.stmt), (yyvsp[(1) - (1)].stmt)); 
@@ -2403,248 +2398,248 @@ yyreduce:
     break;
 
   case 40:
-#line 404 "bello.y"
+#line 399 "bello.y"
     {
         (yyval.stmt) = stmtBlkAdd((yyvsp[(1) - (2)].stmt) ,(yyvsp[(2) - (2)].stmt));
     }
     break;
 
   case 41:
-#line 411 "bello.y"
+#line 406 "bello.y"
     { 
         (yyval.stmt)=bldExpStmt((yyvsp[(1) - (1)].exp)); 
     }
     break;
 
   case 44:
-#line 418 "bello.y"
+#line 413 "bello.y"
     { (yyval.exp) = (yyvsp[(1) - (1)].exp); }
     break;
 
   case 45:
-#line 419 "bello.y"
+#line 414 "bello.y"
     { (yyval.exp) = (yyvsp[(1) - (1)].exp); }
     break;
 
   case 46:
-#line 420 "bello.y"
+#line 415 "bello.y"
     { (yyval.exp) = (yyvsp[(1) - (1)].exp); }
     break;
 
   case 47:
-#line 421 "bello.y"
+#line 416 "bello.y"
     { (yyval.exp) = (yyvsp[(1) - (1)].exp); }
     break;
 
   case 48:
-#line 422 "bello.y"
+#line 417 "bello.y"
     { (yyval.exp) = (yyvsp[(1) - (1)].exp); }
     break;
 
   case 51:
-#line 429 "bello.y"
+#line 424 "bello.y"
     { (yyval.exp)=bldAsgnExp((yyvsp[(1) - (3)].exp), (yyvsp[(3) - (3)].exp)); }
     break;
 
   case 52:
-#line 430 "bello.y"
+#line 425 "bello.y"
     { (yyval.exp)=bldAsgnExp((yyvsp[(1) - (3)].exp), bldBnrExp(ADD, (yyvsp[(1) - (3)].exp), (yyvsp[(3) - (3)].exp))); }
     break;
 
   case 53:
-#line 431 "bello.y"
+#line 426 "bello.y"
     { (yyval.exp)=bldAsgnExp((yyvsp[(1) - (3)].exp), bldBnrExp(SUB, (yyvsp[(1) - (3)].exp), (yyvsp[(3) - (3)].exp))); }
     break;
 
   case 54:
-#line 432 "bello.y"
+#line 427 "bello.y"
     { (yyval.exp)=bldAsgnExp((yyvsp[(1) - (3)].exp), bldBnrExp(MUL, (yyvsp[(1) - (3)].exp), (yyvsp[(3) - (3)].exp))); }
     break;
 
   case 55:
-#line 433 "bello.y"
+#line 428 "bello.y"
     { (yyval.exp)=bldAsgnExp((yyvsp[(1) - (3)].exp), bldBnrExp(DIV, (yyvsp[(1) - (3)].exp), (yyvsp[(3) - (3)].exp))); }
     break;
 
   case 56:
-#line 434 "bello.y"
+#line 429 "bello.y"
     { (yyval.exp)=bldAsgnExp((yyvsp[(1) - (3)].exp), bldBnrExp(MOD, (yyvsp[(1) - (3)].exp), (yyvsp[(3) - (3)].exp))); }
     break;
 
   case 57:
-#line 438 "bello.y"
+#line 433 "bello.y"
     { (yyval.exp)=bldUnrExp(PREFIX_INCREMENT, (yyvsp[(2) - (2)].exp)); }
     break;
 
   case 58:
-#line 439 "bello.y"
+#line 434 "bello.y"
     { (yyval.exp)=bldUnrExp(PREFIX_DECREMENT, (yyvsp[(2) - (2)].exp)); }
     break;
 
   case 59:
-#line 440 "bello.y"
+#line 435 "bello.y"
     { (yyval.exp)=bldUnrExp(SUFFIX_INCREMENT, (yyvsp[(1) - (2)].exp)); }
     break;
 
   case 60:
-#line 441 "bello.y"
+#line 436 "bello.y"
     { (yyval.exp)=bldUnrExp(SUFFIX_DECREMENT, (yyvsp[(1) - (2)].exp)); }
     break;
 
   case 61:
-#line 444 "bello.y"
+#line 439 "bello.y"
     { (yyval.exp) = bldUnrExp(SUB, (yyvsp[(2) - (2)].exp)); }
     break;
 
   case 62:
-#line 445 "bello.y"
+#line 440 "bello.y"
     { (yyval.exp) = bldUnrExp(ADD, (yyvsp[(2) - (2)].exp)); }
     break;
 
   case 63:
-#line 446 "bello.y"
+#line 441 "bello.y"
     { (yyval.exp)=(yyvsp[(2) - (3)].exp); }
     break;
 
   case 64:
-#line 447 "bello.y"
+#line 442 "bello.y"
     { (yyval.exp)=bldUnrExp(NOT, (yyvsp[(2) - (2)].exp)); }
     break;
 
   case 65:
-#line 448 "bello.y"
+#line 443 "bello.y"
     { (yyval.exp)=bldUnrExp(BIT_NOT, (yyvsp[(2) - (2)].exp)); }
     break;
 
   case 66:
-#line 451 "bello.y"
+#line 446 "bello.y"
     { (yyval.exp)=bldBnrExp(ADD, (yyvsp[(1) - (3)].exp), (yyvsp[(3) - (3)].exp)); }
     break;
 
   case 67:
-#line 452 "bello.y"
+#line 447 "bello.y"
     { (yyval.exp)=bldBnrExp(SUB, (yyvsp[(1) - (3)].exp), (yyvsp[(3) - (3)].exp)); }
     break;
 
   case 68:
-#line 453 "bello.y"
+#line 448 "bello.y"
     { (yyval.exp)=bldBnrExp(MUL, (yyvsp[(1) - (3)].exp), (yyvsp[(3) - (3)].exp)); }
     break;
 
   case 69:
-#line 454 "bello.y"
+#line 449 "bello.y"
     { (yyval.exp)=bldBnrExp(DIV, (yyvsp[(1) - (3)].exp), (yyvsp[(3) - (3)].exp)); }
     break;
 
   case 70:
-#line 455 "bello.y"
+#line 450 "bello.y"
     { (yyval.exp)=bldBnrExp(MOD, (yyvsp[(1) - (3)].exp), (yyvsp[(3) - (3)].exp)); }
     break;
 
   case 71:
-#line 456 "bello.y"
+#line 451 "bello.y"
     { (yyval.exp)=bldBnrExp(AND, (yyvsp[(1) - (3)].exp), (yyvsp[(3) - (3)].exp)); }
     break;
 
   case 72:
-#line 457 "bello.y"
+#line 452 "bello.y"
     { (yyval.exp)=bldBnrExp(OR, (yyvsp[(1) - (3)].exp), (yyvsp[(3) - (3)].exp)); }
     break;
 
   case 73:
-#line 458 "bello.y"
+#line 453 "bello.y"
     { (yyval.exp)=bldBnrExp(EQ, (yyvsp[(1) - (3)].exp), (yyvsp[(3) - (3)].exp)); }
     break;
 
   case 74:
-#line 459 "bello.y"
+#line 454 "bello.y"
     { (yyval.exp)=bldBnrExp(NE, (yyvsp[(1) - (3)].exp), (yyvsp[(3) - (3)].exp)); }
     break;
 
   case 75:
-#line 460 "bello.y"
+#line 455 "bello.y"
     { (yyval.exp)=bldBnrExp(GT, (yyvsp[(1) - (3)].exp), (yyvsp[(3) - (3)].exp)); }
     break;
 
   case 76:
-#line 461 "bello.y"
+#line 456 "bello.y"
     { (yyval.exp)=bldBnrExp(GE, (yyvsp[(1) - (3)].exp), (yyvsp[(3) - (3)].exp)); }
     break;
 
   case 77:
-#line 462 "bello.y"
+#line 457 "bello.y"
     { (yyval.exp)=bldBnrExp(LT, (yyvsp[(1) - (3)].exp), (yyvsp[(3) - (3)].exp)); }
     break;
 
   case 78:
-#line 463 "bello.y"
+#line 458 "bello.y"
     { (yyval.exp)=bldBnrExp(LE, (yyvsp[(1) - (3)].exp), (yyvsp[(3) - (3)].exp)); }
     break;
 
   case 79:
-#line 464 "bello.y"
+#line 459 "bello.y"
     { (yyval.exp)=bldBnrExp(BIT_AND, (yyvsp[(1) - (3)].exp), (yyvsp[(3) - (3)].exp)); }
     break;
 
   case 80:
-#line 465 "bello.y"
+#line 460 "bello.y"
     { (yyval.exp)=bldBnrExp(BIT_OR, (yyvsp[(1) - (3)].exp), (yyvsp[(3) - (3)].exp)); }
     break;
 
   case 81:
-#line 466 "bello.y"
+#line 461 "bello.y"
     { (yyval.exp)=bldBnrExp(BIT_XOR, (yyvsp[(1) - (3)].exp), (yyvsp[(3) - (3)].exp)); }
     break;
 
   case 82:
-#line 467 "bello.y"
+#line 462 "bello.y"
     { (yyval.exp) = bldTnrExp(QM, (yyvsp[(1) - (5)].exp), (yyvsp[(3) - (5)].exp), (yyvsp[(5) - (5)].exp)); }
     break;
 
   case 83:
-#line 471 "bello.y"
+#line 466 "bello.y"
     {
         
     }
     break;
 
   case 84:
-#line 476 "bello.y"
+#line 471 "bello.y"
     { (yyval.exp)=bldCnstIntExp((yyvsp[(1) - (1)].intVl)); /*printf("Get data: %d\n",$1);*/ }
     break;
 
   case 85:
-#line 477 "bello.y"
+#line 472 "bello.y"
     { (yyval.exp)=bldCnstFltExp((yyvsp[(1) - (1)].fltVl)); }
     break;
 
   case 86:
-#line 478 "bello.y"
+#line 473 "bello.y"
     { (yyval.exp)=bldCnstBlnExp((yyvsp[(1) - (1)].blnVl)); }
     break;
 
   case 87:
-#line 479 "bello.y"
+#line 474 "bello.y"
     { (yyval.exp)=bldCnstStrExp((yyvsp[(1) - (1)].strVl)); }
     break;
 
   case 88:
-#line 480 "bello.y"
+#line 475 "bello.y"
     { (yyval.exp)=bldCnstNllExp(); }
     break;
 
   case 91:
-#line 483 "bello.y"
+#line 478 "bello.y"
     { (yyval.exp)= bldNewExp((yyvsp[(2) - (2)].idtf)); }
     break;
 
   case 92:
-#line 486 "bello.y"
+#line 481 "bello.y"
     { (yyval.exp)= bldLvlExp(bldVrbExp((yyvsp[(1) - (1)].idtf))); }
     break;
 
   case 93:
-#line 488 "bello.y"
+#line 483 "bello.y"
     {
         LvlExpStrc* lvl = static_cast<LvlExpStrc*>((yyvsp[(1) - (3)].exp));
         (yyval.exp) = lvl;
@@ -2662,7 +2657,7 @@ yyreduce:
     break;
 
   case 94:
-#line 503 "bello.y"
+#line 498 "bello.y"
     { 
         (yyval.exp)=(yyvsp[(1) - (2)].exp); 
         bldLvlExpAdd((yyvsp[(1) - (2)].exp), (yyvsp[(2) - (2)].evlLst)); 
@@ -2670,7 +2665,7 @@ yyreduce:
     break;
 
   case 95:
-#line 508 "bello.y"
+#line 503 "bello.y"
     {
 
         printf("bld obj ivk exp\n");
@@ -2694,28 +2689,28 @@ yyreduce:
     break;
 
   case 96:
-#line 572 "bello.y"
+#line 567 "bello.y"
     {
         (yyval.exp)= bldArrExp((yyvsp[(2) - (3)].elmtLst));
     }
     break;
 
   case 97:
-#line 576 "bello.y"
+#line 571 "bello.y"
     {
         (yyval.exp)= bldArrExp(bldElmtLst());
     }
     break;
 
   case 98:
-#line 582 "bello.y"
+#line 577 "bello.y"
     {
         (yyval.exp) = bldNewArrExp((yyvsp[(3) - (4)].exp));
     }
     break;
 
   case 99:
-#line 588 "bello.y"
+#line 583 "bello.y"
     { 
         (yyval.elmtLst)= bldElmtLst(); 
         elmtLstAdd((yyval.elmtLst), (yyvsp[(1) - (1)].exp)); 
@@ -2723,7 +2718,7 @@ yyreduce:
     break;
 
   case 100:
-#line 593 "bello.y"
+#line 588 "bello.y"
     {  
         (yyval.elmtLst)=(yyvsp[(1) - (3)].elmtLst);  
         elmtLstAdd((yyval.elmtLst), (yyvsp[(3) - (3)].exp)); 
@@ -2731,7 +2726,7 @@ yyreduce:
     break;
 
   case 101:
-#line 601 "bello.y"
+#line 596 "bello.y"
     { 
         //建立变量
         if (blnDfnCls==false)
@@ -2740,18 +2735,18 @@ yyreduce:
         }
         else
         {
-            (yyval.stmt)=bldVarStmt(StmtEnm::ClsVar, (yyvsp[(2) - (2)].asgnLst));
+            //$$=bldVarStmt(StmtEnm::ClsVar, $2);
         }
     }
     break;
 
   case 102:
-#line 613 "bello.y"
+#line 608 "bello.y"
     {
         //需要是类定义状态
         if (blnDfnCls==1)
         {
-            (yyval.stmt) = bldVarStmt(StmtEnm::ClsShrVar, (yyvsp[(3) - (3)].asgnLst));
+            //$$ = bldVarStmt(StmtEnm::ClsShrVar, $3);
         } 
         else
         {
@@ -2762,12 +2757,12 @@ yyreduce:
     break;
 
   case 103:
-#line 627 "bello.y"
+#line 622 "bello.y"
     { (yyval.stmt)=bldGlbStmt((yyvsp[(2) - (2)].asgnLst)); }
     break;
 
   case 104:
-#line 631 "bello.y"
+#line 626 "bello.y"
     {
         (yyval.asgnLst)= bldAsgnLst();
         asgnLstAdd((yyval.asgnLst), bldVrbExp((yyvsp[(1) - (1)].idtf)), bldNllExp());
@@ -2775,7 +2770,7 @@ yyreduce:
     break;
 
   case 105:
-#line 636 "bello.y"
+#line 631 "bello.y"
     {
         (yyval.asgnLst)= bldAsgnLst();
         asgnLstAdd((yyval.asgnLst), bldVrbExp((yyvsp[(1) - (3)].idtf)), (yyvsp[(3) - (3)].exp));
@@ -2783,7 +2778,7 @@ yyreduce:
     break;
 
   case 106:
-#line 641 "bello.y"
+#line 636 "bello.y"
     {
         (yyval.asgnLst)=(yyvsp[(1) - (3)].asgnLst);
         asgnLstAdd((yyval.asgnLst), bldVrbExp((yyvsp[(3) - (3)].idtf)), bldNllExp());
@@ -2791,7 +2786,7 @@ yyreduce:
     break;
 
   case 107:
-#line 646 "bello.y"
+#line 641 "bello.y"
     {
         (yyval.asgnLst)=(yyvsp[(1) - (5)].asgnLst);
         asgnLstAdd((yyval.asgnLst), bldVrbExp((yyvsp[(3) - (5)].idtf)), (yyvsp[(5) - (5)].exp));
@@ -2799,21 +2794,21 @@ yyreduce:
     break;
 
   case 108:
-#line 657 "bello.y"
+#line 652 "bello.y"
     {
         (yyval.exp)=bldFcnExp((yyvsp[(1) - (4)].idtf), (yyvsp[(3) - (4)].argLst));
     }
     break;
 
   case 109:
-#line 661 "bello.y"
+#line 656 "bello.y"
     {
         (yyval.exp)=bldFcnExp((yyvsp[(1) - (3)].idtf), bldArgLst());
     }
     break;
 
   case 110:
-#line 667 "bello.y"
+#line 662 "bello.y"
     {
         (yyval.argLst)=bldArgLst();
         argLstAdd((yyval.argLst), (yyvsp[(1) - (1)].exp));
@@ -2821,7 +2816,7 @@ yyreduce:
     break;
 
   case 111:
-#line 672 "bello.y"
+#line 667 "bello.y"
     {
         (yyval.argLst) = bldArgLst();
         argLstAdd((yyval.argLst), bldVrbExp((yyvsp[(1) - (3)].idtf)), (yyvsp[(3) - (3)].exp));
@@ -2829,7 +2824,7 @@ yyreduce:
     break;
 
   case 112:
-#line 677 "bello.y"
+#line 672 "bello.y"
     {
         (yyval.argLst) = (yyvsp[(1) - (3)].argLst);
         argLstAdd((yyval.argLst), (yyvsp[(3) - (3)].exp));
@@ -2837,7 +2832,7 @@ yyreduce:
     break;
 
   case 113:
-#line 682 "bello.y"
+#line 677 "bello.y"
     {
         (yyval.argLst) = (yyvsp[(1) - (5)].argLst);
         argLstAdd((yyval.argLst), bldVrbExp((yyvsp[(3) - (5)].idtf)), (yyvsp[(5) - (5)].exp));
@@ -2845,7 +2840,7 @@ yyreduce:
     break;
 
   case 114:
-#line 689 "bello.y"
+#line 684 "bello.y"
     {
         (yyval.prmLst) = bldPrmLst();
         prmLstAdd((yyval.prmLst), bldVrbExp((yyvsp[(1) - (1)].idtf)));
@@ -2853,7 +2848,7 @@ yyreduce:
     break;
 
   case 115:
-#line 694 "bello.y"
+#line 689 "bello.y"
     {
         (yyval.prmLst) = bldPrmLst();
         prmLstAdd((yyval.prmLst), bldVrbExp((yyvsp[(1) - (3)].idtf)), (yyvsp[(3) - (3)].exp));
@@ -2861,7 +2856,7 @@ yyreduce:
     break;
 
   case 116:
-#line 699 "bello.y"
+#line 694 "bello.y"
     { 
         (yyval.prmLst) = (yyvsp[(1) - (3)].prmLst);  
         prmLstAdd((yyval.prmLst), bldVrbExp((yyvsp[(3) - (3)].idtf)));
@@ -2869,7 +2864,7 @@ yyreduce:
     break;
 
   case 117:
-#line 704 "bello.y"
+#line 699 "bello.y"
     {
         (yyval.prmLst) = (yyvsp[(1) - (5)].prmLst);
         prmLstAdd((yyval.prmLst), bldVrbExp((yyvsp[(3) - (5)].idtf)), (yyvsp[(5) - (5)].exp));
@@ -2877,7 +2872,7 @@ yyreduce:
     break;
 
   case 118:
-#line 713 "bello.y"
+#line 708 "bello.y"
     {
         (yyval.evlLst) = bldAcsLst();
         acsLstIdxAdd((yyval.evlLst), (yyvsp[(2) - (3)].exp));
@@ -2885,7 +2880,7 @@ yyreduce:
     break;
 
   case 119:
-#line 718 "bello.y"
+#line 713 "bello.y"
     {
         (yyval.evlLst)= bldAcsLst();
         acsLstSlcAdd((yyval.evlLst), (yyvsp[(2) - (5)].exp), (yyvsp[(4) - (5)].exp), bldCnstIntExp(1));
@@ -2893,7 +2888,7 @@ yyreduce:
     break;
 
   case 120:
-#line 723 "bello.y"
+#line 718 "bello.y"
     {
         (yyval.evlLst)= bldAcsLst();
         acsLstSlcAdd((yyval.evlLst), (yyvsp[(2) - (6)].exp), (yyvsp[(4) - (6)].exp), bldCnstIntExp(1));
@@ -2901,7 +2896,7 @@ yyreduce:
     break;
 
   case 121:
-#line 728 "bello.y"
+#line 723 "bello.y"
     {
         (yyval.evlLst)= bldAcsLst();
         acsLstSlcAdd((yyval.evlLst), (yyvsp[(2) - (7)].exp), (yyvsp[(4) - (7)].exp), (yyvsp[(6) - (7)].exp));
@@ -2909,7 +2904,7 @@ yyreduce:
     break;
 
   case 122:
-#line 733 "bello.y"
+#line 728 "bello.y"
     {
         (yyval.evlLst)= bldAcsLst();
         acsLstSlcAdd((yyval.evlLst), (yyvsp[(2) - (4)].exp), bldCnstIntExp(-1), bldCnstIntExp(1));
@@ -2917,7 +2912,7 @@ yyreduce:
     break;
 
   case 123:
-#line 738 "bello.y"
+#line 733 "bello.y"
     {
         (yyval.evlLst)= bldAcsLst();
         acsLstSlcAdd((yyval.evlLst), (yyvsp[(2) - (5)].exp), bldCnstIntExp(-1), bldCnstIntExp(1));
@@ -2925,7 +2920,7 @@ yyreduce:
     break;
 
   case 124:
-#line 743 "bello.y"
+#line 738 "bello.y"
     {
         (yyval.evlLst)= bldAcsLst();
         acsLstSlcAdd((yyval.evlLst), (yyvsp[(2) - (6)].exp), bldCnstIntExp(-1), (yyvsp[(5) - (6)].exp));
@@ -2933,7 +2928,7 @@ yyreduce:
     break;
 
   case 125:
-#line 748 "bello.y"
+#line 743 "bello.y"
     {
         (yyval.evlLst)= bldAcsLst();
         acsLstSlcAdd((yyval.evlLst), bldCnstIntExp(0), (yyvsp[(3) - (4)].exp), bldCnstIntExp(1));
@@ -2941,7 +2936,7 @@ yyreduce:
     break;
 
   case 126:
-#line 753 "bello.y"
+#line 748 "bello.y"
     {
         (yyval.evlLst)= bldAcsLst();
         acsLstSlcAdd((yyval.evlLst), bldCnstIntExp(0), (yyvsp[(3) - (5)].exp), bldCnstIntExp(1));
@@ -2949,7 +2944,7 @@ yyreduce:
     break;
 
   case 127:
-#line 758 "bello.y"
+#line 753 "bello.y"
     {
         (yyval.evlLst)= bldAcsLst();
         acsLstSlcAdd((yyval.evlLst), bldCnstIntExp(0), (yyvsp[(3) - (6)].exp), (yyvsp[(5) - (6)].exp));
@@ -2957,7 +2952,7 @@ yyreduce:
     break;
 
   case 128:
-#line 763 "bello.y"
+#line 758 "bello.y"
     {
         (yyval.evlLst)= bldAcsLst();
         acsLstSlcAdd((yyval.evlLst), bldCnstIntExp(0), bldCnstIntExp(-1), bldCnstIntExp(1));
@@ -2965,7 +2960,7 @@ yyreduce:
     break;
 
   case 129:
-#line 768 "bello.y"
+#line 763 "bello.y"
     {
         (yyval.evlLst)=(yyvsp[(1) - (4)].evlLst);
         acsLstIdxAdd((yyval.evlLst),(yyvsp[(3) - (4)].exp));
@@ -2973,7 +2968,7 @@ yyreduce:
     break;
 
   case 130:
-#line 773 "bello.y"
+#line 768 "bello.y"
     {
         (yyval.evlLst)=(yyvsp[(1) - (6)].evlLst);
         acsLstSlcAdd((yyval.evlLst), (yyvsp[(3) - (6)].exp), (yyvsp[(5) - (6)].exp), bldCnstIntExp(1));
@@ -2981,7 +2976,7 @@ yyreduce:
     break;
 
   case 131:
-#line 778 "bello.y"
+#line 773 "bello.y"
     {
         (yyval.evlLst)=(yyvsp[(1) - (7)].evlLst);
         acsLstSlcAdd((yyval.evlLst), (yyvsp[(3) - (7)].exp), (yyvsp[(5) - (7)].exp), bldCnstIntExp(1));
@@ -2989,7 +2984,7 @@ yyreduce:
     break;
 
   case 132:
-#line 783 "bello.y"
+#line 778 "bello.y"
     {
         (yyval.evlLst)=(yyvsp[(1) - (8)].evlLst);
         acsLstSlcAdd((yyval.evlLst), (yyvsp[(3) - (8)].exp), (yyvsp[(5) - (8)].exp), (yyvsp[(7) - (8)].exp));
@@ -2997,7 +2992,7 @@ yyreduce:
     break;
 
   case 133:
-#line 788 "bello.y"
+#line 783 "bello.y"
     {
         (yyval.evlLst)=(yyvsp[(1) - (5)].evlLst);
         acsLstSlcAdd((yyval.evlLst), (yyvsp[(3) - (5)].exp), bldCnstIntExp(-1), bldCnstIntExp(1));
@@ -3005,7 +3000,7 @@ yyreduce:
     break;
 
   case 134:
-#line 793 "bello.y"
+#line 788 "bello.y"
     {
         (yyval.evlLst)=(yyvsp[(1) - (6)].evlLst);
         acsLstSlcAdd((yyval.evlLst), (yyvsp[(3) - (6)].exp), bldCnstIntExp(-1), bldCnstIntExp(1));
@@ -3013,7 +3008,7 @@ yyreduce:
     break;
 
   case 135:
-#line 798 "bello.y"
+#line 793 "bello.y"
     {
         (yyval.evlLst)=(yyvsp[(1) - (7)].evlLst);
         acsLstSlcAdd((yyval.evlLst), (yyvsp[(3) - (7)].exp), bldCnstIntExp(-1), (yyvsp[(6) - (7)].exp));
@@ -3021,7 +3016,7 @@ yyreduce:
     break;
 
   case 136:
-#line 803 "bello.y"
+#line 798 "bello.y"
     {
         (yyval.evlLst)=(yyvsp[(1) - (5)].evlLst);
         acsLstSlcAdd((yyval.evlLst), bldCnstIntExp(0), (yyvsp[(4) - (5)].exp), bldCnstIntExp(1));
@@ -3029,7 +3024,7 @@ yyreduce:
     break;
 
   case 137:
-#line 808 "bello.y"
+#line 803 "bello.y"
     {
         (yyval.evlLst)=(yyvsp[(1) - (6)].evlLst);
         acsLstSlcAdd((yyval.evlLst), bldCnstIntExp(0), (yyvsp[(4) - (6)].exp), bldCnstIntExp(1));
@@ -3037,7 +3032,7 @@ yyreduce:
     break;
 
   case 138:
-#line 813 "bello.y"
+#line 808 "bello.y"
     {
         (yyval.evlLst)=(yyvsp[(1) - (7)].evlLst);
         acsLstSlcAdd((yyval.evlLst), bldCnstIntExp(0), (yyvsp[(4) - (7)].exp), (yyvsp[(6) - (7)].exp));
@@ -3045,7 +3040,7 @@ yyreduce:
     break;
 
   case 139:
-#line 818 "bello.y"
+#line 813 "bello.y"
     {
         (yyval.evlLst)=(yyvsp[(1) - (5)].evlLst);
         acsLstSlcAdd((yyval.evlLst), bldCnstIntExp(0), bldCnstIntExp(-1), bldCnstIntExp(1));
@@ -3053,7 +3048,7 @@ yyreduce:
     break;
 
   case 140:
-#line 836 "bello.y"
+#line 831 "bello.y"
     {
         (yyval.stmt)=bldIfStmt((yyvsp[(2) - (2)].exp));
         //printf("bld if stmt\n");
@@ -3061,69 +3056,69 @@ yyreduce:
     break;
 
   case 141:
-#line 852 "bello.y"
+#line 847 "bello.y"
     {
         (yyval.stmt) = bldElsStmt();
     }
     break;
 
   case 142:
-#line 858 "bello.y"
+#line 853 "bello.y"
     {
         (yyval.stmt) = bldElifStmt((yyvsp[(2) - (2)].exp));
     }
     break;
 
   case 143:
-#line 874 "bello.y"
+#line 869 "bello.y"
     {
         (yyval.stmt)= bldForStmt((yyvsp[(3) - (8)].stmt), (yyvsp[(5) - (8)].stmt), (yyvsp[(7) - (8)].stmt));  
     }
     break;
 
   case 144:
-#line 886 "bello.y"
+#line 881 "bello.y"
     {
         (yyval.stmt) = bldWhlStmt((yyvsp[(2) - (2)].exp));
     }
     break;
 
   case 145:
-#line 894 "bello.y"
+#line 889 "bello.y"
     {
         (yyval.stmt) = bldWhlStmt();
     }
     break;
 
   case 146:
-#line 900 "bello.y"
+#line 895 "bello.y"
     {
         (yyval.stmt)= bldDoWhlStmt((yyvsp[(5) - (7)].stmt), (yyvsp[(2) - (7)].stmt));
     }
     break;
 
   case 147:
-#line 905 "bello.y"
+#line 900 "bello.y"
     { (yyval.stmt)= bldBrkStmt(bldCnstIntExp(1)); }
     break;
 
   case 148:
-#line 906 "bello.y"
+#line 901 "bello.y"
     { (yyval.stmt)= bldBrkStmt((yyvsp[(3) - (4)].exp)); }
     break;
 
   case 149:
-#line 909 "bello.y"
+#line 904 "bello.y"
     { (yyval.stmt)= bldCntnStmt(bldCnstIntExp(1)); }
     break;
 
   case 150:
-#line 910 "bello.y"
+#line 905 "bello.y"
     { (yyval.stmt)= bldCntnStmt((yyvsp[(3) - (4)].exp)); }
     break;
 
   case 153:
-#line 952 "bello.y"
+#line 947 "bello.y"
     {
         struct FcnStrc* fcn;
 
@@ -3134,7 +3129,7 @@ yyreduce:
     break;
 
   case 154:
-#line 960 "bello.y"
+#line 955 "bello.y"
     {
         struct FcnStrc *fcn;
 
@@ -3145,7 +3140,7 @@ yyreduce:
     break;
 
   case 155:
-#line 968 "bello.y"
+#line 963 "bello.y"
     {
         if (blnDfnCls==false)
         {
@@ -3165,7 +3160,7 @@ yyreduce:
     break;
 
   case 156:
-#line 985 "bello.y"
+#line 980 "bello.y"
     {
         struct FcnStrc *fcn;
 
@@ -3176,7 +3171,7 @@ yyreduce:
     break;
 
   case 157:
-#line 995 "bello.y"
+#line 990 "bello.y"
     {
         struct ClsStrc* cls;
 
@@ -3189,18 +3184,18 @@ yyreduce:
     break;
 
   case 158:
-#line 1008 "bello.y"
+#line 1003 "bello.y"
     { (yyval.stmt)=bldRtnStmt(NULL); }
     break;
 
   case 159:
-#line 1009 "bello.y"
+#line 1004 "bello.y"
     { (yyval.stmt)=bldRtnStmt((yyvsp[(2) - (2)].exp)); }
     break;
 
 
 /* Line 1267 of yacc.c.  */
-#line 3204 "y.tab.c"
+#line 3199 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -3414,9 +3409,10 @@ yyreturn:
 }
 
 
-#line 1012 "bello.y"
+#line 1007 "bello.y"
 
 
+#endif
 
 
 

@@ -1,18 +1,17 @@
 #pragma once
 
+#ifndef ARR_H
+#define ARR_H
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include "y.tab.h"
 #include "dftn.h"
-// #ifndef EXP_H
-// #define EXP_H
-// #endif
+
 
 //�˲�������ı�������������ɾ��
 extern struct ExpStrc* bldCnstIntExp(int intVl);
-extern struct CnstStrc* clcExp(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, struct ExpStrc* exp);
-//extern struct EnvrStrc* glbEnvr;
+extern struct CnstStrc* clcExp(vector<EnvrStrc*>& envr, struct ExpStrc* exp);
 
 struct ElmtLstStrc* bldElmtLst()
 {
@@ -99,3 +98,5 @@ int acsLstSlcAdd(struct AcsLstStrc* acsLst, struct ExpStrc* strt, struct ExpStrc
 
 	return 0;
 }
+
+#endif

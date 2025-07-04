@@ -1,6 +1,7 @@
 #pragma once
 
-#include <stdio.h>
+#ifndef EXPT_H
+#define EXPT_H
 
 
 class ExBs
@@ -78,3 +79,5 @@ class ExClsNotDfn : public ExLgc
 {
 
 };
+
+#endif

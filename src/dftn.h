@@ -1,6 +1,9 @@
 #pragma once
 
-#include <stdio.h>
+#ifndef DFTN_H
+#define DFTN_H
+
+
 #include <vector>
 #include <string>
 #include <stack>
@@ -584,3 +587,4 @@ struct NtvFcnStrc
 
 vector<EnvrStrc*> envr;
 
+#endif

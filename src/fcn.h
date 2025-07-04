@@ -1,13 +1,10 @@
 #pragma once
 
-#include <stdio.h>
-//#include <malloc.h>
-#include "y.tab.h"
+#ifndef FCN_H
+#define FCN_H
+
 #include "dftn.h"
-//#include "envr.h"
-#ifndef ENVR_H
-#define ENVR_H
-#endif
+#include "envr.h"
 
 extern int intlEnvr(struct EnvrStrc** envr);
 
@@ -93,3 +90,4 @@ int prmLstAdd(struct PrmLstStrc* prmLst, struct ExpStrc* prm, struct ExpStrc* df
 	return 0;
 }
 
+#endif

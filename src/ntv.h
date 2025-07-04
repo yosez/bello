@@ -1,7 +1,8 @@
 #pragma once
-#pragma once
-#pragma once
-//#include <malloc.h>
+
+#ifndef NTV_H
+#define NTV_H
+
 #include "dftn.h"
 #include "expt.h"
 #include "cnst.h"
@@ -186,3 +187,5 @@ struct CnstStrc* newArrFcn(vector<EnvrStrc*>& envr, int argCnt, vector <CnstStrc
 
 //     return rslt;
 // }
+
+#endif

@@ -1,32 +1,27 @@
 %{
     #pragma once
+
+    #ifndef Y_TAB_C
+    #define Y_TAB_C
     #include <stdio.h>
     #include <string.h>
     #include <stdlib.h>
     #include <stdbool.h>
     #include <stack>
-    #ifndef DFTN_H
-    #define DFTN_H
-    #endif
+    #include "dftn.h"
     #include "vrb.h"
     #include "cnst.h"
-    #ifndef EXP_H
-    #define EXP_H
-    #endif
-    #ifndef STMT_H
-    #define STMT_H
-    #endif
-    #include "arr.h"
     #include "exp.h"
+    #include "stmt.h"
+    #include "arr.h"
     #include "stmt.h"
     #include "fcn.h"
     #include "cls.h"
     #include "envr.h"
     #include "err.h"
-    #ifndef LEX_YY_C
-    #define LEX_YY_C
-    #endif
     #include "ntv.h"
+    #include "lex.yy.c"
+
 
 
     extern char* yytext;
@@ -606,7 +601,7 @@ var_statement
         }
         else
         {
-            $$=bldVarStmt(StmtEnm::ClsVar, $2);
+            //$$=bldVarStmt(StmtEnm::ClsVar, $2);
         }
     }
     | SHARED VAR assign_list 
@@ -614,7 +609,7 @@ var_statement
         //需要是类定义状态
         if (blnDfnCls==1)
         {
-            $$ = bldVarStmt(StmtEnm::ClsShrVar, $3);
+            //$$ = bldVarStmt(StmtEnm::ClsShrVar, $3);
         } 
         else
         {
@@ -1011,6 +1006,7 @@ return_statement
 
 %%
 
+#endif
 
 
 

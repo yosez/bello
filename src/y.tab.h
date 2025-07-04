@@ -194,7 +194,7 @@
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 69 "bello.y"
+#line 64 "bello.y"
 {
     int blnVl;
     int intVl;

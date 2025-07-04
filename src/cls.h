@@ -1,14 +1,18 @@
 #pragma once
 
+#ifndef CLS_H
+#define CLS_H
+
 #include <stdio.h>
 #include <string>
 #include <stdlib.h>
 #include "y.tab.h"
 #include "vrb.h"
 #include "dftn.h"
-#ifndef EXP_H
-#define EXP_H
-#endif
+#include "exp.h"
+
+extern VrbStrc* cpyVrb(VrbStrc* vrb, string* nm);
+
 
 ClsStrc* bldCls(char* nm);
 int clsAddVrb(ClsStrc* cls, VrbStrc* vrb);
@@ -205,3 +209,5 @@ VrbStrc* getObjVrbDrct(ObjStrc* obj, string nm)
 
 	return nullptr;
 }
+
+#endif

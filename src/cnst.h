@@ -1,13 +1,13 @@
 #pragma once
 
+#ifndef CNST_H
+#define CNST_H
 #include <stdio.h>
 #include <string.h>
 
 #include "y.tab.h"
 #include "dftn.h"
 
-//extern struct CnstStrc;
-//extern enum ExpTyp;
 
 struct CnstStrc* bldIntCnst(int vl)
 {
@@ -229,3 +229,4 @@ int prtlnCnst(struct CnstStrc* cnst)
 	return 0;
 }
 
+#endif

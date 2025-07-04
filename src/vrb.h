@@ -1,22 +1,23 @@
 #pragma once
 
+#ifndef VRB_H
+#define VRB_H
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include "y.tab.h"
 #include "dftn.h"
-#ifndef EXP_H
-#define EXP_H
-#endif
+#include "exp.h"
 
-extern struct ExpStrc* bldAsgnExp(struct ExpStrc* vrb, struct ExpStrc* exp);
-extern struct ExpStrc* bldLvlExp(struct ExpStrc* vrb);
+extern ExpStrc* bldAsgnExp(struct ExpStrc* vrb, struct ExpStrc* exp);
+extern ExpStrc* bldLvlExp(struct ExpStrc* vrb);
 
-struct VrbStrc* bldVrb(string nm);
-struct VrbStrc* cpyVrb(VrbStrc* vrb, string* nm);
+VrbStrc* bldVrb(string nm);
+VrbStrc* cpyVrb(VrbStrc* vrb, string* nm);
 int asgnVrb(struct VrbStrc* vrb, struct CnstStrc* vl);
-struct CnstStrc* bldCnstFrmVrb(struct VrbStrc* vrb);
-struct AsgnLstStrc* bldAsgnLst();
+CnstStrc* bldCnstFrmVrb(struct VrbStrc* vrb);
+AsgnLstStrc* bldAsgnLst();
 int asgnLstAdd(struct AsgnLstStrc* asgnLst, struct ExpStrc* vrb, struct ExpStrc* exp);
 
 //对变量数组中的选定变量进行赋值
@@ -91,3 +92,4 @@ int asgnLstAdd(struct AsgnLstStrc* asgnLst, struct ExpStrc* vrb, struct ExpStrc*
 	return 0;
 }
 
+#endif
