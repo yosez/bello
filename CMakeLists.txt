@@ -8,8 +8,6 @@ set(CMAKE_CXX_STANDARD 17)
 
 # —— 手动列出所有必需的源文件 ——
 set(SOURCES
-#        ${PROJECT_SOURCE_DIR}/src/y.tab.c
-#        ${PROJECT_SOURCE_DIR}/src/lex.yy.c
         ${PROJECT_SOURCE_DIR}/src/bello.cpp
 )
 

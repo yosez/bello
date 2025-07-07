@@ -76,12 +76,12 @@
      SHARED = 265,
      THIS = 266,
      INDENT = 267,
-     INT_VALUE = 268,
-     BOOLEAN_VALUE = 269,
-     FLOAT_VALUE = 270,
-     STRING_VALUE = 271,
+     INT_LTR = 268,
+     BLN_LTR = 269,
+     FLT_LTR = 270,
+     STR_LTR = 271,
      OBJECT_VALUE = 272,
-     NULL_VALUE = 273,
+     NLL_LTR = 273,
      ARRAY_VALUE = 274,
      SHORTCUT_PRINTLN = 275,
      IDENTIFER = 276,
@@ -152,12 +152,12 @@
 #define SHARED 265
 #define THIS 266
 #define INDENT 267
-#define INT_VALUE 268
-#define BOOLEAN_VALUE 269
-#define FLOAT_VALUE 270
-#define STRING_VALUE 271
+#define INT_LTR 268
+#define BLN_LTR 269
+#define FLT_LTR 270
+#define STR_LTR 271
 #define OBJECT_VALUE 272
-#define NULL_VALUE 273
+#define NLL_LTR 273
 #define ARRAY_VALUE 274
 #define SHORTCUT_PRINTLN 275
 #define IDENTIFER 276
@@ -233,7 +233,7 @@
     #include <stack>
     #include "dftn.h"
     #include "vrb.h"
-    #include "cnst.h"
+    #include "val.h"
     #include "exp.h"
     #include "stmt.h"
     #include "arr.h"
@@ -726,23 +726,22 @@ static const yytype_uint16 yyrline[] =
 static const char *const yytname[] =
 {
   "$end", "error", "$undefined", "NULL_STRING", "LF", "END_FILE", "NEW",
-  "NOP", "DOT", "CLASS", "SHARED", "THIS", "INDENT", "INT_VALUE",
-  "BOOLEAN_VALUE", "FLOAT_VALUE", "STRING_VALUE", "OBJECT_VALUE",
-  "NULL_VALUE", "ARRAY_VALUE", "SHORTCUT_PRINTLN", "IDENTIFER", "ASSIGN",
-  "VAR", "GLOBAL", "ADD_ASSIGN", "SUB_ASSIGN", "MUL_ASSIGN", "DIV_ASSIGN",
-  "MOD_ASSIGN", "PRINT", "PRINTLN", "LEFT_PAREN", "RIGHT_PAREN",
-  "LEFT_QUAD", "RIGHT_QUAD", "LEFT_BRACE", "RIGHT_BRACE",
-  "SEMICOLON_OPTIONAL", "SEMICOLON", "COMMA", "COLON", "ADD", "SUB", "MUL",
-  "DIV", "MOD", "EQ", "NE", "GT", "GE", "LT", "LE", "AND", "OR", "NOT",
-  "BIT_AND", "BIT_OR", "BIT_XOR", "BIT_NOT", "INCREMENT", "DECREMENT",
-  "IF", "ELSEIF", "ELSE", "FOR", "WHILE", "DO", "CONTINUE", "BREAK",
-  "FUNC", "RETURN", "NEW_ARRAY", "PLUS_SIGN", "MINUS_SIGN", "QM",
-  "$accept", "statement", "@1", "check_indent", "build_statement_stack",
-  "close_execute_statement", "close_execute_last_statement",
-  "execute_single_statement", "single_statement",
-  "single_statement_no_semicolon", "null_statement", "nop_statement",
-  "statement_block", "block_list", "expression_statement", "expression",
-  "lvalue_operation_expression", "assign_expression",
+  "NOP", "DOT", "CLASS", "SHARED", "THIS", "INDENT", "INT_LTR", "BLN_LTR",
+  "FLT_LTR", "STR_LTR", "OBJECT_VALUE", "NLL_LTR", "ARRAY_VALUE",
+  "SHORTCUT_PRINTLN", "IDENTIFER", "ASSIGN", "VAR", "GLOBAL", "ADD_ASSIGN",
+  "SUB_ASSIGN", "MUL_ASSIGN", "DIV_ASSIGN", "MOD_ASSIGN", "PRINT",
+  "PRINTLN", "LEFT_PAREN", "RIGHT_PAREN", "LEFT_QUAD", "RIGHT_QUAD",
+  "LEFT_BRACE", "RIGHT_BRACE", "SEMICOLON_OPTIONAL", "SEMICOLON", "COMMA",
+  "COLON", "ADD", "SUB", "MUL", "DIV", "MOD", "EQ", "NE", "GT", "GE", "LT",
+  "LE", "AND", "OR", "NOT", "BIT_AND", "BIT_OR", "BIT_XOR", "BIT_NOT",
+  "INCREMENT", "DECREMENT", "IF", "ELSEIF", "ELSE", "FOR", "WHILE", "DO",
+  "CONTINUE", "BREAK", "FUNC", "RETURN", "NEW_ARRAY", "PLUS_SIGN",
+  "MINUS_SIGN", "QM", "$accept", "statement", "@1", "check_indent",
+  "build_statement_stack", "close_execute_statement",
+  "close_execute_last_statement", "execute_single_statement",
+  "single_statement", "single_statement_no_semicolon", "null_statement",
+  "nop_statement", "statement_block", "block_list", "expression_statement",
+  "expression", "lvalue_operation_expression", "assign_expression",
   "self_operation_expression", "unary_expression", "binary_expression",
   "shortcut_expression", "value_expression", "lvalue_expression",
   "array_expression", "new_array_expression", "element_list",
@@ -2468,22 +2467,22 @@ yyreduce:
 
   case 57:
 #line 433 "bello.y"
-    { (yyval.exp)=bldUnrExp(PREFIX_INCREMENT, (yyvsp[(2) - (2)].exp)); }
+    { (yyval.exp)=bldUnrExp(UnrEnm::PfxInc, (yyvsp[(2) - (2)].exp)); }
     break;
 
   case 58:
 #line 434 "bello.y"
-    { (yyval.exp)=bldUnrExp(PREFIX_DECREMENT, (yyvsp[(2) - (2)].exp)); }
+    { (yyval.exp)=bldUnrExp(UnrEnm::PfxDec, (yyvsp[(2) - (2)].exp)); }
     break;
 
   case 59:
 #line 435 "bello.y"
-    { (yyval.exp)=bldUnrExp(SUFFIX_INCREMENT, (yyvsp[(1) - (2)].exp)); }
+    { (yyval.exp)=bldUnrExp(UnrEnm::SfxInc, (yyvsp[(1) - (2)].exp)); }
     break;
 
   case 60:
 #line 436 "bello.y"
-    { (yyval.exp)=bldUnrExp(SUFFIX_DECREMENT, (yyvsp[(1) - (2)].exp)); }
+    { (yyval.exp)=bldUnrExp(UnrEnm::SfxDec, (yyvsp[(1) - (2)].exp)); }
     break;
 
   case 61:
@@ -2605,27 +2604,27 @@ yyreduce:
 
   case 84:
 #line 471 "bello.y"
-    { (yyval.exp)=bldCnstIntExp((yyvsp[(1) - (1)].intVl)); /*printf("Get data: %d\n",$1);*/ }
+    { (yyval.exp)=bldIntValExp((yyvsp[(1) - (1)].intVl)); }
     break;
 
   case 85:
 #line 472 "bello.y"
-    { (yyval.exp)=bldCnstFltExp((yyvsp[(1) - (1)].fltVl)); }
+    { (yyval.exp)=bldFltValExp((yyvsp[(1) - (1)].fltVl)); }
     break;
 
   case 86:
 #line 473 "bello.y"
-    { (yyval.exp)=bldCnstBlnExp((yyvsp[(1) - (1)].blnVl)); }
+    { (yyval.exp)=bldBlnValExp((yyvsp[(1) - (1)].blnVl)); }
     break;
 
   case 87:
 #line 474 "bello.y"
-    { (yyval.exp)=bldCnstStrExp((yyvsp[(1) - (1)].strVl)); }
+    { (yyval.exp)=bldStrValExp((yyvsp[(1) - (1)].strVl)); }
     break;
 
   case 88:
 #line 475 "bello.y"
-    { (yyval.exp)=bldCnstNllExp(); }
+    { (yyval.exp)=bldNllValExp(); }
     break;
 
   case 91:
@@ -2883,7 +2882,7 @@ yyreduce:
 #line 713 "bello.y"
     {
         (yyval.evlLst)= bldAcsLst();
-        acsLstSlcAdd((yyval.evlLst), (yyvsp[(2) - (5)].exp), (yyvsp[(4) - (5)].exp), bldCnstIntExp(1));
+        acsLstSlcAdd((yyval.evlLst), (yyvsp[(2) - (5)].exp), (yyvsp[(4) - (5)].exp), bldIntValExp(1));
     }
     break;
 
@@ -2891,7 +2890,7 @@ yyreduce:
 #line 718 "bello.y"
     {
         (yyval.evlLst)= bldAcsLst();
-        acsLstSlcAdd((yyval.evlLst), (yyvsp[(2) - (6)].exp), (yyvsp[(4) - (6)].exp), bldCnstIntExp(1));
+        acsLstSlcAdd((yyval.evlLst), (yyvsp[(2) - (6)].exp), (yyvsp[(4) - (6)].exp), bldIntValExp(1));
     }
     break;
 
@@ -2907,7 +2906,7 @@ yyreduce:
 #line 728 "bello.y"
     {
         (yyval.evlLst)= bldAcsLst();
-        acsLstSlcAdd((yyval.evlLst), (yyvsp[(2) - (4)].exp), bldCnstIntExp(-1), bldCnstIntExp(1));
+        acsLstSlcAdd((yyval.evlLst), (yyvsp[(2) - (4)].exp), bldIntValExp(-1), bldIntValExp(1));
     }
     break;
 
@@ -2915,7 +2914,7 @@ yyreduce:
 #line 733 "bello.y"
     {
         (yyval.evlLst)= bldAcsLst();
-        acsLstSlcAdd((yyval.evlLst), (yyvsp[(2) - (5)].exp), bldCnstIntExp(-1), bldCnstIntExp(1));
+        acsLstSlcAdd((yyval.evlLst), (yyvsp[(2) - (5)].exp), bldIntValExp(-1), bldIntValExp(1));
     }
     break;
 
@@ -2923,7 +2922,7 @@ yyreduce:
 #line 738 "bello.y"
     {
         (yyval.evlLst)= bldAcsLst();
-        acsLstSlcAdd((yyval.evlLst), (yyvsp[(2) - (6)].exp), bldCnstIntExp(-1), (yyvsp[(5) - (6)].exp));
+        acsLstSlcAdd((yyval.evlLst), (yyvsp[(2) - (6)].exp), bldIntValExp(-1), (yyvsp[(5) - (6)].exp));
     }
     break;
 
@@ -2931,7 +2930,7 @@ yyreduce:
 #line 743 "bello.y"
     {
         (yyval.evlLst)= bldAcsLst();
-        acsLstSlcAdd((yyval.evlLst), bldCnstIntExp(0), (yyvsp[(3) - (4)].exp), bldCnstIntExp(1));
+        acsLstSlcAdd((yyval.evlLst), bldIntValExp(0), (yyvsp[(3) - (4)].exp), bldIntValExp(1));
     }
     break;
 
@@ -2939,7 +2938,7 @@ yyreduce:
 #line 748 "bello.y"
     {
         (yyval.evlLst)= bldAcsLst();
-        acsLstSlcAdd((yyval.evlLst), bldCnstIntExp(0), (yyvsp[(3) - (5)].exp), bldCnstIntExp(1));
+        acsLstSlcAdd((yyval.evlLst), bldIntValExp(0), (yyvsp[(3) - (5)].exp), bldIntValExp(1));
     }
     break;
 
@@ -2947,7 +2946,7 @@ yyreduce:
 #line 753 "bello.y"
     {
         (yyval.evlLst)= bldAcsLst();
-        acsLstSlcAdd((yyval.evlLst), bldCnstIntExp(0), (yyvsp[(3) - (6)].exp), (yyvsp[(5) - (6)].exp));
+        acsLstSlcAdd((yyval.evlLst), bldIntValExp(0), (yyvsp[(3) - (6)].exp), (yyvsp[(5) - (6)].exp));
     }
     break;
 
@@ -2955,7 +2954,7 @@ yyreduce:
 #line 758 "bello.y"
     {
         (yyval.evlLst)= bldAcsLst();
-        acsLstSlcAdd((yyval.evlLst), bldCnstIntExp(0), bldCnstIntExp(-1), bldCnstIntExp(1));
+        acsLstSlcAdd((yyval.evlLst), bldIntValExp(0), bldIntValExp(-1), bldIntValExp(1));
     }
     break;
 
@@ -2971,7 +2970,7 @@ yyreduce:
 #line 768 "bello.y"
     {
         (yyval.evlLst)=(yyvsp[(1) - (6)].evlLst);
-        acsLstSlcAdd((yyval.evlLst), (yyvsp[(3) - (6)].exp), (yyvsp[(5) - (6)].exp), bldCnstIntExp(1));
+        acsLstSlcAdd((yyval.evlLst), (yyvsp[(3) - (6)].exp), (yyvsp[(5) - (6)].exp), bldIntValExp(1));
     }
     break;
 
@@ -2979,7 +2978,7 @@ yyreduce:
 #line 773 "bello.y"
     {
         (yyval.evlLst)=(yyvsp[(1) - (7)].evlLst);
-        acsLstSlcAdd((yyval.evlLst), (yyvsp[(3) - (7)].exp), (yyvsp[(5) - (7)].exp), bldCnstIntExp(1));
+        acsLstSlcAdd((yyval.evlLst), (yyvsp[(3) - (7)].exp), (yyvsp[(5) - (7)].exp), bldIntValExp(1));
     }
     break;
 
@@ -2995,7 +2994,7 @@ yyreduce:
 #line 783 "bello.y"
     {
         (yyval.evlLst)=(yyvsp[(1) - (5)].evlLst);
-        acsLstSlcAdd((yyval.evlLst), (yyvsp[(3) - (5)].exp), bldCnstIntExp(-1), bldCnstIntExp(1));
+        acsLstSlcAdd((yyval.evlLst), (yyvsp[(3) - (5)].exp), bldIntValExp(-1), bldIntValExp(1));
     }
     break;
 
@@ -3003,7 +3002,7 @@ yyreduce:
 #line 788 "bello.y"
     {
         (yyval.evlLst)=(yyvsp[(1) - (6)].evlLst);
-        acsLstSlcAdd((yyval.evlLst), (yyvsp[(3) - (6)].exp), bldCnstIntExp(-1), bldCnstIntExp(1));
+        acsLstSlcAdd((yyval.evlLst), (yyvsp[(3) - (6)].exp), bldIntValExp(-1), bldIntValExp(1));
     }
     break;
 
@@ -3011,7 +3010,7 @@ yyreduce:
 #line 793 "bello.y"
     {
         (yyval.evlLst)=(yyvsp[(1) - (7)].evlLst);
-        acsLstSlcAdd((yyval.evlLst), (yyvsp[(3) - (7)].exp), bldCnstIntExp(-1), (yyvsp[(6) - (7)].exp));
+        acsLstSlcAdd((yyval.evlLst), (yyvsp[(3) - (7)].exp), bldIntValExp(-1), (yyvsp[(6) - (7)].exp));
     }
     break;
 
@@ -3019,7 +3018,7 @@ yyreduce:
 #line 798 "bello.y"
     {
         (yyval.evlLst)=(yyvsp[(1) - (5)].evlLst);
-        acsLstSlcAdd((yyval.evlLst), bldCnstIntExp(0), (yyvsp[(4) - (5)].exp), bldCnstIntExp(1));
+        acsLstSlcAdd((yyval.evlLst), bldIntValExp(0), (yyvsp[(4) - (5)].exp), bldIntValExp(1));
     }
     break;
 
@@ -3027,7 +3026,7 @@ yyreduce:
 #line 803 "bello.y"
     {
         (yyval.evlLst)=(yyvsp[(1) - (6)].evlLst);
-        acsLstSlcAdd((yyval.evlLst), bldCnstIntExp(0), (yyvsp[(4) - (6)].exp), bldCnstIntExp(1));
+        acsLstSlcAdd((yyval.evlLst), bldIntValExp(0), (yyvsp[(4) - (6)].exp), bldIntValExp(1));
     }
     break;
 
@@ -3035,7 +3034,7 @@ yyreduce:
 #line 808 "bello.y"
     {
         (yyval.evlLst)=(yyvsp[(1) - (7)].evlLst);
-        acsLstSlcAdd((yyval.evlLst), bldCnstIntExp(0), (yyvsp[(4) - (7)].exp), (yyvsp[(6) - (7)].exp));
+        acsLstSlcAdd((yyval.evlLst), bldIntValExp(0), (yyvsp[(4) - (7)].exp), (yyvsp[(6) - (7)].exp));
     }
     break;
 
@@ -3043,7 +3042,7 @@ yyreduce:
 #line 813 "bello.y"
     {
         (yyval.evlLst)=(yyvsp[(1) - (5)].evlLst);
-        acsLstSlcAdd((yyval.evlLst), bldCnstIntExp(0), bldCnstIntExp(-1), bldCnstIntExp(1));
+        acsLstSlcAdd((yyval.evlLst), bldIntValExp(0), bldIntValExp(-1), bldIntValExp(1));
     }
     break;
 
@@ -3099,7 +3098,7 @@ yyreduce:
 
   case 147:
 #line 900 "bello.y"
-    { (yyval.stmt)= bldBrkStmt(bldCnstIntExp(1)); }
+    { (yyval.stmt)= bldBrkStmt(bldIntValExp(1)); }
     break;
 
   case 148:
@@ -3109,7 +3108,7 @@ yyreduce:
 
   case 149:
 #line 904 "bello.y"
-    { (yyval.stmt)= bldCntnStmt(bldCnstIntExp(1)); }
+    { (yyval.stmt)= bldCntnStmt(bldIntValExp(1)); }
     break;
 
   case 150:
@@ -3195,7 +3194,7 @@ yyreduce:
 
 
 /* Line 1267 of yacc.c.  */
-#line 3199 "y.tab.c"
+#line 3198 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);

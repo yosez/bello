@@ -9,6 +9,8 @@
 #include <stack>
 #include <map>
 
+#include "dftn.h"
+
 using namespace std;
 
 struct VrbStrc;
@@ -19,14 +21,14 @@ struct ObjStrc;
 struct FcnStrc;
 struct EnvrStrc;
 
-struct CnstStrc;
+struct ValStrc;
 
 struct FcnExpStrc;
 struct VrbDfnStrc;
 struct UnrExpStrc;
 struct BnrExpStrc;
 struct LvlExpStrc;
-struct AsgnExpStrc;
+struct AsnExpStrc;
 struct NewExpStrc;
 struct ExpStrc;
 
@@ -45,6 +47,8 @@ struct NllStmtStrc;
 struct ExpStmtStrc;
 struct StmtStrc;
 
+struct ValStrc;
+
 struct RtnRsltStrc;
 struct BrkRsltStrc;
 struct CntnRsltStrc;
@@ -61,70 +65,87 @@ struct VarStmtStrc;
 struct VarStmtStrc2;
 struct StmtStkItmStrc;
 
-typedef struct CnstStrc* ntvFcnDfn(vector<EnvrStrc*>& envr, int prmCnt, vector <CnstStrc*> prmArr);
+typedef struct ValStrc* ntvFcnDfn(vector<EnvrStrc*>& envr, int prmCnt, vector <ValStrc*> prmArr);
 
 
 int lstIndt = 0;
 
-union VlUnn
+union ValUnn
 {
 	int bln;
 	float flt;
-	int intVl;
+	int int_;
 	string* str;
 	struct ArrStrc* arr;
 	struct ObjStrc* obj;
 
 public:
-	VlUnn()
+	ValUnn()
 	{
 	}
 
-	~VlUnn()
+	~ValUnn()
 	{
 	}
 };
 
-enum ExpTyp
+// enum ExpTyp
+// {
+// 	ExpEnm::Cnst = 1,
+// 	ExpEnm::Vrb,
+// 	ExpEnm::Bnr,
+// 	ExpEnm::Tnr,
+// 	ExpEnm::Asn,
+// 	ExpEnm::Unr,
+// 	ExpEnm::Fcn,
+// 	VARIABLE_DEFINE_EXPRESSION,
+// 	GLOBAL_ExpEnm::Asn,
+// 	LOCAL_ExpEnm::Asn,
+// 	ExpEnm::Nll,
+// 	READ_EXPRESSION,
+// 	ExpEnm::Arr,
+// 	ARRAY_EVALUATE_EXPRESSION,
+// 	ELEMENT_ExpEnm::Asn,
+// 	NEW_ExpEnm::Arr,
+// 	ExpEnm::Lvl,
+// 	ExpEnm::New
+// };
+
+enum class ExpEnm
 {
-	CONST_EXPRESSION = 1,
-	VARIABLE_EXPRESSION,
-	BINARY_EXPRESSION,
-	TERNARY_EXPRESSION,
-	ASSIGN_EXPRESSION,
-	UNARY_EXPRESSION,
-	FUNCTION_EXPRESSION,
-	VARIABLE_DEFINE_EXPRESSION,
-	GLOBAL_ASSIGN_EXPRESSION,
-	LOCAL_ASSIGN_EXPRESSION,
-	NULL_EXPRESSION,
-	READ_EXPRESSION,
-	ARRAY_EXPRESSION,
-	ARRAY_EVALUATE_EXPRESSION,
-	ELEMENT_ASSIGN_EXPRESSION,
-	NEW_ARRAY_EXPRESSION,
-	LVALUE_EXPRESSION,
-	NEW_EXPRESSION
+	Val = 1,
+	Vrb,
+	Bnr,
+	Tnr,
+	Asn,
+	Unr,
+	Fcn,
+	Nll,
+	Arr,
+	ElmAsn,
+	NewArr,
+	Lvl,
+	New,
 };
 
-enum VrbTyp
+enum class ValEnm : int
 {
-	INT = 1,
-	FLOAT,
-	BOOLEAN,
-	STRING_TYPE,
-	NULL_TYPE,
-	ARRAY,
-	OBJECT
+	Int = 1,
+	Flt,
+	Bln,
+	Str,
+	Nll,
+	Arr,
+	Obj
 };
 
 
-enum Unrtyp
+enum UnrEnm
 {
-	PREFIX_INCREMENT = 1,
-	PREFIX_DECREMENT,
-	SUFFIX_INCREMENT,
-	SUFFIX_DECREMENT
+	PfxInc = 1,
+	PfxDec,
+	SfxInc,
+	SfxDec
 };
 
 enum class StmtEnm: int
@@ -163,12 +184,12 @@ enum class RtnEnm
 	Rtn
 };
 
-enum EnvrTyp
+enum class EnvrEnm
 {
-	TOP_LEVEL_ENVIRONMENT,
-	FUNCTION_ENVIRONMENT,
-	STATEMENT_BLOCK_ENVIRONMENT,
-	STATEMENT_ENVIRONMENT
+	TopLvl,
+	Fcn,
+	Blk,
+	Stmt
 };
 
 struct StmtStrc
@@ -194,13 +215,7 @@ std::vector<StmtStkItmStrc*> stmtStk;
 /// </summary>
 std::vector<StmtStrc*> mltStmtStk;
 
-struct VrbStrc
-{
-	string *nm;
-	int typ;
-	union VlUnn vl;
 
-};
 
 struct ClsStrc
 {
@@ -226,7 +241,7 @@ struct ObjStrc
 struct ExpStrc
 {
 public:
-	int typ;
+	ExpEnm typ;
 };
 
 struct VrbExpStrc :public ExpStrc
@@ -234,18 +249,44 @@ struct VrbExpStrc :public ExpStrc
 	string nm;
 };
 
-struct CnstStrc : public ExpStrc
+struct ValStrc
 {
-	int CnstTyp;
-	union VlUnn vl;
+public:
+	ValEnm typ;
+	ValUnn v;
 
 public:
-	CnstStrc()
+	ValStrc()
 	{
 	};
 };
 
-struct AsgnExpStrc : public ExpStrc
+struct VrbStrc
+{
+public:
+	string *nm;
+
+	ValStrc* val;
+
+	ValEnm getTyp()
+	{
+		return val->typ;
+	}
+
+	ValUnn &getVal()
+	{
+		return val->v;
+	}
+};
+
+struct ValExpStrc: public ExpStrc
+{
+	ValStrc *val;
+};
+
+
+
+struct AsnExpStrc : public ExpStrc
 {
 	struct LvlExpStrc* lvl;
 	struct ExpStrc* exp;
@@ -446,7 +487,7 @@ struct NllStmtStrc : public StmtStrc
 struct RtnRsltStrc
 {
 	int blnRslt;
-	struct CnstStrc* rslt;
+	struct ValStrc* rslt;
 };
 
 //break语句返回类型结构体
@@ -488,7 +529,7 @@ struct FcnStrc
 struct EnvrStrc
 {
 
-	EnvrTyp typ;
+	EnvrEnm typ;
 
 	vector<VrbStrc*> vrbArr;
 
@@ -505,7 +546,7 @@ public:
 	EnvrStrc()
 	{
 	}
-	EnvrStrc(EnvrTyp typ)
+	EnvrStrc(EnvrEnm typ)
 	{
 		this->typ = typ;
 	}
@@ -515,7 +556,7 @@ public:
 struct ArrStrc
 {
 
-	vector<CnstStrc*> elmtArr;
+	vector<ValStrc*> elmtArr;
 };
 
 //数组元素列表
@@ -574,7 +615,7 @@ struct ArgLstStrc
 //赋值列表
 struct AsgnLstStrc
 {
-	vector<AsgnExpStrc*> asgnArr;
+	vector<AsnExpStrc*> asgnArr;
 };
 
 struct NtvFcnStrc

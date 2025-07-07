@@ -26,7 +26,7 @@ VrbStrc* getObjVrbDrct(ObjStrc* obj, string nm);
 FcnStrc* getObjFcn(VrbStrc* vrb, LvlExpStrc* lvl);
 FcnStrc* getObjFcnDrct(ObjStrc* obj, string nm);
 
-CnstStrc* istObj(ClsStrc* cls);
+ValStrc* istObj(ClsStrc* cls);
 
 
 ClsStrc* bldCls(char* nm)
@@ -67,23 +67,21 @@ int clsAddShrFcn(ClsStrc* cls, FcnStrc* fcn)
 	return 0;
 }
 
-CnstStrc* istObj(ClsStrc* cls)
+ValStrc* istObj(ClsStrc* cls)
 {
-	auto rslt = new CnstStrc;
+	auto rslt = new ValStrc;
 
-	rslt->typ = CONST_EXPRESSION;
+	rslt->typ = ValEnm::Obj;
 
-	rslt->CnstTyp = OBJECT_VALUE;
+	rslt->v.obj = new ObjStrc;
 
-	rslt->vl.obj = new ObjStrc;
-
-	auto obj = rslt->vl.obj;
+	auto obj = rslt->v.obj;
 
 	for (int i = 0; i < cls->vrb.size(); i++)
 	{
 		obj->vrb.push_back(cpyVrb(cls->vrb.at(i), cls->vrb.at(i)->nm));
 
-		printf("var: %s typ: %d tgt typ: %d\n", obj->vrb.back()->nm->c_str(), obj->vrb.back()->typ, cls->vrb.at(i)->typ);
+		printf("var: %s typ: %d tgt typ: %d\n", obj->vrb.back()->nm->c_str(), obj->vrb.back()->getTyp(), cls->vrb.at(i)->getTyp());
 	}
 
 	//�������ŵ�obj�Ľṹ����
@@ -106,11 +104,11 @@ VrbStrc* getObjVrb(VrbStrc* vrb, LvlExpStrc* lvl)
 
 	VrbStrc* rslt = nullptr;
 
-	printf("vrb typ = obj: %016x %d\n", vrb->typ);
+	printf("vrb typ = obj: %016x %d\n", vrb->getTyp());
 
-	while (vrb->typ == OBJECT_VALUE && lvl->hasAtb == 1)
+	while (vrb->getTyp() == ValEnm::Obj && lvl->hasAtb == 1)
 	{
-		vrb = getObjVrbDrct(vrb->vl.obj, lvl->atb->vrb->nm);
+		vrb = getObjVrbDrct(vrb->getVal().obj, lvl->atb->vrb->nm);
 		lvl = lvl->atb;
 
 		if (lvl->hasAtb == 0)
@@ -142,16 +140,16 @@ FcnStrc* getObjFcn(VrbStrc* vrb, LvlExpStrc* lvl)
 
 	FcnStrc* rslt = nullptr;
 
-	while (vrb->typ == OBJECT_VALUE && lvl->hasAtb == 1)
+	while (vrb->getTyp() == ValEnm::Obj && lvl->hasAtb == 1)
 	{
-		vrb = getObjVrbDrct(vrb->vl.obj, lvl->atb->vrb->nm);
+		vrb = getObjVrbDrct(vrb->getVal().obj, lvl->atb->vrb->nm);
 		lvl = lvl->atb;
 
 	}
 
 	if (lvl->hasFcn == 1)
 	{
-		rslt = getObjFcnDrct(vrb->vl.obj, lvl->fcn->nm);
+		rslt = getObjFcnDrct(vrb->getVal().obj, lvl->fcn->nm);
 
 		return rslt;
 	}

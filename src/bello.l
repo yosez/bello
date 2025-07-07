@@ -121,15 +121,15 @@
 "class"                     { return CLASS; }
 "function"                  { return FUNC; }
 "return"                    { return RETURN; }
-"null"                      { return NULL_VALUE; }
+"null"                      { return NLL_LTR; }
 "class"                     { return CLASS; }
 "func"                      { return FUNC; }
 "shared"                    { return SHARED; }
 "this"                      { return THIS; }
-[0-9]{1,8}                  { yylval.intVl=atoi(yytext); return INT_VALUE; }
-[0-9]{1,8}\.[0-9]{1,8}      { yylval.fltVl= (float)atof(yytext); return FLOAT_VALUE; }
-"true"                      { yylval.blnVl=1; return BOOLEAN_VALUE; }
-"false"                     { yylval.blnVl=0; return BOOLEAN_VALUE; }
+[0-9]{1,8}                  { yylval.intVl=atoi(yytext); return INT_LTR; }
+[0-9]{1,8}\.[0-9]{1,8}      { yylval.fltVl= (float)atof(yytext); return FLT_LTR; }
+"true"                      { yylval.blnVl=1; return BLN_LTR; }
+"false"                     { yylval.blnVl=0; return BLN_LTR; }
 "//"                        { stt=YY_START; BEGIN COMMENT; }
 <COMMENT>\n                 { BEGIN stt; }  
 <COMMENT>.                  { return LF; }
@@ -147,7 +147,7 @@
 <STRING>"\\f"               { strAdd("\f"); }
 <STRING>"\\\""              { strAdd("\""); }
 <STRING>"\\\\"              { strAdd("\\"); }
-<STRING>"\""                { BEGIN stt; yylval.strVl=str; return STRING_VALUE; }
+<STRING>"\""                { BEGIN stt; yylval.strVl=str; return STR_LTR; }
 <STRING>[\r\n]              { BEGIN stt; yyerror(NULL); }
 [a-zA-Z][a-zA-Z0-9]*       { 
                                 yylval.idtf=(char *)malloc(0x100);

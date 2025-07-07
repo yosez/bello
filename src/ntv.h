@@ -5,21 +5,21 @@
 
 #include "dftn.h"
 #include "expt.h"
-#include "cnst.h"
+#include "val.h"
 
 
-struct CnstStrc* rdIntFcn(vector<EnvrStrc*>& envr, int argCnt, vector<CnstStrc*> argArr);
-struct CnstStrc* rdFltFcn(vector<EnvrStrc*>& envr, int argCnt, vector <CnstStrc*> argArr);
-struct CnstStrc* rdBlnFcn(vector<EnvrStrc*>& envr, int argCnt, vector <CnstStrc*> argArr);
-struct CnstStrc* rdFcn(vector<EnvrStrc*>& envr, int argCnt, vector <CnstStrc*> argArr);
-struct CnstStrc* rdlnFcn(vector<EnvrStrc*>& envr, int argCnt, vector <CnstStrc*> argArr);
-struct CnstStrc* prtFcn(vector<EnvrStrc*>& envr, int argCnt, vector <CnstStrc*> argArr);
-struct CnstStrc* prtlnFcn(vector<EnvrStrc*>& envr, int argCnt, vector <CnstStrc*> argArr);
-struct CnstStrc* newArrFcn(vector<EnvrStrc*>& envr, int argCnt, vector <CnstStrc*> argArr);
-struct CnstStrc* flOpn(vector<EnvrStrc*>& envr, int argCnt, vector <CnstStrc*> argArr);
+struct ValStrc* rdIntFcn(vector<EnvrStrc*>& envr, int argCnt, vector<ValStrc*> argArr);
+struct ValStrc* rdFltFcn(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
+struct ValStrc* rdBlnFcn(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
+struct ValStrc* rdFcn(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
+struct ValStrc* rdlnFcn(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
+struct ValStrc* prtFcn(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
+struct ValStrc* prtlnFcn(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
+struct ValStrc* newArrFcn(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
+struct ValStrc* flOpn(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
 
 
-struct CnstStrc* rdIntFcn(vector<EnvrStrc*>& envr, int argCnt, vector <CnstStrc*> argArr)
+struct ValStrc* rdIntFcn(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr)
 {
 	if (argCnt != 0)
 	{
@@ -30,15 +30,15 @@ struct CnstStrc* rdIntFcn(vector<EnvrStrc*>& envr, int argCnt, vector <CnstStrc*
 
 	fscanf(stdin, "%d", &i);
 
-	struct CnstStrc* rslt;
+	struct ValStrc* rslt;
 
-	rslt = bldIntCnst(i);
+	rslt = bldIntVal(i);
 
 	return rslt;
 }
 
 
-struct CnstStrc* rdFltFcn(vector<EnvrStrc*>& envr, int argCnt, vector <CnstStrc*> argArr)
+struct ValStrc* rdFltFcn(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr)
 {
 	if (argCnt != 0)
 	{
@@ -49,14 +49,14 @@ struct CnstStrc* rdFltFcn(vector<EnvrStrc*>& envr, int argCnt, vector <CnstStrc*
 
 	fscanf(stdin, "%f", &f);
 
-	struct CnstStrc* rslt;
+	struct ValStrc* rslt;
 
-	rslt = bldIntCnst(f);
+	rslt = bldIntVal(f);
 
 	return rslt;
 }
 
-struct CnstStrc* rdBlnFcn(vector<EnvrStrc*>& envr, int argCnt, vector <CnstStrc*> argArr)
+struct ValStrc* rdBlnFcn(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr)
 {
 	if (argCnt != 0)
 	{
@@ -67,21 +67,21 @@ struct CnstStrc* rdBlnFcn(vector<EnvrStrc*>& envr, int argCnt, vector <CnstStrc*
 
 	fscanf(stdin, "%s", blnStr);
 
-	struct CnstStrc* rslt;
+	struct ValStrc* rslt;
 
 	if (strcmp(blnStr, "true"))
 	{
-		rslt = bldBlnCnst(1);
+		rslt = bldBlnVal(1);
 	}
 	else
 	{
-		rslt = bldBlnCnst(0);
+		rslt = bldBlnVal(0);
 	}
 
 	return rslt;
 }
 
-struct CnstStrc* rdFcn(vector<EnvrStrc*>& envr, int argCnt, vector <CnstStrc*> argArr)
+struct ValStrc* rdFcn(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr)
 {
 	if (argCnt != 0)
 	{
@@ -92,14 +92,14 @@ struct CnstStrc* rdFcn(vector<EnvrStrc*>& envr, int argCnt, vector <CnstStrc*> a
 
 	fscanf(stdin, "%s", str);
 
-	struct CnstStrc* rslt;
+	struct ValStrc* rslt;
 
-	rslt = bldStrCnst(str);
+	rslt = bldStrVal(str);
 
 	return rslt;
 }
 
-struct CnstStrc* rdlnFcn(vector<EnvrStrc*>& envr, int argCnt, vector <CnstStrc*> argArr)
+struct ValStrc* rdlnFcn(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr)
 {
 	if (argCnt != 0)
 	{
@@ -110,82 +110,60 @@ struct CnstStrc* rdlnFcn(vector<EnvrStrc*>& envr, int argCnt, vector <CnstStrc*>
 
 	fgets(str, 0x1000, stdin);
 
-	struct CnstStrc* rslt;
+	struct ValStrc* rslt;
 
-	rslt = bldStrCnst(str);
+	rslt = bldStrVal(str);
 
 	return rslt;
 }
 
-struct CnstStrc* prtFcn(vector<EnvrStrc*>& envr, int argCnt, vector <CnstStrc*> argArr)
+struct ValStrc* prtFcn(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr)
 {
 	if (argCnt != 1)
 	{
 		throw new ExFcnTooFewArg;
 	}
 
-	prtCnst(argArr[0]);
+	prtVal(argArr[0]);
 
 	return NULL;
 }
 
-struct CnstStrc* prtlnFcn(vector<EnvrStrc*>& envr, int argCnt, vector <CnstStrc*> argArr)
+struct ValStrc* prtlnFcn(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr)
 {
 	if (argCnt != 1)
 	{
 		throw new ExFcnTooFewArg;
 	}
 
-	prtlnCnst(argArr[0]);
+	prtlnVal(argArr[0]);
 
 	return NULL;
 }
 
-struct CnstStrc* newArrFcn(vector<EnvrStrc*>& envr, int argCnt, vector <CnstStrc*> argArr)
+struct ValStrc* newArrFcn(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr)
 {
-	struct CnstStrc* rslt = new CnstStrc;
+	struct ValStrc* rslt = new ValStrc;
 
-	rslt->CnstTyp = ARRAY_VALUE;
+	rslt->typ = ValEnm::Arr;
 
 	//rslt->vl.arr = (struct ArrStrc*)malloc(sizeof(struct ArrStrc*));
-	rslt->vl.arr = new ArrStrc;
+	rslt->v.arr = new ArrStrc;
 
 	int elmtCnt;
 
-	elmtCnt = argArr[0]->vl.intVl;
+	elmtCnt = argArr[0]->v.int_;
 
 	int i;
 
 	for (i = 0; i < elmtCnt; i++)
 	{
 		//rslt->vl.arr->elmtArr[i] = bldNllCnst();
-		rslt->vl.arr->elmtArr.push_back(bldNllCnst());
+		rslt->v.arr->elmtArr.push_back(bldNllVal());
 	}
 
 	return rslt;
 }
 
-// struct CnstStrc *flOpn(struct EnvrStrc *envr, int argCnt, struct CnstStrc **argArr)
-// {
-//     if (argCnt < 2)
-//     {
-//         throw new ExFcnTooFewArg;
-//     }
-
-//     if (argCnt > 2)
-//     {
-//         throw new ExFcnTooFewArg;
-//     }
-
-//     char *str=(char *)malloc(0x1000);
-
-//     fscanf(stdin, "%s", str);
-
-//     struct CnstStrc *rslt;
-
-//     rslt= bldStrCnst(str);
-
-//     return rslt;
-// }
 
 #endif

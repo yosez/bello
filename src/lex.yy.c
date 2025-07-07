@@ -1188,7 +1188,7 @@ YY_RULE_SETUP
 case 50:
 YY_RULE_SETUP
 #line 124 "bello.l"
-{ return NULL_VALUE; }
+{ return NLL_LTR; }
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
@@ -1213,22 +1213,22 @@ YY_RULE_SETUP
 case 55:
 YY_RULE_SETUP
 #line 129 "bello.l"
-{ yylval.intVl=atoi(yytext); return INT_VALUE; }
+{ yylval.intVl=atoi(yytext); return INT_LTR; }
 	YY_BREAK
 case 56:
 YY_RULE_SETUP
 #line 130 "bello.l"
-{ yylval.fltVl= (float)atof(yytext); return FLOAT_VALUE; }
+{ yylval.fltVl= (float)atof(yytext); return FLT_LTR; }
 	YY_BREAK
 case 57:
 YY_RULE_SETUP
 #line 131 "bello.l"
-{ yylval.blnVl=1; return BOOLEAN_VALUE; }
+{ yylval.blnVl=1; return BLN_LTR; }
 	YY_BREAK
 case 58:
 YY_RULE_SETUP
 #line 132 "bello.l"
-{ yylval.blnVl=0; return BOOLEAN_VALUE; }
+{ yylval.blnVl=0; return BLN_LTR; }
 	YY_BREAK
 case 59:
 YY_RULE_SETUP
@@ -1320,7 +1320,7 @@ YY_RULE_SETUP
 case 76:
 YY_RULE_SETUP
 #line 150 "bello.l"
-{ BEGIN stt; yylval.strVl=str; return STRING_VALUE; }
+{ BEGIN stt; yylval.strVl=str; return STR_LTR; }
 	YY_BREAK
 case 77:
 /* rule 77 can match eol */

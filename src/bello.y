@@ -10,7 +10,7 @@
     #include <stack>
     #include "dftn.h"
     #include "vrb.h"
-    #include "cnst.h"
+    #include "val.h"
     #include "exp.h"
     #include "stmt.h"
     #include "arr.h"
@@ -92,12 +92,12 @@
 %token DOT
 %token CLASS SHARED THIS
 %token <intVl> INDENT
-%token <intVl> INT_VALUE
-%token <blnVl> BOOLEAN_VALUE
-%token <fltVl> FLOAT_VALUE
-%token <strVl> STRING_VALUE
+%token <intVl> INT_LTR
+%token <blnVl> BLN_LTR
+%token <fltVl> FLT_LTR
+%token <strVl> STR_LTR
 %token <objVl> OBJECT_VALUE
-%token NULL_VALUE
+%token NLL_LTR
 %token ARRAY_VALUE
 %token SHORTCUT_PRINTLN
 %token <idtf> IDENTIFER
@@ -430,10 +430,10 @@ assign_expression
 
 
 self_operation_expression 
-    : INCREMENT lvalue_expression { $$=bldUnrExp(PREFIX_INCREMENT, $2); }
-    | DECREMENT lvalue_expression { $$=bldUnrExp(PREFIX_DECREMENT, $2); }
-    | lvalue_expression INCREMENT { $$=bldUnrExp(SUFFIX_INCREMENT, $1); }
-    | lvalue_expression DECREMENT { $$=bldUnrExp(SUFFIX_DECREMENT, $1); }
+    : INCREMENT lvalue_expression { $$=bldUnrExp(UnrEnm::PfxInc, $2); }
+    | DECREMENT lvalue_expression { $$=bldUnrExp(UnrEnm::PfxDec, $2); }
+    | lvalue_expression INCREMENT { $$=bldUnrExp(UnrEnm::SfxInc, $1); }
+    | lvalue_expression DECREMENT { $$=bldUnrExp(UnrEnm::SfxDec, $1); }
 
 unary_expression
     : SUB expression %prec MINUS_SIGN { $$ = bldUnrExp(SUB, $2); }
@@ -468,11 +468,11 @@ shortcut_expression
     }
 
 value_expression
-    : INT_VALUE { $$=bldCnstIntExp($1); /*printf("Get data: %d\n",$1);*/ }
-    | FLOAT_VALUE { $$=bldCnstFltExp($1); }
-    | BOOLEAN_VALUE { $$=bldCnstBlnExp($1); }
-    | STRING_VALUE { $$=bldCnstStrExp($1); } 
-    | NULL_VALUE { $$=bldCnstNllExp(); }
+    : INT_LTR { $$=bldIntValExp($1); }
+    | FLT_LTR { $$=bldFltValExp($1); }
+    | BLN_LTR { $$=bldBlnValExp($1); }
+    | STR_LTR { $$=bldStrValExp($1); }
+    | NLL_LTR { $$=bldNllValExp(); }
     | function_expression
     | lvalue_expression 
     | NEW IDENTIFER { $$= bldNewExp($2); }
@@ -712,12 +712,12 @@ evaluate_list
     | LEFT_QUAD expression COLON expression RIGHT_QUAD  //[i:j]
     {
         $$= bldAcsLst();
-        acsLstSlcAdd($$, $2, $4, bldCnstIntExp(1));
+        acsLstSlcAdd($$, $2, $4, bldIntValExp(1));
     }
     | LEFT_QUAD expression COLON expression COLON RIGHT_QUAD  //[i:j:]
     {
         $$= bldAcsLst();
-        acsLstSlcAdd($$, $2, $4, bldCnstIntExp(1));
+        acsLstSlcAdd($$, $2, $4, bldIntValExp(1));
     }
     | LEFT_QUAD expression COLON expression COLON expression RIGHT_QUAD //[i:j:k]
     {
@@ -727,37 +727,37 @@ evaluate_list
     | LEFT_QUAD expression COLON RIGHT_QUAD       //[i:]
     {
         $$= bldAcsLst();
-        acsLstSlcAdd($$, $2, bldCnstIntExp(-1), bldCnstIntExp(1));
+        acsLstSlcAdd($$, $2, bldIntValExp(-1), bldIntValExp(1));
     }
     | LEFT_QUAD expression COLON COLON RIGHT_QUAD       //[i::]
     {
         $$= bldAcsLst();
-        acsLstSlcAdd($$, $2, bldCnstIntExp(-1), bldCnstIntExp(1));
+        acsLstSlcAdd($$, $2, bldIntValExp(-1), bldIntValExp(1));
     }
     | LEFT_QUAD expression COLON COLON expression RIGHT_QUAD        //[i::k]
     {
         $$= bldAcsLst();
-        acsLstSlcAdd($$, $2, bldCnstIntExp(-1), $5);
+        acsLstSlcAdd($$, $2, bldIntValExp(-1), $5);
     }
     | LEFT_QUAD COLON expression RIGHT_QUAD       //[:j]
     {
         $$= bldAcsLst();
-        acsLstSlcAdd($$, bldCnstIntExp(0), $3, bldCnstIntExp(1));
+        acsLstSlcAdd($$, bldIntValExp(0), $3, bldIntValExp(1));
     }
     | LEFT_QUAD COLON expression COLON RIGHT_QUAD       //[:j:]
     {
         $$= bldAcsLst();
-        acsLstSlcAdd($$, bldCnstIntExp(0), $3, bldCnstIntExp(1));
+        acsLstSlcAdd($$, bldIntValExp(0), $3, bldIntValExp(1));
     }
     | LEFT_QUAD COLON expression COLON expression RIGHT_QUAD        //[:j:k]
     {
         $$= bldAcsLst();
-        acsLstSlcAdd($$, bldCnstIntExp(0), $3, $5);
+        acsLstSlcAdd($$, bldIntValExp(0), $3, $5);
     }
     | LEFT_QUAD COLON COLON RIGHT_QUAD      //[::]
     {
         $$= bldAcsLst();
-        acsLstSlcAdd($$, bldCnstIntExp(0), bldCnstIntExp(-1), bldCnstIntExp(1));
+        acsLstSlcAdd($$, bldIntValExp(0), bldIntValExp(-1), bldIntValExp(1));
     }
     | evaluate_list LEFT_QUAD expression RIGHT_QUAD
     {
@@ -767,12 +767,12 @@ evaluate_list
     | evaluate_list LEFT_QUAD expression COLON expression RIGHT_QUAD  //[i:j]
     {
         $$=$1;
-        acsLstSlcAdd($$, $3, $5, bldCnstIntExp(1));
+        acsLstSlcAdd($$, $3, $5, bldIntValExp(1));
     }
     | evaluate_list LEFT_QUAD expression COLON expression COLON RIGHT_QUAD  //[i:j:]
     {
         $$=$1;
-        acsLstSlcAdd($$, $3, $5, bldCnstIntExp(1));
+        acsLstSlcAdd($$, $3, $5, bldIntValExp(1));
     }
     | evaluate_list LEFT_QUAD expression COLON expression COLON expression RIGHT_QUAD //[i:j:k]
     {
@@ -782,37 +782,37 @@ evaluate_list
     | evaluate_list LEFT_QUAD expression COLON RIGHT_QUAD       //[i:]
     {
         $$=$1;
-        acsLstSlcAdd($$, $3, bldCnstIntExp(-1), bldCnstIntExp(1));
+        acsLstSlcAdd($$, $3, bldIntValExp(-1), bldIntValExp(1));
     }
     | evaluate_list LEFT_QUAD expression COLON COLON RIGHT_QUAD       //[i::]
     {
         $$=$1;
-        acsLstSlcAdd($$, $3, bldCnstIntExp(-1), bldCnstIntExp(1));
+        acsLstSlcAdd($$, $3, bldIntValExp(-1), bldIntValExp(1));
     }
     | evaluate_list LEFT_QUAD expression COLON COLON expression RIGHT_QUAD        //[i::k]
     {
         $$=$1;
-        acsLstSlcAdd($$, $3, bldCnstIntExp(-1), $6);
+        acsLstSlcAdd($$, $3, bldIntValExp(-1), $6);
     }
     | evaluate_list LEFT_QUAD COLON expression RIGHT_QUAD       //[:j]
     {
         $$=$1;
-        acsLstSlcAdd($$, bldCnstIntExp(0), $4, bldCnstIntExp(1));
+        acsLstSlcAdd($$, bldIntValExp(0), $4, bldIntValExp(1));
     }
     | evaluate_list LEFT_QUAD COLON expression COLON RIGHT_QUAD       //[:j:]
     {
         $$=$1;
-        acsLstSlcAdd($$, bldCnstIntExp(0), $4, bldCnstIntExp(1));
+        acsLstSlcAdd($$, bldIntValExp(0), $4, bldIntValExp(1));
     }
     | evaluate_list LEFT_QUAD COLON expression COLON expression RIGHT_QUAD        //[:j:k]
     {
         $$=$1;
-        acsLstSlcAdd($$, bldCnstIntExp(0), $4, $6);
+        acsLstSlcAdd($$, bldIntValExp(0), $4, $6);
     }
     | evaluate_list LEFT_QUAD COLON COLON RIGHT_QUAD      //[::]
     {
         $$=$1;
-        acsLstSlcAdd($$, bldCnstIntExp(0), bldCnstIntExp(-1), bldCnstIntExp(1));
+        acsLstSlcAdd($$, bldIntValExp(0), bldIntValExp(-1), bldIntValExp(1));
     }
 
 
@@ -897,11 +897,11 @@ do_while_statement
     }
 
 break_statement
-    : BREAK { $$= bldBrkStmt(bldCnstIntExp(1)); }
+    : BREAK { $$= bldBrkStmt(bldIntValExp(1)); }
     | BREAK LEFT_PAREN expression RIGHT_PAREN { $$= bldBrkStmt($3); }
 
 continue_statement
-    : CONTINUE { $$= bldCntnStmt(bldCnstIntExp(1)); }
+    : CONTINUE { $$= bldCntnStmt(bldIntValExp(1)); }
     | CONTINUE LEFT_PAREN expression RIGHT_PAREN { $$= bldCntnStmt($3); }
 
 structure_statement  

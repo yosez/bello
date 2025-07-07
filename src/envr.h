@@ -44,14 +44,14 @@ int prtEnvrFcn(struct EnvrStrc* envr);
 int intlEnvr(struct EnvrStrc** envr);
 int initGlbEnvr(vector<EnvrStrc*>& envr);
 
-extern struct CnstStrc* rdIntFcn(vector<EnvrStrc*>& envr, int argCnt, vector <CnstStrc*> argArr);
-extern struct CnstStrc* rdFltFcn(vector<EnvrStrc*>& envr, int argCnt, vector <CnstStrc*> argArr);
-extern struct CnstStrc* rdBlnFcn(vector<EnvrStrc*>& envr, int argCnt, vector <CnstStrc*> argArr);
-extern struct CnstStrc* rdFcn(vector<EnvrStrc*>& envr, int argCnt, vector <CnstStrc*> argArr);
-extern struct CnstStrc* rdlnFcn(vector<EnvrStrc*>& envr, int argCnt, vector <CnstStrc*> argArr);
-extern struct CnstStrc* prtFcn(vector<EnvrStrc*>& envr, int argCnt, vector <CnstStrc*> argArr);
-extern struct CnstStrc* prtlnFcn(vector<EnvrStrc*>& envr, int argCnt, vector <CnstStrc*> argArr);
-extern struct CnstStrc* newArrFcn(vector<EnvrStrc*>& envr, int argCnt, vector <CnstStrc*> argArr);
+extern struct ValStrc* rdIntFcn(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
+extern struct ValStrc* rdFltFcn(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
+extern struct ValStrc* rdBlnFcn(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
+extern struct ValStrc* rdFcn(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
+extern struct ValStrc* rdlnFcn(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
+extern struct ValStrc* prtFcn(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
+extern struct ValStrc* prtlnFcn(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
+extern struct ValStrc* newArrFcn(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
 
 extern VrbStrc* getObjVrb(VrbStrc* vrb, LvlExpStrc* lvl);
 
@@ -77,14 +77,14 @@ struct VrbStrc* getEnvrVrb(struct EnvrStrc* envr, struct VrbExpStrc* vrbExp)
 
 	for (i = 0; i < envr->vrbArr.size(); i++)
 	{
-
+		//printf("vrb: %s\n", envr->vrbArr[i]->nm->c_str());
 		if (vrbExp->nm == *(envr->vrbArr[i]->nm))
 		{
 			return envr->vrbArr[i];
 		}
 	}
 
-	if (envr->typ == TOP_LEVEL_ENVIRONMENT)
+	if (envr->typ == EnvrEnm::TopLvl)
 	{
 		for (i = 0; i < envr->glbArr.size(); i++)
 		{
@@ -102,7 +102,7 @@ struct VrbStrc* getEnvrVrb(struct EnvrStrc* envr, struct VrbExpStrc* vrbExp)
 
 struct VrbStrc* getVrb(vector<EnvrStrc*>& envr, struct VrbExpStrc* vrbExp)
 {
-	struct VrbStrc* vrb = nullptr;
+	VrbStrc* vrb = nullptr;
 
 	int lyrNbr = envr.size();
 
@@ -112,7 +112,6 @@ struct VrbStrc* getVrb(vector<EnvrStrc*>& envr, struct VrbExpStrc* vrbExp)
 
 	int lyrBfrFcn = 0;
 
-	//������1�㻷�������ҵ���1����������
 	while (true)
 	{
 		tmp = envr[lyr];
@@ -124,12 +123,12 @@ struct VrbStrc* getVrb(vector<EnvrStrc*>& envr, struct VrbExpStrc* vrbExp)
 			return vrb;
 		}
 
-		if (envr[lyr]->typ == FUNCTION_ENVIRONMENT)
-		{
-			break;
-		}
+		// if (envr[lyr]->typ == EnvrEnm::Fcn)
+		// {
+		// 	break;
+		// }
 
-		if (envr[lyr]->typ == TOP_LEVEL_ENVIRONMENT)
+		if (envr[lyr]->typ == EnvrEnm::TopLvl)
 		{
 			return nullptr;
 		}
@@ -138,7 +137,7 @@ struct VrbStrc* getVrb(vector<EnvrStrc*>& envr, struct VrbExpStrc* vrbExp)
 	}
 
 	//���������ҵ���1����������֮ǰ�Ļ���
-	while (lyrBfrFcn + 1 < lyr && envr[lyrBfrFcn + 1]->typ != FUNCTION_ENVIRONMENT)
+	while (lyrBfrFcn + 1 < lyr && envr[lyrBfrFcn + 1]->typ != EnvrEnm::Fcn)
 	{
 		lyrBfrFcn++;
 	}
@@ -245,7 +244,7 @@ struct FcnStrc* getFcn(vector<EnvrStrc*> envr, struct FcnExpStrc* fcnExp)
 			return nullptr;
 		}
 
-		if (envr[lyr]->typ == FUNCTION_ENVIRONMENT)
+		if (envr[lyr]->typ == EnvrEnm::Fcn)
 		{
 			break;
 		}
@@ -255,7 +254,7 @@ struct FcnStrc* getFcn(vector<EnvrStrc*> envr, struct FcnExpStrc* fcnExp)
 
 	int lyrBfrFcn = 0;
 
-	while (lyrBfrFcn < lyr && envr[lyrBfrFcn]->typ != FUNCTION_ENVIRONMENT)
+	while (lyrBfrFcn < lyr && envr[lyrBfrFcn]->typ != EnvrEnm::Fcn)
 	{
 		lyrBfrFcn++;
 	}
@@ -432,8 +431,8 @@ int prtEnvrFcn(struct EnvrStrc* envr)
 int initGlbEnvr(vector<EnvrStrc*>& envr)
 {
 
-	envr.push_back(new EnvrStrc(TOP_LEVEL_ENVIRONMENT));
-	envr[0]->typ = TOP_LEVEL_ENVIRONMENT;
+	envr.push_back(new EnvrStrc(EnvrEnm::TopLvl));
+	envr[0]->typ = EnvrEnm::TopLvl;
 
 	addNtvFcn(envr[0], string("readInt"), rdIntFcn, 0);
 	addNtvFcn(envr[0], string("readFloat"), rdFltFcn, 0);

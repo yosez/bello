@@ -49,12 +49,12 @@
      SHARED = 265,
      THIS = 266,
      INDENT = 267,
-     INT_VALUE = 268,
-     BOOLEAN_VALUE = 269,
-     FLOAT_VALUE = 270,
-     STRING_VALUE = 271,
+     INT_LTR = 268,
+     BLN_LTR = 269,
+     FLT_LTR = 270,
+     STR_LTR = 271,
      OBJECT_VALUE = 272,
-     NULL_VALUE = 273,
+     NLL_LTR = 273,
      ARRAY_VALUE = 274,
      SHORTCUT_PRINTLN = 275,
      IDENTIFER = 276,
@@ -125,12 +125,12 @@
 #define SHARED 265
 #define THIS 266
 #define INDENT 267
-#define INT_VALUE 268
-#define BOOLEAN_VALUE 269
-#define FLOAT_VALUE 270
-#define STRING_VALUE 271
+#define INT_LTR 268
+#define BLN_LTR 269
+#define FLT_LTR 270
+#define STR_LTR 271
 #define OBJECT_VALUE 272
-#define NULL_VALUE 273
+#define NLL_LTR 273
 #define ARRAY_VALUE 274
 #define SHORTCUT_PRINTLN 275
 #define IDENTIFER 276

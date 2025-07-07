@@ -137,11 +137,11 @@ Grammar
 
    82 shortcut_expression: SHORTCUT_PRINTLN element_list
 
-   83 value_expression: INT_VALUE
-   84                 | FLOAT_VALUE
-   85                 | BOOLEAN_VALUE
-   86                 | STRING_VALUE
-   87                 | NULL_VALUE
+   83 value_expression: INT_LTR
+   84                 | FLT_LTR
+   85                 | BLN_LTR
+   86                 | STR_LTR
+   87                 | NLL_LTR
    88                 | function_expression
    89                 | lvalue_expression
    90                 | NEW IDENTIFER
@@ -252,12 +252,12 @@ CLASS (264) 156
 SHARED (265) 101 154 155
 THIS (266)
 INDENT (267) 3
-INT_VALUE (268) 83
-BOOLEAN_VALUE (269) 85
-FLOAT_VALUE (270) 84
-STRING_VALUE (271) 86
+INT_LTR (268) 83
+BLN_LTR (269) 85
+FLT_LTR (270) 84
+STR_LTR (271) 86
 OBJECT_VALUE (272)
-NULL_VALUE (273) 87
+NLL_LTR (273) 87
 ARRAY_VALUE (274)
 SHORTCUT_PRINTLN (275) 82
 IDENTIFER (276) 90 91 92 103 104 105 106 107 108 110 112 113 114 115
@@ -441,11 +441,11 @@ state 0
     CLASS             reduce using rule 6 (statement)
     SHARED            reduce using rule 6 (statement)
     INDENT            reduce using rule 6 (statement)
-    INT_VALUE         reduce using rule 6 (statement)
-    BOOLEAN_VALUE     reduce using rule 6 (statement)
-    FLOAT_VALUE       reduce using rule 6 (statement)
-    STRING_VALUE      reduce using rule 6 (statement)
-    NULL_VALUE        reduce using rule 6 (statement)
+    INT_LTR           reduce using rule 6 (statement)
+    BLN_LTR           reduce using rule 6 (statement)
+    FLT_LTR           reduce using rule 6 (statement)
+    STR_LTR           reduce using rule 6 (statement)
+    NLL_LTR           reduce using rule 6 (statement)
     SHORTCUT_PRINTLN  reduce using rule 6 (statement)
     IDENTIFER         reduce using rule 6 (statement)
     VAR               reduce using rule 6 (statement)
@@ -531,11 +531,11 @@ state 6
     NOP               shift, and go to state 12
     CLASS             shift, and go to state 13
     SHARED            shift, and go to state 14
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     VAR               shift, and go to state 22
@@ -651,35 +651,35 @@ state 14
 
 state 15
 
-   83 value_expression: INT_VALUE .
+   83 value_expression: INT_LTR .
 
     $default  reduce using rule 83 (value_expression)
 
 
 state 16
 
-   85 value_expression: BOOLEAN_VALUE .
+   85 value_expression: BLN_LTR .
 
     $default  reduce using rule 85 (value_expression)
 
 
 state 17
 
-   84 value_expression: FLOAT_VALUE .
+   84 value_expression: FLT_LTR .
 
     $default  reduce using rule 84 (value_expression)
 
 
 state 18
 
-   86 value_expression: STRING_VALUE .
+   86 value_expression: STR_LTR .
 
     $default  reduce using rule 86 (value_expression)
 
 
 state 19
 
-   87 value_expression: NULL_VALUE .
+   87 value_expression: NLL_LTR .
 
     $default  reduce using rule 87 (value_expression)
 
@@ -689,11 +689,11 @@ state 20
    82 shortcut_expression: SHORTCUT_PRINTLN . element_list
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -756,11 +756,11 @@ state 24
    62 unary_expression: LEFT_PAREN . expression RIGHT_PAREN
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -793,11 +793,11 @@ state 25
    96                 | LEFT_QUAD . RIGHT_QUAD
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -831,11 +831,11 @@ state 26
    61 unary_expression: ADD . expression
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -867,11 +867,11 @@ state 27
    60 unary_expression: SUB . expression
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -903,11 +903,11 @@ state 28
    63 unary_expression: NOT . expression
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -939,11 +939,11 @@ state 29
    64 unary_expression: BIT_NOT . expression
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -993,11 +993,11 @@ state 32
   139 if_statement: IF . expression
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -1029,11 +1029,11 @@ state 33
   141 elseif_statement: ELSEIF . expression
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -1080,11 +1080,11 @@ state 36
   144                | WHILE .
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -1098,11 +1098,11 @@ state 36
     NEW_ARRAY         shift, and go to state 41
 
     NEW               [reduce using rule 144 (while_statement)]
-    INT_VALUE         [reduce using rule 144 (while_statement)]
-    BOOLEAN_VALUE     [reduce using rule 144 (while_statement)]
-    FLOAT_VALUE       [reduce using rule 144 (while_statement)]
-    STRING_VALUE      [reduce using rule 144 (while_statement)]
-    NULL_VALUE        [reduce using rule 144 (while_statement)]
+    INT_LTR           [reduce using rule 144 (while_statement)]
+    BLN_LTR           [reduce using rule 144 (while_statement)]
+    FLT_LTR           [reduce using rule 144 (while_statement)]
+    STR_LTR           [reduce using rule 144 (while_statement)]
+    NLL_LTR           [reduce using rule 144 (while_statement)]
     SHORTCUT_PRINTLN  [reduce using rule 144 (while_statement)]
     IDENTIFER         [reduce using rule 144 (while_statement)]
     LEFT_PAREN        [reduce using rule 144 (while_statement)]
@@ -1166,11 +1166,11 @@ state 40
   158                 | RETURN . expression
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -1184,11 +1184,11 @@ state 40
     NEW_ARRAY         shift, and go to state 41
 
     NEW               [reduce using rule 157 (return_statement)]
-    INT_VALUE         [reduce using rule 157 (return_statement)]
-    BOOLEAN_VALUE     [reduce using rule 157 (return_statement)]
-    FLOAT_VALUE       [reduce using rule 157 (return_statement)]
-    STRING_VALUE      [reduce using rule 157 (return_statement)]
-    NULL_VALUE        [reduce using rule 157 (return_statement)]
+    INT_LTR           [reduce using rule 157 (return_statement)]
+    BLN_LTR           [reduce using rule 157 (return_statement)]
+    FLT_LTR           [reduce using rule 157 (return_statement)]
+    STR_LTR           [reduce using rule 157 (return_statement)]
+    NLL_LTR           [reduce using rule 157 (return_statement)]
     SHORTCUT_PRINTLN  [reduce using rule 157 (return_statement)]
     IDENTIFER         [reduce using rule 157 (return_statement)]
     LEFT_PAREN        [reduce using rule 157 (return_statement)]
@@ -1485,11 +1485,11 @@ state 69
     NOP               shift, and go to state 12
     CLASS             shift, and go to state 13
     SHARED            shift, and go to state 14
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     VAR               shift, and go to state 22
@@ -1649,11 +1649,11 @@ state 76
   108                    | IDENTIFER LEFT_PAREN . RIGHT_PAREN
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 132
     LEFT_PAREN        shift, and go to state 24
@@ -2007,11 +2007,11 @@ state 92
   142 for_statement: FOR LEFT_PAREN . single_statement_no_semicolon SEMICOLON expression_statement SEMICOLON single_statement_no_semicolon RIGHT_PAREN
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -2100,11 +2100,11 @@ state 94
   149 continue_statement: CONTINUE LEFT_PAREN . expression RIGHT_PAREN
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -2136,11 +2136,11 @@ state 95
   147 break_statement: BREAK LEFT_PAREN . expression RIGHT_PAREN
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -2224,11 +2224,11 @@ state 98
    97 new_array_expression: NEW_ARRAY LEFT_PAREN . expression RIGHT_PAREN
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -2269,11 +2269,11 @@ state 100
    65 binary_expression: expression ADD . expression
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -2305,11 +2305,11 @@ state 101
    66 binary_expression: expression SUB . expression
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -2341,11 +2341,11 @@ state 102
    67 binary_expression: expression MUL . expression
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -2377,11 +2377,11 @@ state 103
    68 binary_expression: expression DIV . expression
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -2413,11 +2413,11 @@ state 104
    69 binary_expression: expression MOD . expression
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -2449,11 +2449,11 @@ state 105
    72 binary_expression: expression EQ . expression
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -2485,11 +2485,11 @@ state 106
    73 binary_expression: expression NE . expression
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -2521,11 +2521,11 @@ state 107
    74 binary_expression: expression GT . expression
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -2557,11 +2557,11 @@ state 108
    75 binary_expression: expression GE . expression
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -2593,11 +2593,11 @@ state 109
    76 binary_expression: expression LT . expression
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -2629,11 +2629,11 @@ state 110
    77 binary_expression: expression LE . expression
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -2665,11 +2665,11 @@ state 111
    70 binary_expression: expression AND . expression
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -2701,11 +2701,11 @@ state 112
    71 binary_expression: expression OR . expression
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -2737,11 +2737,11 @@ state 113
    78 binary_expression: expression BIT_AND . expression
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -2773,11 +2773,11 @@ state 114
    79 binary_expression: expression BIT_OR . expression
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -2809,11 +2809,11 @@ state 115
    80 binary_expression: expression BIT_XOR . expression
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -2845,11 +2845,11 @@ state 116
    81 binary_expression: expression QM . expression COLON expression
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -2891,11 +2891,11 @@ state 118
    50 assign_expression: lvalue_expression ASSIGN . expression
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -2927,11 +2927,11 @@ state 119
    51 assign_expression: lvalue_expression ADD_ASSIGN . expression
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -2963,11 +2963,11 @@ state 120
    52 assign_expression: lvalue_expression SUB_ASSIGN . expression
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -2999,11 +2999,11 @@ state 121
    53 assign_expression: lvalue_expression MUL_ASSIGN . expression
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -3035,11 +3035,11 @@ state 122
    54 assign_expression: lvalue_expression DIV_ASSIGN . expression
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -3071,11 +3071,11 @@ state 123
    55 assign_expression: lvalue_expression MOD_ASSIGN . expression
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -3117,11 +3117,11 @@ state 124
   127              | LEFT_QUAD . COLON COLON RIGHT_QUAD
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -3215,11 +3215,11 @@ state 131
    99 element_list: element_list COMMA . expression
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -3323,11 +3323,11 @@ state 136
   104 assign_list: IDENTIFER ASSIGN . expression
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -3385,11 +3385,11 @@ state 140
     NOP               shift, and go to state 12
     CLASS             shift, and go to state 13
     SHARED            shift, and go to state 14
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     VAR               shift, and go to state 22
@@ -4474,11 +4474,11 @@ state 178
   127              | LEFT_QUAD COLON . COLON RIGHT_QUAD
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -4569,11 +4569,11 @@ state 180
   138              | evaluate_list LEFT_QUAD . COLON COLON RIGHT_QUAD
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -4668,11 +4668,11 @@ state 184
   110 argument_list: IDENTIFER COLON . expression
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -4712,11 +4712,11 @@ state 186
   112              | argument_list COMMA . IDENTIFER COLON expression
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 212
     LEFT_PAREN        shift, and go to state 24
@@ -4805,11 +4805,11 @@ state 189
     NOP               shift, and go to state 12
     CLASS             shift, and go to state 13
     SHARED            shift, and go to state 14
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     VAR               shift, and go to state 22
@@ -4890,11 +4890,11 @@ state 193
   142 for_statement: FOR LEFT_PAREN single_statement_no_semicolon SEMICOLON . expression_statement SEMICOLON single_statement_no_semicolon RIGHT_PAREN
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -4982,11 +4982,11 @@ state 201
    81 binary_expression: expression QM expression COLON . expression
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -5081,11 +5081,11 @@ state 205
   123              | LEFT_QUAD expression COLON . COLON expression RIGHT_QUAD
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -5122,11 +5122,11 @@ state 206
   138              | evaluate_list LEFT_QUAD COLON . COLON RIGHT_QUAD
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -5330,11 +5330,11 @@ state 214
   106 assign_list: assign_list COMMA IDENTIFER ASSIGN . expression
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -5385,11 +5385,11 @@ state 217
     NOP               shift, and go to state 12
     CLASS             shift, and go to state 13
     SHARED            shift, and go to state 14
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     VAR               shift, and go to state 22
@@ -5462,11 +5462,11 @@ state 220
   114 parameter_list: IDENTIFER ASSIGN . expression
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -5587,11 +5587,11 @@ state 226
   126              | LEFT_QUAD COLON expression COLON . expression RIGHT_QUAD
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -5632,11 +5632,11 @@ state 228
   123              | LEFT_QUAD expression COLON COLON . expression RIGHT_QUAD
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -5776,11 +5776,11 @@ state 233
   134              | evaluate_list LEFT_QUAD expression COLON . COLON expression RIGHT_QUAD
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -5830,11 +5830,11 @@ state 236
   112 argument_list: argument_list COMMA IDENTIFER COLON . expression
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -5922,11 +5922,11 @@ state 240
   145 do_while_statement: DO structure_statement WHILE LEFT_PAREN . expression_statement RIGHT_PAREN SEMICOLON
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -5959,11 +5959,11 @@ state 241
   142 for_statement: FOR LEFT_PAREN single_statement_no_semicolon SEMICOLON expression_statement SEMICOLON . single_statement_no_semicolon RIGHT_PAREN
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -6164,11 +6164,11 @@ state 249
   120              | LEFT_QUAD expression COLON expression COLON . expression RIGHT_QUAD
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -6216,11 +6216,11 @@ state 252
   137              | evaluate_list LEFT_QUAD COLON expression COLON . expression RIGHT_QUAD
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -6261,11 +6261,11 @@ state 254
   134              | evaluate_list LEFT_QUAD expression COLON COLON . expression RIGHT_QUAD
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -6405,11 +6405,11 @@ state 260
   116 parameter_list: parameter_list COMMA IDENTIFER ASSIGN . expression
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24
@@ -6607,11 +6607,11 @@ state 270
   131              | evaluate_list LEFT_QUAD expression COLON expression COLON . expression RIGHT_QUAD
 
     NEW               shift, and go to state 11
-    INT_VALUE         shift, and go to state 15
-    BOOLEAN_VALUE     shift, and go to state 16
-    FLOAT_VALUE       shift, and go to state 17
-    STRING_VALUE      shift, and go to state 18
-    NULL_VALUE        shift, and go to state 19
+    INT_LTR           shift, and go to state 15
+    BLN_LTR           shift, and go to state 16
+    FLT_LTR           shift, and go to state 17
+    STR_LTR           shift, and go to state 18
+    NLL_LTR           shift, and go to state 19
     SHORTCUT_PRINTLN  shift, and go to state 20
     IDENTIFER         shift, and go to state 21
     LEFT_PAREN        shift, and go to state 24

@@ -12,10 +12,10 @@
 
 extern int chkStmtAlwSubStmt(struct StmtStrc* stmt);
 extern int chkStmtAlwScndStmt(struct StmtStrc* stmt);
-extern int asgnVrb(struct VrbStrc* vrb, struct CnstStrc* vl);
+extern int asnVrb(struct VrbStrc* vrb, struct ValStrc* vl);
 extern StmtStrc* lstStmt;
 extern ExpStrc* bldVrbExp(char* idtf);
-extern CnstStrc* clcExp(vector<EnvrStrc*>& envr, struct ExpStrc* exp);
+extern ValStrc* clcExp(vector<EnvrStrc*>& envr, struct ExpStrc* exp);
 extern VrbStrc* getVrb(vector<EnvrStrc*>& envr, struct VrbExpStrc* vrbExp);
 extern VrbStrc* addVrb(struct EnvrStrc* envr, struct VrbExpStrc* vrbExp);
 extern VrbStrc* addVrbGlb(vector<EnvrStrc*>& envr, VrbExpStrc* vrbExp);
@@ -385,7 +385,7 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 
 		if (stmt->typ == StmtEnm::Exp)
 		{
-			struct CnstStrc* rsltExp;
+			struct ValStrc* rsltExp;
 
 			rsltExp = clcExp(envr, static_cast<ExpStmtStrc*>(stmt)->exp);
 
@@ -401,7 +401,7 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 
 			for (i = 0; i < varStmt->asgnLst->asgnArr.size(); i++)
 			{
-				struct CnstStrc* rslt;
+				struct ValStrc* rslt;
 				struct VrbExpStrc* vrbExp;
 
 				vrbExp = varStmt->asgnLst->asgnArr[i]->lvl->vrb;
@@ -415,14 +415,14 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 					throw new ExVrbRdfn();
 				}
 
-				if (varStmt->asgnLst->asgnArr[i]->exp->typ != NULL_EXPRESSION)
+				if (varStmt->asgnLst->asgnArr[i]->exp->typ != ExpEnm::Nll)
 				{
 					rslt = clcExp(envr, varStmt->asgnLst->asgnArr[i]->exp);
-					asgnVrb(vrb, rslt);
+					asnVrb(vrb, rslt);
 				}
 				else
 				{
-					asgnVrb(vrb, bldNllCnst());
+					asnVrb(vrb, bldNllVal());
 					//rslt = bldNllCnst();
 
 				}
@@ -457,9 +457,9 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 
 				vrb = addVrbGlb(envr, glb);
 
-				CnstStrc* vl = clcExp(envr, glbStmt->asgnLst->asgnArr[i]->exp);
+				ValStrc* vl = clcExp(envr, glbStmt->asgnLst->asgnArr[i]->exp);
 
-				asgnVrb(vrb, vl);
+				asnVrb(vrb, vl);
 			}
 
 			printf("glb dfnd\n");
@@ -472,11 +472,11 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 		{
 			auto ifStmt = static_cast<IfStmtStrc*>(stmt);
 
-			envr.push_back(new EnvrStrc(STATEMENT_ENVIRONMENT));
+			envr.push_back(new EnvrStrc(EnvrEnm::Stmt));
 
 			//printf("clcExp(envr, stmt->stmt.ifStmt->exp)->vl.intVl: %d\n", clcExp(envr, stmt->stmt.ifStmt->exp)->vl.intVl);
 
-			if ((ifStmt->expRslt = clcExp(envr, ifStmt->exp)->vl.intVl) != 0)
+			if ((ifStmt->expRslt = clcExp(envr, ifStmt->exp)->v.int_) != 0)
 			{
 				rslt = exctStmt(envr, ifStmt->stmt);
 			}
@@ -533,7 +533,7 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 			}
 
 
-			envr.push_back(new EnvrStrc(STATEMENT_ENVIRONMENT));
+			envr.push_back(new EnvrStrc(EnvrEnm::Stmt));
 
 			rslt = exctStmt(envr, elsStmt->stmt);
 
@@ -581,10 +581,10 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 
 
 
-			CnstStrc* expRslt = nullptr;
-			envr.push_back(new EnvrStrc(STATEMENT_ENVIRONMENT));
+			ValStrc* expRslt = nullptr;
+			envr.push_back(new EnvrStrc(EnvrEnm::Stmt));
 
-			if ((elifStmt->expRslt = clcExp(envr, elifStmt->exp)->vl.intVl) != 0)
+			if ((elifStmt->expRslt = clcExp(envr, elifStmt->exp)->v.int_) != 0)
 			{
 				rslt = exctStmt(envr, elifStmt->stmt);
 			}
@@ -600,11 +600,11 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 		{
 			//prtCnst(clcExp(stmt->stmt.ifStmt->exp)); 
 
-			envr.push_back(new EnvrStrc(STATEMENT_ENVIRONMENT));
+			envr.push_back(new EnvrStrc(EnvrEnm::Stmt));
 
 			auto ifStmt = static_cast<IfElsStmtStrc*>(stmt);
 
-			if ((clcExp(envr, ifStmt->exp)->vl.intVl) != 0)
+			if ((clcExp(envr, ifStmt->exp)->v.int_) != 0)
 			{
 				rslt = exctStmt(envr, ifStmt->stmt);
 			}
@@ -622,13 +622,13 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 			std::chrono::steady_clock::time_point tmStrt;
 			tmStrt = std::chrono::steady_clock::now();
 
-			envr.push_back(new EnvrStrc(STATEMENT_ENVIRONMENT));
+			envr.push_back(new EnvrStrc(EnvrEnm::Stmt));
 
 			auto forStmt = static_cast<ForStmtStrc*>(stmt);
 
 			rslt = exctStmt(envr, forStmt->intl);
 
-			while ((clcExp(envr, static_cast<ExpStmtStrc*>(forStmt->exp)->exp)->vl.intVl) != 0)
+			while ((clcExp(envr, static_cast<ExpStmtStrc*>(forStmt->exp)->exp)->v.int_) != 0)
 			{
 				//上一次循环中使用了continue语句
 				if (rslt->typ == RtnEnm::Cntn)
@@ -704,9 +704,9 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 
 			auto whlStmt = static_cast<WhlStmtStrc*>(stmt);
 
-			envr.push_back(new EnvrStrc(STATEMENT_ENVIRONMENT));
+			envr.push_back(new EnvrStrc(EnvrEnm::Stmt));
 
-			while (whlStmt->exp == nullptr || clcExp(envr, (whlStmt->exp))->vl.intVl != 0)
+			while (whlStmt->exp == nullptr || clcExp(envr, (whlStmt->exp))->v.int_ != 0)
 			{
 				if (rslt->typ == RtnEnm::Cntn)
 				{
@@ -809,7 +809,7 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 
 					continue;
 				}
-			} while (clcExp(envr, doWhlStmt->exp->exp)->vl.intVl != 0);
+			} while (clcExp(envr, doWhlStmt->exp->exp)->v.int_ != 0);
 
 			if (rslt->typ == RtnEnm::Cntn)
 			{
@@ -823,7 +823,7 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 		{
 			auto stmtBlk = static_cast<StmtBlkStrc*>(stmt);
 
-			envr.push_back(new EnvrStrc(STATEMENT_BLOCK_ENVIRONMENT));
+			envr.push_back(new EnvrStrc(EnvrEnm::Blk));
 
 			int i;
 
@@ -853,7 +853,7 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 
 			rslt->rslt.brkRslt = new BrkRsltStrc;
 
-			rslt->rslt.brkRslt->brkCnt = clcExp(envr, brkStmt->exp)->vl.intVl;
+			rslt->rslt.brkRslt->brkCnt = clcExp(envr, brkStmt->exp)->v.int_;
 		}
 
 		if (stmt->typ == StmtEnm::Cntn)
@@ -864,7 +864,7 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 
 			rslt->rslt.cntnRslt = new CntnRsltStrc;
 
-			rslt->rslt.cntnRslt->cntnCnt = clcExp(envr, cntnStmt->exp)->vl.intVl;
+			rslt->rslt.cntnRslt->cntnCnt = clcExp(envr, cntnStmt->exp)->v.int_;
 		}
 
 		if (stmt->typ == StmtEnm::DfnFcn)
@@ -907,11 +907,11 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, struct StmtStrc* stmt)
 						vrb->nm = new string(static_cast<VarStmtStrc*>(stmtArr.at(i))->asgnLst->asgnArr.at(j)->lvl->vrb->nm);
 
 						//获取变量值
-						CnstStrc* expRslt = clcExp(envr, static_cast<VarStmtStrc*>(stmtArr.at(i))->asgnLst->asgnArr.at(j)->exp);
+						ValStrc* expRslt = clcExp(envr, static_cast<VarStmtStrc*>(stmtArr.at(i))->asgnLst->asgnArr.at(j)->exp);
 
-						printf("expRslt typ: %d cnst typ: %d\n", expRslt->typ, expRslt->CnstTyp);
+						printf("expRslt typ: %d cnst typ: %d\n", expRslt->typ, expRslt->typ);
 
-						asgnVrb(vrb, expRslt);
+						asnVrb(vrb, expRslt);
 
 						cls->vrb.push_back(vrb);
 					}

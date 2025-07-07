@@ -15,18 +15,15 @@ extern ExpStrc* bldLvlExp(struct ExpStrc* vrb);
 
 VrbStrc* bldVrb(string nm);
 VrbStrc* cpyVrb(VrbStrc* vrb, string* nm);
-int asgnVrb(struct VrbStrc* vrb, struct CnstStrc* vl);
-CnstStrc* bldCnstFrmVrb(struct VrbStrc* vrb);
+int asnVrb(struct VrbStrc* vrb, struct ValStrc* vl);
+ValStrc* bldValFrmVrb(struct VrbStrc* vrb);
 AsgnLstStrc* bldAsgnLst();
 int asgnLstAdd(struct AsgnLstStrc* asgnLst, struct ExpStrc* vrb, struct ExpStrc* exp);
 
 //对变量数组中的选定变量进行赋值
-int asgnVrb(struct VrbStrc* vrb, struct CnstStrc* vl)
+int asnVrb(struct VrbStrc* vrb, struct ValStrc* vl)
 {
-	vrb->typ = vl->CnstTyp;
-
-	memset(&(vrb->vl), 0, sizeof(VlUnn));
-	memcpy(&(vrb->vl), &(vl->vl), sizeof(VlUnn));
+	vrb->val =cpyVal(vl);
 
 	return 0;
 }
@@ -35,10 +32,7 @@ struct VrbStrc* cpyVrb(VrbStrc* vrb, string* nm = nullptr)
 {
 	auto rslt = new VrbStrc;
 
-	rslt->typ = vrb->typ;
-	rslt->vl = vrb->vl;
-
-	//printf("cpy vrb: typ: %d\n", rslt->typ);
+	rslt->val = cpyVal(vrb->val);
 
 	if (nm != nullptr)
 	{
@@ -52,15 +46,14 @@ struct VrbStrc* cpyVrb(VrbStrc* vrb, string* nm = nullptr)
 	return rslt;
 }
 
-struct CnstStrc* bldCnstFrmVrb(struct VrbStrc* vrb)
+struct ValStrc* bldValFrmVrb(struct VrbStrc* vrb)
 {
-	struct CnstStrc* rslt = new CnstStrc;
+	ValStrc* rslt = new ValStrc;
 
-	rslt->typ = vrb->typ;
-	rslt->CnstTyp = vrb->typ;
+	rslt->typ = vrb->getTyp();
 
-	memset(&(rslt->vl), 0, sizeof(VlUnn));
-	memcpy(&(rslt->vl), &(vrb->vl), sizeof(VlUnn));
+	memset(&(rslt->v), 0, sizeof(ValUnn));
+	memcpy(&(rslt->v), &(vrb->getVal()), sizeof(ValUnn));
 
 	return rslt;
 }
@@ -72,7 +65,7 @@ struct VrbStrc* bldVrb(string nm)
 
 	rslt->nm = new string(nm);
 
-	rslt->typ = -1;
+	//rslt->typ = -1;
 
 	return rslt;
 }
@@ -87,7 +80,7 @@ struct AsgnLstStrc* bldAsgnLst()
 
 int asgnLstAdd(struct AsgnLstStrc* asgnLst, struct ExpStrc* vrb, struct ExpStrc* exp)
 {
-	asgnLst->asgnArr.push_back(static_cast<AsgnExpStrc*>(bldAsgnExp(bldLvlExp(vrb), exp)));
+	asgnLst->asgnArr.push_back(static_cast<AsnExpStrc*>(bldAsgnExp(bldLvlExp(vrb), exp)));
 
 	return 0;
 }

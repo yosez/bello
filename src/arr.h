@@ -10,8 +10,8 @@
 
 
 //�˲�������ı�������������ɾ��
-extern struct ExpStrc* bldCnstIntExp(int intVl);
-extern struct CnstStrc* clcExp(vector<EnvrStrc*>& envr, struct ExpStrc* exp);
+extern struct ExpStrc* bldIntValExp(int intVl);
+extern struct ValStrc* clcExp(vector<EnvrStrc*>& envr, struct ExpStrc* exp);
 
 struct ElmtLstStrc* bldElmtLst()
 {
@@ -56,7 +56,7 @@ int intlArr(struct ArrStrc** arr)
 	return 0;
 }
 
-int addElmt(struct ArrStrc* arr, struct CnstStrc* elmt)
+int addElmt(struct ArrStrc* arr, struct ValStrc* elmt)
 {
 
 
