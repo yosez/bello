@@ -47,7 +47,6 @@ struct NllStmtStrc;
 struct ExpStmtStrc;
 struct StmtStrc;
 
-struct ValStrc;
 
 struct RtnRsltStrc;
 struct BrkRsltStrc;
@@ -259,6 +258,23 @@ public:
 	ValStrc()
 	{
 	};
+
+	ValStrc operator +(ValStrc &opr, ValStrc &opr2)
+	{
+		ValStrc *rslt = new ValStrc();
+
+		if (opr.typ == ValEnm::Int && opr.typ ==ValEnm::Int)
+		{
+			rslt->typ = ValEnm::Int;
+			rslt->v.int_ = opr.v.int_ + opr2.v.int_;
+		}
+		else if (opr.typ == ValEnm::Int && opr2.typ == ValEnm::Flt)
+		{
+			rslt->typ =ValEnm::Flt;
+			rslt->v.flt = opr.v.int_+opr2.v.flt;
+		}
+
+	}
 };
 
 struct VrbStrc

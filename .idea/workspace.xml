@@ -63,14 +63,17 @@
     <setting file="file://$PROJECT_DIR$/src/cls.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/dftn.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/envr.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/err.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/exp.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/expt.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/fcn.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/lex.yy.c" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/ntv.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/stmt.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/val.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/vrb.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/y.tab.c" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/y.tab.h" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
@@ -193,7 +196,10 @@
       <workItem from="1751721617165" duration="12122000" />
       <workItem from="1751777983009" duration="6322000" />
       <workItem from="1751890999818" duration="141000" />
-      <workItem from="1751891154624" duration="365000" />
+      <workItem from="1751891154624" duration="1059000" />
+      <workItem from="1751892248677" duration="972000" />
+      <workItem from="1751990438740" duration="66000" />
+      <workItem from="1751990513605" duration="954000" />
     </task>
     <task id="LOCAL-00001" summary="测试提交">
       <option name="closed" value="true" />
@@ -291,7 +297,23 @@
       <option name="project" value="LOCAL" />
       <updated>1751641534588</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="将定义源文件中的枚举类型修改c++枚举类型,并进行了相关修正.&#10;将值结构体独立出来,增加了值表达式结构体,并进行了相关修正.">
+      <option name="closed" value="true" />
+      <created>1751892012515</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1751892012515</updated>
+    </task>
+    <task id="LOCAL-00014" summary="更新了val.h文件">
+      <option name="closed" value="true" />
+      <created>1751892114806</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1751892114806</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -313,7 +335,9 @@
     <MESSAGE value="删除了linenoise类库的编译选项,并进行了相关修正.&#10;增加了接收命令行参数运行的功能." />
     <MESSAGE value="正在将枚举类型的数据修改为c++枚举类的类型,并进行相关的修正." />
     <MESSAGE value="使用头文件保护修改了程序,并进行了相关修正.&#10;语句枚举类型修改为强枚举类型,并进行了相关修正." />
-    <option name="LAST_COMMIT_MESSAGE" value="使用头文件保护修改了程序,并进行了相关修正.&#10;语句枚举类型修改为强枚举类型,并进行了相关修正." />
+    <MESSAGE value="将定义源文件中的枚举类型修改c++枚举类型,并进行了相关修正.&#10;将值结构体独立出来,增加了值表达式结构体,并进行了相关修正." />
+    <MESSAGE value="更新了val.h文件" />
+    <option name="LAST_COMMIT_MESSAGE" value="更新了val.h文件" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
