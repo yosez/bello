@@ -443,22 +443,22 @@ unary_expression
     | BIT_NOT expression { $$=bldUnrExp(BIT_NOT, $2); }
 
 binary_expression
-    : expression ADD expression { $$=bldBnrExp(ADD, $1, $3); }
-    | expression SUB expression { $$=bldBnrExp(SUB, $1, $3); }
-    | expression MUL expression { $$=bldBnrExp(MUL, $1, $3); }
-    | expression DIV expression { $$=bldBnrExp(DIV, $1, $3); }
-    | expression MOD expression { $$=bldBnrExp(MOD, $1, $3); }
-    | expression AND expression { $$=bldBnrExp(AND, $1, $3); }
-    | expression OR expression { $$=bldBnrExp(OR, $1, $3); }
-    | expression EQ expression { $$=bldBnrExp(EQ, $1, $3); }
-    | expression NE expression { $$=bldBnrExp(NE, $1, $3); }
-    | expression GT expression { $$=bldBnrExp(GT, $1, $3); }
-    | expression GE expression { $$=bldBnrExp(GE, $1, $3); }
-    | expression LT expression { $$=bldBnrExp(LT, $1, $3); }
-    | expression LE expression { $$=bldBnrExp(LE, $1, $3); }
-    | expression BIT_AND expression { $$=bldBnrExp(BIT_AND, $1, $3); }
-    | expression BIT_OR expression { $$=bldBnrExp(BIT_OR, $1, $3); }
-    | expression BIT_XOR expression { $$=bldBnrExp(BIT_XOR, $1, $3); }
+    : expression ADD expression { $$=bldBnrExp(OprEnm::Add, $1, $3); }
+    | expression SUB expression { $$=bldBnrExp(OprEnm::Sub, $1, $3); }
+    | expression MUL expression { $$=bldBnrExp(OprEnm::Mul, $1, $3); }
+    | expression DIV expression { $$=bldBnrExp(OprEnm::Div, $1, $3); }
+    | expression MOD expression { $$=bldBnrExp(OprEnm::Mod, $1, $3); }
+    | expression AND expression { $$=bldBnrExp(OprEnm::And, $1, $3); }
+    | expression OR expression { $$=bldBnrExp(OprEnm::Or, $1, $3); }
+    | expression EQ expression { $$=bldBnrExp(OprEnm::Eq, $1, $3); }
+    | expression NE expression { $$=bldBnrExp(OprEnm::Ne, $1, $3); }
+    | expression GT expression { $$=bldBnrExp(OprEnm::Gt, $1, $3); }
+    | expression GE expression { $$=bldBnrExp(OprEnm::Ge, $1, $3); }
+    | expression LT expression { $$=bldBnrExp(OprEnm::Lt, $1, $3); }
+    | expression LE expression { $$=bldBnrExp(OprEnm::Le, $1, $3); }
+    | expression BIT_AND expression { $$=bldBnrExp(OprEnm::BAnd, $1, $3); }
+    | expression BIT_OR expression { $$=bldBnrExp(OprEnm::BOr, $1, $3); }
+    | expression BIT_XOR expression { $$=bldBnrExp(OprEnm::BXor, $1, $3); }
     | expression QM expression COLON expression { $$ = bldTnrExp(QM, $1, $3, $5); }
 
 shortcut_expression

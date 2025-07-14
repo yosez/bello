@@ -11,6 +11,20 @@
 
 #include "dftn.h"
 
+
+#define isInt(val) ((val)->typ == ValEnm::Int)
+#define isFlt(val) ((val)->typ == ValEnm::Flt)
+#define isStr(val) ((val)->typ == ValEnm::Str)
+#define isBln(val) ((val)->typ == ValEnm::Bln)
+#define getInt(val) ((val)->v.int_)
+#define getFlt(val) ((val)->v.flt)
+#define getStr(val) ((val)->v.str)
+#define getBln(val) ((val)->v.bln)
+#define setInt(val, arg) {(val)->typ=ValEnm::Int; (val)->v.int_ = (arg); }
+#define setFlt(val, arg) {(val)->typ=ValEnm::Flt; (val)->v.flt = (arg); }
+#define setStr(val, arg) {(val)->typ=ValEnm::Str; (val)->v.str = (arg); }
+#define setBln(val, arg) {(val)->typ=ValEnm::Bln; (val)->v.bln = (arg); }
+
 using namespace std;
 
 struct VrbStrc;
@@ -125,6 +139,30 @@ enum class ExpEnm
 	NewArr,
 	Lvl,
 	New,
+};
+
+enum class OprEnm
+{
+	Add=1,
+	Sub,
+	Mul,
+	Div,
+	Mod,
+	Eq,
+	Ne,
+	Gt,
+	Ge,
+	Lt,
+	Le,
+	Asn,
+	And,
+	Or,
+	Xor,
+	Not,
+	BAnd,
+	BOr,
+	BXor,
+	BNot
 };
 
 enum class ValEnm : int
@@ -259,22 +297,292 @@ public:
 	{
 	};
 
-	ValStrc operator +(ValStrc &opr, ValStrc &opr2)
+	ValStrc operator +(ValStrc &o2) const
 	{
 		ValStrc *rslt = new ValStrc();
 
-		if (opr.typ == ValEnm::Int && opr.typ ==ValEnm::Int)
+		if (isInt(this) && isInt(&o2))
 		{
-			rslt->typ = ValEnm::Int;
-			rslt->v.int_ = opr.v.int_ + opr2.v.int_;
+			setInt(rslt, getInt(this) + getInt(&o2));
 		}
-		else if (opr.typ == ValEnm::Int && opr2.typ == ValEnm::Flt)
+		else if (isInt(this) && isFlt(&o2))
 		{
-			rslt->typ =ValEnm::Flt;
-			rslt->v.flt = opr.v.int_+opr2.v.flt;
+			setFlt(rslt, getInt(this) + getFlt(&o2));
+		}
+		else if (isFlt(this) && isInt(&o2))
+		{
+			setFlt(rslt, getFlt(this) + getInt(&o2))
+		}
+		else if (isFlt(this) && isFlt(&o2))
+		{
+			setFlt(rslt, getFlt(this)+getFlt(&o2));
+		}
+		else if (isStr(this) && isStr(&o2))
+		{
+			setStr(rslt, new std::string(*getStr(this)+*getStr(&o2)))
 		}
 
+		return *rslt;
 	}
+
+	ValStrc operator -(ValStrc &o2)
+	{
+		ValStrc *rslt = new ValStrc();
+
+		if (isInt(this) && isInt(&o2))
+		{
+			setInt(rslt, getInt(this) - getInt(&o2));
+		}
+		else if (isInt(this) && isFlt(&o2))
+		{
+			setFlt(rslt, getInt(this) - getFlt(&o2));
+		}
+		else if (isFlt(this) && isInt(&o2))
+		{
+			setFlt(rslt, getFlt(this) - getFlt(&o2));
+		}
+		else if (isFlt(this) && isFlt(&o2))
+		{
+			setFlt(rslt, getFlt(this) - getFlt(&o2));
+		}
+
+		return *rslt;
+	}
+
+	ValStrc operator *(ValStrc &o2)
+	{
+		ValStrc *rslt = new ValStrc();
+
+		if (isInt(this) && isInt(&o2))
+		{
+			setInt(rslt, getInt(this)*getInt(&o2));
+		}
+		else if (isInt(this) && isFlt(&o2))
+		{
+			setFlt(rslt, getInt(this)*getFlt(&o2))
+		}
+		else if (isFlt(this) && isInt(&o2))
+		{
+			setFlt(rslt, getFlt(this)*getInt(&o2))
+		}
+		else if (isFlt(this) && isFlt(&o2))
+		{
+			setFlt(rslt, getFlt(this)*getFlt(&o2));
+		}
+
+		return *rslt;
+	}
+
+	ValStrc operator/(ValStrc &o2)
+	{
+		ValStrc *rslt = new ValStrc();
+
+		if (isInt(this) && isInt(&o2))
+		{
+			setInt(rslt, getInt(this)/getInt(&o2));
+		}
+		else if (isInt(this) && isFlt(&o2) && getFlt(&o2)!=0)
+		{
+			setFlt(rslt, getInt(this)/getFlt(&o2));
+		}
+		else if (isFlt(this) && isInt(&o2))
+		{
+			setFlt(rslt, getFlt(this)/getFlt(&o2));
+		}
+		else if (isFlt(this) && isFlt(&o2) && getFlt(&o2)!=0)
+		{
+			setFlt(rslt, getFlt(this)/getFlt(&o2));
+		}
+
+		return *rslt;
+	}
+
+	ValStrc operator %(ValStrc &o2) const
+	{
+		ValStrc *rslt = new ValStrc();
+
+		if (isInt(this) && isInt(&o2))
+		{
+			setInt(rslt, getInt(this) % getInt(&o2));
+		}
+		else if (isInt(this) && isFlt(&o2))
+		{
+			setFlt(rslt, fmod(getInt(this) , getFlt(&o2)));
+		}
+		else if (isFlt(this) && isInt(&o2))
+		{
+			setFlt(rslt, fmod(getFlt(this) , getInt(&o2)));
+		}
+		else if (isFlt(this) && isFlt(&o2))
+		{
+			setFlt(rslt, fmod(getFlt(this), getFlt(&o2)));
+		}
+
+		return *rslt;
+	}
+
+	bool operator >(ValStrc &o2) const
+	{
+		bool bln;
+
+		if (isInt(this) && isInt(&o2))
+		{
+			bln = getInt(this) > getInt(&o2);
+		}
+		else if (isInt(this) && isFlt(&o2))
+		{
+			bln = getInt(this) > getFlt(&o2);
+		}
+		else if (isFlt(this) && isInt(&o2))
+		{
+			bln = getFlt(this) > getInt(&o2);
+		}
+		else if (isFlt(this) && isFlt(&o2))
+		{
+			bln = getFlt(this) > getFlt(&o2);
+		}
+
+		return bln;
+	}
+
+	bool operator >=(ValStrc &o2) const
+	{
+		bool bln;
+
+		if (isInt(this) && isInt(&o2))
+		{
+			bln = getInt(this) >= getInt(&o2);
+		}
+		else if (isInt(this) && isFlt(&o2))
+		{
+			bln = getInt(this) >= getFlt(&o2);
+		}
+		else if (isFlt(this) && isInt(&o2))
+		{
+			bln = getFlt(this) >= getInt(&o2);
+		}
+		else if (isFlt(this) && isFlt(&o2))
+		{
+			bln = getFlt(this) >= getFlt(&o2);
+		}
+
+		return bln;
+	}
+
+	bool operator <(ValStrc &o2) const
+	{
+		bool bln;
+
+		if (isInt(this) && isInt(&o2))
+		{
+			bln = getInt(this) < getInt(&o2);
+		}
+		else if (isInt(this) && isFlt(&o2))
+		{
+			bln = getInt(this) < getFlt(&o2);
+		}
+		else if (isFlt(this) && isInt(&o2))
+		{
+			bln = getFlt(this) < getInt(&o2);
+		}
+		else if (isFlt(this) && isFlt(&o2))
+		{
+			bln = getFlt(this) < getFlt(&o2);
+		}
+
+		return bln;
+	}
+
+	bool operator <=(ValStrc &o2) const
+	{
+		bool bln;
+
+		if (isInt(this) && isInt(&o2))
+		{
+			bln = getInt(this) <= getInt(&o2);
+		}
+		else if (isInt(this) && isFlt(&o2))
+		{
+			bln = getInt(this) <= getFlt(&o2);
+		}
+		else if (isFlt(this) && isInt(&o2))
+		{
+			bln = getFlt(this) <= getInt(&o2);
+		}
+		else if (isFlt(this) && isFlt(&o2))
+		{
+			bln = getFlt(this) <= getFlt(&o2);
+		}
+
+		return bln;
+	}
+
+	bool operator ==(ValStrc &o2) const
+	{
+		bool bln;
+
+		if (isInt(this) && isInt(&o2))
+		{
+			bln = getInt(this) == getInt(&o2);
+		}
+		else if (isInt(this) && isFlt(&o2))
+		{
+			bln = getInt(this) == getFlt(&o2);
+		}
+		else if (isFlt(this) && isInt(&o2))
+		{
+			bln = getFlt(this) == getInt(&o2);
+		}
+		else if (isFlt(this) && isFlt(&o2))
+		{
+			bln = getFlt(this) == getFlt(&o2);
+		}
+		else if (isBln(this) && isBln(&o2))
+		{
+			bln = getBln(this) == getBln(&o2);
+		}
+		else if (isStr(this) && isStr(&o2))
+		{
+			bln = getStr(this) ==getStr(&o2);
+		}
+
+		return bln;
+	}
+
+	bool operator !=(ValStrc &o2) const
+	{
+		bool bln;
+
+		if (isInt(this) && isInt(&o2))
+		{
+			bln = getInt(this) != getInt(&o2);
+		}
+		else if (isInt(this) && isFlt(&o2))
+		{
+			bln = getInt(this) != getFlt(&o2);
+		}
+		else if (isFlt(this) && isInt(&o2))
+		{
+			bln = getFlt(this) != getInt(&o2);
+		}
+		else if (isFlt(this) && isFlt(&o2))
+		{
+			bln = getFlt(this) != getFlt(&o2);
+		}
+		else if (isBln(this) && isBln(&o2))
+		{
+			bln = getBln(this) != getBln(&o2);
+		}
+		else if (isStr(this) && isStr(&o2))
+		{
+			bln = getStr(this) != getStr(&o2);
+		}
+
+		return bln;
+	}
+
+	bool
+
 };
 
 struct VrbStrc
@@ -304,32 +612,32 @@ struct ValExpStrc: public ExpStrc
 
 struct AsnExpStrc : public ExpStrc
 {
-	struct LvlExpStrc* lvl;
-	struct ExpStrc* exp;
+	LvlExpStrc* lvl;
+	ExpStrc* exp;
 };
 
 struct NewExpStrc :public ExpStrc
 {
 	string* nm;
-	struct ArgLstStrc* arg;
+	ArgLstStrc* arg;
 };
 
 struct BnrExpStrc : public ExpStrc
 {
-	int oprTyp;
-	struct ExpStrc* lftExp, * rghtExp;
+	OprEnm opr;
+	ExpStrc* lft, * rgt;
 };
 
 struct UnrExpStrc : public ExpStrc
 {
-	int oprTyp;
+	OprEnm opr;
 	struct LvlExpStrc* exp;
 };
 
 struct TnrExpStrc : public ExpStrc
 {
-	int oprTyp;
-	struct ExpStrc* frstExp, * scndExp, * trdExp;
+	OprEnm opr;
+	ExpStrc* frst, * scnd, * trd;
 };
 
 struct FcnExpStrc : public ExpStrc
