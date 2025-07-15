@@ -10,7 +10,7 @@
 #include "dftn.h"
 #include "exp.h"
 
-extern ExpStrc* bldAsgnExp(struct ExpStrc* vrb, struct ExpStrc* exp);
+extern ExpStrc* bldAsnExp(struct ExpStrc* vrb, struct ExpStrc* exp);
 extern ExpStrc* bldLvlExp(struct ExpStrc* vrb);
 
 VrbStrc* bldVrb(string nm);
@@ -80,7 +80,7 @@ struct AsgnLstStrc* bldAsgnLst()
 
 int asgnLstAdd(struct AsgnLstStrc* asgnLst, struct ExpStrc* vrb, struct ExpStrc* exp)
 {
-	asgnLst->asgnArr.push_back(static_cast<AsnExpStrc*>(bldAsgnExp(bldLvlExp(vrb), exp)));
+	asgnLst->asgnArr.push_back(static_cast<AsnExpStrc*>(bldAsnExp(bldLvlExp(vrb), exp)));
 
 	return 0;
 }

@@ -9,7 +9,9 @@
 #include <stack>
 #include <map>
 
-#include "dftn.h"
+
+
+using namespace std;
 
 
 #define isInt(val) ((val)->typ == ValEnm::Int)
@@ -24,8 +26,6 @@
 #define setFlt(val, arg) {(val)->typ=ValEnm::Flt; (val)->v.flt = (arg); }
 #define setStr(val, arg) {(val)->typ=ValEnm::Str; (val)->v.str = (arg); }
 #define setBln(val, arg) {(val)->typ=ValEnm::Bln; (val)->v.bln = (arg); }
-
-using namespace std;
 
 struct VrbStrc;
 struct VrbExpStrc;
@@ -162,7 +162,14 @@ enum class OprEnm
 	BAnd,
 	BOr,
 	BXor,
-	BNot
+	BNot,
+	Tnr,
+	Pstv,
+	Ngtv,
+	PfxInc,
+	PfxDec,
+	SfxInc,
+	SfxDec
 };
 
 enum class ValEnm : int
@@ -297,6 +304,11 @@ public:
 	{
 	};
 
+	ValStrc (ValStrc && val):typ(val.typ), v(val.v)
+	{
+
+	};
+
 	ValStrc operator +(ValStrc &o2) const
 	{
 		ValStrc *rslt = new ValStrc();
@@ -421,8 +433,9 @@ public:
 		return *rslt;
 	}
 
-	bool operator >(ValStrc &o2) const
+	ValStrc operator >(ValStrc &o2) const
 	{
+
 		bool bln;
 
 		if (isInt(this) && isInt(&o2))
@@ -442,10 +455,15 @@ public:
 			bln = getFlt(this) > getFlt(&o2);
 		}
 
-		return bln;
+		ValStrc *rslt;
+
+		rslt = new ValStrc();
+		setBln(rslt, bln);
+
+		return *rslt;
 	}
 
-	bool operator >=(ValStrc &o2) const
+	ValStrc operator >=(ValStrc &o2) const
 	{
 		bool bln;
 
@@ -466,10 +484,14 @@ public:
 			bln = getFlt(this) >= getFlt(&o2);
 		}
 
-		return bln;
+		ValStrc *rslt;
+		rslt = new ValStrc();
+		setBln(rslt, bln);
+
+		return *rslt;
 	}
 
-	bool operator <(ValStrc &o2) const
+	ValStrc operator <(ValStrc &o2) const
 	{
 		bool bln;
 
@@ -490,10 +512,14 @@ public:
 			bln = getFlt(this) < getFlt(&o2);
 		}
 
-		return bln;
+		ValStrc *rslt;
+		rslt = new ValStrc();
+		setBln(rslt, bln);
+
+		return *rslt;
 	}
 
-	bool operator <=(ValStrc &o2) const
+	ValStrc operator <=(ValStrc &o2) const
 	{
 		bool bln;
 
@@ -514,10 +540,14 @@ public:
 			bln = getFlt(this) <= getFlt(&o2);
 		}
 
-		return bln;
+		ValStrc *rslt;
+		rslt = new ValStrc();
+		setBln(rslt, bln);
+
+		return *rslt;
 	}
 
-	bool operator ==(ValStrc &o2) const
+	ValStrc operator ==(ValStrc &o2) const
 	{
 		bool bln;
 
@@ -546,10 +576,14 @@ public:
 			bln = getStr(this) ==getStr(&o2);
 		}
 
-		return bln;
+		ValStrc *rslt;
+		rslt = new ValStrc();
+		setBln(rslt, bln);
+
+		return *rslt;
 	}
 
-	bool operator !=(ValStrc &o2) const
+	ValStrc operator !=(ValStrc &o2) const
 	{
 		bool bln;
 
@@ -578,10 +612,14 @@ public:
 			bln = getStr(this) != getStr(&o2);
 		}
 
-		return bln;
+		ValStrc *rslt;
+		rslt = new ValStrc();
+		setBln(rslt, bln);
+
+		return *rslt;
 	}
 
-	bool
+
 
 };
 

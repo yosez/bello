@@ -4,9 +4,10 @@
 #define VAL_H
 #include <stdio.h>
 #include <string.h>
-
 #include "dftn.h"
 
+// struct ValStrc;
+// enum class ValEnm :int;
 
 ValStrc* bldIntVal(int v)
 {

@@ -355,8 +355,7 @@ single_statement
     | break_statement { $$=$1; }
     | continue_statement  { $$=$1; }
     | return_statement  { $$=$1; }
-    | function_statement { $$=$1; } 
-    /* | null_statement  { $$=$1; } */
+    | function_statement { $$=$1; }
     | nop_statement { $$=$1; }
     | var_statement  { $$ = $1;}
     | global_statement  { $$ = $1; } 
@@ -421,26 +420,26 @@ lvalue_operation_expression
     | self_operation_expression
 
 assign_expression
-    : lvalue_expression ASSIGN expression { $$=bldAsgnExp($1, $3); }
-    | lvalue_expression ADD_ASSIGN expression { $$=bldAsgnExp($1, bldBnrExp(ADD, $1, $3)); }
-    | lvalue_expression SUB_ASSIGN expression { $$=bldAsgnExp($1, bldBnrExp(SUB, $1, $3)); }
-    | lvalue_expression MUL_ASSIGN expression { $$=bldAsgnExp($1, bldBnrExp(MUL, $1, $3)); }
-    | lvalue_expression DIV_ASSIGN expression { $$=bldAsgnExp($1, bldBnrExp(DIV, $1, $3)); }
-    | lvalue_expression MOD_ASSIGN expression { $$=bldAsgnExp($1, bldBnrExp(MOD, $1, $3)); }
+    : lvalue_expression ASSIGN expression { $$=bldAsnExp($1, $3); }
+    | lvalue_expression ADD_ASSIGN expression { $$=bldAsgExp($1, bldBnrExp(OprEnm::Add, $1, $3)); }
+    | lvalue_expression SUB_ASSIGN expression { $$=bldAsgExp($1, bldBnrExp(OprEnm::Sub, $1, $3)); }
+    | lvalue_expression MUL_ASSIGN expression { $$=bldAsgExp($1, bldBnrExp(OprEnm::Mul, $1, $3)); }
+    | lvalue_expression DIV_ASSIGN expression { $$=bldAsgExp($1, bldBnrExp(OprEnm::Div, $1, $3)); }
+    | lvalue_expression MOD_ASSIGN expression { $$=bldAsgExp($1, bldBnrExp(OprEnm::Asn, $1, $3)); }
 
 
 self_operation_expression 
-    : INCREMENT lvalue_expression { $$=bldUnrExp(UnrEnm::PfxInc, $2); }
-    | DECREMENT lvalue_expression { $$=bldUnrExp(UnrEnm::PfxDec, $2); }
-    | lvalue_expression INCREMENT { $$=bldUnrExp(UnrEnm::SfxInc, $1); }
-    | lvalue_expression DECREMENT { $$=bldUnrExp(UnrEnm::SfxDec, $1); }
+    : INCREMENT lvalue_expression { $$=bldUnrExp(OprEnm::PfxInc, $2); }
+    | DECREMENT lvalue_expression { $$=bldUnrExp(OprEnm::PfxDec, $2); }
+    | lvalue_expression INCREMENT { $$=bldUnrExp(OprEnm::SfxInc, $1); }
+    | lvalue_expression DECREMENT { $$=bldUnrExp(OprEnm::SfxDec, $1); }
 
 unary_expression
-    : SUB expression %prec MINUS_SIGN { $$ = bldUnrExp(SUB, $2); }
-    | ADD expression %prec PLUS_SIGN { $$ = bldUnrExp(ADD, $2); }
+    : SUB expression %prec MINUS_SIGN { $$ = bldUnrExp(OprEnm::Ngtv, $2); }
+    | ADD expression %prec PLUS_SIGN { $$ = bldUnrExp(OprEnm::Pstv, $2); }
     | LEFT_PAREN expression RIGHT_PAREN { $$=$2; }
-    | NOT expression { $$=bldUnrExp(NOT, $2); }
-    | BIT_NOT expression { $$=bldUnrExp(BIT_NOT, $2); }
+    | NOT expression { $$=bldUnrExp(OprEnm::Not, $2); }
+    | BIT_NOT expression { $$=bldUnrExp(OprEnm::BNot, $2); }
 
 binary_expression
     : expression ADD expression { $$=bldBnrExp(OprEnm::Add, $1, $3); }
@@ -459,7 +458,7 @@ binary_expression
     | expression BIT_AND expression { $$=bldBnrExp(OprEnm::BAnd, $1, $3); }
     | expression BIT_OR expression { $$=bldBnrExp(OprEnm::BOr, $1, $3); }
     | expression BIT_XOR expression { $$=bldBnrExp(OprEnm::BXor, $1, $3); }
-    | expression QM expression COLON expression { $$ = bldTnrExp(QM, $1, $3, $5); }
+    | expression QM expression COLON expression { $$ = bldTnrExp(OprEnm::Tnr, $1, $3, $5); }
 
 shortcut_expression
     : SHORTCUT_PRINTLN element_list
