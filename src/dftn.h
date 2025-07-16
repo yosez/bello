@@ -97,9 +97,19 @@ public:
 	{
 	}
 
+	ValUnn(ValUnn &&val)
+	{
+		memcpy(this, &val, sizeof(ValUnn));
+	}
+
 	~ValUnn()
 	{
 	}
+
+	//平凡拷贝构造
+	ValUnn(const ValUnn &val)=default;
+
+
 };
 
 // enum ExpTyp
@@ -304,10 +314,8 @@ public:
 	{
 	};
 
-	ValStrc (ValStrc && val):typ(val.typ), v(val.v)
-	{
-
-	};
+	//拷贝构造
+	ValStrc (const ValStrc & val) = default;
 
 	ValStrc operator +(ValStrc &o2) const
 	{
@@ -615,6 +623,129 @@ public:
 		ValStrc *rslt;
 		rslt = new ValStrc();
 		setBln(rslt, bln);
+
+		return *rslt;
+	}
+
+	ValStrc operator &&(ValStrc &o2) const
+	{
+		bool bln;
+
+		if (isBln(this) && isBln(&o2))
+		{
+			bln = getBln(this) && getBln(&o2);
+		}
+
+		ValStrc *rslt= new ValStrc();
+
+		setBln(rslt, bln);
+
+		return *rslt;
+	}
+
+	ValStrc operator ||(ValStrc &o2) const
+	{
+		bool bln;
+
+		if (isBln(this) && isBln(&o2))
+		{
+			bln = getBln(this) || getBln(&o2);
+		}
+
+		ValStrc *rslt= new ValStrc;
+
+		setBln(rslt, bln);
+
+		return *rslt;
+	}
+
+	ValStrc operator ^(ValStrc &o2) const
+	{
+		int bln=0;
+
+		ValStrc *rslt = new ValStrc();
+
+
+		if (isBln(this) && isBln(&o2))
+		{
+			bln = getBln(this) ^ getBln(&o2);
+			setBln(rslt, bln);
+		}
+		else if (isInt(this) && isInt(&o2))
+		{
+			bln = getInt(this) ^ getInt(&o2);
+			setInt(rslt, bln);
+		}
+		else if (isInt(this) && isBln(&o2))
+		{
+			bln = getInt(this) ^ getBln(&o2);
+			setInt(rslt, bln);
+		}
+		else if (isBln(this) && isInt(&o2))
+		{
+			bln = getBln(this) ^ getInt(&o2);
+			setInt(rslt, bln);
+		}
+
+		return *rslt;
+	}
+
+	ValStrc operator &(ValStrc &o2) const
+	{
+		int bln=0;
+
+		ValStrc *rslt = new ValStrc();
+
+		if (isBln(this) && isBln(&o2))
+		{
+			bln = getBln(this) & getBln(&o2);
+			setBln(rslt, bln);
+		}
+		else if (isInt(this) && isInt(&o2))
+		{
+			bln = getInt(this) & getInt(&o2);
+			setInt(rslt, bln);
+		}
+		else if (isInt(this) && isBln(&o2))
+		{
+			bln = getInt(this) & getBln(&o2);
+			setInt(rslt, bln);
+		}
+		else if (isBln(this) && isInt(&o2))
+		{
+			bln = getBln(this) & getInt(&o2);
+			setInt(rslt, bln);
+		}
+
+		return *rslt;
+	}
+
+	ValStrc operator |(ValStrc &o2) const
+	{
+		int bln=0;
+
+		ValStrc *rslt = new ValStrc();
+
+		if (isBln(this) && isBln(&o2))
+		{
+			bln = getBln(this) | getBln(&o2);
+			setBln(rslt, bln);
+		}
+		else if (isInt(this) && isInt(&o2))
+		{
+			bln = getInt(this) | getInt(&o2);
+			setInt(rslt, bln);
+		}
+		else if (isInt(this) && isBln(&o2))
+		{
+			bln = getInt(this) | getBln(&o2);
+			setInt(rslt, bln);
+		}
+		else if (isBln(this) && isInt(&o2))
+		{
+			bln = getBln(this) | getInt(&o2);
+			setInt(rslt, bln);
+		}
 
 		return *rslt;
 	}

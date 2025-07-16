@@ -1049,57 +1049,74 @@ ValStrc *clcBnrExp(vector<EnvrStrc *> &envr, struct BnrExpStrc *exp)
         }
         case OprEnm::Eq:
         {
-            rslt = clcBnrExpEq(envr, exp);
+            rslt = new ValStrc(*lft == *rgt);
+            //rslt = clcBnrExpEq(envr, exp);
             break;
         }
         case OprEnm::Ne:
         {
-            rslt = clcBnrExpNe(envr, exp);
+            rslt = new ValStrc(*lft != *rgt);
+            //rslt = clcBnrExpNe(envr, exp);
             break;
         }
         case OprEnm::Gt:
         {
-            rslt = clcBnrExpGt(envr, exp);
+            rslt = new ValStrc(*lft > *rgt);
+            //rslt = clcBnrExpGt(envr, exp);
             break;
         }
         case OprEnm::Ge:
         {
-            rslt = clcBnrExpGe(envr, exp);
+            rslt = new ValStrc(*lft >= *rgt);
+            //rslt = clcBnrExpGe(envr, exp);
             break;
         }
         case OprEnm::Lt:
         {
-            rslt = clcBnrExpLt(envr, exp);
+            rslt = new ValStrc(*lft < *rgt);
+            //rslt = clcBnrExpLt(envr, exp);
             break;
         }
         case OprEnm::Le:
         {
-            rslt = clcBnrExpLe(envr, exp);
+            rslt = new ValStrc(*lft <= *rgt);
+            //rslt = clcBnrExpLe(envr, exp);
             break;
         }
         case OprEnm::And:
         {
-            rslt = clcBnrExpAnd(envr, exp);
+            rslt = new ValStrc(*lft && *rgt);
+            //rslt = clcBnrExpAnd(envr, exp);
             break;
         }
         case OprEnm::Or:
         {
-            rslt = clcBnrExpOr(envr, exp);
+            rslt = new ValStrc(*lft || *rgt);
+            //rslt = clcBnrExpOr(envr, exp);
+            break;
+        }
+        case OprEnm::Xor:
+        {
+            rslt = new ValStrc(*lft ^ *rgt);
             break;
         }
         case OprEnm::BAnd:
         {
-            rslt = clcBnrExpBitAnd(envr, exp);
+            rslt = new ValStrc(*lft & *rgt);
+            //rslt = clcBnrExpBitAnd(envr, exp);
             break;
         }
         case OprEnm::BOr:
         {
-            rslt = clcBnrExpBitOr(envr, exp);
+            rslt = new ValStrc(*lft | *rgt);
+            //rslt = clcBnrExpBitOr(envr, exp);
             break;
         }
         case OprEnm::BXor:
         {
-            rslt = clcBnrExpBitXor(envr, exp);
+            rslt = new ValStrc(*lft ^ *rgt);
+            //rslt = clcBnrExpBitXor(envr, exp);
+            break;
         }
     }
 

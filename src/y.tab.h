@@ -92,26 +92,27 @@
      AND = 308,
      OR = 309,
      NOT = 310,
-     BIT_AND = 311,
-     BIT_OR = 312,
-     BIT_XOR = 313,
-     BIT_NOT = 314,
-     INCREMENT = 315,
-     DECREMENT = 316,
-     IF = 317,
-     ELSEIF = 318,
-     ELSE = 319,
-     FOR = 320,
-     WHILE = 321,
-     DO = 322,
-     CONTINUE = 323,
-     BREAK = 324,
-     FUNC = 325,
-     RETURN = 326,
-     NEW_ARRAY = 327,
-     PLUS_SIGN = 328,
-     MINUS_SIGN = 329,
-     QM = 330
+     XOR = 311,
+     BIT_AND = 312,
+     BIT_OR = 313,
+     BIT_XOR = 314,
+     BIT_NOT = 315,
+     INCREMENT = 316,
+     DECREMENT = 317,
+     IF = 318,
+     ELSEIF = 319,
+     ELSE = 320,
+     FOR = 321,
+     WHILE = 322,
+     DO = 323,
+     CONTINUE = 324,
+     BREAK = 325,
+     FUNC = 326,
+     RETURN = 327,
+     NEW_ARRAY = 328,
+     PLUS_SIGN = 329,
+     MINUS_SIGN = 330,
+     QM = 331
    };
 #endif
 /* Tokens.  */
@@ -168,26 +169,27 @@
 #define AND 308
 #define OR 309
 #define NOT 310
-#define BIT_AND 311
-#define BIT_OR 312
-#define BIT_XOR 313
-#define BIT_NOT 314
-#define INCREMENT 315
-#define DECREMENT 316
-#define IF 317
-#define ELSEIF 318
-#define ELSE 319
-#define FOR 320
-#define WHILE 321
-#define DO 322
-#define CONTINUE 323
-#define BREAK 324
-#define FUNC 325
-#define RETURN 326
-#define NEW_ARRAY 327
-#define PLUS_SIGN 328
-#define MINUS_SIGN 329
-#define QM 330
+#define XOR 311
+#define BIT_AND 312
+#define BIT_OR 313
+#define BIT_XOR 314
+#define BIT_NOT 315
+#define INCREMENT 316
+#define DECREMENT 317
+#define IF 318
+#define ELSEIF 319
+#define ELSE 320
+#define FOR 321
+#define WHILE 322
+#define DO 323
+#define CONTINUE 324
+#define BREAK 325
+#define FUNC 326
+#define RETURN 327
+#define NEW_ARRAY 328
+#define PLUS_SIGN 329
+#define MINUS_SIGN 330
+#define QM 331
 
 
 
@@ -218,7 +220,7 @@ typedef union YYSTYPE
     //string idtf;
 }
 /* Line 1529 of yacc.c.  */
-#line 222 "y.tab.h"
+#line 224 "y.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1

@@ -9,6 +9,7 @@
 // struct ValStrc;
 // enum class ValEnm :int;
 
+
 ValStrc* bldIntVal(int v)
 {
 	ValStrc* rslt = new ValStrc;
@@ -105,34 +106,34 @@ int prtVal(ValStrc* v)
 	{
 	case ValEnm::Int:
 	{
-		printf("%d", v->v.int_);
+		printf("%d\n", v->v.int_);
 		break;
 	}
 	case ValEnm::Flt:
 	{
-		printf("%f", v->v.flt);
+		printf("%f\n", v->v.flt);
 		break;
 	}
 	case ValEnm::Bln:
 	{
 		if (v->v.bln == 0)
 		{
-			printf("%s", "false");
+			printf("%s\n", "false");
 		}
 		else
 		{
-			printf("%s", "true");
+			printf("%s\n", "true");
 		}
 		break;
 	}
 	case ValEnm::Str:
 	{
-		printf("%s", v->v.str->c_str());
+		printf("%s\n", v->v.str->c_str());
 		break;
 	}
 	case ValEnm::Nll:
 	{
-		printf("null");
+		printf("null\n");
 		break;
 	}
 	case ValEnm::Arr:
@@ -149,7 +150,7 @@ int prtVal(ValStrc* v)
 			}
 		}
 
-		printf("]");
+		printf("]\n");
 
 		break;
 	}

@@ -12,6 +12,7 @@ using namespace std;
 
 #include "dftn.h"
 #include "envr.h"
+#include "val.h"
 
 #include "lex.yy.c"
 #include "y.tab.c"

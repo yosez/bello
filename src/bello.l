@@ -98,6 +98,7 @@
 "!="                        { return NE; }
 "&&"                        { return AND; }
 "||"                        { return OR; }
+"^^"                        { return XOR; }
 "&"                         { return BIT_AND; }
 "|"                         { return BIT_OR; }
 "^"                         { return BIT_XOR; }

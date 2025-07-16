@@ -112,7 +112,7 @@
 %token SEMICOLON COMMA COLON
 %token ADD SUB MUL DIV MOD
 %token EQ NE GT GE LT LE
-%token AND OR NOT
+%token AND OR NOT XOR
 %token BIT_AND BIT_OR BIT_XOR BIT_NOT
 %token INCREMENT DECREMENT
 %token IF ELSEIF ELSE FOR WHILE DO CONTINUE BREAK
@@ -421,11 +421,11 @@ lvalue_operation_expression
 
 assign_expression
     : lvalue_expression ASSIGN expression { $$=bldAsnExp($1, $3); }
-    | lvalue_expression ADD_ASSIGN expression { $$=bldAsgExp($1, bldBnrExp(OprEnm::Add, $1, $3)); }
-    | lvalue_expression SUB_ASSIGN expression { $$=bldAsgExp($1, bldBnrExp(OprEnm::Sub, $1, $3)); }
-    | lvalue_expression MUL_ASSIGN expression { $$=bldAsgExp($1, bldBnrExp(OprEnm::Mul, $1, $3)); }
-    | lvalue_expression DIV_ASSIGN expression { $$=bldAsgExp($1, bldBnrExp(OprEnm::Div, $1, $3)); }
-    | lvalue_expression MOD_ASSIGN expression { $$=bldAsgExp($1, bldBnrExp(OprEnm::Asn, $1, $3)); }
+    | lvalue_expression ADD_ASSIGN expression { $$=bldAsnExp($1, bldBnrExp(OprEnm::Add, $1, $3)); }
+    | lvalue_expression SUB_ASSIGN expression { $$=bldAsnExp($1, bldBnrExp(OprEnm::Sub, $1, $3)); }
+    | lvalue_expression MUL_ASSIGN expression { $$=bldAsnExp($1, bldBnrExp(OprEnm::Mul, $1, $3)); }
+    | lvalue_expression DIV_ASSIGN expression { $$=bldAsnExp($1, bldBnrExp(OprEnm::Div, $1, $3)); }
+    | lvalue_expression MOD_ASSIGN expression { $$=bldAsnExp($1, bldBnrExp(OprEnm::Asn, $1, $3)); }
 
 
 self_operation_expression 
@@ -449,6 +449,7 @@ binary_expression
     | expression MOD expression { $$=bldBnrExp(OprEnm::Mod, $1, $3); }
     | expression AND expression { $$=bldBnrExp(OprEnm::And, $1, $3); }
     | expression OR expression { $$=bldBnrExp(OprEnm::Or, $1, $3); }
+    | expression XOR expression { $$=bldBnrExp(OprEnm::Xor, $1, $3); }
     | expression EQ expression { $$=bldBnrExp(OprEnm::Eq, $1, $3); }
     | expression NE expression { $$=bldBnrExp(OprEnm::Ne, $1, $3); }
     | expression GT expression { $$=bldBnrExp(OprEnm::Gt, $1, $3); }
