@@ -751,7 +751,106 @@ public:
 	}
 
 
+	//一元运算符
+	ValStrc operator+() const
+	{
+		ValStrc *rslt = new ValStrc();
 
+		if (isInt(this))
+		{
+			setInt(rslt, getInt(this));
+		}
+		else if (isFlt(this))
+		{
+			setInt(rslt, getFlt(this));
+		}
+
+		return *rslt;
+	}
+
+	ValStrc operator -() const
+	{
+		ValStrc *rslt = new ValStrc();
+
+		if (isInt(this))
+		{
+			setInt(rslt, -getInt(this));
+		}
+		else if (isFlt(this))
+		{
+			setFlt(rslt, -getFlt(this));
+		}
+
+		return *rslt;
+	}
+
+	ValStrc &operator++()
+	{
+		if (isInt(this))
+		{
+			printf("%d, ", getInt(this));
+			setInt(this, getInt(this)+1);
+			printf("%d", getInt(this));
+		}
+		else if (isFlt(this))
+		{
+			setFlt(this, getFlt(this)+1);
+		}
+
+		return *this;
+	}
+
+	ValStrc &operator--()
+	{
+		if (isInt(this))
+		{
+			setInt(this, getInt(this)-1);
+		}
+		else if (isFlt(this))
+		{
+			setFlt(this, getFlt(this)-1);
+		}
+
+		return *this;
+	}
+
+	ValStrc operator++(int)
+	{
+		ValStrc *rslt = new ValStrc();
+
+		if (isInt(this))
+		{
+			setInt(rslt, getInt(this));
+			setInt(this, getInt(this)+1);
+		}
+		else if (isFlt(this))
+		{
+			setFlt(rslt, getFlt(this));
+			setFlt(this, getFlt(this)+1);
+		}
+
+		return *rslt;
+	}
+
+	ValStrc operator--(int)
+	{
+		ValStrc *rslt = new ValStrc();
+
+		if (isInt(this))
+		{
+			setInt(rslt, getInt(this));
+			setInt(this, getInt(this)-1);
+		}
+		else if (isFlt(this))
+		{
+			setInt(rslt, getFlt(this));
+			setFlt(this, getFlt(this)-1);
+		}
+
+		return *rslt;
+	}
+
+	//ValStrc operator
 };
 
 struct VrbStrc

@@ -1596,28 +1596,48 @@ ValStrc *clcUnrExpAdd(vector<EnvrStrc *> &envr, struct UnrExpStrc *exp)
 
 ValStrc *clcUnrExp(vector<EnvrStrc *> &envr, struct UnrExpStrc *exp)
 {
+    ValStrc *val;
+
+    val = clcExp(envr, exp->exp);
+
     ValStrc *rslt;
+
+    VrbStrc *vrb = getVrb(envr, exp->exp);
 
     switch (exp->opr)
     {
         case OprEnm::PfxInc:
         {
-            rslt = clcUnrExpPfxInc(envr, exp);
+            rslt = new ValStrc(++ (*val));
+
+            vrb->val = rslt;
+            //printf("rslt: %d\n", getInt(rslt));
+            //rslt = clcUnrExpPfxInc(envr, exp);
             break;
         }
         case OprEnm::PfxDec:
         {
-            rslt = clcUnrExpPfxDec(envr, exp);
+            rslt = new ValStrc(-- *val);
+
+            vrb->val = rslt;
+            //rslt = clcUnrExpPfxDec(envr, exp);
             break;
         }
         case OprEnm::SfxInc:
         {
-            rslt = clcUnrExpSfxInc(envr, exp);
+
+            rslt = new ValStrc(*val);
+
+            vrb ->val = new ValStrc(++ *val);
+            //rslt = clcUnrExpSfxInc(envr, exp);
             break;
         }
         case OprEnm::SfxDec:
         {
-            rslt = clcUnrExpSfxDec(envr, exp);
+            rslt = new ValStrc(*val);
+
+            vrb->val = new ValStrc(-- *val);
+            //rslt = clcUnrExpSfxDec(envr, exp);
             break;
         }
         case OprEnm::Not:
@@ -1632,12 +1652,14 @@ ValStrc *clcUnrExp(vector<EnvrStrc *> &envr, struct UnrExpStrc *exp)
         }
         case OprEnm::Ngtv:
         {
-            rslt = clcUnrExpSub(envr, exp);
+            rslt = new ValStrc(- (*val));
+            //rslt = clcUnrExpSub(envr, exp);
             break;
         }
         case OprEnm::Pstv:
         {
-            rslt = clcUnrExpAdd(envr, exp);
+            rslt = new ValStrc(+ (*val));
+            //rslt = clcUnrExpAdd(envr, exp);
             break;
         }
     }
