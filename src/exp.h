@@ -388,7 +388,7 @@ ExpStrc *bldUnrExp(OprEnm opr, ExpStrc *exp)
 
     rslt->typ = ExpEnm::Unr;
 
-    rslt->exp = static_cast<LvlExpStrc *>(exp);
+    rslt->exp = exp;
     rslt->opr = opr;
 
     return rslt;
@@ -1317,7 +1317,7 @@ ValStrc *clcUnrExpSfxInc(vector<EnvrStrc *> &envr, struct UnrExpStrc *exp)
 
     //***此修改可能有问题
     //lvl = static_cast<LvlExpStrc*>(exp->exp);
-    lvl = exp->exp;
+    lvl = static_cast<LvlExpStrc*>(exp->exp);
 
     vrb = getVrb(envr, static_cast<VrbExpStrc *>(lvl->vrb));
 
@@ -1396,7 +1396,7 @@ ValStrc *clcUnrExpSfxDec(vector<EnvrStrc *> &envr, struct UnrExpStrc *exp)
     struct LvlExpStrc *lvl;
 
     //***此修改可能有问题
-    lvl = exp->exp;
+    lvl = static_cast<LvlExpStrc*>(exp->exp);
 
     vrb = getVrb(envr, static_cast<VrbExpStrc *>(lvl->vrb));
 
@@ -1602,21 +1602,25 @@ ValStrc *clcUnrExp(vector<EnvrStrc *> &envr, struct UnrExpStrc *exp)
 
     ValStrc *rslt;
 
-    VrbStrc *vrb = getVrb(envr, exp->exp);
+
 
     switch (exp->opr)
     {
         case OprEnm::PfxInc:
         {
+            VrbStrc *vrb = getVrb(envr, static_cast<LvlExpStrc*> (exp->exp));
+
             rslt = new ValStrc(++ (*val));
 
             vrb->val = rslt;
-            //printf("rslt: %d\n", getInt(rslt));
+
             //rslt = clcUnrExpPfxInc(envr, exp);
             break;
         }
         case OprEnm::PfxDec:
         {
+            VrbStrc *vrb = getVrb(envr, static_cast<LvlExpStrc*> (exp->exp));
+
             rslt = new ValStrc(-- *val);
 
             vrb->val = rslt;
@@ -1625,6 +1629,7 @@ ValStrc *clcUnrExp(vector<EnvrStrc *> &envr, struct UnrExpStrc *exp)
         }
         case OprEnm::SfxInc:
         {
+            VrbStrc *vrb = getVrb(envr, static_cast<LvlExpStrc*> (exp->exp));
 
             rslt = new ValStrc(*val);
 
@@ -1634,6 +1639,8 @@ ValStrc *clcUnrExp(vector<EnvrStrc *> &envr, struct UnrExpStrc *exp)
         }
         case OprEnm::SfxDec:
         {
+            VrbStrc *vrb = getVrb(envr, static_cast<LvlExpStrc*> (exp->exp));
+
             rslt = new ValStrc(*val);
 
             vrb->val = new ValStrc(-- *val);
@@ -1642,12 +1649,15 @@ ValStrc *clcUnrExp(vector<EnvrStrc *> &envr, struct UnrExpStrc *exp)
         }
         case OprEnm::Not:
         {
-            rslt = clcUnrExpNot(envr, exp);
+            rslt = new ValStrc(! (*val));
+
+            //rslt = clcUnrExpNot(envr, exp);
             break;
         }
         case OprEnm::BNot:
         {
-            rslt = clcUnrExpBitNot(envr, exp);
+            rslt = new ValStrc(~ (*val));
+            //rslt = clcUnrExpBitNot(envr, exp);
             break;
         }
         case OprEnm::Ngtv:
@@ -2491,7 +2501,7 @@ ValStrc *clcExp(vector<EnvrStrc *> &envr, ExpStrc *exp)
     if (exp->typ == ExpEnm::Val)
     {
         rslt = static_cast<ValExpStrc *>(exp)->val;
-        //printf("tsfm rslt: %d\n", rslt->v.int_);
+        //printf("tsfm rslt: %d\n", isBln(rslt));
     }
 
     return rslt;

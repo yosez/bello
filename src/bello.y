@@ -407,7 +407,7 @@ expression_statement
     }
 
 expression
-    : value_expression 
+    : value_expression { $$ = $1; }
     | lvalue_operation_expression
     | unary_expression { $$ = $1; }
     | binary_expression { $$ = $1; }
