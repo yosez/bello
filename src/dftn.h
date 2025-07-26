@@ -3,7 +3,7 @@
 #ifndef DFTN_H
 #define DFTN_H
 
-
+#include <cmath>
 #include <vector>
 #include <string>
 #include <stack>
@@ -850,7 +850,37 @@ public:
 		return *rslt;
 	}
 
-	//ValStrc operator
+	ValStrc operator !() const
+	{
+		ValStrc *rslt = new ValStrc();
+
+		if (isInt(this))
+		{
+			setInt(rslt, !getInt(this));
+		}
+		else if (isBln(this))
+		{
+			setBln(rslt, !getBln(this));
+		}
+
+		return *rslt;
+	}
+
+	ValStrc operator~() const
+	{
+		ValStrc *rslt =new ValStrc();
+
+		if (isInt(this))
+		{
+			setInt(rslt, ~getInt(this));
+		}
+		else if (isBln(this))
+		{
+			setBln(rslt, ~getBln(this));
+		}
+
+		return *rslt;
+	}
 };
 
 struct VrbStrc
@@ -899,7 +929,7 @@ struct BnrExpStrc : public ExpStrc
 struct UnrExpStrc : public ExpStrc
 {
 	OprEnm opr;
-	struct LvlExpStrc* exp;
+	struct ExpStrc* exp;
 };
 
 struct TnrExpStrc : public ExpStrc
