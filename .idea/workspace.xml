@@ -155,9 +155,9 @@
       </method>
     </configuration>
     <list>
+      <item itemvalue="CMake 调试.bello" />
       <item itemvalue="CMake 应用程序.belloMacOs" />
       <item itemvalue="CMake 应用程序.bello" />
-      <item itemvalue="CMake 调试.bello" />
     </list>
     <recent_temporary>
       <list>
@@ -208,7 +208,8 @@
       <workItem from="1752586904797" duration="3465000" />
       <workItem from="1752671078427" duration="6124000" />
       <workItem from="1752900173346" duration="1709000" />
-      <workItem from="1753025088619" duration="1518000" />
+      <workItem from="1753025088619" duration="2120000" />
+      <workItem from="1753518005228" duration="1000" />
     </task>
     <task id="LOCAL-00001" summary="测试提交">
       <option name="closed" value="true" />
@@ -354,7 +355,15 @@
       <option name="project" value="LOCAL" />
       <updated>1752681113657</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="正在将一元运算使用运算符重载进行重构">
+      <option name="closed" value="true" />
+      <created>1753026615051</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1753026615051</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -380,7 +389,8 @@
     <MESSAGE value="更新了val.h文件" />
     <MESSAGE value="正在编写值结构体的运算符重载的部分." />
     <MESSAGE value="二元运算使用运算符重载进行了重构, 并进行了相关修正." />
-    <option name="LAST_COMMIT_MESSAGE" value="二元运算使用运算符重载进行了重构, 并进行了相关修正." />
+    <MESSAGE value="正在将一元运算使用运算符重载进行重构" />
+    <option name="LAST_COMMIT_MESSAGE" value="正在将一元运算使用运算符重载进行重构" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
