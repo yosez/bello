@@ -74,16 +74,6 @@
     <setting file="file://$PROJECT_DIR$/src/vrb.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/y.tab.c" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/y.tab.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://diff.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://diff.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://diff.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://diff.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://diff.h" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://diff.h" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://diff.h" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://diff.h" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://diff.h" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://diff.h" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
@@ -147,16 +137,14 @@
       <recent name="D:\Informatica\编译器\Bello V17.41 修改2\lbr" />
     </key>
   </component>
-  <component name="RunManager" selected="CMake 应用程序.bello">
+  <component name="RunManager" selected="CMake 应用程序.belloMacOs">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="bello" type="CMakeListConfigurationType" factoryName="CMakeListConfigurationFactory" temporary="true">
       <method v="2" />
-    </configuration>
-    <configuration name="bello" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="src" TARGET_NAME="bello" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="src" RUN_TARGET_NAME="bello">
-      <method v="2">
-        <option name="ToolBeforeRunTask" enabled="true" actionId="Tool_外部工具_flexAndBisonWin" />
-        <option name="CMake.Explicit.Target" predefinedTargetName="bello" />
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
     </configuration>
     <configuration name="belloMacOs" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="src" TARGET_NAME="bello" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="src" RUN_TARGET_NAME="bello">
       <method v="2">
@@ -166,9 +154,8 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="CMake 调试.bello" />
       <item itemvalue="CMake 应用程序.belloMacOs" />
-      <item itemvalue="CMake 应用程序.bello" />
+      <item itemvalue="CMake 调试.bello" />
     </list>
     <recent_temporary>
       <list>
@@ -220,8 +207,13 @@
       <workItem from="1752671078427" duration="6124000" />
       <workItem from="1752900173346" duration="1709000" />
       <workItem from="1753025088619" duration="2120000" />
-      <workItem from="1753518005228" duration="455000" />
-      <workItem from="1753518566128" duration="5000" />
+      <workItem from="1753518005228" duration="621000" />
+      <workItem from="1753518638637" duration="76000" />
+      <workItem from="1753518738751" duration="4917000" />
+      <workItem from="1753891145926" duration="1073000" />
+      <workItem from="1766582590148" duration="92000" />
+      <workItem from="1769863762181" duration="678000" />
+      <workItem from="1769864608185" duration="367000" />
     </task>
     <task id="LOCAL-00001" summary="测试提交">
       <option name="closed" value="true" />
@@ -383,7 +375,15 @@
       <option name="project" value="LOCAL" />
       <updated>1753518020495</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="正在将一元运算使用运算符重载进行重构">
+      <option name="closed" value="true" />
+      <created>1753518603584</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1753518603584</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

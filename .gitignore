@@ -362,3 +362,9 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /CollateUpdate.py
+
+# bin
+*.exe
+
+# local log file
+UpdateLog.txt

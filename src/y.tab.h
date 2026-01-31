@@ -1,14 +1,14 @@
-/* A Bison parser, made by GNU Bison 3.8.2.  */
+/* A Bison parser, made by GNU Bison 2.3.  */
 
-/* Bison interface for Yacc-like parsers in C
+/* Skeleton interface for Bison's Yacc-like parsers in C
 
-   Copyright (C) 1984, 1989-1990, 2000-2015, 2018-2021 Free Software Foundation,
-   Inc.
+   Copyright (C) 1984, 1989, 1990, 2000, 2001, 2002, 2003, 2004, 2005, 2006
+   Free Software Foundation, Inc.
 
-   This program is free software: you can redistribute it and/or modify
+   This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
+   the Free Software Foundation; either version 2, or (at your option)
+   any later version.
 
    This program is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -16,7 +16,9 @@
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 51 Franklin Street, Fifth Floor,
+   Boston, MA 02110-1301, USA.  */
 
 /* As a special exception, you may create a larger work that contains
    part or all of the Bison parser skeleton and distribute that work
@@ -31,111 +33,89 @@
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
-/* DO NOT RELY ON FEATURES THAT ARE NOT DOCUMENTED in the manual,
-   especially those whose name start with YY_ or yy_.  They are
-   private implementation details that can be changed or removed.  */
-
-#ifndef YY_YY_Y_TAB_H_INCLUDED
-# define YY_YY_Y_TAB_H_INCLUDED
-/* Debug traces.  */
-#ifndef YYDEBUG
-# define YYDEBUG 0
-#endif
-#if YYDEBUG
-extern int yydebug;
-#endif
-
-/* Token kinds.  */
+/* Tokens.  */
 #ifndef YYTOKENTYPE
 # define YYTOKENTYPE
-  enum yytokentype
-  {
-    YYEMPTY = -2,
-    YYEOF = 0,                     /* "end of file"  */
-    YYerror = 256,                 /* error  */
-    YYUNDEF = 257,                 /* "invalid token"  */
-    NULL_STRING = 258,             /* NULL_STRING  */
-    LF = 259,                      /* LF  */
-    END_FILE = 260,                /* END_FILE  */
-    NEW = 261,                     /* NEW  */
-    NOP = 262,                     /* NOP  */
-    DOT = 263,                     /* DOT  */
-    CLASS = 264,                   /* CLASS  */
-    SHARED = 265,                  /* SHARED  */
-    THIS = 266,                    /* THIS  */
-    INDENT = 267,                  /* INDENT  */
-    INT_LTR = 268,                 /* INT_LTR  */
-    BLN_LTR = 269,                 /* BLN_LTR  */
-    FLT_LTR = 270,                 /* FLT_LTR  */
-    STR_LTR = 271,                 /* STR_LTR  */
-    OBJECT_VALUE = 272,            /* OBJECT_VALUE  */
-    NLL_LTR = 273,                 /* NLL_LTR  */
-    ARRAY_VALUE = 274,             /* ARRAY_VALUE  */
-    SHORTCUT_PRINTLN = 275,        /* SHORTCUT_PRINTLN  */
-    IDENTIFER = 276,               /* IDENTIFER  */
-    ASSIGN = 277,                  /* ASSIGN  */
-    VAR = 278,                     /* VAR  */
-    GLOBAL = 279,                  /* GLOBAL  */
-    ADD_ASSIGN = 280,              /* ADD_ASSIGN  */
-    SUB_ASSIGN = 281,              /* SUB_ASSIGN  */
-    MUL_ASSIGN = 282,              /* MUL_ASSIGN  */
-    DIV_ASSIGN = 283,              /* DIV_ASSIGN  */
-    MOD_ASSIGN = 284,              /* MOD_ASSIGN  */
-    PRINT = 285,                   /* PRINT  */
-    PRINTLN = 286,                 /* PRINTLN  */
-    LEFT_PAREN = 287,              /* LEFT_PAREN  */
-    RIGHT_PAREN = 288,             /* RIGHT_PAREN  */
-    LEFT_QUAD = 289,               /* LEFT_QUAD  */
-    RIGHT_QUAD = 290,              /* RIGHT_QUAD  */
-    LEFT_BRACE = 291,              /* LEFT_BRACE  */
-    RIGHT_BRACE = 292,             /* RIGHT_BRACE  */
-    SEMICOLON_OPTIONAL = 293,      /* SEMICOLON_OPTIONAL  */
-    SEMICOLON = 294,               /* SEMICOLON  */
-    COMMA = 295,                   /* COMMA  */
-    COLON = 296,                   /* COLON  */
-    ADD = 297,                     /* ADD  */
-    SUB = 298,                     /* SUB  */
-    MUL = 299,                     /* MUL  */
-    DIV = 300,                     /* DIV  */
-    MOD = 301,                     /* MOD  */
-    EQ = 302,                      /* EQ  */
-    NE = 303,                      /* NE  */
-    GT = 304,                      /* GT  */
-    GE = 305,                      /* GE  */
-    LT = 306,                      /* LT  */
-    LE = 307,                      /* LE  */
-    AND = 308,                     /* AND  */
-    OR = 309,                      /* OR  */
-    NOT = 310,                     /* NOT  */
-    XOR = 311,                     /* XOR  */
-    BIT_AND = 312,                 /* BIT_AND  */
-    BIT_OR = 313,                  /* BIT_OR  */
-    BIT_XOR = 314,                 /* BIT_XOR  */
-    BIT_NOT = 315,                 /* BIT_NOT  */
-    INCREMENT = 316,               /* INCREMENT  */
-    DECREMENT = 317,               /* DECREMENT  */
-    IF = 318,                      /* IF  */
-    ELSEIF = 319,                  /* ELSEIF  */
-    ELSE = 320,                    /* ELSE  */
-    FOR = 321,                     /* FOR  */
-    WHILE = 322,                   /* WHILE  */
-    DO = 323,                      /* DO  */
-    CONTINUE = 324,                /* CONTINUE  */
-    BREAK = 325,                   /* BREAK  */
-    FUNC = 326,                    /* FUNC  */
-    RETURN = 327,                  /* RETURN  */
-    NEW_ARRAY = 328,               /* NEW_ARRAY  */
-    MINUS_SIGN = 329,              /* MINUS_SIGN  */
-    PLUS_SIGN = 330,               /* PLUS_SIGN  */
-    QM = 331                       /* QM  */
-  };
-  typedef enum yytokentype yytoken_kind_t;
+   /* Put the tokens into the symbol table, so that GDB and other debuggers
+      know about them.  */
+   enum yytokentype {
+     NULL_STRING = 258,
+     LF = 259,
+     END_FILE = 260,
+     NEW = 261,
+     NOP = 262,
+     DOT = 263,
+     CLASS = 264,
+     SHARED = 265,
+     THIS = 266,
+     INDENT = 267,
+     INT_LTR = 268,
+     BLN_LTR = 269,
+     FLT_LTR = 270,
+     STR_LTR = 271,
+     OBJECT_VALUE = 272,
+     NLL_LTR = 273,
+     ARRAY_VALUE = 274,
+     SHORTCUT_PRINTLN = 275,
+     IDENTIFER = 276,
+     ASSIGN = 277,
+     VAR = 278,
+     GLOBAL = 279,
+     ADD_ASSIGN = 280,
+     SUB_ASSIGN = 281,
+     MUL_ASSIGN = 282,
+     DIV_ASSIGN = 283,
+     MOD_ASSIGN = 284,
+     PRINT = 285,
+     PRINTLN = 286,
+     LEFT_PAREN = 287,
+     RIGHT_PAREN = 288,
+     LEFT_QUAD = 289,
+     RIGHT_QUAD = 290,
+     LEFT_BRACE = 291,
+     RIGHT_BRACE = 292,
+     SEMICOLON_OPTIONAL = 293,
+     SEMICOLON = 294,
+     COMMA = 295,
+     COLON = 296,
+     ADD = 297,
+     SUB = 298,
+     MUL = 299,
+     DIV = 300,
+     MOD = 301,
+     EQ = 302,
+     NE = 303,
+     GT = 304,
+     GE = 305,
+     LT = 306,
+     LE = 307,
+     AND = 308,
+     OR = 309,
+     NOT = 310,
+     XOR = 311,
+     BIT_AND = 312,
+     BIT_OR = 313,
+     BIT_XOR = 314,
+     BIT_NOT = 315,
+     INCREMENT = 316,
+     DECREMENT = 317,
+     IF = 318,
+     ELSEIF = 319,
+     ELSE = 320,
+     FOR = 321,
+     WHILE = 322,
+     DO = 323,
+     CONTINUE = 324,
+     BREAK = 325,
+     FUNC = 326,
+     RETURN = 327,
+     NEW_ARRAY = 328,
+     PLUS_SIGN = 329,
+     MINUS_SIGN = 330,
+     QM = 331
+   };
 #endif
-/* Token kinds.  */
-#define YYEMPTY -2
-#define YYEOF 0
-#define YYerror 256
-#define YYUNDEF 257
+/* Tokens.  */
 #define NULL_STRING 258
 #define LF 259
 #define END_FILE 260
@@ -207,16 +187,17 @@ extern int yydebug;
 #define FUNC 326
 #define RETURN 327
 #define NEW_ARRAY 328
-#define MINUS_SIGN 329
-#define PLUS_SIGN 330
+#define PLUS_SIGN 329
+#define MINUS_SIGN 330
 #define QM 331
 
-/* Value type.  */
-#if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-union YYSTYPE
-{
-#line 64 "bello.y"
 
+
+
+#if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
+typedef union YYSTYPE
+#line 64 "bello.y"
+{
     int blnVl;
     int intVl;
     float fltVl;
@@ -237,20 +218,14 @@ union YYSTYPE
     
     char *idtf;
     //string idtf;
-
-#line 242 "y.tab.h"
-
-};
-typedef union YYSTYPE YYSTYPE;
-# define YYSTYPE_IS_TRIVIAL 1
+}
+/* Line 1529 of yacc.c.  */
+#line 224 "y.tab.h"
+	YYSTYPE;
+# define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
+# define YYSTYPE_IS_TRIVIAL 1
 #endif
-
 
 extern YYSTYPE yylval;
 
-
-int yyparse (void);
-
-
-#endif /* !YY_YY_Y_TAB_H_INCLUDED  */

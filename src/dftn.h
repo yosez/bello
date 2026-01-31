@@ -9,10 +9,7 @@
 #include <stack>
 #include <map>
 
-
-
 using namespace std;
-
 
 #define isInt(val) ((val)->typ == ValEnm::Int)
 #define isFlt(val) ((val)->typ == ValEnm::Flt)
@@ -788,9 +785,7 @@ public:
 	{
 		if (isInt(this))
 		{
-			printf("%d, ", getInt(this));
 			setInt(this, getInt(this)+1);
-			printf("%d", getInt(this));
 		}
 		else if (isFlt(this))
 		{
@@ -1008,8 +1003,6 @@ struct IfStmtStrc : public StmtStrc
 {
 	struct ExpStrc* exp;
 	struct StmtStrc* stmt;
-	//struct StmtStrc* els;
-	//struct StmtStrc* elif;
 	int expRslt;
 };
 

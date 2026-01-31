@@ -4,9 +4,8 @@ project(src LANGUAGES C CXX)
 message(STATUS ${CMAKE_CXX_COMPILER_ID})
 
 set(CMAKE_C_STANDARD 11)
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 
-# —— 手动列出所有必需的源文件 ——
 set(SOURCES
         ${PROJECT_SOURCE_DIR}/src/bello.cpp
 )
