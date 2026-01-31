@@ -213,7 +213,7 @@
       <workItem from="1753891145926" duration="1073000" />
       <workItem from="1766582590148" duration="92000" />
       <workItem from="1769863762181" duration="678000" />
-      <workItem from="1769864608185" duration="367000" />
+      <workItem from="1769864608185" duration="710000" />
     </task>
     <task id="LOCAL-00001" summary="测试提交">
       <option name="closed" value="true" />
@@ -383,7 +383,23 @@
       <option name="project" value="LOCAL" />
       <updated>1753518603584</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Delete some auxiliary files to upload to github.">
+      <option name="closed" value="true" />
+      <created>1769865268379</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1769865268379</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Delete some auxiliary files to upload to github.">
+      <option name="closed" value="true" />
+      <created>1769865300756</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1769865300756</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -421,7 +437,8 @@
     <MESSAGE value="正在编写值结构体的运算符重载的部分." />
     <MESSAGE value="二元运算使用运算符重载进行了重构, 并进行了相关修正." />
     <MESSAGE value="正在将一元运算使用运算符重载进行重构" />
-    <option name="LAST_COMMIT_MESSAGE" value="正在将一元运算使用运算符重载进行重构" />
+    <MESSAGE value="Delete some auxiliary files to upload to github." />
+    <option name="LAST_COMMIT_MESSAGE" value="Delete some auxiliary files to upload to github." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
