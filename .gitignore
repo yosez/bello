@@ -72,3 +72,8 @@ Testing/
 Update.txt
 UpdateLog.txt
 
+# binary files
+*.exe
+
+.DS_Store
+
