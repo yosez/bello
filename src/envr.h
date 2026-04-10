@@ -442,6 +442,13 @@ int initGlbEnvr(vector<EnvrStrc*>& envr)
 	addNtvFcn(envr[0], string("print"), prtFcn, 1);
 	addNtvFcn(envr[0], string("println"), prtlnFcn, 1);
 	addNtvFcn(envr[0], string("newArray"), newArrFcn, 1);
+	/// primitive naming before class i/o version
+	addNtvFcn(envr[0], string("fopen"), flOpn, 2);
+	addNtvFcn(envr[0], string("freadInt"), flScnInt, 1);
+	addNtvFcn(envr[0], string("freadDbl"), flScnDbl, 1);
+	addNtvFcn(envr[0], string("fclose"), flCls, 1);
+	addNtvFcn(envr[0], string("fseek"), flSk, 3);
+	addNtvFcn(envr[0], string("ftell"), flTl, 1);
 
 	return 0;
 }
