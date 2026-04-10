@@ -55,7 +55,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/Users/yosezang/Bello/bello V20.11 git \u4fee\u6539/main/bello/cmake-build-debug"
+			"value" : "/Users/yosezang/Bello/bello V20.11 MDF/main/bello/cmake-build-debug"
 		},
 		{
 			"name" : "CMAKE_CACHE_MAJOR_VERSION",
@@ -495,7 +495,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/Users/yosezang/Bello/bello V20.11 git \u4fee\u6539/main/bello/cmake-build-debug/CMakeFiles/pkgRedirects"
+			"value" : "/Users/yosezang/Bello/bello V20.11 MDF/main/bello/cmake-build-debug/CMakeFiles/pkgRedirects"
 		},
 		{
 			"name" : "CMAKE_GENERATOR",
@@ -555,7 +555,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/Users/yosezang/Bello/bello V20.11 git \u4fee\u6539/main/bello"
+			"value" : "/Users/yosezang/Bello/bello V20.11 MDF/main/bello"
 		},
 		{
 			"name" : "CMAKE_INSTALL_NAME_TOOL",
@@ -1155,7 +1155,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/Users/yosezang/Bello/bello V20.11 git \u4fee\u6539/main/bello/cmake-build-debug"
+			"value" : "/Users/yosezang/Bello/bello V20.11 MDF/main/bello/cmake-build-debug"
 		},
 		{
 			"name" : "src_IS_TOP_LEVEL",
@@ -1179,7 +1179,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/Users/yosezang/Bello/bello V20.11 git \u4fee\u6539/main/bello"
+			"value" : "/Users/yosezang/Bello/bello V20.11 MDF/main/bello"
 		}
 	],
 	"kind" : "cache",

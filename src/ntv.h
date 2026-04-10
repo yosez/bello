@@ -6,6 +6,13 @@
 #include "dftn.h"
 #include "expt.h"
 #include "val.h"
+#include <functional>
+
+
+//defination of native functions
+std::function<ValStrc* (vector<EnvrStrc*>&, int, vector<ValStrc*>)> ntvFmt;
+
+
 
 
 struct ValStrc* rdIntFcn(vector<EnvrStrc*>& envr, int argCnt, vector<ValStrc*> argArr);
@@ -22,6 +29,7 @@ struct ValStrc* flScn(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> arg
 struct ValStrc* flWrt(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
 struct ValStrc* flTl(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
 struct ValStrc* flCls(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
+struct ValStrc* flPrt(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
 
 struct ValStrc* flScnInt(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
 struct ValStrc* flScnDbl(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
@@ -283,6 +291,53 @@ struct ValStrc *flScnDbl(vector<EnvrStrc *> &envr, int argCnt, vector<ValStrc*> 
 	rslt->typ = ValEnm::Flt;
 
 	return rslt;
+}
+
+struct ValStrc* flPrt(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr)
+{
+	ValStrc *rslt = new ValStrc;
+
+	if (argCnt!=2)
+	{
+		return nullptr;
+	}
+
+	FILE *fl;
+	fl = (FILE*)(argArr[0]->v.ptr);
+
+	switch (argArr[1]->typ)
+	{
+		case ValEnm::Int:
+		{
+			fprintf(fl, "%d", argArr[1]->v.int_);
+			break;
+		}
+		case ValEnm::Flt:
+		{
+			fprintf(fl, "%f", argArr[1]->v.flt);
+			break;
+		}
+		case ValEnm::Bln:
+		{
+			fprintf(fl, "%s", argArr[1]->v.bln==0? "false" : "true");
+			break;
+		}
+		case ValEnm::Str:
+		{
+			fprintf(fl, "%s", argArr[1]->v.str->c_str());
+			break;
+		}
+		case ValEnm::Nll:
+		{
+			fprintf(fl, "%s", "(null)");
+			break;
+		}
+
+	}
+
+	fclose(fl);
+
+	return nullptr;
 }
 
 

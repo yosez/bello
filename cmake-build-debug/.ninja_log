@@ -1,17 +1,5 @@
 # ninja log v6
-0	758	1775782923688450541	CMakeFiles/bello.dir/src/bello.cpp.o	269e8fd5400f9ba3
-764	874	1775782924451742162	/Users/yosezang/Bello/bello V20.11 git 修改/main/bello/bin/bello	ff76be8ceb128917
-5	648	1775783039729244613	CMakeFiles/bello.dir/src/bello.cpp.o	269e8fd5400f9ba3
-649	678	1775783040373175958	/Users/yosezang/Bello/bello V20.11 git 修改/main/bello/bin/bello	ff76be8ceb128917
-6	645	1775783922210067686	CMakeFiles/bello.dir/src/bello.cpp.o	269e8fd5400f9ba3
-646	685	1775783922850371122	/Users/yosezang/Bello/bello V20.11 git 修改/main/bello/bin/bello	ff76be8ceb128917
-4	601	1775783957506250359	CMakeFiles/bello.dir/src/bello.cpp.o	269e8fd5400f9ba3
-602	630	1775783958104757522	/Users/yosezang/Bello/bello V20.11 git 修改/main/bello/bin/bello	ff76be8ceb128917
-6	732	1775784606411687713	CMakeFiles/bello.dir/src/bello.cpp.o	269e8fd5400f9ba3
-733	764	1775784607139115248	/Users/yosezang/Bello/bello V20.11 git 修改/main/bello/bin/bello	ff76be8ceb128917
-4	610	1775784616263398861	CMakeFiles/bello.dir/src/bello.cpp.o	269e8fd5400f9ba3
-611	637	1775784616869813916	/Users/yosezang/Bello/bello V20.11 git 修改/main/bello/bin/bello	ff76be8ceb128917
-5	599	1775784851347571141	CMakeFiles/bello.dir/src/bello.cpp.o	269e8fd5400f9ba3
-600	626	1775784851942731598	/Users/yosezang/Bello/bello V20.11 git 修改/main/bello/bin/bello	ff76be8ceb128917
-4	600	1775784861304003930	CMakeFiles/bello.dir/src/bello.cpp.o	269e8fd5400f9ba3
+4	597	1775807531063322946	CMakeFiles/bello.dir/src/bello.cpp.o	a9d80c1cc2dc969b
 600	626	1775784861900229015	/Users/yosezang/Bello/bello V20.11 git 修改/main/bello/bin/bello	ff76be8ceb128917
+4	604	1775822484962636278	CMakeFiles/bello.dir/src/bello.cpp.o	119b4ff136a1f205
+608	637	1775822485566578743	/Users/yosezang/Bello/bello V20.11 MDF/main/bello/bin/bello	72f6fd5b912f6b3a
