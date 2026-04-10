@@ -88,6 +88,7 @@ union ValUnn
 	string* str;
 	struct ArrStrc* arr;
 	struct ObjStrc* obj;
+	void* ptr;
 
 public:
 	ValUnn()
@@ -187,7 +188,8 @@ enum class ValEnm : int
 	Str,
 	Nll,
 	Arr,
-	Obj
+	Obj,
+	Ptr
 };
 
 

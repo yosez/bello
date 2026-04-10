@@ -1,0 +1,3 @@
+/Users/yosezang/Bello/bello V20.11 git 修改/main/bello/cmake-build-debug/CMakeFiles/bello.dir
+/Users/yosezang/Bello/bello V20.11 git 修改/main/bello/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/yosezang/Bello/bello V20.11 git 修改/main/bello/cmake-build-debug/CMakeFiles/rebuild_cache.dir

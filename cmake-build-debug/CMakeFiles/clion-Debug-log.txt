@@ -1,0 +1,5 @@
+/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/Applications/CLion.app/Contents/bin/ninja/mac/aarch64/ninja -G Ninja -S "/Users/yosezang/Bello/bello V20.11 git 修改/main/bello" -B "/Users/yosezang/Bello/bello V20.11 git 修改/main/bello/cmake-build-debug"
+-- AppleClang
+-- Configuring done (0.0s)
+-- Generating done (0.0s)
+-- Build files have been written to: /Users/yosezang/Bello/bello V20.11 git 修改/main/bello/cmake-build-debug
