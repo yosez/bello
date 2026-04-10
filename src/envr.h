@@ -449,6 +449,7 @@ int initGlbEnvr(vector<EnvrStrc*>& envr)
 	addNtvFcn(envr[0], string("fclose"), flCls, 1);
 	addNtvFcn(envr[0], string("fseek"), flSk, 3);
 	addNtvFcn(envr[0], string("ftell"), flTl, 1);
+	addNtvFcn(envr[0], string("fprint"), flPrt, 2);
 
 	return 0;
 }
