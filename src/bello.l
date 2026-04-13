@@ -9,6 +9,7 @@
     #include <stdio.h>
     #include <stdlib.h>
     #include <string>
+    #include <iostream>
     #include "y.tab.h"
     #include "dftn.h"
 
@@ -127,6 +128,9 @@
 "func"                      { return FUNC; }
 "shared"                    { return SHARED; }
 "this"                      { return THIS; }
+"import"                    { return IMPORT; }
+"space"                     { return SPACE; }
+"package"                   { return PACKAGE; }
 [0-9]{1,8}                  { yylval.intVl=atoi(yytext); return INT_LTR; }
 [0-9]{1,8}\.[0-9]{1,8}      { yylval.fltVl= (float)atof(yytext); return FLT_LTR; }
 "true"                      { yylval.blnVl=1; return BLN_LTR; }
@@ -168,7 +172,9 @@
 ","                         { return COMMA; }
 ";"                         { return SEMICOLON; }
 ":"                         { return COLON; }
+
 [ \t\r\n]                   {}
+
 
 
 %%
