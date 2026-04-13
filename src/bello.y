@@ -3,6 +3,7 @@
 
     #ifndef Y_TAB_C
     #define Y_TAB_C
+    #include <iostream>
     #include <stdio.h>
     #include <string.h>
     #include <stdlib.h>
@@ -88,6 +89,7 @@
 %token LF
 %token END_FILE
 %token NEW
+%token IMPORT
 %token NOP
 %token DOT
 %token CLASS SHARED THIS
@@ -118,6 +120,8 @@
 %token IF ELSEIF ELSE FOR WHILE DO CONTINUE BREAK
 %token FUNC RETURN
 %token NEW_ARRAY
+%token SPACE
+%token PACKAGE
 
 %type <exp> expression value_expression function_expression  array_expression
     new_array_expression assign_expression unary_expression binary_expression 
@@ -162,17 +166,40 @@
 %%
 
 statement
-    : //从命令行或源码输入顶层语句并执行
-    statement close_execute_last_statement {$<intVl>$ = 0; } single_statement LF check_indent build_statement_stack execute_single_statement 
+    : IMPORT STR_LTR
+    {
+
+        FILE* f = fopen($2, "r");
+
+        //创建buffer
+        YY_BUFFER_STATE stt = YY_CURRENT_BUFFER;
+
+        //use file pointer to create new buffer
+        YY_BUFFER_STATE sttNew = yy_create_buffer(f, YY_BUF_SIZE);
+
+        //switch buffer
+        yypush_buffer_state(sttNew);
+
+
+    }
+    //从命令行或源码输入顶层语句并执行
+    | statement close_execute_last_statement {$<intVl>$ = 0; } single_statement LF check_indent build_statement_stack execute_single_statement
     //从命令行或源码输入子语句
     | statement INDENT single_statement LF check_indent build_statement_stack
     //从命令行输入，输入空行之后执行语句栈中的语句
     | statement LF close_execute_statement
     //从源码输入文件结束
     | statement END_FILE close_execute_last_statement  { return 0; }//需要加上识别空语句，以处理输入结束的情况
-    | ;
     | error { yyerrok; }
-    //| statement NULL_STRING close_execute_statement 
+    |
+    | END_FILE
+    {
+        yypop_buffer_state();
+    }
+
+    //| statement NULL_STRING close_execute_statement
+
+
 
 check_indent
     : { 
@@ -865,9 +892,13 @@ elseif_statement
     } */
 
 for_statement
-    : FOR LEFT_PAREN single_statement_no_semicolon SEMICOLON expression_statement SEMICOLON single_statement_no_semicolon RIGHT_PAREN
+    : FOR single_statement_no_semicolon SEMICOLON expression_statement SEMICOLON single_statement_no_semicolon
     {
-        $$= bldForStmt($3, $5, $7);  
+        $$= bldForStmt($2, $4, $6);
+    }
+    | FOR single_statement_no_semicolon COLON expression_statement COLON single_statement_no_semicolon
+    {
+        $$= bldForStmt($2, $4, $6);
     }
 
 /* while_statement
