@@ -70,11 +70,11 @@ ExpStrc *bldAsnExp(ExpStrc *lvl, ExpStrc *exp);
 
 ExpStrc *bldVrbExp(char *idtf);
 
-ExpStrc *bldBnrExp(OprEnm opr, ExpStrc *lftExp, ExpStrc *rghtExp);
+ExpStrc *bldBnrExp(OpEnm opr, ExpStrc *lftExp, ExpStrc *rgtExp);
 
-ExpStrc *blnTrpExp(OprEnm opr, ExpStrc *frstExp, ExpStrc *scndExp, ExpStrc *trdExp);
+ExpStrc *blnTrpExp(OpEnm opr, ExpStrc *frstExp, ExpStrc *scndExp, ExpStrc *trdExp);
 
-ExpStrc *bldUnrExp(OprEnm opr, ExpStrc *exp);
+ExpStrc *bldUnrExp(OpEnm opr, ExpStrc *exp);
 
 ExpStrc *bldFcnExp(char *nm, struct ArgLstStrc *argLst);
 
@@ -84,43 +84,43 @@ ExpStrc *bldLvlExp(ExpStrc *vrb);
 
 ExpStrc *bldLvlExpAdd(ExpStrc *lvl, struct AcsLstStrc *evlLst);
 
-ExpStrc *bldElmtAsgnExp(ExpStrc *arr, struct PstnLstStrc *pstnLst, ExpStrc *vl);
+ExpStrc *bldElmtAsgnExp(ExpStrc *arr, struct PsnLstStrc *pstnLst, ExpStrc *vl);
 
 ExpStrc *bldNewArrExp(ExpStrc *cnt);
 
 ExpStrc *bldNewExp(char *cls);
 
-ValStrc *clcBnrExp(vector<EnvrStrc *> &envr, struct BnrExpStrc *exp);
+ValStrc *clcBnrExp(vector<EnvrStrc *> &envr, BnrExpStrc *exp);
 
-ValStrc *clcBnrExpAdd(vector<EnvrStrc *> &envr, struct BnrExpStrc *exp);
+ValStrc *clcBnrExpAdd(vector<EnvrStrc *> &envr, BnrExpStrc *exp);
 
-ValStrc *clcBnrExpSub(vector<EnvrStrc *> &envr, struct BnrExpStrc *exp);
+ValStrc *clcBnrExpSub(vector<EnvrStrc *> &envr, BnrExpStrc *exp);
 
-ValStrc *clcBnrExpMul(vector<EnvrStrc *> &envr, struct BnrExpStrc *exp);
+ValStrc *clcBnrExpMul(vector<EnvrStrc *> &envr, BnrExpStrc *exp);
 
-ValStrc *clcBnrExpDiv(vector<EnvrStrc *> &envr, struct BnrExpStrc *exp);
+ValStrc *clcBnrExpDiv(vector<EnvrStrc *> &envr, BnrExpStrc *exp);
 
-ValStrc *clcBnrExpAnd(vector<EnvrStrc *> &envr, struct BnrExpStrc *exp);
+ValStrc *clcBnrExpAnd(vector<EnvrStrc *> &envr, BnrExpStrc *exp);
 
-ValStrc *clcBnrExpOr(vector<EnvrStrc *> &envr, struct BnrExpStrc *exp);
+ValStrc *clcBnrExpOr(vector<EnvrStrc *> &envr, BnrExpStrc *exp);
 
-ValStrc *clcBnrExpEq(vector<EnvrStrc *> &envr, struct BnrExpStrc *exp);
+ValStrc *clcBnrExpEq(vector<EnvrStrc *> &envr, BnrExpStrc *exp);
 
-ValStrc *clcBnrExpNe(vector<EnvrStrc *> &envr, struct BnrExpStrc *exp);
+ValStrc *clcBnrExpNe(vector<EnvrStrc *> &envr, BnrExpStrc *exp);
 
-ValStrc *clcBnrExpGt(vector<EnvrStrc *> &envr, struct BnrExpStrc *exp);
+ValStrc *clcBnrExpGt(vector<EnvrStrc *> &envr, BnrExpStrc *exp);
 
-ValStrc *clcBnrExpGe(vector<EnvrStrc *> &envr, struct BnrExpStrc *exp);
+ValStrc *clcBnrExpGe(vector<EnvrStrc *> &envr, BnrExpStrc *exp);
 
-ValStrc *clcBnrExpLt(vector<EnvrStrc *> &envr, struct BnrExpStrc *exp);
+ValStrc *clcBnrExpLt(vector<EnvrStrc *> &envr, BnrExpStrc *exp);
 
-ValStrc *clcBnrExpLe(vector<EnvrStrc *> &envr, struct BnrExpStrc *exp);
+ValStrc *clcBnrExpLe(vector<EnvrStrc *> &envr, BnrExpStrc *exp);
 
-ValStrc *clcBnrExpBitAnd(vector<EnvrStrc *> &envr, struct BnrExpStrc *exp);
+ValStrc *clcBnrExpBitAnd(vector<EnvrStrc *> &envr, BnrExpStrc *exp);
 
-ValStrc *clcBnrExpBitOr(vector<EnvrStrc *> &envr, struct BnrExpStrc *exp);
+ValStrc *clcBnrExpBitOr(vector<EnvrStrc *> &envr, BnrExpStrc *exp);
 
-ValStrc *clcBnrExpBitXor(vector<EnvrStrc *> &envr, struct BnrExpStrc *exp);
+ValStrc *clcBnrExpBitXor(vector<EnvrStrc *> &envr, BnrExpStrc *exp);
 
 ValStrc *clcTnrExp(vector<EnvrStrc *> &envr, TnrExpStrc *exp);
 
@@ -128,13 +128,13 @@ ValStrc *clcTnrExpQm(vector<EnvrStrc *> &envr, struct TnrExpStrc *exp);
 
 ValStrc *clcAsgExp(vector<EnvrStrc *> &envr, struct AsnExpStrc *asn);
 
-ValStrc *clcUnrExpPfxInc(vector<EnvrStrc *> &envr, struct UnrExpStrc *exp);
+ValStrc *clcUnrExpPfxInc(vector<EnvrStrc *> &envr, UnrExpStrc *exp);
 
-ValStrc *clcUnrExpPfxDec(vector<EnvrStrc *> &envr, struct UnrExpStrc *exp);
+ValStrc *clcUnrExpPfxDec(vector<EnvrStrc *> &envr, UnrExpStrc *exp);
 
-ValStrc *clcUnrExpSfxInc(vector<EnvrStrc *> &envr, struct UnrExpStrc *exp);
+ValStrc *clcUnrExpSfxInc(vector<EnvrStrc *> &envr, UnrExpStrc *exp);
 
-ValStrc *clcUnrExpSfxDec(vector<EnvrStrc *> &envr, struct UnrExpStrc *exp);
+ValStrc *clcUnrExpSfxDec(vector<EnvrStrc *> &envr, UnrExpStrc *exp);
 
 ValStrc *clcUnrExpNot(vector<EnvrStrc *> &envr, struct UnrExpStrc *exp);
 
@@ -167,11 +167,11 @@ ValStrc *clcExp(vector<EnvrStrc *> &envr, ExpStrc *exp);
 
 ExpStrc *bldExpFromVal(ValStrc *val)
 {
-    ValExpStrc *exp = new ValExpStrc;
+    ValExpStrc *exp = new ValExpStrc(val);
 
-    exp->typ = ExpEnm::Val;
-
-    exp->val = val;
+    // exp->typ = ExpEnm::Val;
+    //
+    // exp->val = val;
 
     return exp;
 }
@@ -182,10 +182,10 @@ ExpStrc *bldIntValExp(int intVl)
 
     exp = bldIntVal(intVl);
 
-    ValExpStrc *rslt = new ValExpStrc;
+    ValExpStrc *rslt = new ValExpStrc(exp);
 
-    rslt->val = exp;
-    rslt->typ = ExpEnm::Val;
+    // rslt->val = exp;
+    // rslt->typ = ExpEnm::Val;
 
     return rslt;
 }
@@ -196,11 +196,11 @@ ExpStrc *bldFltValExp(float fltVl)
 
     val = bldFltVal(fltVl);
 
-    ValExpStrc *rslt = new ValExpStrc;
+    ValExpStrc *rslt = new ValExpStrc(val);
 
-    rslt->typ = ExpEnm::Val;
-
-    rslt->val = val;
+    // rslt->typ = ExpEnm::Val;
+    //
+    // rslt->val = val;
 
     return rslt;
 }
@@ -211,11 +211,11 @@ ExpStrc *bldBlnValExp(int blnVl)
 
     val = bldBlnVal(blnVl);
 
-    ValExpStrc *rslt = new ValExpStrc;
+    ValExpStrc *rslt = new ValExpStrc(val);
 
-    rslt->typ = ExpEnm::Val;
-
-    rslt->val = val;
+    // rslt->typ = ExpEnm::Val;
+    //
+    // rslt->val = val;
 
     return rslt;
 }
@@ -226,11 +226,11 @@ ExpStrc *bldStrValExp(char *strVl)
 
     val = bldStrVal(strVl);
 
-    ValExpStrc *rslt = new ValExpStrc;
+    ValExpStrc *rslt = new ValExpStrc(val);
 
-    rslt->typ = ExpEnm::Val;
-
-    rslt->val = val;
+    // rslt->typ = ExpEnm::Val;
+    //
+    // rslt->val = val;
 
     return rslt;
 }
@@ -241,23 +241,18 @@ ExpStrc *bldNllValExp()
 
     val = bldNllVal();
 
-    ValExpStrc *rslt = new ValExpStrc;
+    ValExpStrc *rslt = new ValExpStrc(val);
 
-    rslt->typ = ExpEnm::Val;
-
-    rslt->val = val;
+    // rslt->typ = ExpEnm::Val;
+    //
+    // rslt->val = val;
 
     return rslt;
 }
 
 ExpStrc *bldAsnExp(ExpStrc *lvl, ExpStrc *exp)
 {
-    struct AsnExpStrc *rslt = new AsnExpStrc;
-
-    rslt->typ = ExpEnm::Asn;
-
-    rslt->lvl = static_cast<LvlExpStrc *>(lvl);
-    rslt->exp = exp;
+    AsnExpStrc *rslt = new AsnExpStrc(static_cast<LvlExpStrc *>(lvl), exp);
 
     return rslt;
 }
@@ -265,18 +260,15 @@ ExpStrc *bldAsnExp(ExpStrc *lvl, ExpStrc *exp)
 
 ExpStrc *bldArrExp(struct ElmtLstStrc *elmtLst)
 {
-    struct ArrExpStrc *rslt = new ArrExpStrc;
-
-    rslt->typ = ExpEnm::Arr;
-
-    rslt->elmtLst = elmtLst;
+    struct ArrExpStrc *rslt = new ArrExpStrc(elmtLst);
 
     return rslt;
 }
 
 ExpStrc *bldLvlExp(ExpStrc *vrb)
 {
-    struct LvlExpStrc *rslt = new LvlExpStrc;
+    ///TODO
+    LvlExpStrc *rslt = new LvlExpStrc(static_cast<VrbExpStrc *>(vrb));
 
     rslt->typ = ExpEnm::Lvl;
 
@@ -308,36 +300,17 @@ ExpStrc *bldLvlExpAdd(ExpStrc *lvl, struct AcsLstStrc *evlLst)
     return lvl;
 }
 
-ExpStrc *bldElmtAsgnExp(ExpStrc *arr, struct PstnLstStrc *pstnLst, ExpStrc *vl)
+ExpStrc *bldElmtAsgnExp(ExpStrc *arr, PsnLstStrc *pstnLst, ExpStrc *vl)
 {
-    struct ElmtAsgnExpStrc *rslt = new ElmtAsgnExpStrc;
-
-    rslt->typ = ExpEnm::ElmAsn;
-
-    rslt->arr = arr;
-    rslt->pstnLst = pstnLst;
-    rslt->vl = vl;
+    ElmtAsgnExpStrc *rslt = new ElmtAsgnExpStrc(arr, pstnLst, vl);
 
     return rslt;
 }
 
-
-ExpStrc *bldNewArrExp(ExpStrc *cnt)
-{
-    struct NewArrExpStrc *rslt = new NewArrExpStrc;
-
-    rslt->typ = ExpEnm::NewArr;
-
-    rslt->cnt = cnt;
-
-    return rslt;
-}
 
 ExpStrc *bldNewExp(char *cls)
 {
-    auto rslt = new NewExpStrc;
-    rslt->typ = ExpEnm::New;
-    rslt->nm = new string(cls);
+    auto rslt = new NewExpStrc(new string(cls));
 
     return rslt;
 }
@@ -345,51 +318,30 @@ ExpStrc *bldNewExp(char *cls)
 
 ExpStrc *bldVrbExp(char *nm)
 {
-    struct VrbExpStrc *exp = new VrbExpStrc;
-
-    exp->typ = ExpEnm::Vrb;
-
-    exp->nm = nm;
+    VrbExpStrc *exp = new VrbExpStrc(nm);
 
     return exp;
 }
 
-ExpStrc *bldBnrExp(OprEnm opr, ExpStrc *lftExp, ExpStrc *rghtExp)
+ExpStrc *bldBnrExp(OpEnm opr, ExpStrc *lftExp, ExpStrc *rgtExp)
 {
-    BnrExpStrc *exp = new BnrExpStrc;
-
-    exp->typ = ExpEnm::Bnr;
-
-    exp->lft = lftExp;
-    exp->rgt = rghtExp;
-    exp->opr = opr;
+    BnrExpStrc *exp = new BnrExpStrc(opr, lftExp, rgtExp);
 
     return exp;
 }
 
-ExpStrc *bldTnrExp(OprEnm opr, ExpStrc *frstExp, ExpStrc *scndExp, ExpStrc *trdExp)
+ExpStrc *bldTnrExp(OpEnm opr, ExpStrc *frstExp, ExpStrc *scndExp, ExpStrc *trdExp)
 {
-    TnrExpStrc *exp = new TnrExpStrc;
+    TnrExpStrc *exp = new TnrExpStrc(opr, frstExp, scndExp, trdExp);
 
-    exp->typ = ExpEnm::Tnr;
-
-    exp->opr = opr;
-
-    exp->frst = frstExp;
-    exp->scnd = scndExp;
-    exp->trd = trdExp;
 
     return exp;
 }
 
-ExpStrc *bldUnrExp(OprEnm opr, ExpStrc *exp)
+ExpStrc *bldUnrExp(OpEnm opr, ExpStrc *exp)
 {
-    struct UnrExpStrc *rslt = new UnrExpStrc;
+    struct UnrExpStrc *rslt = new UnrExpStrc(opr, exp);
 
-    rslt->typ = ExpEnm::Unr;
-
-    rslt->exp = exp;
-    rslt->opr = opr;
 
     return rslt;
 }
@@ -397,22 +349,20 @@ ExpStrc *bldUnrExp(OprEnm opr, ExpStrc *exp)
 
 ExpStrc *bldFcnExp(char *nm, struct ArgLstStrc *argLst)
 {
-    struct FcnExpStrc *rslt = new FcnExpStrc;
+    FcnExpStrc *rslt = new FcnExpStrc(nm, argLst);
 
-    rslt->typ = ExpEnm::Fcn;
-
-    rslt->nm = nm;
-
-    rslt->argLst = argLst;
+    // rslt->typ = ExpEnm::Fcn;
+    //
+    // rslt->nm = nm;
+    //
+    // rslt->argLst = argLst;
 
     return rslt;
 }
 
-ExpStrc *bldNllExp()
+ExpStrc *bldNlExp()
 {
-    ExpStrc *rslt = new ExpStrc;
-
-    rslt->typ = ExpEnm::Nll;
+    ExpStrc *rslt = new ExpStrc(ExpEnm::Nl);
 
     return rslt;
 }
@@ -1015,104 +965,104 @@ ValStrc *clcBnrExp(vector<EnvrStrc *> &envr, struct BnrExpStrc *exp)
     switch (exp->opr)
     {
         //处理相同类型及不同类型变量之间的运算
-        case OprEnm::Add:
+        case OpEnm::Add:
         {
             //rslt = clcBnrExpAdd(envr, exp);
             rslt = new ValStrc(*lft + *rgt);
 
             break;
         }
-        case OprEnm::Sub:
+        case OpEnm::Sub:
         {
             rslt = new ValStrc(*lft - *rgt);
             //rslt = clcBnrExpSub(envr, exp);
 
             break;
         }
-        case OprEnm::Mul:
+        case OpEnm::Mul:
         {
             rslt = new ValStrc(*lft * *rgt);
             //rslt = clcBnrExpMul(envr, exp);
             break;
         }
-        case OprEnm::Div:
+        case OpEnm::Div:
         {
             rslt = new ValStrc(*lft / *rgt);
             //rslt = clcBnrExpDiv(envr, exp);
             break;
         }
-        case OprEnm::Mod:
+        case OpEnm::Mod:
         {
             rslt = new ValStrc(*lft % *rgt);
             //rslt = clcBnrExpMod(envr, exp);
             break;
         }
-        case OprEnm::Eq:
+        case OpEnm::Eq:
         {
             rslt = new ValStrc(*lft == *rgt);
             //rslt = clcBnrExpEq(envr, exp);
             break;
         }
-        case OprEnm::Ne:
+        case OpEnm::Ne:
         {
             rslt = new ValStrc(*lft != *rgt);
             //rslt = clcBnrExpNe(envr, exp);
             break;
         }
-        case OprEnm::Gt:
+        case OpEnm::Gt:
         {
             rslt = new ValStrc(*lft > *rgt);
             //rslt = clcBnrExpGt(envr, exp);
             break;
         }
-        case OprEnm::Ge:
+        case OpEnm::Ge:
         {
             rslt = new ValStrc(*lft >= *rgt);
             //rslt = clcBnrExpGe(envr, exp);
             break;
         }
-        case OprEnm::Lt:
+        case OpEnm::Lt:
         {
             rslt = new ValStrc(*lft < *rgt);
             //rslt = clcBnrExpLt(envr, exp);
             break;
         }
-        case OprEnm::Le:
+        case OpEnm::Le:
         {
             rslt = new ValStrc(*lft <= *rgt);
             //rslt = clcBnrExpLe(envr, exp);
             break;
         }
-        case OprEnm::And:
+        case OpEnm::And:
         {
             rslt = new ValStrc(*lft && *rgt);
             //rslt = clcBnrExpAnd(envr, exp);
             break;
         }
-        case OprEnm::Or:
+        case OpEnm::Or:
         {
             rslt = new ValStrc(*lft || *rgt);
             //rslt = clcBnrExpOr(envr, exp);
             break;
         }
-        case OprEnm::Xor:
+        case OpEnm::Xor:
         {
             rslt = new ValStrc(*lft ^ *rgt);
             break;
         }
-        case OprEnm::BAnd:
+        case OpEnm::BAnd:
         {
             rslt = new ValStrc(*lft & *rgt);
             //rslt = clcBnrExpBitAnd(envr, exp);
             break;
         }
-        case OprEnm::BOr:
+        case OpEnm::BOr:
         {
             rslt = new ValStrc(*lft | *rgt);
             //rslt = clcBnrExpBitOr(envr, exp);
             break;
         }
-        case OprEnm::BXor:
+        case OpEnm::BXor:
         {
             rslt = new ValStrc(*lft ^ *rgt);
             //rslt = clcBnrExpBitXor(envr, exp);
@@ -1128,7 +1078,7 @@ ValStrc *clcTnrExp(vector<EnvrStrc *> &envr, TnrExpStrc *exp)
     ValStrc *rslt = nullptr;
     switch (exp->opr)
     {
-        case OprEnm::Tnr:
+        case OpEnm::Tnr:
         {
             rslt = clcTnrExpQm(envr, exp);
             break;
@@ -1606,7 +1556,7 @@ ValStrc *clcUnrExp(vector<EnvrStrc *> &envr, struct UnrExpStrc *exp)
 
     switch (exp->opr)
     {
-        case OprEnm::PfxInc:
+        case OpEnm::PfxInc:
         {
             VrbStrc *vrb = getVrb(envr, static_cast<LvlExpStrc*> (exp->exp));
 
@@ -1617,7 +1567,7 @@ ValStrc *clcUnrExp(vector<EnvrStrc *> &envr, struct UnrExpStrc *exp)
             //rslt = clcUnrExpPfxInc(envr, exp);
             break;
         }
-        case OprEnm::PfxDec:
+        case OpEnm::PfxDec:
         {
             VrbStrc *vrb = getVrb(envr, static_cast<LvlExpStrc*> (exp->exp));
 
@@ -1627,7 +1577,7 @@ ValStrc *clcUnrExp(vector<EnvrStrc *> &envr, struct UnrExpStrc *exp)
             //rslt = clcUnrExpPfxDec(envr, exp);
             break;
         }
-        case OprEnm::SfxInc:
+        case OpEnm::SfxInc:
         {
             VrbStrc *vrb = getVrb(envr, static_cast<LvlExpStrc*> (exp->exp));
 
@@ -1637,7 +1587,7 @@ ValStrc *clcUnrExp(vector<EnvrStrc *> &envr, struct UnrExpStrc *exp)
             //rslt = clcUnrExpSfxInc(envr, exp);
             break;
         }
-        case OprEnm::SfxDec:
+        case OpEnm::SfxDec:
         {
             VrbStrc *vrb = getVrb(envr, static_cast<LvlExpStrc*> (exp->exp));
 
@@ -1647,26 +1597,26 @@ ValStrc *clcUnrExp(vector<EnvrStrc *> &envr, struct UnrExpStrc *exp)
             //rslt = clcUnrExpSfxDec(envr, exp);
             break;
         }
-        case OprEnm::Not:
+        case OpEnm::Not:
         {
             rslt = new ValStrc(! (*val));
 
             //rslt = clcUnrExpNot(envr, exp);
             break;
         }
-        case OprEnm::BNot:
+        case OpEnm::BNot:
         {
             rslt = new ValStrc(~ (*val));
             //rslt = clcUnrExpBitNot(envr, exp);
             break;
         }
-        case OprEnm::Ngtv:
+        case OpEnm::Ngtv:
         {
             rslt = new ValStrc(- (*val));
             //rslt = clcUnrExpSub(envr, exp);
             break;
         }
-        case OprEnm::Pstv:
+        case OpEnm::Pstv:
         {
             rslt = new ValStrc(+ (*val));
             //rslt = clcUnrExpAdd(envr, exp);
@@ -2201,19 +2151,19 @@ ValStrc *clcElmtAsgnExp(vector<EnvrStrc *> &envr, struct ElmtAsgnExpStrc *exp)
 
     int lyr;
 
-    lyr = exp->pstnLst->pstnArr.size();
+    lyr = exp->psnLst->pstnArr.size();
 
     int i;
 
     for (i = 0; i < lyr - 1; i++)
     {
-        pstn = clcExp(envr, exp->pstnLst->pstnArr[i])->v.int_;
+        pstn = clcExp(envr, exp->psnLst->pstnArr[i])->v.int_;
         arrPrnt = arrPrnt->elmtArr[pstn]->v.arr;
     }
 
-    rslt = clcExp(envr, exp->vl);
+    rslt = clcExp(envr, exp->val);
 
-    pstn = clcExp(envr, exp->pstnLst->pstnArr[lyr - 1])->v.int_;
+    pstn = clcExp(envr, exp->psnLst->pstnArr[lyr - 1])->v.int_;
 
     arrPrnt->elmtArr[pstn] = rslt;
 
@@ -2488,7 +2438,7 @@ ValStrc *clcExp(vector<EnvrStrc *> &envr, ExpStrc *exp)
         rslt = clcLvlExp(envr, static_cast<LvlExpStrc *>(exp));
     }
 
-    if (exp->typ == ExpEnm::Nll)
+    if (exp->typ == ExpEnm::Nl)
     {
         rslt = bldNllVal();
     }

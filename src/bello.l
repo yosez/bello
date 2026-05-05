@@ -107,6 +107,7 @@
 "!"                         { return NOT; }
 "."                         { return DOT; }
 "?"                         { return QM; }
+"@"                         { return AT; }
 ":::"                       { return SHORTCUT_PRINTLN; }
 "nop"                       { return NOP; }
 "new"                       { return NEW; }
@@ -121,6 +122,7 @@
 "break"                     { return BREAK; }
 "continue"                  { return CONTINUE; }
 "class"                     { return CLASS; }
+"fn"                        { return FUNC; }
 "function"                  { return FUNC; }
 "return"                    { return RETURN; }
 "null"                      { return NLL_LTR; }

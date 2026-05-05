@@ -900,12 +900,22 @@ for_statement
     {
         $$= bldForStmt($2, $4, $6);
     }
-
-/* while_statement
-    : WHILE LEFT_PAREN expression_statement RIGHT_PAREN structure_statement
+    ｜ FOR AT signle_statement_no_semicolon COMMA expression_statement COMMA COLON single_statement_no_semicolon
     {
-        $$= bldWhlStmt($3, $5);
-    } */
+        $$ = bldForStmt($3, $5, $8);
+    }
+
+for_condition_statement
+    : AT single_statement_no_semicolon COMMA for_condition_statement
+    {
+    }
+    | single_statement_no_semicolon COMMA for_condition_statement
+    {
+    }
+    | COLON single_statement_no_semicolon COMMA for_condition_statement
+    {
+    }
+
 
 while_statement
     : WHILE expression 

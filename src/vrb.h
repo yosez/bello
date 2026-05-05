@@ -30,18 +30,22 @@ int asnVrb(struct VrbStrc* vrb, struct ValStrc* vl)
 
 struct VrbStrc* cpyVrb(VrbStrc* vrb, string* nm = nullptr)
 {
-	auto rslt = new VrbStrc;
+	//auto rslt = new VrbStrc();
 
-	rslt->val = cpyVal(vrb->val);
+	ValStrc* val = cpyVal(vrb->val);
 
-	if (nm != nullptr)
-	{
-		rslt->nm = new string(*nm);
-	}
-	else
-	{
-		rslt->nm = new string(*(vrb->nm));
-	}
+	//rslt->val = cpyVal(vrb->val);
+
+	VrbStrc* rslt = new VrbStrc(val, new string(*nm));
+
+	// if (nm != nullptr)
+	// {
+	// 	rslt->nm = new string(*nm);
+	// }
+	// else
+	// {
+	// 	rslt->nm = new string(*(vrb->nm));
+	// }
 
 	return rslt;
 }

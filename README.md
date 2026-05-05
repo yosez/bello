@@ -1,8 +1,49 @@
 # Bello Script Language
 
 Bello is a small scripting language interpreter implemented with C++,
-Flex, and Bison. It supports running scripts from files or an interactive
-REPL. Blocks are defined by indentation.
+Flex, and Bison. It supports fundamental structure, e.g. for, if, and
+support object-orirented.
+
+Its aim is to create a flexible, basically classical, stable implementation of scripting language.
+
+
+## while语句
+while [condition]
+	[statement]
+
+## if语句
+if [condition]
+	[statement_or_block]
+elif 
+	[statement_or_block]
+else
+	[statement_or_block]
+
+## for语句
+for [initial variable define, e.g i=0]: [condition] : [iterative]
+	[statement_or_block] 
+
+## 函数定义 function defination
+fn [function_name]([parameter_name :] parameter, ...)
+	[statement_or_block]
+
+
+## break语句
+
+用于循环中，跳出循环
+
+break
+break([layer])
+
+## continue语句
+
+用于循环中，跳过之后内容，（for：使用迭代语句），省略循环体
+
+## 数组 array
+
+a = [1, 2, 3, 4, 7]
+
+a[2] = 5
 
 ## Features
 
@@ -11,57 +52,5 @@ REPL. Blocks are defined by indentation.
 - Function definitions
 - Basic built-in I/O (see examples)
 
-## Quick Start
 
-### Build (scripted)
-
-```
-cd src
-./build.sh
-```
-
-This produces `bello` in `src/`.
-
-### Build (CMake)
-
-```
-mkdir -p build
-cd build
-cmake ..
-cmake --build .
-```
-
-The executable is placed in `bin/`.
-
-## Run
-
-Run a script file:
-
-```
-./bin/bello bin/test.bello
-```
-
-Or run from the `src/` build:
-
-```
-./src/bello bin/test.bello
-```
-
-Start the REPL:
-
-```
-./bin/bello
-```
-
-## Examples
-
-Example scripts are in `bin/`:
-
-- `bin/test.bello`
-- `bin/SelectionSortTest.bello`
-
-## Notes
-
-- On macOS, the build uses the system edit/readline library.
-- If you modify the grammar, rerun `src/build.sh` to regenerate sources.
 

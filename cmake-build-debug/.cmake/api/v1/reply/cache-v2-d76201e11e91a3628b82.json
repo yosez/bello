@@ -55,7 +55,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/Users/yosezang/Bello/bello V20.21 MDF/main/bello/cmake-build-debug"
+			"value" : "/Users/yosezang/bello/bello V20.31 MDF2/main/bello/cmake-build-debug"
 		},
 		{
 			"name" : "CMAKE_CACHE_MAJOR_VERSION",
@@ -495,7 +495,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/Users/yosezang/Bello/bello V20.21 MDF/main/bello/cmake-build-debug/CMakeFiles/pkgRedirects"
+			"value" : "/Users/yosezang/bello/bello V20.31 MDF2/main/bello/cmake-build-debug/CMakeFiles/pkgRedirects"
 		},
 		{
 			"name" : "CMAKE_GENERATOR",
@@ -555,7 +555,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/Users/yosezang/Bello/bello V20.21 MDF/main/bello"
+			"value" : "/Users/yosezang/Bello/bello V20.31 MDF2/main/bello"
 		},
 		{
 			"name" : "CMAKE_INSTALL_NAME_TOOL",
@@ -835,7 +835,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "src"
+			"value" : "bello"
 		},
 		{
 			"name" : "CMAKE_RANLIB",
@@ -1146,6 +1146,42 @@
 			"value" : "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/usr/lib/libedit.tbd"
 		},
 		{
+			"name" : "bello_BINARY_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "/Users/yosezang/bello/bello V20.31 MDF2/main/bello/cmake-build-debug"
+		},
+		{
+			"name" : "bello_IS_TOP_LEVEL",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "ON"
+		},
+		{
+			"name" : "bello_SOURCE_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "/Users/yosezang/bello/bello V20.31 MDF2/main/bello"
+		},
+		{
 			"name" : "src_BINARY_DIR",
 			"properties" : 
 			[
@@ -1155,7 +1191,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/Users/yosezang/Bello/bello V20.21 MDF/main/bello/cmake-build-debug"
+			"value" : "/Users/yosezang/bello/bello V20.31 MDF2/main/bello/cmake-build-debug"
 		},
 		{
 			"name" : "src_IS_TOP_LEVEL",
@@ -1179,7 +1215,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/Users/yosezang/Bello/bello V20.21 MDF/main/bello"
+			"value" : "/Users/yosezang/bello/bello V20.31 MDF2/main/bello"
 		}
 	],
 	"kind" : "cache",

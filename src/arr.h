@@ -30,16 +30,16 @@ int elmtLstAdd(struct ElmtLstStrc* elmtLst, struct ExpStrc* exp)
 	return 0;
 }
 
-struct PstnLstStrc* bldPstnLst()
+struct PsnLstStrc* bldPstnLst()
 {
 
-	struct PstnLstStrc* rslt = new PstnLstStrc;
+	struct PsnLstStrc* rslt = new PsnLstStrc;
 
 
 	return rslt;
 }
 
-int pstnLstAdd(struct PstnLstStrc* pstnLst, struct ExpStrc* exp)
+int pstnLstAdd(struct PsnLstStrc* pstnLst, struct ExpStrc* exp)
 {
 
 

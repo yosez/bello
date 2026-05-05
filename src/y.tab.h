@@ -219,7 +219,7 @@ typedef union YYSTYPE
     struct VrbLstStrc *vrbLst;
     struct AsgnLstStrc *asgnLst;
     struct ElmtLstStrc *elmtLst;
-    struct PstnLstStrc *pstnLst;
+    struct PsnLstStrc *pstnLst;
     struct AcsLstStrc *evlLst;
     
     char *idtf;
