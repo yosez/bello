@@ -212,12 +212,6 @@ StmtStrc* bldWhlStmt()
 {
 	auto rslt = new WhlStmtStrc;
 
-	rslt->typ = StmtEnm::Whl;
-
-	rslt->exp = nullptr;
-
-	rslt->stmt = nullptr;
-
 	return rslt;
 }
 
