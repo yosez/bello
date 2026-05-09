@@ -958,7 +958,7 @@ struct ValExpStrc: public ExpStrc
 {
 	ValStrc *val;
 
-	ValExpStrc(ValStrc* val): ExpStrc(ExpEnm::Vrb), val(val)
+	ValExpStrc(ValStrc* val): ExpStrc(ExpEnm::Val), val(val)
 	{};
 };
 

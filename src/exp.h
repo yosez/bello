@@ -1655,7 +1655,7 @@ ValStrc *clcFcnExp(vector<EnvrStrc *> &envr, FcnExpStrc *exp)
         }
 
 #ifdef DBG_FLG
-        printf("ntv fcn: %d", ntvFcn->prmCnt);
+        printf("ntv fcn: %d\n", ntvFcn->prmCnt);
 #endif
         rslt = ntvFcn->fcn(envr, ntvFcn->prmCnt, argArr);
     } else if (fcn != nullptr)

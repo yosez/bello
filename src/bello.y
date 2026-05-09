@@ -435,7 +435,7 @@ expression_statement
     }
 
 expression
-    : value_expression { $$ = $1; }
+    : value_expression { $$ = $1; printf("**exp prs typ**:%d\n", ($1)->typ); }
     | lvalue_operation_expression
     | unary_expression { $$ = $1; }
     | binary_expression { $$ = $1; }
@@ -684,6 +684,8 @@ argument_list
     : expression 
     {
         $$=bldArgLst();
+
+        printf("**arg lst add typ**:%d\n", ($1)->typ);
         argLstAdd($$, $1);
     }
     | IDENTIFER COLON expression
