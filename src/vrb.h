@@ -10,20 +10,27 @@
 #include "dftn.h"
 #include "exp.h"
 
-extern ExpStrc* bldAsnExp(struct ExpStrc* vrb, struct ExpStrc* exp);
-extern ExpStrc* bldLvlExp(struct ExpStrc* vrb);
+extern ExpStrc* bldAsnExp(ExpStrc* vrb, struct ExpStrc* exp);
+extern ExpStrc* bldLvlExp(ExpStrc* vrb);
 
 VrbStrc* bldVrb(string nm);
 VrbStrc* cpyVrb(VrbStrc* vrb, string* nm);
-int asnVrb(struct VrbStrc* vrb, struct ValStrc* vl);
+int asnVrbCpy(struct VrbStrc* vrb, struct ValStrc* vl);
 ValStrc* bldValFrmVrb(struct VrbStrc* vrb);
-AsgnLstStrc* bldAsgnLst();
-int asgnLstAdd(struct AsgnLstStrc* asgnLst, struct ExpStrc* vrb, struct ExpStrc* exp);
+AsnLstStrc* bldAsnLst();
+int asnLstAdd(struct AsnLstStrc* asgnLst, struct ExpStrc* vrb, struct ExpStrc* exp);
 
 //对变量数组中的选定变量进行赋值
-int asnVrb(struct VrbStrc* vrb, struct ValStrc* vl)
+int asnVrbCpy(VrbStrc* vrb, ValStrc* vl)
 {
-	vrb->val =cpyVal(vl);
+	vrb->val = cpyVal(vl);
+
+	return 0;
+}
+
+int asnVrbMv(VrbStrc* vrb, ValStrc* vl)
+{
+	vrb->val = vl;
 
 	return 0;
 }
@@ -75,14 +82,14 @@ struct VrbStrc* bldVrb(string nm)
 }
 
 
-struct AsgnLstStrc* bldAsgnLst()
+AsnLstStrc* bldAsnLst()
 {
-	struct AsgnLstStrc* rslt = new AsgnLstStrc;
+	struct AsnLstStrc* rslt = new AsnLstStrc;
 
 	return rslt;
 }
 
-int asgnLstAdd(struct AsgnLstStrc* asgnLst, struct ExpStrc* vrb, struct ExpStrc* exp)
+int asnLstAdd(struct AsnLstStrc* asgnLst, struct ExpStrc* vrb, struct ExpStrc* exp)
 {
 	asgnLst->asgnArr.push_back(static_cast<AsnExpStrc*>(bldAsnExp(bldLvlExp(vrb), exp)));
 

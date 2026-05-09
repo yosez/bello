@@ -20,11 +20,11 @@ extern struct StmtRsltStrc *exctStmt(vector<EnvrStrc *> &envr, struct StmtStrc *
 
 extern VrbStrc *getObjVrb(VrbStrc *vrb, LvlExpStrc *lvl);
 
-extern ValStrc *bldValFrmVrb(struct VrbStrc *vrb);
+extern ValStrc *bldValFrmVrb(VrbStrc *vrb);
 
-extern VrbStrc *getEnvrVrb(struct EnvrStrc *envr, struct VrbExpStrc *vrbExp);
+extern VrbStrc *getEnvrVrb(EnvrStrc *envr, VrbExpStrc *vrbExp);
 
-extern NtvFcnStrc *getNtvFcn(struct EnvrStrc *envr, struct FcnExpStrc *fcn);
+extern NtvFcnStrc *getNtvFcn(EnvrStrc *envr, FcnExpStrc *fcn);
 
 extern NtvFcnStrc *getNtvFcn(vector<EnvrStrc *> envr, struct FcnExpStrc *fcn);
 
@@ -38,25 +38,9 @@ extern int addFcn(struct EnvrStrc *envr, struct FcnStrc *fcn);
 
 extern struct ClsStrc *getGlbCls(vector<EnvrStrc *> &envr, string nm);
 
-//struct CnstStrc* bldCnstIntExp(int intVl);
-//struct CnstStrc* bldCnstFltExp(float fltVl);
-//struct CnstStrc* bldCnstBlnExp(int blnVl);
-//struct CnstStrc* bldCnstStrExp(char* strVl);
-//struct CnstStrc* bldCnstNllExp();
-//struct AsgnExpStrc* bldAsgnExp(ExpStrc* lvl, ExpStrc* exp);
-//struct VrbExpStrc* bldVrbExp(char* idtf);
-//struct BnrExpStrc* bldBnrExp(int opr, ExpStrc* lftExp, ExpStrc* rghtExp);
-//struct UnrExpStrc* bldUnrExp(int opr, ExpStrc* exp);
-//struct FcnExpStrc* bldFcnExp(char* nm, struct ArgLstStrc* argLst);
-//struct ArrExpStrc* bldArrExp(struct ElmtLstStrc* elmtLst);
-//struct LvlExpStrc* bldLvlExp(ExpStrc* vrb);
-//ExpStrc* bldLvlExpAdd(ExpStrc* lvl, struct AcsLstStrc* evlLst);
-//struct ElmtAsgnExpStrc* bldElmtAsgnExp(ExpStrc* arr, struct PstnLstStrc* pstnLst, ExpStrc* vl);
-//struct NewArrExpStrc* bldNewArrExp(ExpStrc* cnt);
-
 ExpStrc *bldExpFromVal(ValStrc *val);
 
-ExpStrc *bldIntValExp(int intVl);
+ExpStrc *bldIntValExp(int int_);
 
 ExpStrc *bldFltValExp(float fltVl);
 
@@ -64,7 +48,7 @@ ExpStrc *bldBlnValExp(int blnVl);
 
 ExpStrc *bldStrValExp(char *strVl);
 
-ExpStrc *bldNllValExp();
+ExpStrc *bldNlValExp();
 
 ExpStrc *bldAsnExp(ExpStrc *lvl, ExpStrc *exp);
 
@@ -86,7 +70,6 @@ ExpStrc *bldLvlExpAdd(ExpStrc *lvl, struct AcsLstStrc *evlLst);
 
 ExpStrc *bldElmtAsgnExp(ExpStrc *arr, struct PsnLstStrc *pstnLst, ExpStrc *vl);
 
-ExpStrc *bldNewArrExp(ExpStrc *cnt);
 
 ExpStrc *bldNewExp(char *cls);
 
@@ -126,7 +109,7 @@ ValStrc *clcTnrExp(vector<EnvrStrc *> &envr, TnrExpStrc *exp);
 
 ValStrc *clcTnrExpQm(vector<EnvrStrc *> &envr, struct TnrExpStrc *exp);
 
-ValStrc *clcAsgExp(vector<EnvrStrc *> &envr, struct AsnExpStrc *asn);
+ValStrc *clcAsnExp(vector<EnvrStrc *> &envr, struct AsnExpStrc *asn);
 
 ValStrc *clcUnrExpPfxInc(vector<EnvrStrc *> &envr, UnrExpStrc *exp);
 
@@ -152,7 +135,6 @@ ValStrc *clcFcnExp(vector<EnvrStrc *> &envr, struct FcnStrc *fcn, struct FcnExpS
 
 ValStrc *clcArrExp(vector<EnvrStrc *> &envr, struct ArrExpStrc *exp);
 
-ValStrc *clcNewArrExp(vector<EnvrStrc *> &envr, struct NewArrExpStrc *exp);
 
 ValStrc *clcArrEvlExp(vector<EnvrStrc *> &envr, struct ArrEvlExpStrc *exp);
 
@@ -176,16 +158,11 @@ ExpStrc *bldExpFromVal(ValStrc *val)
     return exp;
 }
 
-ExpStrc *bldIntValExp(int intVl)
+ExpStrc *bldIntValExp(int int_)
 {
-    ValStrc *exp;
+    ValStrc *vl = bldIntVal(int_);
 
-    exp = bldIntVal(intVl);
-
-    ValExpStrc *rslt = new ValExpStrc(exp);
-
-    // rslt->val = exp;
-    // rslt->typ = ExpEnm::Val;
+    ValExpStrc *rslt = new ValExpStrc(vl);
 
     return rslt;
 }
@@ -235,24 +212,21 @@ ExpStrc *bldStrValExp(char *strVl)
     return rslt;
 }
 
-ExpStrc *bldNllValExp()
+ExpStrc *bldNlValExp()
 {
     ValStrc *val;
 
-    val = bldNllVal();
+    val = bldNlVal();
 
     ValExpStrc *rslt = new ValExpStrc(val);
 
-    // rslt->typ = ExpEnm::Val;
-    //
-    // rslt->val = val;
 
     return rslt;
 }
 
 ExpStrc *bldAsnExp(ExpStrc *lvl, ExpStrc *exp)
 {
-    AsnExpStrc *rslt = new AsnExpStrc(static_cast<LvlExpStrc *>(lvl), exp);
+    AsnExpStrc *rslt = new AsnExpStrc(dynamic_cast<LvlExpStrc *>(lvl), exp);
 
     return rslt;
 }
@@ -270,31 +244,19 @@ ExpStrc *bldLvlExp(ExpStrc *vrb)
     ///TODO
     LvlExpStrc *rslt = new LvlExpStrc(static_cast<VrbExpStrc *>(vrb));
 
-    rslt->typ = ExpEnm::Lvl;
-
-    rslt->vrb = static_cast<VrbExpStrc *>(vrb);
-
-    rslt->hasAcsLst = 0;
-    rslt->acs = nullptr;
-
-    rslt->hasAtb = 0;
-    rslt->atb = nullptr;
-
-    rslt->hasFcn = 0;
-    rslt->fcn = nullptr;
-
-    rslt->blnIvk = 0;
 
     return rslt;
 }
 
-ExpStrc *bldLvlExpAdd(ExpStrc *lvl, struct AcsLstStrc *evlLst)
+ExpStrc *bldLvlExpAdd(ExpStrc *lvl, AcsLstStrc *evlLst)
 {
-    static_cast<LvlExpStrc *>(lvl)->acs = evlLst;
+    LvlExpStrc *rslt = dynamic_cast<LvlExpStrc *>(lvl);
 
-    if (evlLst != NULL)
+    rslt->acs = evlLst;
+
+    if (evlLst != nullptr)
     {
-        static_cast<LvlExpStrc *>(lvl)->hasAcsLst = 1;
+        rslt->hasAcsLst = 1;
     }
 
     return lvl;
@@ -347,15 +309,10 @@ ExpStrc *bldUnrExp(OpEnm opr, ExpStrc *exp)
 }
 
 
-ExpStrc *bldFcnExp(char *nm, struct ArgLstStrc *argLst)
+ExpStrc *bldFcnExp(char *nm, ArgLstStrc *argLst)
 {
     FcnExpStrc *rslt = new FcnExpStrc(nm, argLst);
 
-    // rslt->typ = ExpEnm::Fcn;
-    //
-    // rslt->nm = nm;
-    //
-    // rslt->argLst = argLst;
 
     return rslt;
 }
@@ -1503,7 +1460,7 @@ ValStrc *clcUnrExpSub(vector<EnvrStrc *> &envr, struct UnrExpStrc *exp)
 {
     ValStrc *cnst, *rslt;
 
-    rslt = NULL;
+    rslt = nullptr;
 
     cnst = clcExp(envr, exp->exp);
 
@@ -1627,7 +1584,7 @@ ValStrc *clcUnrExp(vector<EnvrStrc *> &envr, struct UnrExpStrc *exp)
     return rslt;
 }
 
-ValStrc *clcFcnExp(vector<EnvrStrc *> &envr, struct FcnExpStrc *exp)
+ValStrc *clcFcnExp(vector<EnvrStrc *> &envr, FcnExpStrc *exp)
 {
     ValStrc *rslt = new ValStrc;
 
@@ -1642,9 +1599,14 @@ ValStrc *clcFcnExp(vector<EnvrStrc *> &envr, struct FcnExpStrc *exp)
     if (ntvFcn == nullptr && fcn == nullptr)
     {
         throw new ExFcnNotFnd;
-    } else if (ntvFcn != nullptr)
+    }
+    else if (ntvFcn != nullptr)
     {
         //计算各个参数的值并赋值给传参数组
+
+#ifdef DBG_FLG
+        printf("ntv fcn\n");
+#endif
 
         int i;
 
@@ -1661,21 +1623,40 @@ ValStrc *clcFcnExp(vector<EnvrStrc *> &envr, struct FcnExpStrc *exp)
         }
 
         //struct CnstStrc** argArr = (struct CnstStrc**)malloc(sizeof(struct CnstStrc*) * ntvFcn->prmCnt);
-        vector<ValStrc *> argArr;
+        vector<ValStrc *> argArr{};
 
         //printf("clc fcn prm cnt: %d\n", exp->argLst->argArr.size());
 
         for (i = 0; i < exp->argLst->argArr.size(); i++)
         {
-            //printf("ntvFcn arg[%2d] typ: %d\n", i, exp->argLst->argArr.at(i)->typ);
-
+// #ifdef DBG_FLG
+//             printf("ntvFcn arg[%2d] typ: %d\n", i, dynamic_cast<>exp->argLst->argArr.at(i)->);
+// #endif
+#ifdef DBG_FLG
+            printf("bfr clc ntvFcn arg[%2d] val: %d\n", i, dynamic_cast<ValExpStrc*>(exp->argLst->argArr.at(i))->val->v.int_);
+            printf("bfr clc ntvFcn arg[%2d] typ: %d\n", i, dynamic_cast<ValExpStrc*>(exp->argLst->argArr.at(i))->val->typ);
+            printf("bfr clc ntv arg[%2d] **exp typ**: %d\n", i, exp->argLst->argArr.at(i)->typ);
+#endif
             arg = clcExp(envr, exp->argLst->argArr[i]);
 
-            //printf("aft clc ntvFcn arg[%2d] typ: %d\n", i, exp->argLst->argArr.at(i)->typ);
+            // printf("arg: %d\n", dynamic_cast<ValStrc*>(arg)->v.int_);
+            // printf("typ: %d\n", dynamic_cast<ValStrc*>(arg)->typ);
 
+// #ifdef DBG_FLG
+//             printf("aft clc ntvFcn arg[%2d] val: %d\n", i, dynamic_cast<ValExpStrc*>(exp->argLst->argArr.at(i))->val->v.int_);
+//             printf("aft clc ntvFcn arg[%2d] typ: %d\n", i, dynamic_cast<ValExpStrc*>(exp->argLst->argArr.at(i))->val->typ);
+// #endif
             argArr.push_back(arg);
+
+#ifdef DBG_FLG
+            printf("aft psh arg[%2d] val: %d\n", i, dynamic_cast<ValStrc*>(argArr.at(i))->v.int_);
+            printf("aft psh arg[%2d] typ: %d\n", i, dynamic_cast<ValStrc*>(argArr.at(i))->typ);
+#endif
         }
 
+#ifdef DBG_FLG
+        printf("ntv fcn: %d", ntvFcn->prmCnt);
+#endif
         rslt = ntvFcn->fcn(envr, ntvFcn->prmCnt, argArr);
     } else if (fcn != nullptr)
     {
@@ -1731,9 +1712,9 @@ ValStrc *clcFcnExp(vector<EnvrStrc *> &envr, struct FcnExpStrc *exp)
 
                 //printf("bfr lctn prm asgn: arg: cnstTyp: %d typ: %d\n",arg->typ, arg->typ);
 
-                vrb = addVrb(envrFcn, fcn->prmLst->prmArr[i]);
+                vrb = addVrb(envrFcn, fcn->prm->prmArr[i]);
 
-                asnVrb(vrb, arg);
+                asnVrbCpy(vrb, arg);
 
                 //printf("aft lctn prm asgn: typ: %d\n", vrb->getTyp());
             }
@@ -1748,21 +1729,21 @@ ValStrc *clcFcnExp(vector<EnvrStrc *> &envr, struct FcnExpStrc *exp)
                     vrb = addVrb(envrFcn, exp->argLst->prmArr[i]);
                 }
 
-                asnVrb(vrb, arg);
+                asnVrbCpy(vrb, arg);
             }
         }
 
-        for (i = 0; i < fcn->prmLst->prmArr.size(); i++)
+        for (i = 0; i < fcn->prm->prmArr.size(); i++)
         {
             //默认参数赋值
-            vrb = getEnvrVrb(envrFcn, fcn->prmLst->prmArr[i]);
+            vrb = getEnvrVrb(envrFcn, fcn->prm->prmArr[i]);
 
-            if (vrb == nullptr && fcn->prmLst->expArr[i] != nullptr)
+            if (vrb == nullptr && fcn->prm->expArr[i] != nullptr)
             {
-                vrb = addVrb(envrFcn, fcn->prmLst->prmArr[i]);
-                arg = clcExp(envr, fcn->prmLst->expArr[i]);
+                vrb = addVrb(envrFcn, fcn->prm->prmArr[i]);
+                arg = clcExp(envr, fcn->prm->expArr[i]);
 
-                asnVrb(vrb, arg);
+                asnVrbCpy(vrb, arg);
             }
         }
 
@@ -1835,9 +1816,9 @@ ValStrc *clcFcnExp(vector<EnvrStrc *> &envr, struct FcnStrc *fcn, struct FcnExpS
             {
                 arg = clcExp(envr, exp->argLst->argArr[i]);
 
-                vrb = addVrb(envrFcn, fcn->prmLst->prmArr[i]);
+                vrb = addVrb(envrFcn, fcn->prm->prmArr[i]);
 
-                asnVrb(vrb, arg);
+                asnVrbCpy(vrb, arg);
             }
             //关键字参数赋值
             else
@@ -1850,21 +1831,21 @@ ValStrc *clcFcnExp(vector<EnvrStrc *> &envr, struct FcnStrc *fcn, struct FcnExpS
                     vrb = addVrb(envrFcn, exp->argLst->prmArr[i]);
                 }
 
-                asnVrb(vrb, arg);
+                asnVrbCpy(vrb, arg);
             }
         }
 
-        for (i = 0; i < fcn->prmLst->prmArr.size(); i++)
+        for (i = 0; i < fcn->prm->prmArr.size(); i++)
         {
             //默认参数赋值
-            vrb = getEnvrVrb(envrFcn, fcn->prmLst->prmArr[i]);
+            vrb = getEnvrVrb(envrFcn, fcn->prm->prmArr[i]);
 
-            if (vrb == nullptr && fcn->prmLst->expArr[i] != nullptr)
+            if (vrb == nullptr && fcn->prm->expArr[i] != nullptr)
             {
-                vrb = addVrb(envrFcn, fcn->prmLst->prmArr[i]);
-                arg = clcExp(envr, fcn->prmLst->expArr[i]);
+                vrb = addVrb(envrFcn, fcn->prm->prmArr[i]);
+                arg = clcExp(envr, fcn->prm->expArr[i]);
 
-                asnVrb(vrb, arg);
+                asnVrbCpy(vrb, arg);
             }
         }
 
@@ -1922,7 +1903,7 @@ ValStrc *clcFcnExp(vector<EnvrStrc *> &envr, struct FcnStrc *fcn, struct FcnExpS
 //}
 
 
-ValStrc *clcAsgExp(vector<EnvrStrc *> &envr, struct AsnExpStrc *asn)
+ValStrc *clcAsnExp(vector<EnvrStrc *> &envr, struct AsnExpStrc *asn)
 {
     ValStrc *rslt = new ValStrc;
 
@@ -1943,7 +1924,7 @@ ValStrc *clcAsgExp(vector<EnvrStrc *> &envr, struct AsnExpStrc *asn)
 
     if (lvl->hasAcsLst == 0)
     {
-        asnVrb(vrb, rslt);
+        asnVrbCpy(vrb, rslt);
         //printf("vrb asgn: typ: %d\n", vrb->typ);
         //printf("vrb asgn: ctn vrb: %s\n", vrb->vl.obj->vrb.back()->nm->c_str());
     }
@@ -2022,34 +2003,34 @@ ValStrc *clcArrExp(vector<EnvrStrc *> &envr, struct ArrExpStrc *exp)
     return rslt;
 }
 
-ValStrc *clcNewArrExp(vector<EnvrStrc *> &envr, struct NewArrExpStrc *exp)
-{
-    ValStrc *rslt = new ValStrc;
-
-    rslt->typ = ValEnm::Arr;
-
-    //rslt->vl.arr = (struct ArrStrc*)malloc(sizeof(struct ArrStrc*));
-    rslt->v.arr = new ArrStrc;
-
-    int elmtCnt;
-
-    elmtCnt = clcExp(envr, exp->cnt)->v.int_;
-
-    //rslt->vl.arr->elmtSz = elmtCnt + 0x10;
-    //rslt->vl.arr->elmtCnt = elmtCnt;
-
-    //rslt->vl.arr->elmtArr = (struct CnstStrc**)malloc(sizeof(struct CnstStrc*) * rslt->vl.arr->elmtSz);
-
-    int i;
-
-    for (i = 0; i < elmtCnt; i++)
-    {
-        //rslt->vl.arr->elmtArr[i] = bldNllCnst();
-        rslt->v.arr->elmtArr.push_back(bldNllVal());
-    }
-
-    return rslt;
-}
+// ValStrc *clcNewArrExp(vector<EnvrStrc *> &envr, struct NewArrExpStrc *exp)
+// {
+//     ValStrc *rslt = new ValStrc;
+//
+//     rslt->typ = ValEnm::Arr;
+//
+//     //rslt->vl.arr = (struct ArrStrc*)malloc(sizeof(struct ArrStrc*));
+//     rslt->v.arr = new ArrStrc;
+//
+//     int elmtCnt;
+//
+//     elmtCnt = clcExp(envr, exp->cnt)->v.int_;
+//
+//     //rslt->vl.arr->elmtSz = elmtCnt + 0x10;
+//     //rslt->vl.arr->elmtCnt = elmtCnt;
+//
+//     //rslt->vl.arr->elmtArr = (struct CnstStrc**)malloc(sizeof(struct CnstStrc*) * rslt->vl.arr->elmtSz);
+//
+//     int i;
+//
+//     for (i = 0; i < elmtCnt; i++)
+//     {
+//         //rslt->vl.arr->elmtArr[i] = bldNllCnst();
+//         rslt->v.arr->elmtArr.push_back(bldNlVal());
+//     }
+//
+//     return rslt;
+// }
 
 //struct CnstStrc* clcArrEvlExp(vector<EnvrStrc*>& envr, struct ArrEvlExpStrc* exp)
 //{
@@ -2365,10 +2346,10 @@ ValStrc *clcExp(vector<EnvrStrc *> &envr, ExpStrc *exp)
         struct VrbStrc *vrb = getVrb(envr, static_cast<VrbExpStrc *>(exp));
 
         //如果变量没有注册过，则注册变量并赋值为null
-        if (vrb == NULL)
+        if (vrb == nullptr)
         {
             vrb = addVrb(envr[envr.size() - 1], static_cast<VrbExpStrc *>(exp));
-            asnVrb(vrb, bldNllVal());
+            asnVrbCpy(vrb, bldNlVal());
         }
 
         rslt = bldValFrmVrb(vrb);
@@ -2401,7 +2382,7 @@ ValStrc *clcExp(vector<EnvrStrc *> &envr, ExpStrc *exp)
             //printf("getVrb: %d\n", getVrb(envr, asnExp->lvl->vrb)!=nullptr);
         }
 
-        rslt = clcAsgExp(envr, asnExp);
+        rslt = clcAsnExp(envr, asnExp);
 
         //printf("aft asn %d\n", getVrb(envr, asnExp->lvl->vrb)->getVal().int_);
         //printf("aft asgn: rslt typ: %d cnst typ: %d\n", rslt->typ, rslt->CnstTyp);
@@ -2428,10 +2409,6 @@ ValStrc *clcExp(vector<EnvrStrc *> &envr, ExpStrc *exp)
         rslt = clcElmtAsgnExp(envr, static_cast<ElmtAsgnExpStrc *>(exp));
     }
 
-    if (exp->typ == ExpEnm::NewArr)
-    {
-        rslt = clcNewArrExp(envr, static_cast<NewArrExpStrc *>(exp));
-    }
 
     if (exp->typ == ExpEnm::Lvl)
     {
@@ -2440,7 +2417,7 @@ ValStrc *clcExp(vector<EnvrStrc *> &envr, ExpStrc *exp)
 
     if (exp->typ == ExpEnm::Nl)
     {
-        rslt = bldNllVal();
+        rslt = bldNlVal();
     }
 
     if (exp->typ == ExpEnm::New)
@@ -2450,8 +2427,15 @@ ValStrc *clcExp(vector<EnvrStrc *> &envr, ExpStrc *exp)
 
     if (exp->typ == ExpEnm::Val)
     {
+
+#ifdef DBG_FLG
+        printf("clc exp val: %d\n", static_cast<ValExpStrc *>(exp)->val->v.int_);
+        printf("clc exp val typ: %d\n", static_cast<ValExpStrc *>(exp)->val->typ);
+#endif
+
         rslt = static_cast<ValExpStrc *>(exp)->val;
-        //printf("tsfm rslt: %d\n", isBln(rslt));
+
+        printf("tsfm rslt: %d\n", isBln(rslt));
     }
 
     return rslt;

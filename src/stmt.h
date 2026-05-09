@@ -12,7 +12,7 @@
 
 extern int chkStmtAlwSubStmt(StmtStrc* stmt);
 extern int chkStmtAlwScndStmt(StmtStrc* stmt);
-extern int asnVrb(struct VrbStrc* vrb, struct ValStrc* vl);
+extern int asnVrbCpy(struct VrbStrc* vrb, struct ValStrc* vl);
 extern StmtStrc* lstStmt;
 extern ExpStrc* bldVrbExp(char* idtf);
 extern ValStrc* clcExp(vector<EnvrStrc*>& envr, struct ExpStrc* exp);
@@ -39,9 +39,9 @@ StmtStrc* bldBrkStmt(ExpStrc* exp);
 StmtStrc* bldCntnStmt(ExpStrc* exp);
 StmtStrc* bldFcnStmt(FcnStrc* fcn);
 StmtStrc* bldRtnStmt(ExpStrc* exp);
-StmtStrc* bldVarStmt(AsgnLstStrc* asgnLst);
-StmtStrc* bldVarStmt(int typ, AsgnLstStrc* asgnLst);
-StmtStrc* bldGlbStmt(AsgnLstStrc* asgnLst);
+StmtStrc* bldVarStmt(AsnLstStrc* asnLst);
+StmtStrc* bldVarStmt(int typ, AsnLstStrc* asgnLst);
+StmtStrc* bldGlbStmt(AsnLstStrc* asnLst);
 StmtStrc* bldNlStmt();
 StmtStrc* bldClsStmt(ClsStrc* cls);
 
@@ -124,13 +124,13 @@ StmtStrc *bldForInitStmt(ExpStrc *exp)
 	return stmt;
 }
 
-StmtStrc *bldForCdtnStmt(VrbStrc *vrb, VrbStrc *vrb2, OpEnm op, CndStmtStrc* cnd, CndStmtStrc *cnd2)
-{
-	CndStmtStrc *rsl = new CndStmtStrc(vrb, vrb2, op, cnd, cnd2);
-
-	return rsl;
-}
-
+// StmtStrc *bldForCdtnStmt(VrbStrc *vrb, VrbStrc *vrb2, OpEnm op, CndStmtStrc* cnd, CndStmtStrc *cnd2)
+// {
+// 	CndStmtStrc *rsl = new CndStmtStrc(vrb, vrb2, op, cnd, cnd2);
+//
+// 	return rsl;
+// }
+//
 
 
 
@@ -160,38 +160,20 @@ StmtStrc* bldForStmt(StmtStrc* intl, StmtStrc* exp, StmtStrc* itr, StmtStrc* stm
 {
 	ForStmtStrc* rslt = new ForStmtStrc(intl, exp,  itr, stmt);
 
-	rslt->typ = StmtEnm::For;
-
-	rslt->intl = intl;
-	rslt->exp = exp;
-	rslt->itr = itr;
-	rslt->stmt = stmt;
-
 	return rslt;
 }
 
 StmtStrc* bldForStmt(StmtStrc* intl, StmtStrc* exp, StmtStrc* itr)
 {
-	struct ForStmtStrc* rslt = new ForStmtStrc(intl, exp, itr, nullptr);
-
-	rslt->typ = StmtEnm::For;
-
-	rslt->intl = intl;
-	rslt->exp = exp;
-	rslt->itr = itr;
-	rslt->stmt = nullptr;
+	ForStmtStrc* rslt = new ForStmtStrc(intl, exp, itr, nullptr);
 
 	return rslt;
 }
 
 StmtStrc* bldWhlStmt(ExpStrc* exp, StmtStrc* stmt)
 {
-	WhlStmtStrc* rslt = new WhlStmtStrc;
+	WhlStmtStrc* rslt = new WhlStmtStrc(exp, stmt);
 
-	rslt->typ = StmtEnm::Whl;
-
-	rslt->exp = exp;
-	rslt->stmt = stmt;
 
 	return rslt;
 }
@@ -200,38 +182,26 @@ StmtStrc* bldWhlStmt(ExpStrc* exp)
 {
 	WhlStmtStrc* rslt = new WhlStmtStrc(exp, nullptr);
 
-	rslt->typ = StmtEnm::Whl;
-
-	rslt->exp = exp;
-	rslt->stmt = nullptr;
-
 	return rslt;
 }
 
 StmtStrc* bldWhlStmt()
 {
-	auto rslt = new WhlStmtStrc;
+	auto rslt = new WhlStmtStrc(nullptr, nullptr);
 
 	return rslt;
 }
 
 StmtStrc* bldDoWhlStmt(StmtStrc* exp, StmtStrc* stmt)
 {
-	struct DoWhlStmtStrc* rslt = new DoWhlStmtStrc;
-
-	rslt->typ = StmtEnm::DoWhl;
-
-	rslt->exp = static_cast<ExpStmtStrc*>(exp);
-	rslt->stmt = stmt;
+	DoWhlStmtStrc* rslt = new DoWhlStmtStrc(exp, stmt);
 
 	return rslt;
 }
 
 StmtStrc* bldStmtBlk()
 {
-	struct StmtBlkStrc* rslt = new StmtBlkStrc;
-
-	rslt->typ = StmtEnm::Blk;
+	StmtBlkStrc* rslt = new StmtBlkStrc;
 
 	return rslt;
 }
@@ -247,91 +217,59 @@ StmtStrc* stmtBlkAdd(StmtStrc* stmtBlk, StmtStrc* stmt)
 	return blk;
 }
 
-StmtStrc* bldBrkStmt(struct ExpStrc* exp)
+StmtStrc* bldBrkStmt(ExpStrc* exp)
 {
-	struct BrkStmtStrc* rslt = new BrkStmtStrc;
-
-	rslt->typ = StmtEnm::Brk;
-
-	rslt->exp = exp;
+	BrkStmtStrc* rslt = new BrkStmtStrc(exp);
 
 	return rslt;
 }
 
 StmtStrc* bldCntnStmt(struct ExpStrc* exp)
 {
-	struct CntnStmtStrc* rslt = new CntnStmtStrc;
-
-	rslt->typ = StmtEnm::Cntn;
-
-	rslt->exp = exp;
+	CntnStmtStrc* rslt = new CntnStmtStrc(exp);
 
 	return rslt;
 }
 
 StmtStrc* bldFcnStmt(struct FcnStrc* fcn)
 {
-	struct FcnStmtStrc* rslt = new FcnStmtStrc;
+	FcnStmtStrc* rslt = new FcnStmtStrc(fcn);
 
-	rslt->typ = StmtEnm::DfnFcn;
-
-	rslt->fcn = fcn;
-
-	return rslt;
-}
-
-StmtStrc* bldRtnStmt(struct ExpStrc* exp)
-{
-	struct RtnStmtStrc* rslt = new RtnStmtStrc;
-
-	rslt->typ = StmtEnm::Rtn;
-
-	if (exp == NULL)
-	{
-		rslt->blnRslt = 0;
-		rslt->exp = NULL;
-	}
-	else
-	{
-		rslt->blnRslt = 1;
-		rslt->exp = exp;
-	}
-
-	return rslt;
-}
-
-StmtStrc* bldVarStmt(struct AsgnLstStrc* asgnLst)
-{
-	struct VarStmtStrc* rslt = new VarStmtStrc;
-
-	rslt->typ = StmtEnm::Var;
-
-	rslt->asgnLst = asgnLst;
-
-	return rslt;
-
-}
-
-StmtStrc* bldVarStmt(int typ, struct AsgnLstStrc* asgnLst)
-{
-	struct VarStmtStrc* rslt = new VarStmtStrc;
-
-	rslt->typ = StmtEnm::Var;
-
-	rslt->asgnLst = asgnLst;
-
-	return rslt;
-
-}
-
-StmtStrc* bldGlbStmt(AsgnLstStrc* asgnLst)
-{
-
-	GlbStmtStrc* rslt = new GlbStmtStrc;
-
-	// rslt->typ = StmtEnm::Glb;
+	// rslt->typ = StmtEnm::DfnFcn;
 	//
-	// rslt->asgnLst = asgnLst;
+	// rslt->fcn = fcn;
+
+	return rslt;
+}
+
+StmtStrc* bldRtnStmt(ExpStrc* exp)
+{
+	RtnStmtStrc* rslt = new RtnStmtStrc(exp, exp==nullptr? 0:1);
+
+	return rslt;
+}
+
+StmtStrc* bldVarStmt(AsnLstStrc* asnLst)
+{
+	VarStmtStrc* rslt = new VarStmtStrc(asnLst);
+
+
+	return rslt;
+
+}
+
+StmtStrc* bldVarStmt(int typ, struct AsnLstStrc* asgnLst)
+{
+	struct VarStmtStrc* rslt = new VarStmtStrc;
+
+	return rslt;
+
+}
+
+StmtStrc* bldGlbStmt(AsnLstStrc* asnLst)
+{
+
+	GlbStmtStrc* rslt = new GlbStmtStrc(asnLst);
 
 	return rslt;
 }
@@ -346,11 +284,11 @@ StmtStrc* bldNlStmt()
 
 StmtStrc* bldClsStmt(ClsStrc* cls)
 {
-	struct ClsStmtStrc* rslt = new ClsStmtStrc;
+	ClsStmtStrc* rslt = new ClsStmtStrc(cls);
 
-	rslt->typ = StmtEnm::Cls;
-
-	rslt->cls = cls;
+	// rslt->typ = StmtEnm::Cls;
+	//
+	// rslt->cls = cls;
 
 	return rslt;
 }
@@ -403,12 +341,12 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, StmtStrc* stmt)
 
 			int i;
 
-			for (i = 0; i < varStmt->asgnLst->asgnArr.size(); i++)
+			for (i = 0; i < varStmt->asnLst->asgnArr.size(); i++)
 			{
 				struct ValStrc* rslt;
 				struct VrbExpStrc* vrbExp;
 
-				vrbExp = varStmt->asgnLst->asgnArr[i]->lvl->vrb;
+				vrbExp = varStmt->asnLst->asgnArr[i]->lvl->vrb;
 
 				if ((vrb = getVrb(envr, vrbExp)) == NULL)
 				{
@@ -419,14 +357,14 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, StmtStrc* stmt)
 					throw new ExVrbRdfn();
 				}
 
-				if (varStmt->asgnLst->asgnArr[i]->exp->typ != ExpEnm::Nl)
+				if (varStmt->asnLst->asgnArr[i]->exp->typ != ExpEnm::Nl)
 				{
-					rslt = clcExp(envr, varStmt->asgnLst->asgnArr[i]->exp);
-					asnVrb(vrb, rslt);
+					rslt = clcExp(envr, varStmt->asnLst->asgnArr[i]->exp);
+					asnVrbCpy(vrb, rslt);
 				}
 				else
 				{
-					asnVrb(vrb, bldNllVal());
+					asnVrbCpy(vrb, bldNlVal());
 					//rslt = bldNllCnst();
 
 				}
@@ -443,14 +381,14 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, StmtStrc* stmt)
 			struct VrbStrc* vrb;
 
 			//获取glb语句声明全局变量的个数
-			int lnt = glbStmt->asgnLst->asgnArr.size();
+			int lnt = glbStmt->asnLst->asgnArr.size();
 
 			struct VrbExpStrc* glb;
 
 			//检查变量是否已经被定义过
 			for (int i = 0; i < lnt; i++)
 			{
-				glb = glbStmt->asgnLst->asgnArr[i]->lvl->vrb;
+				glb = glbStmt->asnLst->asgnArr[i]->lvl->vrb;
 
 				vrb = getVrb(envr, glb);
 
@@ -461,9 +399,9 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, StmtStrc* stmt)
 
 				vrb = addVrbGlb(envr, glb);
 
-				ValStrc* vl = clcExp(envr, glbStmt->asgnLst->asgnArr[i]->exp);
+				ValStrc* vl = clcExp(envr, glbStmt->asnLst->asgnArr[i]->exp);
 
-				asnVrb(vrb, vl);
+				asnVrbCpy(vrb, vl);
 			}
 
 			printf("glb dfnd\n");
@@ -600,26 +538,26 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, StmtStrc* stmt)
 
 		}
 
-		if (stmt->typ == StmtEnm::IfEls)
-		{
-			//prtCnst(clcExp(stmt->stmt.ifStmt->exp)); 
-
-			envr.push_back(new EnvrStrc(EnvrEnm::Stmt));
-
-			auto ifStmt = static_cast<IfElsStmtStrc*>(stmt);
-
-			if ((clcExp(envr, ifStmt->exp)->v.int_) != 0)
-			{
-				rslt = exctStmt(envr, ifStmt->stmt);
-			}
-			else
-			{
-				rslt = exctStmt(envr, ifStmt->elsStmt);
-			}
-
-			//删除创建的环境
-			envr.pop_back();
-		}
+		// if (stmt->typ == StmtEnm::IfEls)
+		// {
+		// 	//prtCnst(clcExp(stmt->stmt.ifStmt->exp));
+		//
+		// 	envr.push_back(new EnvrStrc(EnvrEnm::Stmt));
+		//
+		// 	auto ifStmt = static_cast<IfElStmtStrc*>(stmt);
+		//
+		// 	if ((clcExp(envr, ifStmt->exp)->v.int_) != 0)
+		// 	{
+		// 		rslt = exctStmt(envr, ifStmt->stmt);
+		// 	}
+		// 	else
+		// 	{
+		// 		rslt = exctStmt(envr, ifStmt->elsStmt);
+		// 	}
+		//
+		// 	//删除创建的环境
+		// 	envr.pop_back();
+		// }
 
 		if (stmt->typ == StmtEnm::For)
 		{
@@ -813,7 +751,7 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, StmtStrc* stmt)
 
 					continue;
 				}
-			} while (clcExp(envr, doWhlStmt->exp->exp)->v.int_ != 0);
+			} while (clcExp(envr, reinterpret_cast<ExpStmtStrc*>(doWhlStmt->exp)->exp)->v.int_ != 0);
 
 			if (rslt->typ == RtnEnm::Cntn)
 			{
@@ -904,18 +842,18 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, StmtStrc* stmt)
 				{
 				case StmtEnm::Var:
 				{
-					for (int j = 0; j < static_cast<VarStmtStrc*>(stmtArr.at(i))->asgnLst->asgnArr.size(); j++)
+					for (int j = 0; j < static_cast<VarStmtStrc*>(stmtArr.at(i))->asnLst->asgnArr.size(); j++)
 					{
 						VrbStrc* vrb = new VrbStrc;
 						//获取变量名称
-						vrb->nm = new string(static_cast<VarStmtStrc*>(stmtArr.at(i))->asgnLst->asgnArr.at(j)->lvl->vrb->nm);
+						vrb->nm = new string(static_cast<VarStmtStrc*>(stmtArr.at(i))->asnLst->asgnArr.at(j)->lvl->vrb->nm);
 
 						//获取变量值
-						ValStrc* expRslt = clcExp(envr, static_cast<VarStmtStrc*>(stmtArr.at(i))->asgnLst->asgnArr.at(j)->exp);
+						ValStrc* expRslt = clcExp(envr, static_cast<VarStmtStrc*>(stmtArr.at(i))->asnLst->asgnArr.at(j)->exp);
 
 						printf("expRslt typ: %d cnst typ: %d\n", expRslt->typ, expRslt->typ);
 
-						asnVrb(vrb, expRslt);
+						asnVrbCpy(vrb, expRslt);
 
 						cls->vrb.push_back(vrb);
 					}

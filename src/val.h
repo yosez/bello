@@ -12,7 +12,7 @@
 
 ValStrc* bldIntVal(int v)
 {
-	ValStrc* rslt = new ValStrc;
+	ValStrc* rslt = new ValStrc();
 
 	rslt->typ = ValEnm::Int;
 	rslt->v.int_ = v;
@@ -22,7 +22,7 @@ ValStrc* bldIntVal(int v)
 
 ValStrc* bldFltVal(float vl)
 {
-	ValStrc* rslt = new ValStrc;
+	ValStrc* rslt = new ValStrc();
 
 	rslt->typ = ValEnm::Flt;
 	rslt->v.flt = vl;
@@ -32,7 +32,7 @@ ValStrc* bldFltVal(float vl)
 
 ValStrc* bldBlnVal(int vl)
 {
-	ValStrc* rslt = new ValStrc;
+	ValStrc* rslt = new ValStrc();
 
 	rslt->typ = ValEnm::Bln;
 
@@ -50,7 +50,7 @@ ValStrc* bldBlnVal(int vl)
 
 ValStrc* bldStrVal(char* vl)
 {
-	ValStrc* rslt = new ValStrc;
+	ValStrc* rslt = new ValStrc();
 
 	rslt->typ = ValEnm::Str;
 
@@ -79,11 +79,11 @@ ValStrc* bldArrVal(ArrStrc* arr)
 	return rslt;
 }
 
-ValStrc* bldNllVal()
+ValStrc* bldNlVal()
 {
 	ValStrc* rslt = new ValStrc;
 
-	rslt->typ = ValEnm::Nll;
+	rslt->typ = ValEnm::Nl;
 
 	return rslt;
 }
@@ -106,34 +106,34 @@ int prtVal(ValStrc* v)
 	{
 	case ValEnm::Int:
 	{
-		printf("%d\n", v->v.int_);
+		printf("%d", v->v.int_);
 		break;
 	}
 	case ValEnm::Flt:
 	{
-		printf("%f\n", v->v.flt);
+		printf("%f", v->v.flt);
 		break;
 	}
 	case ValEnm::Bln:
 	{
 		if (v->v.bln == 0)
 		{
-			printf("%s\n", "false");
+			printf("%s", "false");
 		}
 		else
 		{
-			printf("%s\n", "true");
+			printf("%s", "true");
 		}
 		break;
 	}
 	case ValEnm::Str:
 	{
-		printf("%s\n", v->v.str->c_str());
+		printf("%s", v->v.str->c_str());
 		break;
 	}
-	case ValEnm::Nll:
+	case ValEnm::Nl:
 	{
-		printf("null\n");
+		printf("null");
 		break;
 	}
 	case ValEnm::Arr:
@@ -150,7 +150,7 @@ int prtVal(ValStrc* v)
 			}
 		}
 
-		printf("]\n");
+		printf("]");
 
 		break;
 	}
@@ -163,60 +163,119 @@ int prtlnVal(ValStrc* v)
 {
 	switch (v->typ)
 	{
-	case ValEnm::Int:
-	{
-		printf("%d\n", v->v.int_);
-		break;
-	}
-	case ValEnm::Flt:
-	{
-		printf("%f\n", v->v.flt);
-		break;
-	}
-	case ValEnm::Bln:
-	{
-		if (v->v.bln == 0)
+		case ValEnm::Int:
 		{
-			printf("%s\n", "false");
+			printf("%d\n", v->v.int_);
+			break;
 		}
-		else
+		case ValEnm::Flt:
 		{
-			printf("%s\n", "true");
+			printf("%f\n", v->v.flt);
+			break;
 		}
-		break;
-	}
-	case ValEnm::Str:
-	{
-		printf("%s\n", v->v.str->c_str());
-		break;
-	}
-	case ValEnm::Nll:
-	{
-		printf("null\n");
-		break;
-	}
-	case ValEnm::Arr:
-	{
-
-		printf("[");
-		int i;
-
-		for (i = 0; i < v->v.arr->elmtArr.size(); i++)
+		case ValEnm::Bln:
 		{
-			prtVal(v->v.arr->elmtArr[i]);
-
-			if (i != v->v.arr->elmtArr.size() - 1)
+			if (v->v.bln == 0)
 			{
-				printf(", ");
+				printf("%s\n", "false");
 			}
+			else
+			{
+				printf("%s\n", "true");
+			}
+			break;
 		}
-		printf("]\n");
+		case ValEnm::Str:
+		{
+			printf("%s\n", v->v.str->c_str());
+			break;
+		}
+		case ValEnm::Nl:
+		{
+			printf("null\n");
+			break;
+		}
+		case ValEnm::Arr:
+		{
+			printf("[");
+			int i;
+			for (i = 0; i < v->v.arr->elmtArr.size(); i++)
+			{
+				prtVal(v->v.arr->elmtArr[i]);
 
-		break;
-	}
+				if (i != v->v.arr->elmtArr.size() - 1)
+				{
+					printf(", ");
+				}
+			}
+
+			printf("]\n");
+
+			break;
+		}
 	}
 
 	return 0;
 }
+
+// int prtlnVal(ValStrc* v)
+// {
+// 	switch (v->typ)
+// 	{
+// 	case ValEnm::Int:
+// 	{
+// 		printf("%d\n", v->v.int_);
+// 		break;
+// 	}
+// 	case ValEnm::Flt:
+// 	{
+// 		printf("%f\n", v->v.flt);
+// 		break;
+// 	}
+// 	case ValEnm::Bln:
+// 	{
+// 		if (v->v.bln == 0)
+// 		{
+// 			printf("%s\n", "false");
+// 		}
+// 		else
+// 		{
+// 			printf("%s\n", "true");
+// 		}
+// 		break;
+// 	}
+// 	case ValEnm::Str:
+// 	{
+// 		printf("%s\n", v->v.str->c_str());
+// 		break;
+// 	}
+// 	case ValEnm::Nll:
+// 	{
+// 		printf("null\n");
+// 		break;
+// 	}
+// 	case ValEnm::Arr:
+// 	{
+//
+// 		printf("[");
+// 		int i;
+//
+// 		for (i = 0; i < v->v.arr->elmtArr.size(); i++)
+// 		{
+// 			prtVal(v->v.arr->elmtArr[i]);
+//
+// 			if (i != v->v.arr->elmtArr.size() - 1)
+// 			{
+// 				printf(", ");
+// 			}
+// 		}
+// 		printf("]\n");
+//
+// 		break;
+// 	}
+// 	}
+//
+// 	return 0;
+// }
 
 #endif

@@ -143,7 +143,11 @@ struct ValStrc* prtFcn(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> ar
 
 	prtVal(argArr[0]);
 
-	return NULL;
+#ifdef DBG_FLG
+	printf("prt fcn %d\n", argArr[0]->v.int_);
+#endif
+
+	return nullptr;
 }
 
 struct ValStrc* prtlnFcn(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr)
@@ -176,7 +180,7 @@ struct ValStrc* newArrFcn(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*>
 	for (i = 0; i < elmtCnt; i++)
 	{
 		//rslt->vl.arr->elmtArr[i] = bldNllCnst();
-		rslt->v.arr->elmtArr.push_back(bldNllVal());
+		rslt->v.arr->elmtArr.push_back(bldNlVal());
 	}
 
 	return rslt;
@@ -327,7 +331,7 @@ struct ValStrc* flPrt(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> arg
 			fprintf(fl, "%s", argArr[1]->v.str->c_str());
 			break;
 		}
-		case ValEnm::Nll:
+		case ValEnm::Nl:
 		{
 			fprintf(fl, "%s", "(null)");
 			break;

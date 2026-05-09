@@ -9,6 +9,7 @@ using namespace std;
 #include <readline/history.h>
 #endif
 
+#define DBG_FLG
 
 #include "dftn.h"
 #include "envr.h"

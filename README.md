@@ -45,6 +45,22 @@ a = [1, 2, 3, 4, 7]
 
 a[2] = 5
 
+## read系列语句
+
+```
+a = readInt()
+b = readFloat()
+c = readStr()
+```
+
+## 文件操作
+```
+f = fopen([Filename], [Option]) 
+fseek([fileptr, e.g. f], [position], [option])
+fprint([fileptr], [string])
+psn = ftell([fileptr])
+fclose([fileptr])
+```
 ## Features
 
 - Variables and arrays

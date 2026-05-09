@@ -33,7 +33,7 @@ FcnStrc* getEnvrFcn(struct EnvrStrc* envr, struct FcnExpStrc* fcnExp);
 ClsStrc* getEnvrCls(EnvrStrc* envr, string nm);
 ClsStrc* getGlbCls(vector<EnvrStrc*>& envr, string nm);
 
-int addNtvFcn(struct EnvrStrc* envr, string fcnNm, ntvFcnDfn* fcn, int prmCnt);
+int addNtvFcn(struct EnvrStrc* envr, string fcnNm, NtvFcnDfn* fcn, int prmCnt);
 NtvFcnStrc* getNtvFcn(struct EnvrStrc* envr, struct FcnExpStrc* fcn);
 NtvFcnStrc* getNtvFcn(vector<EnvrStrc*> envr, struct FcnExpStrc* fcn);
 
@@ -282,15 +282,15 @@ struct FcnStrc* getFcn(vector<EnvrStrc*> envr, struct FcnExpStrc* fcnExp)
 }
 
 
-int addNtvFcn(struct EnvrStrc* envr, string fcnNm, ntvFcnDfn* fcn, int prmCnt)
+int addNtvFcn(struct EnvrStrc* envr, string fcnNm, NtvFcnDfn* fcn, int prmCnt)
 {
-	struct NtvFcnStrc* fcnDfn = new NtvFcnStrc;
+	NtvFcnStrc* fcnDfn = new NtvFcnStrc(fcnNm, prmCnt, fcn);
 
-	fcnDfn->fcn = fcn;
-
-	fcnDfn->prmCnt = prmCnt;
-
-	fcnDfn->fcnNm = fcnNm;
+	// fcnDfn->fcn = fcn;
+	//
+	// fcnDfn->prmCnt = prmCnt;
+	//
+	// fcnDfn->fcnNm = fcnNm;
 
 	envr->ntvFcnArr.push_back(fcnDfn);
 

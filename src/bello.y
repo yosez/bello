@@ -76,7 +76,7 @@
     struct PrmLstStrc *prmLst;
     struct ArgLstStrc *argLst;
     struct VrbLstStrc *vrbLst;
-    struct AsgnLstStrc *asgnLst;
+    struct AsnLstStrc *asnLst;
     struct ElmtLstStrc *elmtLst;
     struct PstnLstStrc *pstnLst;
     struct AcsLstStrc *evlLst;
@@ -93,6 +93,7 @@
 %token NOP
 %token DOT
 %token CLASS SHARED THIS
+%token AT
 %token <intVl> INDENT
 %token <intVl> INT_LTR
 %token <blnVl> BLN_LTR
@@ -124,7 +125,7 @@
 %token PACKAGE
 
 %type <exp> expression value_expression function_expression  array_expression
-    new_array_expression assign_expression unary_expression binary_expression 
+    assign_expression unary_expression binary_expression
     lvalue_operation_expression self_operation_expression lvalue_expression
     shortcut_expression
 %type <stmt> single_statement expression_statement 
@@ -134,7 +135,7 @@
 %type <stmt> function_statement class_statement
 %type <prmLst> parameter_list 
 %type <argLst> argument_list
-%type <asgnLst> assign_list
+%type <asnLst> assign_list
 %type <elmtLst> element_list
 %type <evlLst> evaluate_list
 
@@ -389,7 +390,7 @@ single_statement
     | class_statement { $$= $1; } 
     | error 
     { 
-        $$=bldNllStmt(); 
+        $$=bldNlStmt();
         yyclearin; 
         yyerrok; 
     }
@@ -406,14 +407,14 @@ single_statement_no_semicolon
 
 
 null_statement
-    : { $$=bldNllStmt(); }
+    : { $$=bldNlStmt(); }
 
 nop_statement
-    : NOP { $$=bldNllStmt(); }
+    : NOP { $$=bldNlStmt(); }
 
 statement_block
     : LEFT_BRACE block_list RIGHT_BRACE { $$=$2; }
-    | LEFT_BRACE RIGHT_BRACE { $$=bldNllStmt(); }
+    | LEFT_BRACE RIGHT_BRACE { $$=bldNlStmt(); }
 
 block_list
     : single_statement 
@@ -439,7 +440,6 @@ expression
     | unary_expression { $$ = $1; }
     | binary_expression { $$ = $1; }
     | array_expression { $$ = $1; }
-    | new_array_expression { $$ = $1; }
     | shortcut_expression { $$ = $1; }
 
 lvalue_operation_expression
@@ -447,46 +447,46 @@ lvalue_operation_expression
     | self_operation_expression
 
 assign_expression
-    : lvalue_expression ASSIGN expression { $$=bldAsnExp($1, $3); }
-    | lvalue_expression ADD_ASSIGN expression { $$=bldAsnExp($1, bldBnrExp(OprEnm::Add, $1, $3)); }
-    | lvalue_expression SUB_ASSIGN expression { $$=bldAsnExp($1, bldBnrExp(OprEnm::Sub, $1, $3)); }
-    | lvalue_expression MUL_ASSIGN expression { $$=bldAsnExp($1, bldBnrExp(OprEnm::Mul, $1, $3)); }
-    | lvalue_expression DIV_ASSIGN expression { $$=bldAsnExp($1, bldBnrExp(OprEnm::Div, $1, $3)); }
-    | lvalue_expression MOD_ASSIGN expression { $$=bldAsnExp($1, bldBnrExp(OprEnm::Asn, $1, $3)); }
+    : lvalue_expression ASSIGN expression { printf("asn %s %d\n",  (dynamic_cast<LvlExpStrc*>($1))->vrb->nm.c_str(),  (dynamic_cast<ValExpStrc*>($3)->val->v.int_)); $$=bldAsnExp($1, $3); }
+    | lvalue_expression ADD_ASSIGN expression { $$=bldAsnExp($1, bldBnrExp(OpEnm::Add, $1, $3)); }
+    | lvalue_expression SUB_ASSIGN expression { $$=bldAsnExp($1, bldBnrExp(OpEnm::Sub, $1, $3)); }
+    | lvalue_expression MUL_ASSIGN expression { $$=bldAsnExp($1, bldBnrExp(OpEnm::Mul, $1, $3)); }
+    | lvalue_expression DIV_ASSIGN expression { $$=bldAsnExp($1, bldBnrExp(OpEnm::Div, $1, $3)); }
+    | lvalue_expression MOD_ASSIGN expression { $$=bldAsnExp($1, bldBnrExp(OpEnm::Asn, $1, $3)); }
 
 
 self_operation_expression 
-    : INCREMENT lvalue_expression { $$=bldUnrExp(OprEnm::PfxInc, $2); }
-    | DECREMENT lvalue_expression { $$=bldUnrExp(OprEnm::PfxDec, $2); }
-    | lvalue_expression INCREMENT { $$=bldUnrExp(OprEnm::SfxInc, $1); }
-    | lvalue_expression DECREMENT { $$=bldUnrExp(OprEnm::SfxDec, $1); }
+    : INCREMENT lvalue_expression { $$=bldUnrExp(OpEnm::PfxInc, $2); }
+    | DECREMENT lvalue_expression { $$=bldUnrExp(OpEnm::PfxDec, $2); }
+    | lvalue_expression INCREMENT { $$=bldUnrExp(OpEnm::SfxInc, $1); }
+    | lvalue_expression DECREMENT { $$=bldUnrExp(OpEnm::SfxDec, $1); }
 
 unary_expression
-    : SUB expression %prec MINUS_SIGN { $$ = bldUnrExp(OprEnm::Ngtv, $2); }
-    | ADD expression %prec PLUS_SIGN { $$ = bldUnrExp(OprEnm::Pstv, $2); }
+    : SUB expression %prec MINUS_SIGN { $$ = bldUnrExp(OpEnm::Ngtv, $2); }
+    | ADD expression %prec PLUS_SIGN { $$ = bldUnrExp(OpEnm::Pstv, $2); }
     | LEFT_PAREN expression RIGHT_PAREN { $$=$2; }
-    | NOT expression { $$=bldUnrExp(OprEnm::Not, $2); }
-    | BIT_NOT expression { $$=bldUnrExp(OprEnm::BNot, $2); }
+    | NOT expression { $$=bldUnrExp(OpEnm::Not, $2); }
+    | BIT_NOT expression { $$=bldUnrExp(OpEnm::BNot, $2); }
 
 binary_expression
-    : expression ADD expression { $$=bldBnrExp(OprEnm::Add, $1, $3); }
-    | expression SUB expression { $$=bldBnrExp(OprEnm::Sub, $1, $3); }
-    | expression MUL expression { $$=bldBnrExp(OprEnm::Mul, $1, $3); }
-    | expression DIV expression { $$=bldBnrExp(OprEnm::Div, $1, $3); }
-    | expression MOD expression { $$=bldBnrExp(OprEnm::Mod, $1, $3); }
-    | expression AND expression { $$=bldBnrExp(OprEnm::And, $1, $3); }
-    | expression OR expression { $$=bldBnrExp(OprEnm::Or, $1, $3); }
-    | expression XOR expression { $$=bldBnrExp(OprEnm::Xor, $1, $3); }
-    | expression EQ expression { $$=bldBnrExp(OprEnm::Eq, $1, $3); }
-    | expression NE expression { $$=bldBnrExp(OprEnm::Ne, $1, $3); }
-    | expression GT expression { $$=bldBnrExp(OprEnm::Gt, $1, $3); }
-    | expression GE expression { $$=bldBnrExp(OprEnm::Ge, $1, $3); }
-    | expression LT expression { $$=bldBnrExp(OprEnm::Lt, $1, $3); }
-    | expression LE expression { $$=bldBnrExp(OprEnm::Le, $1, $3); }
-    | expression BIT_AND expression { $$=bldBnrExp(OprEnm::BAnd, $1, $3); }
-    | expression BIT_OR expression { $$=bldBnrExp(OprEnm::BOr, $1, $3); }
-    | expression BIT_XOR expression { $$=bldBnrExp(OprEnm::BXor, $1, $3); }
-    | expression QM expression COLON expression { $$ = bldTnrExp(OprEnm::Tnr, $1, $3, $5); }
+    : expression ADD expression { $$=bldBnrExp(OpEnm::Add, $1, $3); }
+    | expression SUB expression { $$=bldBnrExp(OpEnm::Sub, $1, $3); }
+    | expression MUL expression { $$=bldBnrExp(OpEnm::Mul, $1, $3); }
+    | expression DIV expression { $$=bldBnrExp(OpEnm::Div, $1, $3); }
+    | expression MOD expression { $$=bldBnrExp(OpEnm::Mod, $1, $3); }
+    | expression AND expression { $$=bldBnrExp(OpEnm::And, $1, $3); }
+    | expression OR expression { $$=bldBnrExp(OpEnm::Or, $1, $3); }
+    | expression XOR expression { $$=bldBnrExp(OpEnm::Xor, $1, $3); }
+    | expression EQ expression { $$=bldBnrExp(OpEnm::Eq, $1, $3); }
+    | expression NE expression { $$=bldBnrExp(OpEnm::Ne, $1, $3); }
+    | expression GT expression { $$=bldBnrExp(OpEnm::Gt, $1, $3); }
+    | expression GE expression { $$=bldBnrExp(OpEnm::Ge, $1, $3); }
+    | expression LT expression { $$=bldBnrExp(OpEnm::Lt, $1, $3); }
+    | expression LE expression { $$=bldBnrExp(OpEnm::Le, $1, $3); }
+    | expression BIT_AND expression { $$=bldBnrExp(OpEnm::BAnd, $1, $3); }
+    | expression BIT_OR expression { $$=bldBnrExp(OpEnm::BOr, $1, $3); }
+    | expression BIT_XOR expression { $$=bldBnrExp(OpEnm::BXor, $1, $3); }
+    | expression QM expression COLON expression { $$ = bldTnrExp(OpEnm::Tnr, $1, $3, $5); }
 
 shortcut_expression
     : SHORTCUT_PRINTLN element_list
@@ -499,10 +499,10 @@ value_expression
     | FLT_LTR { $$=bldFltValExp($1); }
     | BLN_LTR { $$=bldBlnValExp($1); }
     | STR_LTR { $$=bldStrValExp($1); }
-    | NLL_LTR { $$=bldNllValExp(); }
+    | NLL_LTR { $$=bldNlValExp(); }
     | function_expression
     | lvalue_expression 
-    | NEW IDENTIFER { $$= bldNewExp($2); }
+    /*| NEW IDENTIFER { $$= bldNewExp($2); }*/
 
 lvalue_expression
     : IDENTIFER { $$= bldLvlExp(bldVrbExp($1)); }
@@ -599,11 +599,7 @@ array_expression
         $$= bldArrExp(bldElmtLst());
     }
 
-new_array_expression
-    : NEW_ARRAY LEFT_PAREN expression RIGHT_PAREN
-    {
-        $$ = bldNewArrExp($3);
-    }
+
 
 element_list
     : expression
@@ -651,23 +647,23 @@ global_statement
 assign_list
     : IDENTIFER 
     {
-        $$= bldAsgnLst();
-        asgnLstAdd($$, bldVrbExp($1), bldNllExp());
+        $$= bldAsnLst();
+        asnLstAdd($$, bldVrbExp($1), bldNlExp());
     }
     | IDENTIFER ASSIGN expression
     {
-        $$= bldAsgnLst();
-        asgnLstAdd($$, bldVrbExp($1), $3);
+        $$= bldAsnLst();
+        asnLstAdd($$, bldVrbExp($1), $3);
     }
     | assign_list COMMA IDENTIFER 
     {
         $$=$1;
-        asgnLstAdd($$, bldVrbExp($3), bldNllExp());
+        asnLstAdd($$, bldVrbExp($3), bldNlExp());
     }
     | assign_list COMMA IDENTIFER ASSIGN expression
     {
         $$=$1;
-        asgnLstAdd($$, bldVrbExp($3), $5);
+        asnLstAdd($$, bldVrbExp($3), $5);
     }
 
 
@@ -900,11 +896,12 @@ for_statement
     {
         $$= bldForStmt($2, $4, $6);
     }
-    ｜ FOR AT signle_statement_no_semicolon COMMA expression_statement COMMA COLON single_statement_no_semicolon
+    /*｜ FOR AT signle_statement_no_semicolon COMMA expression_statement COMMA COLON single_statement_no_semicolon
     {
         $$ = bldForStmt($3, $5, $8);
-    }
+    }*/
 
+/*
 for_condition_statement
     : AT single_statement_no_semicolon COMMA for_condition_statement
     {
@@ -915,7 +912,7 @@ for_condition_statement
     | COLON single_statement_no_semicolon COMMA for_condition_statement
     {
     }
-
+*/
 
 while_statement
     : WHILE expression 

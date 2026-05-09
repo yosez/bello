@@ -10,7 +10,7 @@
 
 
 //�˲�������ı�������������ɾ��
-extern struct ExpStrc* bldIntValExp(int intVl);
+extern struct ExpStrc* bldIntValExp(int int_);
 extern struct ValStrc* clcExp(vector<EnvrStrc*>& envr, struct ExpStrc* exp);
 
 struct ElmtLstStrc* bldElmtLst()

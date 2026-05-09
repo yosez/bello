@@ -77,7 +77,8 @@ struct VarStmtStrc;
 struct VarStmtStrc2;
 struct StmtStkItmStrc;
 
-typedef struct ValStrc* ntvFcnDfn(vector<EnvrStrc*>& envr, int prmCnt, vector <ValStrc*> prmArr);
+///
+typedef struct ValStrc* NtvFcnDfn(vector<EnvrStrc*>& envr, int prmCnt, vector <ValStrc*> prmArr);
 
 
 int lstIndt = 0;
@@ -88,8 +89,8 @@ union ValUnn
 	float flt;
 	int int_;
 	string* str;
-	struct ArrStrc* arr;
-	struct ObjStrc* obj;
+	ArrStrc* arr;
+	ObjStrc* obj;
 	void* ptr;
 
 public:
@@ -97,10 +98,10 @@ public:
 	{
 	}
 
-	ValUnn(ValUnn &&val)
-	{
-		memcpy(this, &val, sizeof(ValUnn));
-	}
+	// ValUnn(ValUnn &&val)
+	// {
+	// 	//memcpy(this, &val, sizeof(ValUnn));
+	// }
 
 	~ValUnn()
 	{
@@ -168,7 +169,7 @@ enum class ValEnm : int
 	Flt,
 	Bln,
 	Str,
-	Nll,
+	Nl,
 	Arr,
 	Obj,
 	Ptr
@@ -296,6 +297,9 @@ public:
 
 	ClsStrc* cls;
 
+	ObjStrc()
+	{};
+
 	ObjStrc(vector<VrbStrc *> vrb, vector<FcnStrc *> fcn, ClsStrc* cls): vrb(vrb), fcn(fcn), cls(cls)
 	{};
 };
@@ -319,6 +323,8 @@ public:
 
 	ExpStrc (ExpEnm typ) : typ(typ)
 	{};
+
+	virtual ~ExpStrc() = default;
 };
 
 // 条件语句的逻辑表达式
@@ -334,6 +340,7 @@ struct VrbExpStrc :public ExpStrc
 {
 	string nm;
 
+	//间接使用string的char*构造器
 	VrbExpStrc(string nm): ExpStrc(ExpEnm::Vrb), nm(nm)
 	{};
 };
@@ -351,6 +358,9 @@ public:
 	ValStrc()
 	{
 	};
+
+	ValStrc(ValEnm typ): typ(typ)
+	{};
 
 	//拷贝构造
 	ValStrc (const ValStrc & val) = default;
@@ -1159,14 +1169,22 @@ struct WhlStmtStrc : public StmtStrc
 	WhlStmtStrc(ExpStrc* exp, StmtStrc *stmt ): StmtStrc(StmtEnm::Whl), exp(exp), stmt(stmt)
 	{};
 
-	WhlStmtStrc(CndStrc* cnd, StmtStrc *stmt) : StmtStrc(StmtEnm::Cnd), cnd(cnd), stmt(stmt)
-	{};
+	//WhlStmtStrc(CndStrc* cnd, StmtStrc *stmt) : StmtStrc(StmtEnm::Cnd), cnd(cnd), stmt(stmt)
+	//{};
 };
 
 struct DoWhlStmtStrc : public StmtStrc
 {
-	ExpStmtStrc* exp;
+	//CndStrc* cnd;
+	StmtStrc* exp;
 	StmtStrc* stmt;
+
+	DoWhlStmtStrc(StmtStrc *exp): StmtStrc(StmtEnm::DoWhl), exp(exp)
+	{};
+
+	DoWhlStmtStrc(StmtStrc *exp, StmtStrc *stmt): StmtStrc(StmtEnm::DoWhl), exp(exp), stmt(stmt)
+	{};
+
 };
 
 struct BrkStmtStrc : public StmtStrc
@@ -1213,17 +1231,33 @@ struct ClsStmtStrc : public StmtStrc
 struct StmtBlkStrc : public StmtStrc
 {
 	vector<StmtStrc*> stmtArr;
+
+	StmtBlkStrc(): StmtStrc(StmtEnm::Blk)
+	{};
 };
 
-struct RtnStmtStrc : public StmtStrc
-{
+struct RtnStmtStrc : public StmtStrc {
 	int blnRslt;
 	ExpStrc* exp;
+
+	RtnStmtStrc(ExpStrc *exp): StmtStrc(StmtEnm::Rtn), exp(exp)
+	{};
+
+	RtnStmtStrc(ExpStrc *exp, int rslt): StmtStrc(StmtEnm::Rtn), exp(exp), blnRslt(rslt)
+	{};
+
 };
 
 struct VarStmtStrc : public StmtStrc
 {
-	struct AsgnLstStrc* asgnLst;
+	struct AsnLstStrc* asnLst;
+
+	VarStmtStrc(AsnLstStrc *lst): StmtStrc(StmtEnm::Var), asnLst(lst)
+	{};
+
+	VarStmtStrc():StmtStrc(StmtEnm::Var)
+	{};
+
 };
 
 struct VarStmtStrc2 : public StmtStrc
@@ -1235,9 +1269,12 @@ struct VarStmtStrc2 : public StmtStrc
 
 struct GlbStmtStrc : public StmtStrc
 {
-	AsgnLstStrc* asgnLst;
+	AsnLstStrc* asnLst;
 
-	GlbStmtStrc(AsgnLstStrc* asgnLst): StmtStrc(StmtEnm::Glb), asgnLst(asgnLst)
+	GlbStmtStrc(): StmtStrc(StmtEnm::Glb)
+	{};
+
+	GlbStmtStrc(AsnLstStrc* asgnLst): StmtStrc(StmtEnm::Glb), asnLst(asgnLst)
 	{};
 
 };
@@ -1285,8 +1322,12 @@ struct StmtRsltStrc
 struct FcnStrc
 {
 	string nm;
-	struct PrmLstStrc* prmLst;
-	struct StmtStrc* stmt;
+	PrmLstStrc* prm;
+	StmtStrc* stmt;
+
+	FcnStrc(string nm, PrmLstStrc* prm, StmtStrc* stmt): nm(nm), prm(prm), stmt(stmt)
+	{};
+
 };
 
 
@@ -1379,16 +1420,24 @@ struct ArgLstStrc
 };
 
 //赋值列表
-struct AsgnLstStrc
+struct AsnLstStrc
 {
 	vector<AsnExpStrc*> asgnArr;
+
+	AsnLstStrc()
+	{};
+
+	//AsnLstStrc
 };
 
 struct NtvFcnStrc
 {
 	string fcnNm;
 	int prmCnt;
-	ntvFcnDfn* fcn;
+	NtvFcnDfn* fcn;
+
+	NtvFcnStrc(string fcnNm, int prmCnt, NtvFcnDfn* fcn): fcnNm(fcnNm), prmCnt(prmCnt), fcn(fcn)
+	{};
 };
 
 
