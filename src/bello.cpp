@@ -9,6 +9,7 @@ using namespace std;
 #include <readline/history.h>
 #endif
 
+//#define DBG_FLG
 
 #include "dftn.h"
 #include "envr.h"
@@ -127,7 +128,7 @@ void fldStmt(int indt=0)
 
                 break;
             }
-            case StmtEnm::Elsif:
+            case StmtEnm::Elif:
             {
                 auto elifStmt = static_cast<ElifStmtStrc*>(stmtStk.back()->stmt);
                 elifStmt->stmt = blk;

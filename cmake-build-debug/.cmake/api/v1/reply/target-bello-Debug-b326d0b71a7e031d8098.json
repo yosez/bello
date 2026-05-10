@@ -2,7 +2,7 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "/Users/yosezang/Bello/bello V20.21 MDF/main/bello/bin/bello"
+			"path" : "/Users/yosezang/bello/bello V20.31 MDF2/main/bello/bin/bello"
 		}
 	],
 	"backtrace" : 1,
@@ -25,13 +25,13 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 26,
+				"line" : 30,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 36,
+				"line" : 40,
 				"parent" : 0
 			}
 		]

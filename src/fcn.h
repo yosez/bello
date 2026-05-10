@@ -3,14 +3,17 @@
 #ifndef FCN_H
 #define FCN_H
 
+#define DBG_FLG
+
+
 #include "dftn.h"
 #include "envr.h"
 
 extern int intlEnvr(struct EnvrStrc** envr);
 
-struct FcnStrc* bldFcn(char* nm, struct PrmLstStrc* prmLst, struct StmtStrc* stmt);
-struct FcnStrc* bldFcn(char* nm, struct PrmLstStrc* prmLst);
-struct ArgLstStrc* bldArgLst();
+FcnStrc* bldFcn(char* nm, struct PrmLstStrc* prmLst, struct StmtStrc* stmt);
+FcnStrc* bldFcn(char* nm, struct PrmLstStrc* prmLst);
+ArgLstStrc* bldArgLst();
 int argLstAdd(struct ArgLstStrc* argLst, struct ExpStrc* arg);
 int argLstAdd(struct ArgLstStrc* argLst, struct ExpStrc* prm, struct ExpStrc* arg);
 struct PrmLstStrc* bldPrmLst();
@@ -18,47 +21,47 @@ int prmLstAdd(struct PrmLstStrc* prmLst, struct ExpStrc* prm);
 int prmLstAdd(struct PrmLstStrc* prmLst, struct ExpStrc* prm, struct ExpStrc* dft);
 
 
-struct FcnStrc* bldFcn(char* nm, struct PrmLstStrc* prmLst, struct StmtStrc* stmt)
+FcnStrc* bldFcn(char* nm, struct PrmLstStrc* prmLst, struct StmtStrc* stmt)
 {
-	struct FcnStrc* rslt = new FcnStrc;
-
-	rslt->nm = nm;
-
-	rslt->prmLst = prmLst;
-	rslt->stmt = stmt;
+	FcnStrc* rslt = new FcnStrc(nm, prmLst, stmt);
 
 	return rslt;
 }
 
-struct FcnStrc* bldFcn(char* nm, struct PrmLstStrc* prmLst)
+FcnStrc* bldFcn(char* nm, PrmLstStrc* prmLst)
 {
-	struct FcnStrc* rslt = new FcnStrc;
+	FcnStrc* rslt = new FcnStrc(nm, prmLst, nullptr);
 
-	rslt->nm = nm;
-
-	rslt->prmLst = prmLst;
-	rslt->stmt = nullptr;
 
 	return rslt;
 }
 
 
-struct ArgLstStrc* bldArgLst()
+ArgLstStrc* bldArgLst()
 {
-	struct ArgLstStrc* rslt = new ArgLstStrc;
+	ArgLstStrc* rslt = new ArgLstStrc;
 
 	return rslt;
 }
 
-int argLstAdd(struct ArgLstStrc* argLst, struct ExpStrc* arg)
+int argLstAdd(ArgLstStrc* argLst, ExpStrc* arg)
 {
 
 	argLst->prmArr.push_back(nullptr);
 	argLst->argArr.push_back(arg);
 
+#ifdef DBG_FLG
+
+	printf("**exp typ**: %d\n", arg->typ);
+	printf("arg: %d\n", dynamic_cast<ValExpStrc*>(arg)->val->v.int_);
+	printf("typ: %d\n", dynamic_cast<ValExpStrc*>(arg)->val->typ);
+
+#endif
+
 	return 0;
 }
 
+///TODO
 int argLstAdd(struct ArgLstStrc* argLst, struct ExpStrc* prm, struct ExpStrc* arg)
 {
 	argLst->prmArr.push_back(static_cast<VrbExpStrc*>(prm));
@@ -67,7 +70,7 @@ int argLstAdd(struct ArgLstStrc* argLst, struct ExpStrc* prm, struct ExpStrc* ar
 	return 0;
 }
 
-struct PrmLstStrc* bldPrmLst()
+PrmLstStrc* bldPrmLst()
 {
 	struct PrmLstStrc* rslt = new PrmLstStrc;
 
