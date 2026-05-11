@@ -27,7 +27,7 @@ using namespace std;
 #define setBln(val, arg) {(val)->typ=ValEnm::Bln; (val)->v.bln = (arg); }
 
 struct VrbStrc;
-struct VrbExpStrc;
+struct VrbExp;
 struct ClsStrc;
 struct ObjStrc;
 
@@ -43,22 +43,22 @@ struct BnrExpStrc;
 struct LvlExpStrc;
 struct AsnExpStrc;
 struct NewExpStrc;
-struct ExpStrc;
+struct Exp;
 
-struct IfStmtStrc;
-struct ElsStmtStrc;
-struct FcnStmtStrc;
-struct ForStmtStrc;
-struct WhlStmtStrc;
-struct DoWhlStmtStrc;
-struct BrkStmtStrc;
-struct CntnStmtStrc;
-struct RtnStmtStrc;
+struct IfStmt;
+struct ElsStmt;
+struct FcnStmt;
+struct ForStmt;
+struct WhlStmt;
+struct DoWhlStmt;
+struct BrkStmt;
+struct CntnStmt;
+struct RtnStmt;
 struct StmtBlkStrc;
-struct ClsStmtStrc;
+struct ClsStmt;
 struct NlStmtStrc;
 struct ExpStmtStrc;
-struct StmtStrc;
+struct Stmt;
 
 
 struct RtnRsltStrc;
@@ -73,7 +73,7 @@ struct ArrStrc;
 struct ArrEvlExpStrc;
 struct ElmtAsgnExpStrc;
 struct NtvFcnStrc;
-struct VarStmtStrc;
+struct VarStmt;
 struct VarStmtStrc2;
 struct StmtStkItmStrc;
 
@@ -83,10 +83,14 @@ typedef struct ValStrc* NtvFcnDfn(vector<EnvrStrc*>& envr, int prmCnt, vector <V
 
 int lstIndt = 0;
 
+
+///TODO level quick float 修改为 double
+///TODO level 1 ValUnn 考虑修改为 strc，并相应修改程序中程量ValStrc，更容易判定类型
+///TODO level 1 ValUnn 是否可以修改为long
 union ValUnn
 {
 	int bln;
-	float flt;
+	double flt;
 	int int_;
 	string* str;
 	ArrStrc* arr;
@@ -98,6 +102,24 @@ public:
 	{
 	}
 
+	explicit ValUnn(const int &int_):int_(int_)
+	{}
+
+	explicit ValUnn(const float &flt):flt(flt)
+	{};
+
+	explicit ValUnn( string* str): str(str)
+	{};
+
+	explicit ValUnn(ArrStrc* arr): arr(arr)
+	{};
+
+	explicit ValUnn(ObjStrc *obj):obj(obj)
+	{};
+
+	explicit ValUnn(void* ptr):ptr(ptr)
+	{};
+
 	// ValUnn(ValUnn &&val)
 	// {
 	// 	//memcpy(this, &val, sizeof(ValUnn));
@@ -108,7 +130,7 @@ public:
 	}
 
 	//平凡拷贝构造
-	ValUnn(const ValUnn &val)=default;
+	//ValUnn(const ValUnn &val)=default;
 
 
 };
@@ -232,16 +254,16 @@ enum class EnvrEnm
 	Stmt
 };
 
-struct StmtStrc
+struct Stmt
 {
 public:
 	StmtEnm typ;
 	int indt;
 
-	StmtStrc(StmtEnm stmt, int indt): typ(stmt), indt(indt)
+	Stmt(StmtEnm stmt, int indt): typ(stmt), indt(indt)
 	{};
 
-	StmtStrc(StmtEnm stmt): typ(stmt)
+	Stmt(StmtEnm stmt): typ(stmt)
 	{};
 };
 
@@ -249,7 +271,7 @@ struct StmtStkItmStrc
 {
 
 	int indt;
-	StmtStrc* stmt;
+	Stmt* stmt;
 	int alwSubStmt = 0;
 	int blnScndStmt = 0;
 };
@@ -259,11 +281,11 @@ std::vector<StmtStkItmStrc*> stmtStk;
 /// <summary>
 ///	多主句语句的栈
 /// </summary>
-std::vector<StmtStrc*> mltStmtStk;
+std::vector<Stmt*> mltStmtStk;
 
 
 /// 条件语句
-struct CndStmtStrc : public StmtStrc
+struct CndStmtStrc : public Stmt
 {
 public:
 	VrbStrc *vrb, *vrb2;
@@ -271,7 +293,7 @@ public:
 	///如果有嵌套结构
 	CndStmtStrc *cnd, *cnd2;
 
-	CndStmtStrc(int indt, VrbStrc *vrb, VrbStrc *vrb2, OpEnm op, CndStmtStrc *cnd, CndStmtStrc *cnd2):StmtStrc(StmtEnm::Cnd), vrb(vrb), vrb2(vrb2), op(op),
+	CndStmtStrc(int indt, VrbStrc *vrb, VrbStrc *vrb2, OpEnm op, CndStmtStrc *cnd, CndStmtStrc *cnd2):Stmt(StmtEnm::Cnd), vrb(vrb), vrb2(vrb2), op(op),
 		cnd(cnd), cnd2(cnd2)
 	{};
 };
@@ -284,7 +306,7 @@ struct ClsStrc
 	vector<VrbStrc*> shrVrb;
 	vector<FcnStrc*> shrFcn;
 
-	StmtStrc* dfn;
+	Stmt* dfn;
 };
 
 
@@ -305,46 +327,47 @@ public:
 };
 
 // 单一语句
-struct SglStmtStrc: public StmtStrc
+struct SglStmtStrc: public Stmt
 {
 public:
-	ExpStrc* exp;
+	Exp* exp;
 
-	SglStmtStrc(ExpStrc *exp): StmtStrc(StmtEnm::Sgl), exp(exp)
+	SglStmtStrc(Exp *exp): Stmt(StmtEnm::Sgl), exp(exp)
 	{};
 };
 
 
 /// 表达式语句
-struct ExpStrc
+struct Exp
 {
 public:
 	ExpEnm typ;
 
-	ExpStrc (ExpEnm typ) : typ(typ)
+	Exp (ExpEnm typ) : typ(typ)
 	{};
 
-	virtual ~ExpStrc() = default;
+	virtual ~Exp() = default;
 };
 
 // 条件语句的逻辑表达式
 struct CndStrc
 {
-	ExpStrc *lft, *rgt;
+	Exp *lft, *rgt;
 	OpEnm op;
 };
 
 
 /// 变量表达式 variable expression
-struct VrbExpStrc :public ExpStrc
+struct VrbExp :public Exp
 {
 	string nm;
 
 	//间接使用string的char*构造器
-	VrbExpStrc(string nm): ExpStrc(ExpEnm::Vrb), nm(nm)
+	VrbExp(string nm): Exp(ExpEnm::Vrb), nm(nm)
 	{};
 };
 
+/// TODO 考虑和ValUnn合成1个
 /// 程序值结构体
 struct ValStrc
 {
@@ -954,104 +977,104 @@ public:
 	{};
 };
 
-struct ValExpStrc: public ExpStrc
+struct ValExpStrc: public Exp
 {
 	ValStrc *val;
 
-	ValExpStrc(ValStrc* val): ExpStrc(ExpEnm::Val), val(val)
+	ValExpStrc(ValStrc* val): Exp(ExpEnm::Val), val(val)
 	{};
 };
 
 
 // 赋值表达式 assign expression
-struct AsnExpStrc : public ExpStrc
+struct AsnExpStrc : public Exp
 {
 	LvlExpStrc* lvl;
-	ExpStrc* exp;
+	Exp* exp;
 
-	AsnExpStrc(LvlExpStrc* lvl, ExpStrc *exp): ExpStrc(ExpEnm::Asn), lvl(lvl), exp(exp)
+	AsnExpStrc(LvlExpStrc* lvl, Exp *exp): Exp(ExpEnm::Asn), lvl(lvl), exp(exp)
 	{};
 };
 
-struct NewExpStrc :public ExpStrc
+struct NewExpStrc :public Exp
 {
 	string* nm;
 	ArgLstStrc* arg;
 
 	//NewExpStrc(string *nm, ArgLstStrc* arg): ExpStrc(ExpEnm::New), nm(nm)
-	NewExpStrc(string *nm): ExpStrc(ExpEnm::New), nm(nm)
+	NewExpStrc(string *nm): Exp(ExpEnm::New), nm(nm)
 	{};
 };
 
-struct BnrExpStrc : public ExpStrc
+struct BnrExpStrc : public Exp
 {
 	OpEnm opr;
-	ExpStrc* lft, * rgt;
+	Exp* lft, * rgt;
 
-	BnrExpStrc(OpEnm opr, ExpStrc* lft, ExpStrc* rgt): ExpStrc(ExpEnm::Bnr), opr(opr), lft(lft), rgt(rgt)
+	BnrExpStrc(OpEnm opr, Exp* lft, Exp* rgt): Exp(ExpEnm::Bnr), opr(opr), lft(lft), rgt(rgt)
 	{};
 };
 
-struct UnrExpStrc : public ExpStrc
+struct UnrExpStrc : public Exp
 {
 	OpEnm opr;
-	ExpStrc* exp;
+	Exp* exp;
 
-	UnrExpStrc(OpEnm opr, ExpStrc* exp) : ExpStrc(ExpEnm::Unr), opr(opr), exp(exp)
+	UnrExpStrc(OpEnm opr, Exp* exp) : Exp(ExpEnm::Unr), opr(opr), exp(exp)
 	{};
 };
 
 
-struct TnrExpStrc : public ExpStrc
+struct TnrExpStrc : public Exp
 {
 public:
 	OpEnm opr;
-	ExpStrc* frst, * scnd, * trd;
+	Exp* frst, * scnd, * trd;
 
-	TnrExpStrc(OpEnm opr, ExpStrc* frst, ExpStrc* scnd, ExpStrc* trd):ExpStrc(ExpEnm::Tnr), opr(opr), frst(frst),
+	TnrExpStrc(OpEnm opr, Exp* frst, Exp* scnd, Exp* trd):Exp(ExpEnm::Tnr), opr(opr), frst(frst),
 		scnd(scnd), trd(trd)
 	{};
 };
 
-struct FcnExpStrc : public ExpStrc
+struct FcnExpStrc : public Exp
 {
 public:
 	string nm;
 
 	ArgLstStrc* argLst;
 
-	FcnExpStrc(string nm, ArgLstStrc* arg): ExpStrc(ExpEnm::Fcn), nm(nm), argLst(arg)
+	FcnExpStrc(string nm, ArgLstStrc* arg): Exp(ExpEnm::Fcn), nm(nm), argLst(arg)
 	{};
 };
 
 
 
 //数组定义结构体
-struct ArrExpStrc :public ExpStrc
+struct ArrExpStrc :public Exp
 {
 public:
 	struct ElmtLstStrc* elmtLst;
 
-	ArrExpStrc(ElmtLstStrc* elmtLst): ExpStrc(ExpEnm::Arr), elmtLst(elmtLst)
+	ArrExpStrc(ElmtLstStrc* elmtLst): Exp(ExpEnm::Arr), elmtLst(elmtLst)
 	{};
 };
 
 //数组取用结构体
-struct ArrEvlExpStrc :public ExpStrc
+struct ArrEvlExpStrc :public Exp
 {
 	// 0: 标识符数组变量 1: 数组表达式
 	int blnArr;
 
-	struct ExpStrc* arr;
+	struct Exp* arr;
 
 	struct AcsLstStrc* evlLst;
 };
 
-struct LvlExpStrc :public ExpStrc
+struct LvlExpStrc :public Exp
 {
 public:
 
-	VrbExpStrc* vrb;
+	VrbExp* vrb;
 
 	int hasAcsLst;
 	AcsLstStrc* acs;
@@ -1064,35 +1087,35 @@ public:
 
 	int blnIvk;
 
-	LvlExpStrc(VrbExpStrc* vrb): ExpStrc(ExpEnm::Lvl), vrb(vrb)
+	LvlExpStrc(VrbExp* vrb): Exp(ExpEnm::Lvl), vrb(vrb)
 	{};
 
-	LvlExpStrc(VrbExpStrc* vrb, int hasAcsLst, AcsLstStrc* acs): ExpStrc(ExpEnm::Lvl), hasAcsLst(hasAcsLst), vrb(vrb), acs(acs)
+	LvlExpStrc(VrbExp* vrb, int hasAcsLst, AcsLstStrc* acs): Exp(ExpEnm::Lvl), hasAcsLst(hasAcsLst), vrb(vrb), acs(acs)
 	{};
 
-	LvlExpStrc(VrbExpStrc* vrb, int hasAtb,  LvlExpStrc* atb): ExpStrc(ExpEnm::Lvl), hasAtb(hasAtb), vrb(vrb), atb(atb)
+	LvlExpStrc(VrbExp* vrb, int hasAtb,  LvlExpStrc* atb): Exp(ExpEnm::Lvl), hasAtb(hasAtb), vrb(vrb), atb(atb)
 	{};
 
-	LvlExpStrc(VrbExpStrc* vrb, int hasFcn, FcnExpStrc* fcn): ExpStrc(ExpEnm::Lvl), hasFcn(hasFcn), vrb(vrb), fcn(fcn)
+	LvlExpStrc(VrbExp* vrb, int hasFcn, FcnExpStrc* fcn): Exp(ExpEnm::Lvl), hasFcn(hasFcn), vrb(vrb), fcn(fcn)
 	{};
 };
 
 
-struct NewArrExpStrc :ExpStrc
+struct NewArrExpStrc :Exp
 {
-	struct ExpStrc* cnt;
+	struct Exp* cnt;
 };
 
 //数组元素赋值表达式结构体
-struct ElmtAsgnExpStrc :ExpStrc
+struct ElmtAsgnExpStrc :Exp
 {
-	ExpStrc* arr;
+	Exp* arr;
 
 	PsnLstStrc* psnLst;
 
-	ExpStrc* val;
+	Exp* val;
 
-	ElmtAsgnExpStrc(ExpStrc *arr, PsnLstStrc* psnLst, ExpStrc* val): ExpStrc(ExpEnm::ElmAsn), arr(arr), psnLst(psnLst), val(val)
+	ElmtAsgnExpStrc(Exp *arr, PsnLstStrc* psnLst, Exp* val): Exp(ExpEnm::ElmAsn), arr(arr), psnLst(psnLst), val(val)
 	{};
 };
 
@@ -1100,44 +1123,44 @@ struct ElmtAsgnExpStrc :ExpStrc
 
 
 ///表达式语句
-struct ExpStmtStrc : public StmtStrc
+struct ExpStmtStrc : public Stmt
 {
-	ExpStrc* exp;
+	Exp* exp;
 
-	ExpStmtStrc(ExpStrc *exp): StmtStrc(StmtEnm::Exp), exp(exp)
+	ExpStmtStrc(Exp *exp): Stmt(StmtEnm::Exp), exp(exp)
 	{};
 };
 
-struct IfStmtStrc : public StmtStrc
+struct IfStmt : public Stmt
 {
-	ExpStrc* exp;
-	StmtStrc* stmt;
+	Exp* exp;
+	Stmt* stmt;
 	int expRslt;
 
-	IfStmtStrc(ExpStrc* exp, StmtStrc* stmt): StmtStrc(StmtEnm::If), exp(exp), stmt(stmt)
+	IfStmt(Exp* exp, Stmt* stmt): Stmt(StmtEnm::If), exp(exp), stmt(stmt)
 	{};
 
-	IfStmtStrc(ExpStrc* exp, StmtStrc* stmt, int rslt): StmtStrc(StmtEnm::If), exp(exp), stmt(stmt), expRslt(rslt)
+	IfStmt(Exp* exp, Stmt* stmt, int rslt): Stmt(StmtEnm::If), exp(exp), stmt(stmt), expRslt(rslt)
 	{};
 };
 
-struct ElsStmtStrc :public StmtStrc
+struct ElsStmt :public Stmt
 {
-	struct StmtStrc* stmt;
+	struct Stmt* stmt;
 
-	ElsStmtStrc(StmtStrc* stmt): StmtStrc(StmtEnm::Els), stmt(stmt)
+	ElsStmt(Stmt* stmt): Stmt(StmtEnm::Els), stmt(stmt)
 	{};
 
 };
 
-struct ElifStmtStrc : public StmtStrc
+struct ElifStmt : public Stmt
 {
-	ExpStrc* exp;
-	StmtStrc* stmt;
+	Exp* exp;
+	Stmt* stmt;
 
 	int expRslt;
 
-	ElifStmtStrc(ExpStrc* exp, StmtStrc* stmt, int expRslt): StmtStrc(StmtEnm::Elif), exp(exp), stmt(stmt), expRslt(expRslt)
+	ElifStmt(Exp* exp, Stmt* stmt, int expRslt): Stmt(StmtEnm::Elif), exp(exp), stmt(stmt), expRslt(expRslt)
 	{};
 };
 
@@ -1148,140 +1171,140 @@ struct ElifStmtStrc : public StmtStrc
 // 	struct StmtStrc* elsStmt;
 // };
 
-struct ForStmtStrc : public StmtStrc
+struct ForStmt : public Stmt
 {
-	StmtStrc* intl;
-	StmtStrc* exp;
-	StmtStrc* itr;
-	StmtStrc* stmt;
+	Stmt* intl;
+	Stmt* exp;
+	Stmt* itr;
+	Stmt* stmt;
 
-	ForStmtStrc(StmtStrc* init, StmtStrc* exp, StmtStrc* itr, StmtStrc* stmt): StmtStrc(StmtEnm::For), intl(init),
+	ForStmt(Stmt* init, Stmt* exp, Stmt* itr, Stmt* stmt): Stmt(StmtEnm::For), intl(init),
 		exp(exp), itr(itr), stmt(stmt)
 	{};
 };
 
-struct WhlStmtStrc : public StmtStrc
+struct WhlStmt : public Stmt
 {
 	CndStrc* cnd;
-	ExpStrc* exp;
-	StmtStrc* stmt;
+	Exp* exp;
+	Stmt* stmt;
 
-	WhlStmtStrc(ExpStrc* exp, StmtStrc *stmt ): StmtStrc(StmtEnm::Whl), exp(exp), stmt(stmt)
+	WhlStmt(Exp* exp, Stmt *stmt ): Stmt(StmtEnm::Whl), exp(exp), stmt(stmt)
 	{};
 
 	//WhlStmtStrc(CndStrc* cnd, StmtStrc *stmt) : StmtStrc(StmtEnm::Cnd), cnd(cnd), stmt(stmt)
 	//{};
 };
 
-struct DoWhlStmtStrc : public StmtStrc
+struct DoWhlStmt : public Stmt
 {
 	//CndStrc* cnd;
-	StmtStrc* exp;
-	StmtStrc* stmt;
+	Stmt* exp;
+	Stmt* stmt;
 
-	DoWhlStmtStrc(StmtStrc *exp): StmtStrc(StmtEnm::DoWhl), exp(exp)
+	DoWhlStmt(Stmt *exp): Stmt(StmtEnm::DoWhl), exp(exp)
 	{};
 
-	DoWhlStmtStrc(StmtStrc *exp, StmtStrc *stmt): StmtStrc(StmtEnm::DoWhl), exp(exp), stmt(stmt)
+	DoWhlStmt(Stmt *exp, Stmt *stmt): Stmt(StmtEnm::DoWhl), exp(exp), stmt(stmt)
 	{};
 
 };
 
-struct BrkStmtStrc : public StmtStrc
+struct BrkStmt : public Stmt
 {
-	ExpStrc* exp;
+	Exp* exp;
 
-	BrkStmtStrc(): StmtStrc(StmtEnm::Brk)
+	BrkStmt(): Stmt(StmtEnm::Brk)
 	{};
 
 	//break(2)是可以的
-	BrkStmtStrc(ExpStrc * exp): StmtStrc(StmtEnm::Brk), exp(exp)
+	BrkStmt(Exp * exp): Stmt(StmtEnm::Brk), exp(exp)
 	{};
 };
 
-struct CntnStmtStrc : public StmtStrc
+struct CntnStmt : public Stmt
 {
-	ExpStrc* exp;
+	Exp* exp;
 
-	CntnStmtStrc(): StmtStrc(StmtEnm::Cntn)
+	CntnStmt(): Stmt(StmtEnm::Cntn)
 	{};
 
 	//可以使用continue(2)语句
-	CntnStmtStrc(ExpStrc* exp): StmtStrc(StmtEnm::Cntn), exp(exp)
+	CntnStmt(Exp* exp): Stmt(StmtEnm::Cntn), exp(exp)
 	{};
 };
 
-struct FcnStmtStrc : public StmtStrc
+struct FcnStmt : public Stmt
 {
 	FcnStrc* fcn;
 
-	FcnStmtStrc(FcnStrc* fcn): StmtStrc(StmtEnm::DfnFcn), fcn(fcn)
+	FcnStmt(FcnStrc* fcn): Stmt(StmtEnm::DfnFcn), fcn(fcn)
 	{};
 };
 
-struct ClsStmtStrc : public StmtStrc
+struct ClsStmt : public Stmt
 {
 	ClsStrc* cls;
 
-	ClsStmtStrc(ClsStrc* cls): StmtStrc(StmtEnm::Cls), cls(cls)
+	ClsStmt(ClsStrc* cls): Stmt(StmtEnm::Cls), cls(cls)
 	{};
 
 };
 
-struct StmtBlkStrc : public StmtStrc
+struct StmtBlkStrc : public Stmt
 {
-	vector<StmtStrc*> stmtArr;
+	vector<Stmt*> stmtArr;
 
-	StmtBlkStrc(): StmtStrc(StmtEnm::Blk)
+	StmtBlkStrc(): Stmt(StmtEnm::Blk)
 	{};
 };
 
-struct RtnStmtStrc : public StmtStrc {
+struct RtnStmt : public Stmt {
 	int blnRslt;
-	ExpStrc* exp;
+	Exp* exp;
 
-	RtnStmtStrc(ExpStrc *exp): StmtStrc(StmtEnm::Rtn), exp(exp)
+	RtnStmt(Exp *exp): Stmt(StmtEnm::Rtn), exp(exp)
 	{};
 
-	RtnStmtStrc(ExpStrc *exp, int rslt): StmtStrc(StmtEnm::Rtn), exp(exp), blnRslt(rslt)
+	RtnStmt(Exp *exp, int rslt): Stmt(StmtEnm::Rtn), exp(exp), blnRslt(rslt)
 	{};
 
 };
 
-struct VarStmtStrc : public StmtStrc
+struct VarStmt : public Stmt
 {
 	struct AsnLstStrc* asnLst;
 
-	VarStmtStrc(AsnLstStrc *lst): StmtStrc(StmtEnm::Var), asnLst(lst)
+	VarStmt(AsnLstStrc *lst): Stmt(StmtEnm::Var), asnLst(lst)
 	{};
 
-	VarStmtStrc():StmtStrc(StmtEnm::Var)
+	VarStmt():Stmt(StmtEnm::Var)
 	{};
 
 };
 
-struct VarStmtStrc2 : public StmtStrc
+struct VarStmtStrc2 : public Stmt
 {
-	std::map<string, ExpStrc*> asnLst;
+	std::map<string, Exp*> asnLst;
 
 
 };
 
-struct GlbStmtStrc : public StmtStrc
+struct GlbStmtStrc : public Stmt
 {
 	AsnLstStrc* asnLst;
 
-	GlbStmtStrc(): StmtStrc(StmtEnm::Glb)
+	GlbStmtStrc(): Stmt(StmtEnm::Glb)
 	{};
 
-	GlbStmtStrc(AsnLstStrc* asgnLst): StmtStrc(StmtEnm::Glb), asnLst(asgnLst)
+	GlbStmtStrc(AsnLstStrc* asgnLst): Stmt(StmtEnm::Glb), asnLst(asgnLst)
 	{};
 
 };
 
-struct NlStmtStrc : public StmtStrc
+struct NlStmtStrc : public Stmt
 {
-	NlStmtStrc(): StmtStrc(StmtEnm::Nl)
+	NlStmtStrc(): Stmt(StmtEnm::Nl)
 	{};
 };
 
@@ -1323,9 +1346,9 @@ struct FcnStrc
 {
 	string nm;
 	PrmLstStrc* prm;
-	StmtStrc* stmt;
+	Stmt* stmt;
 
-	FcnStrc(string nm, PrmLstStrc* prm, StmtStrc* stmt): nm(nm), prm(prm), stmt(stmt)
+	FcnStrc(string nm, PrmLstStrc* prm, Stmt* stmt): nm(nm), prm(prm), stmt(stmt)
 	{};
 
 };
@@ -1369,7 +1392,7 @@ struct ArrStrc
 //数组元素列表
 struct ElmtLstStrc
 {
-	vector<ExpStrc*> elmtArr;
+	vector<Exp*> elmtArr;
 };
 
 //数组定位列表
@@ -1378,7 +1401,7 @@ struct PsnLstStrc
 	//int pstnSz;
 	//int pstnCnt;
 
-	vector<ExpStrc*> pstnArr;
+	vector<Exp*> pstnArr;
 };
 
 /// <summary>
@@ -1389,10 +1412,10 @@ struct AcsStrc
 	// 1 数组取值为切片 0 数组取值为指定元素
 	int blnSlc;
 
-	ExpStrc* pstn;
-	ExpStrc* strt;
-	ExpStrc* end;
-	ExpStrc* stp;
+	Exp* pstn;
+	Exp* strt;
+	Exp* end;
+	Exp* stp;
 };
 
 //数组评估列表，acsLst中的每个元素是指某一层的访问索引或切片
@@ -1407,16 +1430,16 @@ struct AcsLstStrc
 struct PrmLstStrc
 {
 
-	vector<VrbExpStrc*> prmArr;
-	vector<ExpStrc*> expArr;
+	vector<VrbExp*> prmArr;
+	vector<Exp*> expArr;
 };
 
 
 //函数实参列表
 struct ArgLstStrc
 {
-	vector <VrbExpStrc*> prmArr;
-	vector <ExpStrc*> argArr;
+	vector <VrbExp*> prmArr;
+	vector <Exp*> argArr;
 };
 
 //赋值列表
