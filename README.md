@@ -4,7 +4,7 @@ Bello is a small scripting language interpreter implemented with C++,
 Flex, and Bison. It supports fundamental structure, e.g. for, if, and
 support object-orirented.
 
-Its aim is to create a flexible, basically classical, stable implementation of scripting language.
+Its aim is to create a flexible, basically classical, stable implementation of scripting language, with 
 
 
 ## while语句
@@ -66,7 +66,12 @@ fclose([fileptr])
 - Variables and arrays
 - If / for / while control flow
 - Function definitions
-- Basic built-in I/O (see examples)
+- Basic built-in I/O
 
+# Legal Statement
+
+bello Accepts Apache 2.0 License, which means you cannot uses its brand and, HEREBY we acclaimed, other registered intellectual properties freely,
+and any modification on bello should retain the name of the authors.
+We warningly prompt that please do not accuse the authors, BECAUSE it triggers the machinery in the clauses that you cannot use it any more.
 
 

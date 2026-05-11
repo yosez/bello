@@ -9,14 +9,14 @@
     #include <stdlib.h>
     #include <stdbool.h>
     #include <stack>
-    #include "dftn.h"
+    #include "dfn.h"
     #include "vrb.h"
     #include "val.h"
     #include "exp.h"
     #include "stmt.h"
     #include "arr.h"
     #include "stmt.h"
-    #include "fcn.h"
+    #include "fn.h"
     #include "cls.h"
     #include "envr.h"
     #include "err.h"
@@ -43,22 +43,22 @@
 
     extern std::vector<StmtStkItmStrc*> stmtStk;
 
-    extern int chkStmtAlwSubStmt(struct StmtStrc* stmt);
+    extern int chkStmtAlwSubStmt(struct Stmt* stmt);
 
-    extern int chkStmtAlwScndStmt(struct StmtStrc* stmt);
+    extern int chkStmtAlwScndStmt(struct Stmt* stmt);
 
 
     //prsStt为1 从标准输入读取 prsStt为2 从源文件读取
     int prsStt;
 
     void fldStmt(int indt);
-    void pshStmt(int indt, StmtStrc* stmt);
+    void pshStmt(int indt, Stmt* stmt);
     void prtStmtStk();
 
     //类定义语句的标志，0为不是类定义的状态，1为类定义的状态
     int blnDfnCls=0;
 
-    struct StmtStrc* lstStmt;
+    struct Stmt* lstStmt;
 %}
 
 %union
@@ -70,8 +70,8 @@
     struct ObjStrc* objVl;
 
     struct VrbStrc *vrb;
-    struct ExpStrc *exp;
-    struct StmtStrc *stmt;
+    struct Exp *exp;
+    struct Stmt *stmt;
     struct FcnStrc *fcn;
     struct PrmLstStrc *prmLst;
     struct ArgLstStrc *argLst;
@@ -216,7 +216,7 @@ build_statement_stack
     {   
         int indt = $<intVl>-3;
 
-        StmtStrc* stmt=$<stmt>-2;
+        Stmt* stmt=$<stmt>-2;
 
         stmt->indt= indt;
 
@@ -320,11 +320,21 @@ close_execute_last_statement
         {
             //需要闭合上1条顶级语句的子语句，并执行该顶级语句
 
-            //如果存在上1条语句，该语句允许子语句
+            //如果存在上1条语句，该语句允许子语句，e.g. for，执行语句
+            //执行语句
             if (stmtStk.back()->indt == 0 && stmtStk.back()->alwSubStmt)
             {
-                yyclearin;
-                yyerrok;
+                //printf("%s\n", )
+                //执行倒数第2条指令
+                exctStmt(envr, stmtStk.at(stmtStk.size()-2)->stmt);
+                //倒数第2条指令出栈
+                stmtStk.erase(stmtStk.end()-2);
+
+
+                //exctStmt(envr, stmtStk.back()->stmt);
+
+                //yyclearin;
+                //yyerrok;
                 
             }
             // //如果上1条语句为顶级语句且不允许子语句，则执行上一条语句
@@ -435,7 +445,7 @@ expression_statement
     }
 
 expression
-    : value_expression { $$ = $1; printf("**exp prs typ**:%d\n", ($1)->typ); }
+    : value_expression { $$ = $1; /* printf("**exp prs typ**:%d\n", ($1)->typ);*/ }
     | lvalue_operation_expression
     | unary_expression { $$ = $1; }
     | binary_expression { $$ = $1; }
@@ -447,7 +457,7 @@ lvalue_operation_expression
     | self_operation_expression
 
 assign_expression
-    : lvalue_expression ASSIGN expression { printf("asn %s %d\n",  (dynamic_cast<LvlExpStrc*>($1))->vrb->nm.c_str(),  (dynamic_cast<ValExpStrc*>($3)->val->v.int_)); $$=bldAsnExp($1, $3); }
+    : lvalue_expression ASSIGN expression { $$=bldAsnExp($1, $3); }
     | lvalue_expression ADD_ASSIGN expression { $$=bldAsnExp($1, bldBnrExp(OpEnm::Add, $1, $3)); }
     | lvalue_expression SUB_ASSIGN expression { $$=bldAsnExp($1, bldBnrExp(OpEnm::Sub, $1, $3)); }
     | lvalue_expression MUL_ASSIGN expression { $$=bldAsnExp($1, bldBnrExp(OpEnm::Mul, $1, $3)); }
@@ -685,7 +695,7 @@ argument_list
     {
         $$=bldArgLst();
 
-        printf("**arg lst add typ**:%d\n", ($1)->typ);
+        /*printf("**arg lst add typ**:%d\n", ($1)->typ);*/
         argLstAdd($$, $1);
     }
     | IDENTIFER COLON expression
@@ -898,10 +908,12 @@ for_statement
     {
         $$= bldForStmt($2, $4, $6);
     }
-    /*｜ FOR AT signle_statement_no_semicolon COMMA expression_statement COMMA COLON single_statement_no_semicolon
+
+/*    | FOR AT signle_statement_no_semicolon SEMICOLON expression_statement SEMICOLON COLON single_statement_no_semicolon
     {
         $$ = bldForStmt($3, $5, $8);
-    }*/
+    }
+*/
 
 /*
 for_condition_statement

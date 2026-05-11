@@ -7,18 +7,18 @@
 #include <string.h>
 #include <stdlib.h>
 #include "y.tab.h"
-#include "dftn.h"
+#include "dfn.h"
 #include "exp.h"
 
-extern ExpStrc* bldAsnExp(ExpStrc* vrb, struct ExpStrc* exp);
-extern ExpStrc* bldLvlExp(ExpStrc* vrb);
+extern Exp* bldAsnExp(Exp* vrb, struct Exp* exp);
+extern Exp* bldLvlExp(Exp* vrb);
 
 VrbStrc* bldVrb(string nm);
 VrbStrc* cpyVrb(VrbStrc* vrb, string* nm);
 int asnVrbCpy(struct VrbStrc* vrb, struct ValStrc* vl);
 ValStrc* bldValFrmVrb(struct VrbStrc* vrb);
 AsnLstStrc* bldAsnLst();
-int asnLstAdd(struct AsnLstStrc* asgnLst, struct ExpStrc* vrb, struct ExpStrc* exp);
+int asnLstAdd(struct AsnLstStrc* asgnLst, struct Exp* vrb, struct Exp* exp);
 
 //对变量数组中的选定变量进行赋值
 int asnVrbCpy(VrbStrc* vrb, ValStrc* vl)
@@ -89,7 +89,7 @@ AsnLstStrc* bldAsnLst()
 	return rslt;
 }
 
-int asnLstAdd(struct AsnLstStrc* asgnLst, struct ExpStrc* vrb, struct ExpStrc* exp)
+int asnLstAdd(struct AsnLstStrc* asgnLst, struct Exp* vrb, struct Exp* exp)
 {
 	asgnLst->asgnArr.push_back(static_cast<AsnExpStrc*>(bldAsnExp(bldLvlExp(vrb), exp)));
 

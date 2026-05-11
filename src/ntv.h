@@ -3,8 +3,8 @@
 #ifndef NTV_H
 #define NTV_H
 
-#include "dftn.h"
-#include "expt.h"
+#include "dfn.h"
+#include "ex.h"
 #include "val.h"
 #include <functional>
 
@@ -14,25 +14,31 @@ std::function<ValStrc* (vector<EnvrStrc*>&, int, vector<ValStrc*>)> ntvFmt;
 
 
 
+//TODO argCnt -1 represent multi variables after 1 parameter
+/// argCnt -2 ... after 2 parameter
+/// argCnt MAXINT arbitrary parameters
+ValStrc* rdIntFcn(vector<EnvrStrc*>& envr, int argCnt, vector<ValStrc*> argArr);
+ValStrc* rdFltFcn(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
+ValStrc* rdBlnFcn(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
+ValStrc* rdFcn(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
+ValStrc* rdlnFcn(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
+ValStrc* prtFcn(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
+ValStrc* prtlnFcn(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
 
-struct ValStrc* rdIntFcn(vector<EnvrStrc*>& envr, int argCnt, vector<ValStrc*> argArr);
-struct ValStrc* rdFltFcn(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
-struct ValStrc* rdBlnFcn(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
-struct ValStrc* rdFcn(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
-struct ValStrc* rdlnFcn(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
-struct ValStrc* prtFcn(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
-struct ValStrc* prtlnFcn(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
-struct ValStrc* newArrFcn(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
-struct ValStrc* flOpn(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
-struct ValStrc* flSk(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
-struct ValStrc* flScn(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
-struct ValStrc* flWrt(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
-struct ValStrc* flTl(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
-struct ValStrc* flCls(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
-struct ValStrc* flPrt(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
+ValStrc* newArrFcn(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
+ValStrc* flOpn(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
+ValStrc* flSk(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
+ValStrc* flScn(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
+ValStrc* flWrt(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
+ValStrc* flTl(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
+ValStrc* flCls(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
+ValStrc* flPrt(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
+//2 calling names scat and strcat
+ValStrc* scat(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
 
-struct ValStrc* flScnInt(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
-struct ValStrc* flScnDbl(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
+
+ValStrc* flScnInt(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
+ValStrc* flScnDbl(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
 
 
 
@@ -136,16 +142,35 @@ struct ValStrc* rdlnFcn(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> a
 
 struct ValStrc* prtFcn(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr)
 {
-	if (argCnt != 1)
+	// if (argCnt < 1)
+	// {
+	// 	throw new ExFcnTooFewArg;
+	// }
+
+	int i=0;
+
+	for (i=0;i<argCnt;i++)
 	{
-		throw new ExFcnTooFewArg;
+		prtVal(argArr[i]);
 	}
 
-	prtVal(argArr[0]);
+	// int i=0;
+	//
+	// if (argCnt == INT_MAX)
+	// {
+	// 	for (i=0;i<argCnt;i++)
+	// 	{
+	// 		prtVal(argArr[i]);
+	// 	}
+	// }
+	// else if (argCnt == )
+	// prtVal(argArr[0]);
 
-#ifdef DBG_FLG
-	printf("prt fcn %d\n", argArr[0]->v.int_);
-#endif
+
+
+// #ifdef DBG_FLG
+// 	printf("prt fcn %d\n", argArr[0]->v.int_);
+// #endif
 
 	return nullptr;
 }
@@ -344,5 +369,31 @@ struct ValStrc* flPrt(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> arg
 	return nullptr;
 }
 
+
+ValStrc* scat(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr)
+{
+	ValStrc *op, *op2, *rslt;
+
+	//ValUnn
+
+	op = new ValStrc(ValEnm::Str,  ValUnn((argArr.at(0)->v.str)));  //clcExp(envr, argArr.at(0)->v.str+)
+	op2 = new ValStrc(ValEnm::Str,  ValUnn((argArr.at(1)->v.str)));  //clcExp(envr, argArr.at(0)->v.str+)
+	rslt = new ValStrc(*op + *op2);
+	return rslt;
+}
+
+
+///TODO
+// ValStrc* scpy(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr)
+// {
+// 	ValStrc *op, *op2, *rslt;
+//
+// 	//ValUnn
+//
+// 	op = new ValStrc(ValEnm::Str,  ValUnn((argArr.at(0)->v.str)));  //clcExp(envr, argArr.at(0)->v.str+)
+// 	op2 = new ValStrc(ValEnm::Str,  ValUnn((argArr.at(1)->v.str)));  //clcExp(envr, argArr.at(0)->v.str+)
+// 	rslt = new ValStrc(*op + *op2);
+// 	return rslt;
+// }
 
 #endif

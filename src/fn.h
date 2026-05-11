@@ -5,7 +5,7 @@
 
 
 
-#include "dftn.h"
+#include "dfn.h"
 #include "envr.h"
 
 extern int intlEnvr(struct EnvrStrc** envr);

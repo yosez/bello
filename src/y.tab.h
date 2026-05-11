@@ -213,8 +213,8 @@ typedef union YYSTYPE
     struct ObjStrc* objVl;
 
     struct VrbStrc *vrb;
-    struct ExpStrc *exp;
-    struct StmtStrc *stmt;
+    struct Exp *exp;
+    struct Stmt *stmt;
     struct FcnStrc *fcn;
     struct PrmLstStrc *prmLst;
     struct ArgLstStrc *argLst;

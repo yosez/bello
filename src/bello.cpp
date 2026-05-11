@@ -11,7 +11,7 @@ using namespace std;
 
 //#define DBG_FLG
 
-#include "dftn.h"
+#include "dfn.h"
 #include "envr.h"
 #include "val.h"
 
@@ -37,14 +37,15 @@ struct StmtStkItmStrc;
 
 extern std::vector<StmtStkItmStrc*> stmtStk;
 
-extern int chkStmtAlwSubStmt(struct StmtStrc* stmt);
+extern int chkStmtAlwSubStmt(struct Stmt* stmt);
 
-extern int chkStmtAlwScndStmt(struct StmtStrc* stmt);
+extern int chkStmtAlwScndStmt(struct Stmt* stmt);
 
-extern struct StmtStrc* bldStmtBlk();
+extern struct Stmt* bldStmtBlk();
 
-extern struct StmtStrc* stmtBlkAdd(struct StmtStrc* stmtBlk, struct StmtStrc* stmt);
+extern struct Stmt* stmtBlkAdd(struct Stmt* stmtBlk, struct Stmt* stmt);
 
+//将之前缩进大于等于indt的语句折叠放入栈中
 void fldStmt(int indt=0)
 {
     if (stmtStk.size()==0)
@@ -54,6 +55,7 @@ void fldStmt(int indt=0)
 
     int idx;
 
+    //在上一条语句大于indt的情况，给子语句建立语句块，从栈中折叠子语句到主语句
     while (stmtStk.back()->indt > indt)
     {
 
@@ -67,7 +69,7 @@ void fldStmt(int indt=0)
 
         int i = idx;
 
-        StmtStrc* blk = bldStmtBlk();
+        Stmt* blk = bldStmtBlk();
 
         while (i < stmtStk.size())
         {
@@ -76,7 +78,7 @@ void fldStmt(int indt=0)
             i++;
         }
 
-        //子语句出栈
+        //子语句出栈，以准备放到主语句中
         int nbrPop = stmtStk.size() - idx;
 
         for (i=0;i<nbrPop;i++)
@@ -89,7 +91,7 @@ void fldStmt(int indt=0)
         {
             case StmtEnm::If:
             {
-                auto ifStmt = static_cast<IfStmtStrc*>(stmtStk.back()->stmt);
+                auto ifStmt = static_cast<IfStmt*>(stmtStk.back()->stmt);
                 ifStmt->stmt = blk;
                 //ifStmt->els = nullptr;
                 //ifStmt->elif = nullptr;
@@ -97,25 +99,25 @@ void fldStmt(int indt=0)
             }
             case StmtEnm::Whl:
             {
-                auto whlStmt = static_cast<WhlStmtStrc*>(stmtStk.back()->stmt);
+                auto whlStmt = static_cast<WhlStmt*>(stmtStk.back()->stmt);
                 whlStmt->stmt = blk;
                 break;
             }
             case StmtEnm::For:
             {
-                auto forStmt = static_cast<ForStmtStrc*>(stmtStk.back()->stmt);
+                auto forStmt = static_cast<ForStmt*>(stmtStk.back()->stmt);
                 forStmt->stmt = blk;
                 break;
             }
             case StmtEnm::DfnFcn:
             {
-                auto fcnStmt = static_cast<FcnStmtStrc*>(stmtStk.back()->stmt);
+                auto fcnStmt = static_cast<FcnStmt*>(stmtStk.back()->stmt);
                 fcnStmt->fcn->stmt = blk;
                 break;
             }
             case StmtEnm::Els:
             {
-                auto elsStmt = static_cast<ElsStmtStrc*>(stmtStk.back()->stmt);
+                auto elsStmt = static_cast<ElsStmt*>(stmtStk.back()->stmt);
                 elsStmt->stmt = blk;
 
                 /* stmtStk.pop_back();
@@ -130,7 +132,7 @@ void fldStmt(int indt=0)
             }
             case StmtEnm::Elif:
             {
-                auto elifStmt = static_cast<ElifStmtStrc*>(stmtStk.back()->stmt);
+                auto elifStmt = static_cast<ElifStmt*>(stmtStk.back()->stmt);
                 elifStmt->stmt = blk;
 
                 /* stmtStk.pop_back();
@@ -149,7 +151,7 @@ void fldStmt(int indt=0)
                 //此处未完成
                 //根据类中的语句填充类
 
-                auto clsStmt = static_cast<ClsStmtStrc*>(stmtStk.back()->stmt);
+                auto clsStmt = static_cast<ClsStmt*>(stmtStk.back()->stmt);
 
                 int lnt = static_cast<StmtBlkStrc*>(blk)->stmtArr.size();
 
@@ -164,7 +166,7 @@ void fldStmt(int indt=0)
 }
 
 //当前读入的语句入栈
-void pshStmt(int indt, StmtStrc* stmt)
+void pshStmt(int indt, Stmt* stmt)
 {
     StmtStkItmStrc * itm =new StmtStkItmStrc;
 

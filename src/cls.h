@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include "y.tab.h"
 #include "vrb.h"
-#include "dftn.h"
+#include "dfn.h"
 #include "exp.h"
 
 extern VrbStrc* cpyVrb(VrbStrc* vrb, string* nm);

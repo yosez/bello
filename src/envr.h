@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <vector>
 
-#include "dftn.h"
+#include "dfn.h"
 #include "exp.h"
 #include "ntv.h"
 #include "vrb.h"
@@ -17,12 +17,12 @@ extern VrbStrc* bldVrb(string nm);
 
 using namespace std;
 
-extern struct ExpStrc* bldFcnExp(char* nm, struct ArgLstStrc* argLst);
+extern struct Exp* bldFcnExp(char* nm, struct ArgLstStrc* argLst);
 
-VrbStrc* addVrb(struct EnvrStrc* envr, struct VrbExpStrc* vrbExp);
-VrbStrc* getEnvrVrb(struct EnvrStrc* envr, struct VrbExpStrc* vrbExp);
-VrbStrc* addVrbGlb(vector<EnvrStrc*>& envr, VrbExpStrc* vrbExp);
-VrbStrc* getVrb(vector<EnvrStrc*>& envr, struct VrbExpStrc* vrbExp);
+VrbStrc* addVrb(struct EnvrStrc* envr, struct VrbExp* vrbExp);
+VrbStrc* getEnvrVrb(struct EnvrStrc* envr, struct VrbExp* vrbExp);
+VrbStrc* addVrbGlb(vector<EnvrStrc*>& envr, VrbExp* vrbExp);
+VrbStrc* getVrb(vector<EnvrStrc*>& envr, struct VrbExp* vrbExp);
 VrbStrc* getVrb(vector<EnvrStrc*>& envr, struct LvlExpStrc* lvl);
 int prtEnvrVrb(struct EnvrStrc* envr);
 
@@ -55,7 +55,7 @@ extern struct ValStrc* newArrFcn(vector<EnvrStrc*>& envr, int argCnt, vector <Va
 
 extern VrbStrc* getObjVrb(VrbStrc* vrb, LvlExpStrc* lvl);
 
-struct VrbStrc* addVrb(struct EnvrStrc* envr, struct VrbExpStrc* vrbExp)
+struct VrbStrc* addVrb(struct EnvrStrc* envr, struct VrbExp* vrbExp)
 {
 
 	envr->vrbArr.push_back(bldVrb(vrbExp->nm));
@@ -64,14 +64,14 @@ struct VrbStrc* addVrb(struct EnvrStrc* envr, struct VrbExpStrc* vrbExp)
 
 }
 
-struct VrbStrc* addVrbGlb(vector<EnvrStrc*>& envr, VrbExpStrc* vrbExp)
+struct VrbStrc* addVrbGlb(vector<EnvrStrc*>& envr, VrbExp* vrbExp)
 {
 	envr[0]->glbArr.push_back(bldVrb(string(vrbExp->nm)));
 
 	return envr[0]->glbArr.back();
 }
 
-struct VrbStrc* getEnvrVrb(struct EnvrStrc* envr, struct VrbExpStrc* vrbExp)
+struct VrbStrc* getEnvrVrb(struct EnvrStrc* envr, struct VrbExp* vrbExp)
 {
 	int i;
 
@@ -100,7 +100,7 @@ struct VrbStrc* getEnvrVrb(struct EnvrStrc* envr, struct VrbExpStrc* vrbExp)
 }
 
 
-struct VrbStrc* getVrb(vector<EnvrStrc*>& envr, struct VrbExpStrc* vrbExp)
+struct VrbStrc* getVrb(vector<EnvrStrc*>& envr, struct VrbExp* vrbExp)
 {
 	VrbStrc* vrb = nullptr;
 
@@ -440,7 +440,17 @@ int initGlbEnvr(vector<EnvrStrc*>& envr)
 	addNtvFcn(envr[0], string("read"), rdFcn, 0);
 	addNtvFcn(envr[0], string("readln"), rdlnFcn, 0);
 	addNtvFcn(envr[0], string("print"), prtFcn, 1);
-	addNtvFcn(envr[0], string("println"), prtlnFcn, 1);
+
+	//PROMPT proving name pn for print
+	///TODO to allow more viariables
+	addNtvFcn(envr[0], string("pn"), prtFcn,INT_MAX);
+
+	addNtvFcn(envr[0], string("println"), prtlnFcn, INT_MAX);
+
+	//PROMPT proving name pln for println
+	///TODO to allow more viariables
+	addNtvFcn(envr[0], string("pln"), prtlnFcn, 1);
+
 	addNtvFcn(envr[0], string("newArray"), newArrFcn, 1);
 	/// primitive naming before class i/o version
 	addNtvFcn(envr[0], string("fopen"), flOpn, 2);
@@ -450,6 +460,8 @@ int initGlbEnvr(vector<EnvrStrc*>& envr)
 	addNtvFcn(envr[0], string("fseek"), flSk, 3);
 	addNtvFcn(envr[0], string("ftell"), flTl, 1);
 	addNtvFcn(envr[0], string("fprint"), flPrt, 2);
+	addNtvFcn(envr[0], string("scat"), scat,2);
+	addNtvFcn(envr[0], string("strcat"), scat, 2);
 
 	return 0;
 }

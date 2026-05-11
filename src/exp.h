@@ -1,5 +1,7 @@
 #pragma once
 
+#define DBG_FLG
+
 #ifndef EXP_H
 #define EXP_H
 
@@ -7,22 +9,22 @@
 #include <string.h>
 #include <math.h>
 
-#include "dftn.h"
+#include "dfn.h"
 #include "val.h"
 #include "envr.h"
 #include "arr.h"
 #include "stmt.h"
-#include "expt.h"
+#include "ex.h"
 #include "cls.h"
 #include "vrb.h"
 
-extern struct StmtRsltStrc *exctStmt(vector<EnvrStrc *> &envr, struct StmtStrc *stmt);
+extern struct StmtRsltStrc *exctStmt(vector<EnvrStrc *> &envr, struct Stmt *stmt);
 
 extern VrbStrc *getObjVrb(VrbStrc *vrb, LvlExpStrc *lvl);
 
 extern ValStrc *bldValFrmVrb(VrbStrc *vrb);
 
-extern VrbStrc *getEnvrVrb(EnvrStrc *envr, VrbExpStrc *vrbExp);
+extern VrbStrc *getEnvrVrb(EnvrStrc *envr, VrbExp *vrbExp);
 
 extern NtvFcnStrc *getNtvFcn(EnvrStrc *envr, FcnExpStrc *fcn);
 
@@ -30,7 +32,7 @@ extern NtvFcnStrc *getNtvFcn(vector<EnvrStrc *> envr, struct FcnExpStrc *fcn);
 
 extern FcnStrc *getFcn(vector<EnvrStrc *> envr, struct FcnExpStrc *fcnExp);
 
-extern VrbStrc *getVrb(vector<EnvrStrc *> &envr, struct VrbExpStrc *vrbExp);
+extern VrbStrc *getVrb(vector<EnvrStrc *> &envr, struct VrbExp *vrbExp);
 
 extern VrbStrc *getVrb(vector<EnvrStrc *> &envr, struct LvlExpStrc *lvl);
 
@@ -38,40 +40,40 @@ extern int addFcn(struct EnvrStrc *envr, struct FcnStrc *fcn);
 
 extern struct ClsStrc *getGlbCls(vector<EnvrStrc *> &envr, string nm);
 
-ExpStrc *bldExpFromVal(ValStrc *val);
+Exp *bldExpFromVal(ValStrc *val);
 
-ExpStrc *bldIntValExp(int int_);
+Exp *bldIntValExp(int int_);
 
-ExpStrc *bldFltValExp(float fltVl);
+Exp *bldFltValExp(float fltVl);
 
-ExpStrc *bldBlnValExp(int blnVl);
+Exp *bldBlnValExp(int blnVl);
 
-ExpStrc *bldStrValExp(char *strVl);
+Exp *bldStrValExp(char *strVl);
 
-ExpStrc *bldNlValExp();
+Exp *bldNlValExp();
 
-ExpStrc *bldAsnExp(ExpStrc *lvl, ExpStrc *exp);
+Exp *bldAsnExp(Exp *lvl, Exp *exp);
 
-ExpStrc *bldVrbExp(char *idtf);
+Exp *bldVrbExp(char *idtf);
 
-ExpStrc *bldBnrExp(OpEnm opr, ExpStrc *lftExp, ExpStrc *rgtExp);
+Exp *bldBnrExp(OpEnm opr, Exp *lftExp, Exp *rgtExp);
 
-ExpStrc *blnTrpExp(OpEnm opr, ExpStrc *frstExp, ExpStrc *scndExp, ExpStrc *trdExp);
+Exp *blnTrpExp(OpEnm opr, Exp *frstExp, Exp *scndExp, Exp *trdExp);
 
-ExpStrc *bldUnrExp(OpEnm opr, ExpStrc *exp);
+Exp *bldUnrExp(OpEnm opr, Exp *exp);
 
-ExpStrc *bldFcnExp(char *nm, struct ArgLstStrc *argLst);
+Exp *bldFcnExp(char *nm, struct ArgLstStrc *argLst);
 
-ExpStrc *bldArrExp(struct ElmtLstStrc *elmtLst);
+Exp *bldArrExp(struct ElmtLstStrc *elmtLst);
 
-ExpStrc *bldLvlExp(ExpStrc *vrb);
+Exp *bldLvlExp(Exp *vrb);
 
-ExpStrc *bldLvlExpAdd(ExpStrc *lvl, struct AcsLstStrc *evlLst);
+Exp *bldLvlExpAdd(Exp *lvl, struct AcsLstStrc *evlLst);
 
-ExpStrc *bldElmtAsgnExp(ExpStrc *arr, struct PsnLstStrc *pstnLst, ExpStrc *vl);
+Exp *bldElmtAsgnExp(Exp *arr, struct PsnLstStrc *pstnLst, Exp *vl);
 
 
-ExpStrc *bldNewExp(char *cls);
+Exp *bldNewExp(char *cls);
 
 ValStrc *clcBnrExp(vector<EnvrStrc *> &envr, BnrExpStrc *exp);
 
@@ -144,10 +146,10 @@ ValStrc *clcLvlExp(vector<EnvrStrc *> &envr, struct LvlExpStrc *exp);
 
 ValStrc *clcNewExp(vector<EnvrStrc *> &envr, struct NewExpStrc *exp);
 
-ValStrc *clcExp(vector<EnvrStrc *> &envr, ExpStrc *exp);
+ValStrc *clcExp(vector<EnvrStrc *> &envr, Exp *exp);
 
 
-ExpStrc *bldExpFromVal(ValStrc *val)
+Exp *bldExpFromVal(ValStrc *val)
 {
     ValExpStrc *exp = new ValExpStrc(val);
 
@@ -158,7 +160,7 @@ ExpStrc *bldExpFromVal(ValStrc *val)
     return exp;
 }
 
-ExpStrc *bldIntValExp(int int_)
+Exp *bldIntValExp(int int_)
 {
     ValStrc *vl = bldIntVal(int_);
 
@@ -167,7 +169,7 @@ ExpStrc *bldIntValExp(int int_)
     return rslt;
 }
 
-ExpStrc *bldFltValExp(float fltVl)
+Exp *bldFltValExp(float fltVl)
 {
     ValStrc *val;
 
@@ -182,7 +184,7 @@ ExpStrc *bldFltValExp(float fltVl)
     return rslt;
 }
 
-ExpStrc *bldBlnValExp(int blnVl)
+Exp *bldBlnValExp(int blnVl)
 {
     ValStrc *val;
 
@@ -197,7 +199,7 @@ ExpStrc *bldBlnValExp(int blnVl)
     return rslt;
 }
 
-ExpStrc *bldStrValExp(char *strVl)
+Exp *bldStrValExp(char *strVl)
 {
     ValStrc *val;
 
@@ -212,7 +214,7 @@ ExpStrc *bldStrValExp(char *strVl)
     return rslt;
 }
 
-ExpStrc *bldNlValExp()
+Exp *bldNlValExp()
 {
     ValStrc *val;
 
@@ -224,7 +226,7 @@ ExpStrc *bldNlValExp()
     return rslt;
 }
 
-ExpStrc *bldAsnExp(ExpStrc *lvl, ExpStrc *exp)
+Exp *bldAsnExp(Exp *lvl, Exp *exp)
 {
     AsnExpStrc *rslt = new AsnExpStrc(dynamic_cast<LvlExpStrc *>(lvl), exp);
 
@@ -232,23 +234,23 @@ ExpStrc *bldAsnExp(ExpStrc *lvl, ExpStrc *exp)
 }
 
 
-ExpStrc *bldArrExp(struct ElmtLstStrc *elmtLst)
+Exp *bldArrExp(struct ElmtLstStrc *elmtLst)
 {
     struct ArrExpStrc *rslt = new ArrExpStrc(elmtLst);
 
     return rslt;
 }
 
-ExpStrc *bldLvlExp(ExpStrc *vrb)
+Exp *bldLvlExp(Exp *vrb)
 {
     ///TODO
-    LvlExpStrc *rslt = new LvlExpStrc(static_cast<VrbExpStrc *>(vrb));
+    LvlExpStrc *rslt = new LvlExpStrc(static_cast<VrbExp *>(vrb));
 
 
     return rslt;
 }
 
-ExpStrc *bldLvlExpAdd(ExpStrc *lvl, AcsLstStrc *evlLst)
+Exp *bldLvlExpAdd(Exp *lvl, AcsLstStrc *evlLst)
 {
     LvlExpStrc *rslt = dynamic_cast<LvlExpStrc *>(lvl);
 
@@ -262,7 +264,7 @@ ExpStrc *bldLvlExpAdd(ExpStrc *lvl, AcsLstStrc *evlLst)
     return lvl;
 }
 
-ExpStrc *bldElmtAsgnExp(ExpStrc *arr, PsnLstStrc *pstnLst, ExpStrc *vl)
+Exp *bldElmtAsgnExp(Exp *arr, PsnLstStrc *pstnLst, Exp *vl)
 {
     ElmtAsgnExpStrc *rslt = new ElmtAsgnExpStrc(arr, pstnLst, vl);
 
@@ -270,7 +272,7 @@ ExpStrc *bldElmtAsgnExp(ExpStrc *arr, PsnLstStrc *pstnLst, ExpStrc *vl)
 }
 
 
-ExpStrc *bldNewExp(char *cls)
+Exp *bldNewExp(char *cls)
 {
     auto rslt = new NewExpStrc(new string(cls));
 
@@ -278,21 +280,21 @@ ExpStrc *bldNewExp(char *cls)
 }
 
 
-ExpStrc *bldVrbExp(char *nm)
+Exp *bldVrbExp(char *nm)
 {
-    VrbExpStrc *exp = new VrbExpStrc(nm);
+    VrbExp *exp = new VrbExp(nm);
 
     return exp;
 }
 
-ExpStrc *bldBnrExp(OpEnm opr, ExpStrc *lftExp, ExpStrc *rgtExp)
+Exp *bldBnrExp(OpEnm opr, Exp *lftExp, Exp *rgtExp)
 {
     BnrExpStrc *exp = new BnrExpStrc(opr, lftExp, rgtExp);
 
     return exp;
 }
 
-ExpStrc *bldTnrExp(OpEnm opr, ExpStrc *frstExp, ExpStrc *scndExp, ExpStrc *trdExp)
+Exp *bldTnrExp(OpEnm opr, Exp *frstExp, Exp *scndExp, Exp *trdExp)
 {
     TnrExpStrc *exp = new TnrExpStrc(opr, frstExp, scndExp, trdExp);
 
@@ -300,7 +302,7 @@ ExpStrc *bldTnrExp(OpEnm opr, ExpStrc *frstExp, ExpStrc *scndExp, ExpStrc *trdEx
     return exp;
 }
 
-ExpStrc *bldUnrExp(OpEnm opr, ExpStrc *exp)
+Exp *bldUnrExp(OpEnm opr, Exp *exp)
 {
     struct UnrExpStrc *rslt = new UnrExpStrc(opr, exp);
 
@@ -309,7 +311,7 @@ ExpStrc *bldUnrExp(OpEnm opr, ExpStrc *exp)
 }
 
 
-ExpStrc *bldFcnExp(char *nm, ArgLstStrc *argLst)
+Exp *bldFcnExp(char *nm, ArgLstStrc *argLst)
 {
     FcnExpStrc *rslt = new FcnExpStrc(nm, argLst);
 
@@ -317,9 +319,9 @@ ExpStrc *bldFcnExp(char *nm, ArgLstStrc *argLst)
     return rslt;
 }
 
-ExpStrc *bldNlExp()
+Exp *bldNlExp()
 {
-    ExpStrc *rslt = new ExpStrc(ExpEnm::Nl);
+    Exp *rslt = new Exp(ExpEnm::Nl);
 
     return rslt;
 }
@@ -1071,7 +1073,7 @@ ValStrc *clcUnrExpPfxInc(vector<EnvrStrc *> &envr, struct UnrExpStrc *exp)
 
     struct VrbStrc *vrb;
 
-    vrb = getVrb(envr, static_cast<VrbExpStrc *>(lvl->vrb));
+    vrb = getVrb(envr, static_cast<VrbExp *>(lvl->vrb));
 
     if (vrb == NULL)
     {
@@ -1150,7 +1152,7 @@ ValStrc *clcUnrExpPfxDec(vector<EnvrStrc *> &envr, struct UnrExpStrc *exp)
 
     //lvl = exp->exp->exp.lvlExp;
 
-    vrb = getVrb(envr, static_cast<VrbExpStrc *>(lvl->vrb));
+    vrb = getVrb(envr, static_cast<VrbExp *>(lvl->vrb));
 
     if (vrb == NULL)
     {
@@ -1226,7 +1228,7 @@ ValStrc *clcUnrExpSfxInc(vector<EnvrStrc *> &envr, struct UnrExpStrc *exp)
     //lvl = static_cast<LvlExpStrc*>(exp->exp);
     lvl = static_cast<LvlExpStrc*>(exp->exp);
 
-    vrb = getVrb(envr, static_cast<VrbExpStrc *>(lvl->vrb));
+    vrb = getVrb(envr, static_cast<VrbExp *>(lvl->vrb));
 
     //lvl = exp->exp->exp.lvlExp;
 
@@ -1305,7 +1307,7 @@ ValStrc *clcUnrExpSfxDec(vector<EnvrStrc *> &envr, struct UnrExpStrc *exp)
     //***此修改可能有问题
     lvl = static_cast<LvlExpStrc*>(exp->exp);
 
-    vrb = getVrb(envr, static_cast<VrbExpStrc *>(lvl->vrb));
+    vrb = getVrb(envr, static_cast<VrbExp *>(lvl->vrb));
 
     //lvl = exp->exp->exp.lvlExp;
 
@@ -1588,11 +1590,11 @@ ValStrc *clcFcnExp(vector<EnvrStrc *> &envr, FcnExpStrc *exp)
 {
     ValStrc *rslt = new ValStrc;
 
-    struct NtvFcnStrc *ntvFcn;
+    NtvFcnStrc *ntvFcn;
 
     ntvFcn = getNtvFcn(envr, exp);
 
-    struct FcnStrc *fcn;
+    FcnStrc *fcn;
 
     fcn = getFcn(envr, exp);
 
@@ -1604,20 +1606,28 @@ ValStrc *clcFcnExp(vector<EnvrStrc *> &envr, FcnExpStrc *exp)
     {
         //计算各个参数的值并赋值给传参数组
 
-#ifdef DBG_FLG
-        printf("ntv fcn\n");
-#endif
+
+//#ifdef DBG_FLG
+//        printf("ntv fcn\n");
+//#endif
+
 
         int i;
 
         ValStrc *arg;
         int argCnt = 0, argSz;
 
+
+#ifdef DBG_FLG
+        printf("prm cnt: %d\n", ntvFcn->prmCnt);
+        printf("arg cnt: %d\n", exp->argLst->argArr.size());
+#endif
+
         //如果函数参数个数不正确
-        if (exp->argLst->argArr.size() > ntvFcn->prmCnt)
+        if (exp->argLst->argArr.size() > ntvFcn->prmCnt && ntvFcn->prmCnt != INT_MAX)
         {
             throw new ExFcnTooMnyArg;
-        } else if (exp->argLst->argArr.size() < ntvFcn->prmCnt)
+        } else if (exp->argLst->argArr.size() < ntvFcn->prmCnt && ntvFcn->prmCnt != INT_MAX)
         {
             throw new ExFcnTooFewArg;
         }
@@ -1632,11 +1642,11 @@ ValStrc *clcFcnExp(vector<EnvrStrc *> &envr, FcnExpStrc *exp)
 // #ifdef DBG_FLG
 //             printf("ntvFcn arg[%2d] typ: %d\n", i, dynamic_cast<>exp->argLst->argArr.at(i)->);
 // #endif
-#ifdef DBG_FLG
-            printf("bfr clc ntvFcn arg[%2d] val: %d\n", i, dynamic_cast<ValExpStrc*>(exp->argLst->argArr.at(i))->val->v.int_);
-            printf("bfr clc ntvFcn arg[%2d] typ: %d\n", i, dynamic_cast<ValExpStrc*>(exp->argLst->argArr.at(i))->val->typ);
-            printf("bfr clc ntv arg[%2d] **exp typ**: %d\n", i, exp->argLst->argArr.at(i)->typ);
-#endif
+// #ifdef DBG_FLG
+//             printf("bfr clc ntvFcn arg[%2d] val: %d\n", i, dynamic_cast<ValExpStrc*>(exp->argLst->argArr.at(i))->val->v.int_);
+//             printf("bfr clc ntvFcn arg[%2d] typ: %d\n", i, dynamic_cast<ValExpStrc*>(exp->argLst->argArr.at(i))->val->typ);
+//             printf("bfr clc ntv arg[%2d] **exp typ**: %d\n", i, exp->argLst->argArr.at(i)->typ);
+// #endif
             arg = clcExp(envr, exp->argLst->argArr[i]);
 
             // printf("arg: %d\n", dynamic_cast<ValStrc*>(arg)->v.int_);
@@ -1648,10 +1658,10 @@ ValStrc *clcFcnExp(vector<EnvrStrc *> &envr, FcnExpStrc *exp)
 // #endif
             argArr.push_back(arg);
 
-#ifdef DBG_FLG
-            printf("aft psh arg[%2d] val: %d\n", i, dynamic_cast<ValStrc*>(argArr.at(i))->v.int_);
-            printf("aft psh arg[%2d] typ: %d\n", i, dynamic_cast<ValStrc*>(argArr.at(i))->typ);
-#endif
+// #ifdef DBG_FLG
+//             printf("aft psh arg[%2d] val: %d\n", i, dynamic_cast<ValStrc*>(argArr.at(i))->v.int_);
+//             printf("aft psh arg[%2d] typ: %d\n", i, dynamic_cast<ValStrc*>(argArr.at(i))->typ);
+// #endif
         }
 
 #ifdef DBG_FLG
@@ -2124,7 +2134,7 @@ ValStrc *clcElmtAsgnExp(vector<EnvrStrc *> &envr, struct ElmtAsgnExpStrc *exp)
 
     struct VrbStrc *arr;
 
-    arr = getVrb(envr, static_cast<VrbExpStrc *>(exp->arr));
+    arr = getVrb(envr, static_cast<VrbExp *>(exp->arr));
 
     struct ArrStrc *arrPrnt;
 
@@ -2337,18 +2347,18 @@ ValStrc *clcNewExp(vector<EnvrStrc *> &envr, struct NewExpStrc *exp)
     }
 }
 
-ValStrc *clcExp(vector<EnvrStrc *> &envr, ExpStrc *exp)
+ValStrc *clcExp(vector<EnvrStrc *> &envr, Exp *exp)
 {
     ValStrc *rslt = new ValStrc;
 
     if (exp->typ == ExpEnm::Vrb)
     {
-        struct VrbStrc *vrb = getVrb(envr, static_cast<VrbExpStrc *>(exp));
+        struct VrbStrc *vrb = getVrb(envr, static_cast<VrbExp *>(exp));
 
         //如果变量没有注册过，则注册变量并赋值为null
         if (vrb == nullptr)
         {
-            vrb = addVrb(envr[envr.size() - 1], static_cast<VrbExpStrc *>(exp));
+            vrb = addVrb(envr[envr.size() - 1], static_cast<VrbExp *>(exp));
             asnVrbCpy(vrb, bldNlVal());
         }
 
@@ -2428,14 +2438,14 @@ ValStrc *clcExp(vector<EnvrStrc *> &envr, ExpStrc *exp)
     if (exp->typ == ExpEnm::Val)
     {
 
-#ifdef DBG_FLG
-        printf("clc exp val: %d\n", static_cast<ValExpStrc *>(exp)->val->v.int_);
-        printf("clc exp val typ: %d\n", static_cast<ValExpStrc *>(exp)->val->typ);
-#endif
+// #ifdef DBG_FLG
+//         printf("clc exp val: %d\n", static_cast<ValExpStrc *>(exp)->val->v.int_);
+//         printf("clc exp val typ: %d\n", static_cast<ValExpStrc *>(exp)->val->typ);
+// #endif
 
         rslt = static_cast<ValExpStrc *>(exp)->val;
 
-        printf("tsfm rslt: %d\n", isBln(rslt));
+        //printf("tsfm rslt: %d\n", isBln(rslt));
     }
 
     return rslt;

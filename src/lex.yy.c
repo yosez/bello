@@ -601,7 +601,7 @@ char *yytext;
     #include <string>
     #include <iostream>
     #include "y.tab.h"
-    #include "dftn.h"
+    #include "dfn.h"
 
     using namespace std;
 

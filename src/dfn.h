@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef DFTN_H
-#define DFTN_H
+#ifndef DFN_H
+#define DFN_H
 
 #include <cmath>
 #include <vector>
@@ -9,7 +9,6 @@
 #include <stack>
 #include <map>
 
-#include "dftn.h"
 
 using namespace std;
 
@@ -25,6 +24,9 @@ using namespace std;
 #define setFlt(val, arg) {(val)->typ=ValEnm::Flt; (val)->v.flt = (arg); }
 #define setStr(val, arg) {(val)->typ=ValEnm::Str; (val)->v.str = (arg); }
 #define setBln(val, arg) {(val)->typ=ValEnm::Bln; (val)->v.bln = (arg); }
+
+//PMT STMT -> EXP
+//PMT VRB -> VAL
 
 struct VrbStrc;
 struct VrbExp;

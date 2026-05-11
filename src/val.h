@@ -4,7 +4,7 @@
 #define VAL_H
 #include <stdio.h>
 #include <string.h>
-#include "dftn.h"
+#include "dfn.h"
 
 // struct ValStrc;
 // enum class ValEnm :int;

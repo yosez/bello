@@ -6,12 +6,12 @@
 #include <string.h>
 #include <stdlib.h>
 #include "y.tab.h"
-#include "dftn.h"
+#include "dfn.h"
 
 
 //�˲�������ı�������������ɾ��
-extern struct ExpStrc* bldIntValExp(int int_);
-extern struct ValStrc* clcExp(vector<EnvrStrc*>& envr, struct ExpStrc* exp);
+extern Exp* bldIntValExp(int int_);
+extern ValStrc* clcExp(vector<EnvrStrc*>& envr, struct Exp* exp);
 
 struct ElmtLstStrc* bldElmtLst()
 {
@@ -20,7 +20,7 @@ struct ElmtLstStrc* bldElmtLst()
 	return rslt;
 }
 
-int elmtLstAdd(struct ElmtLstStrc* elmtLst, struct ExpStrc* exp)
+int elmtLstAdd(struct ElmtLstStrc* elmtLst, struct Exp* exp)
 {
 
 	elmtLst->elmtArr.push_back(exp);
@@ -39,7 +39,7 @@ struct PsnLstStrc* bldPstnLst()
 	return rslt;
 }
 
-int pstnLstAdd(struct PsnLstStrc* pstnLst, struct ExpStrc* exp)
+int pstnLstAdd(struct PsnLstStrc* pstnLst, struct Exp* exp)
 {
 
 
@@ -73,7 +73,7 @@ struct AcsLstStrc* bldAcsLst()
 	return rslt;
 }
 
-int acsLstIdxAdd(struct AcsLstStrc* evlLst, struct ExpStrc* exp)
+int acsLstIdxAdd(struct AcsLstStrc* evlLst, struct Exp* exp)
 {
 	AcsStrc* acs = new AcsStrc;
 	acs->blnSlc = false;
@@ -84,7 +84,7 @@ int acsLstIdxAdd(struct AcsLstStrc* evlLst, struct ExpStrc* exp)
 	return 0;
 }
 
-int acsLstSlcAdd(struct AcsLstStrc* acsLst, struct ExpStrc* strt, struct ExpStrc* end, struct ExpStrc* stp)
+int acsLstSlcAdd(struct AcsLstStrc* acsLst, struct Exp* strt, struct Exp* end, struct Exp* stp)
 {
 
 	AcsStrc* acs = new AcsStrc;
