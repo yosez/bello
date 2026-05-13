@@ -1619,16 +1619,18 @@ ValStrc *clcFcnExp(vector<EnvrStrc *> &envr, FcnExpStrc *exp)
 
 
 #ifdef DBG_FLG
-        printf("prm cnt: %d\n", ntvFcn->prmCnt);
+        printf("prm cnt: %d %s\n", ntvFcn->prmCnt, ntvFcn->fcnNm.c_str());
         printf("arg cnt: %d\n", exp->argLst->argArr.size());
 #endif
 
         //如果函数参数个数不正确
-        if (exp->argLst->argArr.size() > ntvFcn->prmCnt && ntvFcn->prmCnt != INT_MAX)
+        if (exp->argLst->argArr.size() > ntvFcn->prmCnt )
         {
+            printf("gtr than prm cnt\n");
             throw new ExFcnTooMnyArg;
         } else if (exp->argLst->argArr.size() < ntvFcn->prmCnt && ntvFcn->prmCnt != INT_MAX)
         {
+            printf("lss than prm cnt \n");
             throw new ExFcnTooFewArg;
         }
 

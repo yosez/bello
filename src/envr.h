@@ -439,7 +439,7 @@ int initGlbEnvr(vector<EnvrStrc*>& envr)
 	addNtvFcn(envr[0], string("readBool"), rdBlnFcn, 0);
 	addNtvFcn(envr[0], string("read"), rdFcn, 0);
 	addNtvFcn(envr[0], string("readln"), rdlnFcn, 0);
-	addNtvFcn(envr[0], string("print"), prtFcn, 1);
+	addNtvFcn(envr[0], string("print"), prtFcn, INT_MAX);
 
 	//PROMPT proving name pn for print
 	///TODO to allow more viariables
@@ -449,7 +449,7 @@ int initGlbEnvr(vector<EnvrStrc*>& envr)
 
 	//PROMPT proving name pln for println
 	///TODO to allow more viariables
-	addNtvFcn(envr[0], string("pln"), prtlnFcn, 1);
+	addNtvFcn(envr[0], string("pln"), prtlnFcn, INT_MAX);
 
 	addNtvFcn(envr[0], string("newArray"), newArrFcn, 1);
 	/// primitive naming before class i/o version
