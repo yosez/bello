@@ -18,27 +18,27 @@
 #include "cls.h"
 #include "vrb.h"
 
-extern struct StmtRsltStrc *exctStmt(vector<EnvrStrc *> &envr, struct Stmt *stmt);
+extern struct StmtRsltStrc *exctStmt(vector<Envr *> &envr, struct Stmt *stmt);
 
 extern VrbStrc *getObjVrb(VrbStrc *vrb, LvlExpStrc *lvl);
 
 extern ValStrc *bldValFrmVrb(VrbStrc *vrb);
 
-extern VrbStrc *getEnvrVrb(EnvrStrc *envr, VrbExp *vrbExp);
+extern VrbStrc *getEnvrVrb(Envr *envr, VrbExp *vrbExp);
 
-extern NtvFcnStrc *getNtvFcn(EnvrStrc *envr, FcnExpStrc *fcn);
+extern NtvFcnStrc *getNtvFcn(Envr *envr, FcnExpStrc *fcn);
 
-extern NtvFcnStrc *getNtvFcn(vector<EnvrStrc *> envr, struct FcnExpStrc *fcn);
+extern NtvFcnStrc *getNtvFcn(vector<Envr *> envr, struct FcnExpStrc *fcn);
 
-extern FcnStrc *getFcn(vector<EnvrStrc *> envr, struct FcnExpStrc *fcnExp);
+extern FcnStrc *getFcn(vector<Envr *> envr, struct FcnExpStrc *fcnExp);
 
-extern VrbStrc *getVrb(vector<EnvrStrc *> &envr, struct VrbExp *vrbExp);
+extern VrbStrc *getVrb(vector<Envr *> &envr, struct VrbExp *vrbExp);
 
-extern VrbStrc *getVrb(vector<EnvrStrc *> &envr, struct LvlExpStrc *lvl);
+extern VrbStrc *getVrb(vector<Envr *> &envr, struct LvlExpStrc *lvl);
 
-extern int addFcn(struct EnvrStrc *envr, struct FcnStrc *fcn);
+extern int addFcn(struct Envr *envr, struct FcnStrc *fcn);
 
-extern struct ClsStrc *getGlbCls(vector<EnvrStrc *> &envr, string nm);
+extern struct ClsStrc *getGlbCls(vector<Envr *> &envr, string nm);
 
 Exp *bldExpFromVal(ValStrc *val);
 
@@ -75,78 +75,78 @@ Exp *bldElmtAsgnExp(Exp *arr, struct PsnLstStrc *pstnLst, Exp *vl);
 
 Exp *bldNewExp(char *cls);
 
-ValStrc *clcBnrExp(vector<EnvrStrc *> &envr, BnrExpStrc *exp);
+ValStrc *clcBnrExp(vector<Envr *> &envr, BnrExpStrc *exp);
 
-ValStrc *clcBnrExpAdd(vector<EnvrStrc *> &envr, BnrExpStrc *exp);
+ValStrc *clcBnrExpAdd(vector<Envr *> &envr, BnrExpStrc *exp);
 
-ValStrc *clcBnrExpSub(vector<EnvrStrc *> &envr, BnrExpStrc *exp);
+ValStrc *clcBnrExpSub(vector<Envr *> &envr, BnrExpStrc *exp);
 
-ValStrc *clcBnrExpMul(vector<EnvrStrc *> &envr, BnrExpStrc *exp);
+ValStrc *clcBnrExpMul(vector<Envr *> &envr, BnrExpStrc *exp);
 
-ValStrc *clcBnrExpDiv(vector<EnvrStrc *> &envr, BnrExpStrc *exp);
+ValStrc *clcBnrExpDiv(vector<Envr *> &envr, BnrExpStrc *exp);
 
-ValStrc *clcBnrExpAnd(vector<EnvrStrc *> &envr, BnrExpStrc *exp);
+ValStrc *clcBnrExpAnd(vector<Envr *> &envr, BnrExpStrc *exp);
 
-ValStrc *clcBnrExpOr(vector<EnvrStrc *> &envr, BnrExpStrc *exp);
+ValStrc *clcBnrExpOr(vector<Envr *> &envr, BnrExpStrc *exp);
 
-ValStrc *clcBnrExpEq(vector<EnvrStrc *> &envr, BnrExpStrc *exp);
+ValStrc *clcBnrExpEq(vector<Envr *> &envr, BnrExpStrc *exp);
 
-ValStrc *clcBnrExpNe(vector<EnvrStrc *> &envr, BnrExpStrc *exp);
+ValStrc *clcBnrExpNe(vector<Envr *> &envr, BnrExpStrc *exp);
 
-ValStrc *clcBnrExpGt(vector<EnvrStrc *> &envr, BnrExpStrc *exp);
+ValStrc *clcBnrExpGt(vector<Envr *> &envr, BnrExpStrc *exp);
 
-ValStrc *clcBnrExpGe(vector<EnvrStrc *> &envr, BnrExpStrc *exp);
+ValStrc *clcBnrExpGe(vector<Envr *> &envr, BnrExpStrc *exp);
 
-ValStrc *clcBnrExpLt(vector<EnvrStrc *> &envr, BnrExpStrc *exp);
+ValStrc *clcBnrExpLt(vector<Envr *> &envr, BnrExpStrc *exp);
 
-ValStrc *clcBnrExpLe(vector<EnvrStrc *> &envr, BnrExpStrc *exp);
+ValStrc *clcBnrExpLe(vector<Envr *> &envr, BnrExpStrc *exp);
 
-ValStrc *clcBnrExpBitAnd(vector<EnvrStrc *> &envr, BnrExpStrc *exp);
+ValStrc *clcBnrExpBitAnd(vector<Envr *> &envr, BnrExpStrc *exp);
 
-ValStrc *clcBnrExpBitOr(vector<EnvrStrc *> &envr, BnrExpStrc *exp);
+ValStrc *clcBnrExpBitOr(vector<Envr *> &envr, BnrExpStrc *exp);
 
-ValStrc *clcBnrExpBitXor(vector<EnvrStrc *> &envr, BnrExpStrc *exp);
+ValStrc *clcBnrExpBitXor(vector<Envr *> &envr, BnrExpStrc *exp);
 
-ValStrc *clcTnrExp(vector<EnvrStrc *> &envr, TnrExpStrc *exp);
+ValStrc *clcTnrExp(vector<Envr *> &envr, TnrExpStrc *exp);
 
-ValStrc *clcTnrExpQm(vector<EnvrStrc *> &envr, struct TnrExpStrc *exp);
+ValStrc *clcTnrExpQm(vector<Envr *> &envr, struct TnrExpStrc *exp);
 
-ValStrc *clcAsnExp(vector<EnvrStrc *> &envr, struct AsnExpStrc *asn);
+ValStrc *clcAsnExp(vector<Envr *> &envr, struct AsnExpStrc *asn);
 
-ValStrc *clcUnrExpPfxInc(vector<EnvrStrc *> &envr, UnrExpStrc *exp);
+ValStrc *clcUnrExpPfxInc(vector<Envr *> &envr, UnrExpStrc *exp);
 
-ValStrc *clcUnrExpPfxDec(vector<EnvrStrc *> &envr, UnrExpStrc *exp);
+ValStrc *clcUnrExpPfxDec(vector<Envr *> &envr, UnrExpStrc *exp);
 
-ValStrc *clcUnrExpSfxInc(vector<EnvrStrc *> &envr, UnrExpStrc *exp);
+ValStrc *clcUnrExpSfxInc(vector<Envr *> &envr, UnrExpStrc *exp);
 
-ValStrc *clcUnrExpSfxDec(vector<EnvrStrc *> &envr, UnrExpStrc *exp);
+ValStrc *clcUnrExpSfxDec(vector<Envr *> &envr, UnrExpStrc *exp);
 
-ValStrc *clcUnrExpNot(vector<EnvrStrc *> &envr, struct UnrExpStrc *exp);
+ValStrc *clcUnrExpNot(vector<Envr *> &envr, struct UnrExpStrc *exp);
 
-ValStrc *clcUnrExpBitNot(vector<EnvrStrc *> &envr, struct UnrExpStrc *exp);
+ValStrc *clcUnrExpBitNot(vector<Envr *> &envr, struct UnrExpStrc *exp);
 
-ValStrc *clcUnrExpSub(vector<EnvrStrc *> &envr, struct UnrExpStrc *exp);
+ValStrc *clcUnrExpSub(vector<Envr *> &envr, struct UnrExpStrc *exp);
 
-ValStrc *clcUnrExpAdd(vector<EnvrStrc *> &envr, struct UnrExpStrc *exp);
+ValStrc *clcUnrExpAdd(vector<Envr *> &envr, struct UnrExpStrc *exp);
 
-ValStrc *clcUnrExp(vector<EnvrStrc *> &envr, struct UnrExpStrc *exp);
+ValStrc *clcUnrExp(vector<Envr *> &envr, struct UnrExpStrc *exp);
 
-ValStrc *clcFcnExp(vector<EnvrStrc *> &envr, struct FcnExpStrc *exp);
+ValStrc *clcFcnExp(vector<Envr *> &envr, struct FcnExpStrc *exp);
 
-ValStrc *clcFcnExp(vector<EnvrStrc *> &envr, struct FcnStrc *fcn, struct FcnExpStrc *exp);
+ValStrc *clcFcnExp(vector<Envr *> &envr, struct FcnStrc *fcn, struct FcnExpStrc *exp);
 
-ValStrc *clcArrExp(vector<EnvrStrc *> &envr, struct ArrExpStrc *exp);
+ValStrc *clcArrExp(vector<Envr *> &envr, struct ArrExpStrc *exp);
 
 
-ValStrc *clcArrEvlExp(vector<EnvrStrc *> &envr, struct ArrEvlExpStrc *exp);
+ValStrc *clcArrEvlExp(vector<Envr *> &envr, struct ArrEvlExpStrc *exp);
 
-ValStrc *clcElmtAsgnExp(vector<EnvrStrc *> &envr, struct ElmtAsgnExpStrc *exp);
+ValStrc *clcElmtAsgnExp(vector<Envr *> &envr, struct ElmtAsgnExpStrc *exp);
 
-ValStrc *clcLvlExp(vector<EnvrStrc *> &envr, struct LvlExpStrc *exp);
+ValStrc *clcLvlExp(vector<Envr *> &envr, struct LvlExpStrc *exp);
 
-ValStrc *clcNewExp(vector<EnvrStrc *> &envr, struct NewExpStrc *exp);
+ValStrc *clcNewExp(vector<Envr *> &envr, struct NewExpStrc *exp);
 
-ValStrc *clcExp(vector<EnvrStrc *> &envr, Exp *exp);
+ValStrc *clcExp(vector<Envr *> &envr, Exp *exp);
 
 
 Exp *bldExpFromVal(ValStrc *val)
@@ -326,7 +326,7 @@ Exp *bldNlExp()
     return rslt;
 }
 
-ValStrc *clcBnrExpAdd(vector<EnvrStrc *> &envr, struct BnrExpStrc *exp)
+ValStrc *clcBnrExpAdd(vector<Envr *> &envr, struct BnrExpStrc *exp)
 {
     ValStrc *lftVal = clcExp(envr, exp->lft);
     ValStrc *rgtVal = clcExp(envr, exp->rgt);
@@ -420,7 +420,7 @@ ValStrc *clcBnrExpAdd(vector<EnvrStrc *> &envr, struct BnrExpStrc *exp)
     return rslt;
 }
 
-ValStrc *clcBnrExpSub(vector<EnvrStrc *> &envr, struct BnrExpStrc *exp)
+ValStrc *clcBnrExpSub(vector<Envr *> &envr, struct BnrExpStrc *exp)
 {
     ValStrc *lftCnst = clcExp(envr, exp->lft);
     ValStrc *rghtCnst = clcExp(envr, exp->rgt);
@@ -452,7 +452,7 @@ ValStrc *clcBnrExpSub(vector<EnvrStrc *> &envr, struct BnrExpStrc *exp)
     return rslt;
 }
 
-ValStrc *clcBnrExpMul(vector<EnvrStrc *> &envr, struct BnrExpStrc *exp)
+ValStrc *clcBnrExpMul(vector<Envr *> &envr, struct BnrExpStrc *exp)
 {
     ValStrc *lftCnst = clcExp(envr, exp->lft);
     ValStrc *rghtCnst = clcExp(envr, exp->rgt);
@@ -488,7 +488,7 @@ ValStrc *clcBnrExpMul(vector<EnvrStrc *> &envr, struct BnrExpStrc *exp)
     return rslt;
 }
 
-ValStrc *clcBnrExpDiv(vector<EnvrStrc *> &envr, struct BnrExpStrc *exp)
+ValStrc *clcBnrExpDiv(vector<Envr *> &envr, struct BnrExpStrc *exp)
 {
     ValStrc *lftCnst = clcExp(envr, exp->lft);
     ValStrc *rghtCnst = clcExp(envr, exp->rgt);
@@ -519,7 +519,7 @@ ValStrc *clcBnrExpDiv(vector<EnvrStrc *> &envr, struct BnrExpStrc *exp)
     return rslt;
 }
 
-ValStrc *clcBnrExpMod(vector<EnvrStrc *> &envr, struct BnrExpStrc *exp)
+ValStrc *clcBnrExpMod(vector<Envr *> &envr, struct BnrExpStrc *exp)
 {
     ValStrc *lftCnst = clcExp(envr, exp->lft);
     ValStrc *rghtCnst = clcExp(envr, exp->rgt);
@@ -550,7 +550,7 @@ ValStrc *clcBnrExpMod(vector<EnvrStrc *> &envr, struct BnrExpStrc *exp)
     return rslt;
 }
 
-ValStrc *clcBnrExpEq(vector<EnvrStrc *> &envr, struct BnrExpStrc *exp)
+ValStrc *clcBnrExpEq(vector<Envr *> &envr, struct BnrExpStrc *exp)
 {
     ValStrc *lftCnst = clcExp(envr, exp->lft);
     ValStrc *rghtCnst = clcExp(envr, exp->rgt);
@@ -588,7 +588,7 @@ ValStrc *clcBnrExpEq(vector<EnvrStrc *> &envr, struct BnrExpStrc *exp)
     return rslt;
 }
 
-ValStrc *clcBnrExpNe(vector<EnvrStrc *> &envr, struct BnrExpStrc *exp)
+ValStrc *clcBnrExpNe(vector<Envr *> &envr, struct BnrExpStrc *exp)
 {
     ValStrc *lftCnst = clcExp(envr, exp->lft);
     ValStrc *rghtCnst = clcExp(envr, exp->rgt);
@@ -626,7 +626,7 @@ ValStrc *clcBnrExpNe(vector<EnvrStrc *> &envr, struct BnrExpStrc *exp)
     return rslt;
 }
 
-ValStrc *clcBnrExpGt(vector<EnvrStrc *> &envr, struct BnrExpStrc *exp)
+ValStrc *clcBnrExpGt(vector<Envr *> &envr, struct BnrExpStrc *exp)
 {
     ValStrc *lftCnst = clcExp(envr, exp->lft);
     ValStrc *rghtCnst = clcExp(envr, exp->rgt);
@@ -663,7 +663,7 @@ ValStrc *clcBnrExpGt(vector<EnvrStrc *> &envr, struct BnrExpStrc *exp)
     return rslt;
 }
 
-ValStrc *clcBnrExpGe(vector<EnvrStrc *> &envr, struct BnrExpStrc *exp)
+ValStrc *clcBnrExpGe(vector<Envr *> &envr, struct BnrExpStrc *exp)
 {
     ValStrc *lftCnst = clcExp(envr, exp->lft);
     ValStrc *rghtCnst = clcExp(envr, exp->rgt);
@@ -701,7 +701,7 @@ ValStrc *clcBnrExpGe(vector<EnvrStrc *> &envr, struct BnrExpStrc *exp)
 }
 
 
-ValStrc *clcBnrExpLt(vector<EnvrStrc *> &envr, struct BnrExpStrc *exp)
+ValStrc *clcBnrExpLt(vector<Envr *> &envr, struct BnrExpStrc *exp)
 {
     ValStrc *lftCnst = clcExp(envr, exp->lft);
     ValStrc *rghtCnst = clcExp(envr, exp->rgt);
@@ -738,7 +738,7 @@ ValStrc *clcBnrExpLt(vector<EnvrStrc *> &envr, struct BnrExpStrc *exp)
     return rslt;
 }
 
-ValStrc *clcBnrExpLe(vector<EnvrStrc *> &envr, struct BnrExpStrc *exp)
+ValStrc *clcBnrExpLe(vector<Envr *> &envr, struct BnrExpStrc *exp)
 {
     ValStrc *lftCnst = clcExp(envr, exp->lft);
     ValStrc *rghtCnst = clcExp(envr, exp->rgt);
@@ -775,7 +775,7 @@ ValStrc *clcBnrExpLe(vector<EnvrStrc *> &envr, struct BnrExpStrc *exp)
     return rslt;
 }
 
-ValStrc *clcBnrExpBitAnd(vector<EnvrStrc *> &envr, struct BnrExpStrc *exp)
+ValStrc *clcBnrExpBitAnd(vector<Envr *> &envr, struct BnrExpStrc *exp)
 {
     ValStrc *lftCnst = clcExp(envr, exp->lft);
     ValStrc *rghtCnst = clcExp(envr, exp->rgt);
@@ -796,7 +796,7 @@ ValStrc *clcBnrExpBitAnd(vector<EnvrStrc *> &envr, struct BnrExpStrc *exp)
     return rslt;
 }
 
-ValStrc *clcBnrExpBitOr(vector<EnvrStrc *> &envr, struct BnrExpStrc *exp)
+ValStrc *clcBnrExpBitOr(vector<Envr *> &envr, struct BnrExpStrc *exp)
 {
     ValStrc *lftCnst = clcExp(envr, exp->lft);
     ValStrc *rghtCnst = clcExp(envr, exp->rgt);
@@ -817,7 +817,7 @@ ValStrc *clcBnrExpBitOr(vector<EnvrStrc *> &envr, struct BnrExpStrc *exp)
     return rslt;
 }
 
-ValStrc *clcBnrExpBitXor(vector<EnvrStrc *> &envr, struct BnrExpStrc *exp)
+ValStrc *clcBnrExpBitXor(vector<Envr *> &envr, struct BnrExpStrc *exp)
 {
     ValStrc *lftCnst = clcExp(envr, exp->lft);
     ValStrc *rghtCnst = clcExp(envr, exp->rgt);
@@ -839,7 +839,7 @@ ValStrc *clcBnrExpBitXor(vector<EnvrStrc *> &envr, struct BnrExpStrc *exp)
 }
 
 
-ValStrc *clcBnrExpAnd(vector<EnvrStrc *> &envr, struct BnrExpStrc *exp)
+ValStrc *clcBnrExpAnd(vector<Envr *> &envr, struct BnrExpStrc *exp)
 {
     ValStrc *lftCnst = clcExp(envr, exp->lft);
     ValStrc *rghtCnst = clcExp(envr, exp->rgt);
@@ -876,7 +876,7 @@ ValStrc *clcBnrExpAnd(vector<EnvrStrc *> &envr, struct BnrExpStrc *exp)
     return rslt;
 }
 
-ValStrc *clcBnrExpOr(vector<EnvrStrc *> &envr, struct BnrExpStrc *exp)
+ValStrc *clcBnrExpOr(vector<Envr *> &envr, struct BnrExpStrc *exp)
 {
     ValStrc *lftCnst = clcExp(envr, exp->lft);
     ValStrc *rghtCnst = clcExp(envr, exp->rgt);
@@ -914,7 +914,7 @@ ValStrc *clcBnrExpOr(vector<EnvrStrc *> &envr, struct BnrExpStrc *exp)
 }
 
 
-ValStrc *clcBnrExp(vector<EnvrStrc *> &envr, struct BnrExpStrc *exp)
+ValStrc *clcBnrExp(vector<Envr *> &envr, struct BnrExpStrc *exp)
 {
     ValStrc *rslt;
 
@@ -1032,7 +1032,7 @@ ValStrc *clcBnrExp(vector<EnvrStrc *> &envr, struct BnrExpStrc *exp)
     return rslt;
 }
 
-ValStrc *clcTnrExp(vector<EnvrStrc *> &envr, TnrExpStrc *exp)
+ValStrc *clcTnrExp(vector<Envr *> &envr, TnrExpStrc *exp)
 {
     ValStrc *rslt = nullptr;
     switch (exp->opr)
@@ -1047,7 +1047,7 @@ ValStrc *clcTnrExp(vector<EnvrStrc *> &envr, TnrExpStrc *exp)
     return rslt;
 }
 
-ValStrc *clcTnrExpQm(vector<EnvrStrc *> &envr, TnrExpStrc *exp)
+ValStrc *clcTnrExpQm(vector<Envr *> &envr, TnrExpStrc *exp)
 {
     ValStrc *rslt;
 
@@ -1062,7 +1062,7 @@ ValStrc *clcTnrExpQm(vector<EnvrStrc *> &envr, TnrExpStrc *exp)
     return rslt;
 }
 
-ValStrc *clcUnrExpPfxInc(vector<EnvrStrc *> &envr, struct UnrExpStrc *exp)
+ValStrc *clcUnrExpPfxInc(vector<Envr *> &envr, struct UnrExpStrc *exp)
 {
     ValStrc *rslt = new ValStrc;
 
@@ -1139,7 +1139,7 @@ ValStrc *clcUnrExpPfxInc(vector<EnvrStrc *> &envr, struct UnrExpStrc *exp)
     return rslt;
 }
 
-ValStrc *clcUnrExpPfxDec(vector<EnvrStrc *> &envr, struct UnrExpStrc *exp)
+ValStrc *clcUnrExpPfxDec(vector<Envr *> &envr, struct UnrExpStrc *exp)
 {
     struct VrbStrc *vrb;
 
@@ -1216,7 +1216,7 @@ ValStrc *clcUnrExpPfxDec(vector<EnvrStrc *> &envr, struct UnrExpStrc *exp)
     return rslt;
 }
 
-ValStrc *clcUnrExpSfxInc(vector<EnvrStrc *> &envr, struct UnrExpStrc *exp)
+ValStrc *clcUnrExpSfxInc(vector<Envr *> &envr, struct UnrExpStrc *exp)
 {
     struct VrbStrc *vrb;
 
@@ -1296,7 +1296,7 @@ ValStrc *clcUnrExpSfxInc(vector<EnvrStrc *> &envr, struct UnrExpStrc *exp)
     return rslt;
 }
 
-ValStrc *clcUnrExpSfxDec(vector<EnvrStrc *> &envr, struct UnrExpStrc *exp)
+ValStrc *clcUnrExpSfxDec(vector<Envr *> &envr, struct UnrExpStrc *exp)
 {
     struct VrbStrc *vrb;
 
@@ -1375,7 +1375,7 @@ ValStrc *clcUnrExpSfxDec(vector<EnvrStrc *> &envr, struct UnrExpStrc *exp)
     return rslt;
 }
 
-ValStrc *clcUnrExpNot(vector<EnvrStrc *> &envr, struct UnrExpStrc *exp)
+ValStrc *clcUnrExpNot(vector<Envr *> &envr, struct UnrExpStrc *exp)
 {
     ValStrc *rslt = NULL;
 
@@ -1414,7 +1414,7 @@ ValStrc *clcUnrExpNot(vector<EnvrStrc *> &envr, struct UnrExpStrc *exp)
     return rslt;
 }
 
-ValStrc *clcUnrExpBitNot(vector<EnvrStrc *> &envr, struct UnrExpStrc *exp)
+ValStrc *clcUnrExpBitNot(vector<Envr *> &envr, struct UnrExpStrc *exp)
 {
     ValStrc *rslt;
 
@@ -1458,7 +1458,7 @@ ValStrc *clcUnrExpBitNot(vector<EnvrStrc *> &envr, struct UnrExpStrc *exp)
     return rslt;
 }
 
-ValStrc *clcUnrExpSub(vector<EnvrStrc *> &envr, struct UnrExpStrc *exp)
+ValStrc *clcUnrExpSub(vector<Envr *> &envr, struct UnrExpStrc *exp)
 {
     ValStrc *cnst, *rslt;
 
@@ -1485,7 +1485,7 @@ ValStrc *clcUnrExpSub(vector<EnvrStrc *> &envr, struct UnrExpStrc *exp)
     return rslt;
 }
 
-ValStrc *clcUnrExpAdd(vector<EnvrStrc *> &envr, struct UnrExpStrc *exp)
+ValStrc *clcUnrExpAdd(vector<Envr *> &envr, struct UnrExpStrc *exp)
 {
     ValStrc *cnst, *rslt;
 
@@ -1503,7 +1503,7 @@ ValStrc *clcUnrExpAdd(vector<EnvrStrc *> &envr, struct UnrExpStrc *exp)
     return rslt;
 }
 
-ValStrc *clcUnrExp(vector<EnvrStrc *> &envr, struct UnrExpStrc *exp)
+ValStrc *clcUnrExp(vector<Envr *> &envr, struct UnrExpStrc *exp)
 {
     ValStrc *val;
 
@@ -1586,7 +1586,7 @@ ValStrc *clcUnrExp(vector<EnvrStrc *> &envr, struct UnrExpStrc *exp)
     return rslt;
 }
 
-ValStrc *clcFcnExp(vector<EnvrStrc *> &envr, FcnExpStrc *exp)
+ValStrc *clcFcnExp(vector<Envr *> &envr, FcnExpStrc *exp)
 {
     ValStrc *rslt = new ValStrc;
 
@@ -1688,7 +1688,7 @@ ValStrc *clcFcnExp(vector<EnvrStrc *> &envr, FcnExpStrc *exp)
 
         //建立函数中的EnvrStrc
 
-        struct EnvrStrc *envrFcn = new EnvrStrc(EnvrEnm::Fcn);
+        struct Envr *envrFcn = new Envr(EnvrEnm::Fcn);
 
         envr.push_back(envrFcn);
 
@@ -1778,7 +1778,7 @@ ValStrc *clcFcnExp(vector<EnvrStrc *> &envr, FcnExpStrc *exp)
 /// <summary>
 /// 使用函数结构体以及函数表达式结构体计算函数表达式
 /// </summary>
-ValStrc *clcFcnExp(vector<EnvrStrc *> &envr, struct FcnStrc *fcn, struct FcnExpStrc *exp)
+ValStrc *clcFcnExp(vector<Envr *> &envr, struct FcnStrc *fcn, struct FcnExpStrc *exp)
 {
     ValStrc *rslt = new ValStrc;
 
@@ -1796,7 +1796,7 @@ ValStrc *clcFcnExp(vector<EnvrStrc *> &envr, struct FcnStrc *fcn, struct FcnExpS
 
         //建立函数中的EnvrStrc
 
-        struct EnvrStrc *envrFcn = new EnvrStrc(EnvrEnm::Fcn);
+        struct Envr *envrFcn = new Envr(EnvrEnm::Fcn);
 
         envr.push_back(envrFcn);
 
@@ -1915,7 +1915,7 @@ ValStrc *clcFcnExp(vector<EnvrStrc *> &envr, struct FcnStrc *fcn, struct FcnExpS
 //}
 
 
-ValStrc *clcAsnExp(vector<EnvrStrc *> &envr, struct AsnExpStrc *asn)
+ValStrc *clcAsnExp(vector<Envr *> &envr, struct AsnExpStrc *asn)
 {
     ValStrc *rslt = new ValStrc;
 
@@ -1987,7 +1987,7 @@ ValStrc *clcAsnExp(vector<EnvrStrc *> &envr, struct AsnExpStrc *asn)
     return rslt;
 }
 
-ValStrc *clcArrExp(vector<EnvrStrc *> &envr, struct ArrExpStrc *exp)
+ValStrc *clcArrExp(vector<Envr *> &envr, struct ArrExpStrc *exp)
 {
     ValStrc *rslt = new ValStrc;
 
@@ -2128,7 +2128,7 @@ ValStrc *clcArrExp(vector<EnvrStrc *> &envr, struct ArrExpStrc *exp)
 //
 //}
 
-ValStrc *clcElmtAsgnExp(vector<EnvrStrc *> &envr, struct ElmtAsgnExpStrc *exp)
+ValStrc *clcElmtAsgnExp(vector<Envr *> &envr, struct ElmtAsgnExpStrc *exp)
 {
     ValStrc *rslt = new ValStrc;
 
@@ -2164,7 +2164,7 @@ ValStrc *clcElmtAsgnExp(vector<EnvrStrc *> &envr, struct ElmtAsgnExpStrc *exp)
 }
 
 
-ValStrc *clcLvlExp(vector<EnvrStrc *> &envr, struct LvlExpStrc *exp)
+ValStrc *clcLvlExp(vector<Envr *> &envr, struct LvlExpStrc *exp)
 {
     ValStrc *rslt = new ValStrc;
 
@@ -2329,7 +2329,7 @@ ValStrc *clcLvlExp(vector<EnvrStrc *> &envr, struct LvlExpStrc *exp)
     return rslt;
 }
 
-ValStrc *clcNewExp(vector<EnvrStrc *> &envr, struct NewExpStrc *exp)
+ValStrc *clcNewExp(vector<Envr *> &envr, struct NewExpStrc *exp)
 {
     ClsStrc *cls = nullptr;
 
@@ -2349,7 +2349,7 @@ ValStrc *clcNewExp(vector<EnvrStrc *> &envr, struct NewExpStrc *exp)
     }
 }
 
-ValStrc *clcExp(vector<EnvrStrc *> &envr, Exp *exp)
+ValStrc *clcExp(vector<Envr *> &envr, Exp *exp)
 {
     ValStrc *rslt = new ValStrc;
 

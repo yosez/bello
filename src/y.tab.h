@@ -40,171 +40,173 @@
       know about them.  */
    enum yytokentype {
      NULL_STRING = 258,
-     LF = 259,
-     END_FILE = 260,
-     NEW = 261,
-     IMPORT = 262,
-     NOP = 263,
-     DOT = 264,
-     CLASS = 265,
-     SHARED = 266,
-     THIS = 267,
-     AT = 268,
-     INDENT = 269,
-     INT_LTR = 270,
-     BLN_LTR = 271,
-     FLT_LTR = 272,
-     STR_LTR = 273,
-     OBJECT_VALUE = 274,
-     NLL_LTR = 275,
-     ARRAY_VALUE = 276,
-     SHORTCUT_PRINTLN = 277,
-     IDENTIFER = 278,
-     ASSIGN = 279,
-     VAR = 280,
-     GLOBAL = 281,
-     ADD_ASSIGN = 282,
-     SUB_ASSIGN = 283,
-     MUL_ASSIGN = 284,
-     DIV_ASSIGN = 285,
-     MOD_ASSIGN = 286,
-     PRINT = 287,
-     PRINTLN = 288,
-     LEFT_PAREN = 289,
-     RIGHT_PAREN = 290,
-     LEFT_QUAD = 291,
-     RIGHT_QUAD = 292,
-     LEFT_BRACE = 293,
-     RIGHT_BRACE = 294,
-     SEMICOLON_OPTIONAL = 295,
-     SEMICOLON = 296,
-     COMMA = 297,
-     COLON = 298,
-     ADD = 299,
-     SUB = 300,
-     MUL = 301,
-     DIV = 302,
-     MOD = 303,
-     EQ = 304,
-     NE = 305,
-     GT = 306,
-     GE = 307,
-     LT = 308,
-     LE = 309,
-     AND = 310,
-     OR = 311,
-     NOT = 312,
-     XOR = 313,
-     BIT_AND = 314,
-     BIT_OR = 315,
-     BIT_XOR = 316,
-     BIT_NOT = 317,
-     INCREMENT = 318,
-     DECREMENT = 319,
-     IF = 320,
-     ELSEIF = 321,
-     ELSE = 322,
-     FOR = 323,
-     WHILE = 324,
-     DO = 325,
-     CONTINUE = 326,
-     BREAK = 327,
-     FUNC = 328,
-     RETURN = 329,
-     NEW_ARRAY = 330,
-     SPACE = 331,
-     PACKAGE = 332,
-     PLUS_SIGN = 333,
-     MINUS_SIGN = 334,
-     QM = 335
+     NO_INDENT = 259,
+     LF = 260,
+     END_FILE = 261,
+     NEW = 262,
+     IMPORT = 263,
+     NOP = 264,
+     DOT = 265,
+     CLASS = 266,
+     SHARED = 267,
+     THIS = 268,
+     AT = 269,
+     INDENT = 270,
+     INT_LTR = 271,
+     BLN_LTR = 272,
+     FLT_LTR = 273,
+     STR_LTR = 274,
+     OBJECT_VALUE = 275,
+     NLL_LTR = 276,
+     ARRAY_VALUE = 277,
+     SHORTCUT_PRINTLN = 278,
+     IDENTIFER = 279,
+     ASSIGN = 280,
+     VAR = 281,
+     GLOBAL = 282,
+     ADD_ASSIGN = 283,
+     SUB_ASSIGN = 284,
+     MUL_ASSIGN = 285,
+     DIV_ASSIGN = 286,
+     MOD_ASSIGN = 287,
+     PRINT = 288,
+     PRINTLN = 289,
+     LEFT_PAREN = 290,
+     RIGHT_PAREN = 291,
+     LEFT_QUAD = 292,
+     RIGHT_QUAD = 293,
+     LEFT_BRACE = 294,
+     RIGHT_BRACE = 295,
+     SEMICOLON_OPTIONAL = 296,
+     SEMICOLON = 297,
+     COMMA = 298,
+     COLON = 299,
+     ADD = 300,
+     SUB = 301,
+     MUL = 302,
+     DIV = 303,
+     MOD = 304,
+     EQ = 305,
+     NE = 306,
+     GT = 307,
+     GE = 308,
+     LT = 309,
+     LE = 310,
+     AND = 311,
+     OR = 312,
+     NOT = 313,
+     XOR = 314,
+     BIT_AND = 315,
+     BIT_OR = 316,
+     BIT_XOR = 317,
+     BIT_NOT = 318,
+     INCREMENT = 319,
+     DECREMENT = 320,
+     IF = 321,
+     ELIF = 322,
+     ELSE = 323,
+     FOR = 324,
+     WHILE = 325,
+     DO = 326,
+     CONTINUE = 327,
+     BREAK = 328,
+     FUNC = 329,
+     RETURN = 330,
+     NEW_ARRAY = 331,
+     SPACE = 332,
+     PACKAGE = 333,
+     PLUS_SIGN = 334,
+     MINUS_SIGN = 335,
+     QM = 336
    };
 #endif
 /* Tokens.  */
 #define NULL_STRING 258
-#define LF 259
-#define END_FILE 260
-#define NEW 261
-#define IMPORT 262
-#define NOP 263
-#define DOT 264
-#define CLASS 265
-#define SHARED 266
-#define THIS 267
-#define AT 268
-#define INDENT 269
-#define INT_LTR 270
-#define BLN_LTR 271
-#define FLT_LTR 272
-#define STR_LTR 273
-#define OBJECT_VALUE 274
-#define NLL_LTR 275
-#define ARRAY_VALUE 276
-#define SHORTCUT_PRINTLN 277
-#define IDENTIFER 278
-#define ASSIGN 279
-#define VAR 280
-#define GLOBAL 281
-#define ADD_ASSIGN 282
-#define SUB_ASSIGN 283
-#define MUL_ASSIGN 284
-#define DIV_ASSIGN 285
-#define MOD_ASSIGN 286
-#define PRINT 287
-#define PRINTLN 288
-#define LEFT_PAREN 289
-#define RIGHT_PAREN 290
-#define LEFT_QUAD 291
-#define RIGHT_QUAD 292
-#define LEFT_BRACE 293
-#define RIGHT_BRACE 294
-#define SEMICOLON_OPTIONAL 295
-#define SEMICOLON 296
-#define COMMA 297
-#define COLON 298
-#define ADD 299
-#define SUB 300
-#define MUL 301
-#define DIV 302
-#define MOD 303
-#define EQ 304
-#define NE 305
-#define GT 306
-#define GE 307
-#define LT 308
-#define LE 309
-#define AND 310
-#define OR 311
-#define NOT 312
-#define XOR 313
-#define BIT_AND 314
-#define BIT_OR 315
-#define BIT_XOR 316
-#define BIT_NOT 317
-#define INCREMENT 318
-#define DECREMENT 319
-#define IF 320
-#define ELSEIF 321
-#define ELSE 322
-#define FOR 323
-#define WHILE 324
-#define DO 325
-#define CONTINUE 326
-#define BREAK 327
-#define FUNC 328
-#define RETURN 329
-#define NEW_ARRAY 330
-#define SPACE 331
-#define PACKAGE 332
-#define PLUS_SIGN 333
-#define MINUS_SIGN 334
-#define QM 335
+#define NO_INDENT 259
+#define LF 260
+#define END_FILE 261
+#define NEW 262
+#define IMPORT 263
+#define NOP 264
+#define DOT 265
+#define CLASS 266
+#define SHARED 267
+#define THIS 268
+#define AT 269
+#define INDENT 270
+#define INT_LTR 271
+#define BLN_LTR 272
+#define FLT_LTR 273
+#define STR_LTR 274
+#define OBJECT_VALUE 275
+#define NLL_LTR 276
+#define ARRAY_VALUE 277
+#define SHORTCUT_PRINTLN 278
+#define IDENTIFER 279
+#define ASSIGN 280
+#define VAR 281
+#define GLOBAL 282
+#define ADD_ASSIGN 283
+#define SUB_ASSIGN 284
+#define MUL_ASSIGN 285
+#define DIV_ASSIGN 286
+#define MOD_ASSIGN 287
+#define PRINT 288
+#define PRINTLN 289
+#define LEFT_PAREN 290
+#define RIGHT_PAREN 291
+#define LEFT_QUAD 292
+#define RIGHT_QUAD 293
+#define LEFT_BRACE 294
+#define RIGHT_BRACE 295
+#define SEMICOLON_OPTIONAL 296
+#define SEMICOLON 297
+#define COMMA 298
+#define COLON 299
+#define ADD 300
+#define SUB 301
+#define MUL 302
+#define DIV 303
+#define MOD 304
+#define EQ 305
+#define NE 306
+#define GT 307
+#define GE 308
+#define LT 309
+#define LE 310
+#define AND 311
+#define OR 312
+#define NOT 313
+#define XOR 314
+#define BIT_AND 315
+#define BIT_OR 316
+#define BIT_XOR 317
+#define BIT_NOT 318
+#define INCREMENT 319
+#define DECREMENT 320
+#define IF 321
+#define ELIF 322
+#define ELSE 323
+#define FOR 324
+#define WHILE 325
+#define DO 326
+#define CONTINUE 327
+#define BREAK 328
+#define FUNC 329
+#define RETURN 330
+#define NEW_ARRAY 331
+#define SPACE 332
+#define PACKAGE 333
+#define PLUS_SIGN 334
+#define MINUS_SIGN 335
+#define QM 336
 
 
 
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 65 "./bello.y"
+#line 70 "./bello.y"
 {
     int blnVl;
     int intVl;
@@ -228,7 +230,7 @@ typedef union YYSTYPE
     //string idtf;
 }
 /* Line 1529 of yacc.c.  */
-#line 232 "y.tab.h"
+#line 234 "y.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1

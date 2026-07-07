@@ -3,8 +3,8 @@ project(bello LANGUAGES C CXX)
 
 message(STATUS ${CMAKE_CXX_COMPILER_ID})
 
-set(CMAKE_C_STANDARD 11)
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_C_STANDARD 17)
+set(CMAKE_CXX_STANDARD 23)
 
 set(SOURCES
         ${PROJECT_SOURCE_DIR}/src/bello.cpp
@@ -44,7 +44,3 @@ elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     endif()
 endif()
 
-
-#if (NOT WIN32)
-#    target_link_libraries(bello PRIVATE linenoise)
-#endif()

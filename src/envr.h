@@ -19,43 +19,44 @@ using namespace std;
 
 extern struct Exp* bldFcnExp(char* nm, struct ArgLstStrc* argLst);
 
-VrbStrc* addVrb(struct EnvrStrc* envr, struct VrbExp* vrbExp);
-VrbStrc* getEnvrVrb(struct EnvrStrc* envr, struct VrbExp* vrbExp);
-VrbStrc* addVrbGlb(vector<EnvrStrc*>& envr, VrbExp* vrbExp);
-VrbStrc* getVrb(vector<EnvrStrc*>& envr, struct VrbExp* vrbExp);
-VrbStrc* getVrb(vector<EnvrStrc*>& envr, struct LvlExpStrc* lvl);
-int prtEnvrVrb(struct EnvrStrc* envr);
+VrbStrc* addVrb(struct Envr* envr, struct VrbExp* vrbExp);
+VrbStrc* getEnvrVrb(struct Envr* envr, struct VrbExp* vrbExp);
+VrbStrc* addVrbGlb(vector<Envr*>& envr, VrbExp* vrbExp);
+VrbStrc* getVrb(vector<Envr*>& envr, struct VrbExp* vrbExp);
+VrbStrc* getVrb(vector<Envr*>& envr, struct LvlExpStrc* lvl);
+int prtEnvrVrb(struct Envr* envr);
 
-int addFcn(struct EnvrStrc* envr, struct FcnStrc* fcn);
-FcnStrc* getFcn(vector<EnvrStrc*> envr, struct FcnExpStrc* fcnExp);
-FcnStrc* getEnvrFcn(struct EnvrStrc* envr, struct FcnExpStrc* fcnExp);
+int addFcn(struct Envr* envr, struct FcnStrc* fcn);
+FcnStrc* getFcn(vector<Envr*> envr, struct FcnExpStrc* fcnExp);
+FcnStrc* getEnvrFcn(struct Envr* envr, struct FcnExpStrc* fcnExp);
 
-ClsStrc* getEnvrCls(EnvrStrc* envr, string nm);
-ClsStrc* getGlbCls(vector<EnvrStrc*>& envr, string nm);
+ClsStrc* getEnvrCls(Envr* envr, string nm);
+ClsStrc* getGlbCls(vector<Envr*>& envr, string nm);
 
-int addNtvFcn(struct EnvrStrc* envr, string fcnNm, NtvFcnDfn* fcn, int prmCnt);
-NtvFcnStrc* getNtvFcn(struct EnvrStrc* envr, struct FcnExpStrc* fcn);
-NtvFcnStrc* getNtvFcn(vector<EnvrStrc*> envr, struct FcnExpStrc* fcn);
+int addNtvFcn(struct Envr* envr, string fcnNm, NtvFcnDfn* fcn, int prmCnt);
+NtvFcnStrc* getNtvFcn(struct Envr* envr, struct FcnExpStrc* fcn);
+NtvFcnStrc* getNtvFcn(vector<Envr*> envr, struct FcnExpStrc* fcn);
 
-int addCls(struct EnvrStrc* envr, struct ClsStrc* cls);
-struct ClsStrc* getEnvrCls(struct EnvrStrc* envr, string nm);
+int addCls(struct Envr* envr, struct ClsStrc* cls);
+struct ClsStrc* getEnvrCls(struct Envr* envr, string nm);
 
-int prtEnvrFcn(struct EnvrStrc* envr);
-int intlEnvr(struct EnvrStrc** envr);
-int initGlbEnvr(vector<EnvrStrc*>& envr);
+int prtEnvrFcn(struct Envr* envr);
+int intlEnvr(struct Envr** envr);
+int initGlbEnvr(vector<Envr*>& envr);
 
-extern struct ValStrc* rdIntFcn(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
-extern struct ValStrc* rdFltFcn(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
-extern struct ValStrc* rdBlnFcn(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
-extern struct ValStrc* rdFcn(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
-extern struct ValStrc* rdlnFcn(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
-extern struct ValStrc* prtFcn(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
-extern struct ValStrc* prtlnFcn(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
-extern struct ValStrc* newArrFcn(vector<EnvrStrc*>& envr, int argCnt, vector <ValStrc*> argArr);
+extern ValStrc* rdIntFcn(vector<Envr*>& envr, int argCnt, vector <ValStrc*> argArr);
+extern ValStrc* rdFltFcn(vector<Envr*>& envr, int argCnt, vector <ValStrc*> argArr);
+extern ValStrc* rdBlnFcn(vector<Envr*>& envr, int argCnt, vector <ValStrc*> argArr);
+extern ValStrc* rdFcn(vector<Envr*>& envr, int argCnt, vector <ValStrc*> argArr);
+extern ValStrc* rdlnFcn(vector<Envr*>& envr, int argCnt, vector <ValStrc*> argArr);
+extern ValStrc* prtFcn(vector<Envr*>& envr, int argCnt, vector <ValStrc*> argArr);
+extern ValStrc* prtlnFcn(vector<Envr*>& envr, int argCnt, vector <ValStrc*> argArr);
+extern ValStrc* newArrFcn(vector<Envr*>& envr, int argCnt, vector <ValStrc*> argArr);
+extern ValStrc* exe(vector<Envr*>& envr, int argCnt, vector<ValStrc*> argArr);
 
 extern VrbStrc* getObjVrb(VrbStrc* vrb, LvlExpStrc* lvl);
 
-struct VrbStrc* addVrb(struct EnvrStrc* envr, struct VrbExp* vrbExp)
+struct VrbStrc* addVrb(struct Envr* envr, struct VrbExp* vrbExp)
 {
 
 	envr->vrbArr.push_back(bldVrb(vrbExp->nm));
@@ -64,14 +65,14 @@ struct VrbStrc* addVrb(struct EnvrStrc* envr, struct VrbExp* vrbExp)
 
 }
 
-struct VrbStrc* addVrbGlb(vector<EnvrStrc*>& envr, VrbExp* vrbExp)
+struct VrbStrc* addVrbGlb(vector<Envr*>& envr, VrbExp* vrbExp)
 {
 	envr[0]->glbArr.push_back(bldVrb(string(vrbExp->nm)));
 
 	return envr[0]->glbArr.back();
 }
 
-struct VrbStrc* getEnvrVrb(struct EnvrStrc* envr, struct VrbExp* vrbExp)
+struct VrbStrc* getEnvrVrb(struct Envr* envr, struct VrbExp* vrbExp)
 {
 	int i;
 
@@ -100,7 +101,7 @@ struct VrbStrc* getEnvrVrb(struct EnvrStrc* envr, struct VrbExp* vrbExp)
 }
 
 
-struct VrbStrc* getVrb(vector<EnvrStrc*>& envr, struct VrbExp* vrbExp)
+struct VrbStrc* getVrb(vector<Envr*>& envr, struct VrbExp* vrbExp)
 {
 	VrbStrc* vrb = nullptr;
 
@@ -108,7 +109,7 @@ struct VrbStrc* getVrb(vector<EnvrStrc*>& envr, struct VrbExp* vrbExp)
 
 	int lyr = envr.size() - 1;
 
-	EnvrStrc* tmp;
+	Envr* tmp;
 
 	int lyrBfrFcn = 0;
 
@@ -167,7 +168,7 @@ struct VrbStrc* getVrb(vector<EnvrStrc*>& envr, struct VrbExp* vrbExp)
 	return vrb;
 }
 
-struct VrbStrc* getVrb(vector<EnvrStrc*>& envr, struct LvlExpStrc* lvl)
+struct VrbStrc* getVrb(vector<Envr*>& envr, struct LvlExpStrc* lvl)
 {
 	VrbStrc* rslt = nullptr;
 
@@ -184,7 +185,7 @@ struct VrbStrc* getVrb(vector<EnvrStrc*>& envr, struct LvlExpStrc* lvl)
 
 
 
-int prtEnvrVrb(struct EnvrStrc* envr)
+int prtEnvrVrb(struct Envr* envr)
 {
 	int i;
 
@@ -199,7 +200,7 @@ int prtEnvrVrb(struct EnvrStrc* envr)
 }
 
 
-int addFcn(struct EnvrStrc* envr, struct FcnStrc* fcn)
+int addFcn(struct Envr* envr, struct FcnStrc* fcn)
 {
 
 	envr->fcnArr.push_back(fcn);
@@ -207,7 +208,7 @@ int addFcn(struct EnvrStrc* envr, struct FcnStrc* fcn)
 	return 0;
 }
 
-struct FcnStrc* getEnvrFcn(struct EnvrStrc* envr, struct FcnExpStrc* fcnExp)
+struct FcnStrc* getEnvrFcn(struct Envr* envr, struct FcnExpStrc* fcnExp)
 {
 	int i;
 
@@ -224,7 +225,7 @@ struct FcnStrc* getEnvrFcn(struct EnvrStrc* envr, struct FcnExpStrc* fcnExp)
 }
 
 
-struct FcnStrc* getFcn(vector<EnvrStrc*> envr, struct FcnExpStrc* fcnExp)
+struct FcnStrc* getFcn(vector<Envr*> envr, struct FcnExpStrc* fcnExp)
 {
 	struct FcnStrc* fcn = nullptr;
 
@@ -282,7 +283,7 @@ struct FcnStrc* getFcn(vector<EnvrStrc*> envr, struct FcnExpStrc* fcnExp)
 }
 
 
-int addNtvFcn(struct EnvrStrc* envr, string fcnNm, NtvFcnDfn* fcn, int prmCnt)
+int addNtvFcn(struct Envr* envr, string fcnNm, NtvFcnDfn* fcn, int prmCnt)
 {
 	NtvFcnStrc* fcnDfn = new NtvFcnStrc(fcnNm, prmCnt, fcn);
 
@@ -314,7 +315,7 @@ int addNtvFcn(struct EnvrStrc* envr, string fcnNm, NtvFcnDfn* fcn, int prmCnt)
 //     return NULL;
 // }
 
-struct NtvFcnStrc* getNtvFcn(struct EnvrStrc* envr, struct FcnExpStrc* fcn)
+struct NtvFcnStrc* getNtvFcn(struct Envr* envr, struct FcnExpStrc* fcn)
 {
 	struct NtvFctnStrc* rslt = NULL;
 
@@ -331,7 +332,7 @@ struct NtvFcnStrc* getNtvFcn(struct EnvrStrc* envr, struct FcnExpStrc* fcn)
 	return NULL;
 }
 
-int addCls(struct EnvrStrc* envr, struct ClsStrc* cls)
+int addCls(struct Envr* envr, struct ClsStrc* cls)
 {
 	envr->clsArr.push_back(cls);
 
@@ -353,7 +354,7 @@ int addCls(struct EnvrStrc* envr, struct ClsStrc* cls)
 //	return NULL;
 //}
 
-struct ClsStrc* getEnvrCls(EnvrStrc* envr, string nm)
+struct ClsStrc* getEnvrCls(Envr* envr, string nm)
 {
 	vector<ClsStrc*>* vct = &(envr->clsArr);
 
@@ -373,11 +374,11 @@ struct ClsStrc* getEnvrCls(EnvrStrc* envr, string nm)
 }
 
 
-ClsStrc* getGlbCls(vector<EnvrStrc*>& envr, string nm)
+ClsStrc* getGlbCls(vector<Envr*>& envr, string nm)
 {
 	ClsStrc* rslt = nullptr;
 
-	any_of(envr.rbegin(), envr.rend(), [nm, &rslt](EnvrStrc* envr)
+	any_of(envr.rbegin(), envr.rend(), [nm, &rslt](Envr* envr)
 		{
 			printf("fnd cls: %s\n", nm.c_str());
 			rslt = getEnvrCls(envr, nm);
@@ -387,7 +388,7 @@ ClsStrc* getGlbCls(vector<EnvrStrc*>& envr, string nm)
 	return rslt;
 }
 
-struct NtvFcnStrc* getNtvFcn(vector<EnvrStrc*> envr, struct FcnExpStrc* fcn)
+struct NtvFcnStrc* getNtvFcn(vector<Envr*> envr, struct FcnExpStrc* fcn)
 {
 	struct NtvFctnStrc* rslt = nullptr;
 
@@ -411,7 +412,7 @@ struct NtvFcnStrc* getNtvFcn(vector<EnvrStrc*> envr, struct FcnExpStrc* fcn)
 
 
 
-int prtEnvrFcn(struct EnvrStrc* envr)
+int prtEnvrFcn(struct Envr* envr)
 {
 	int i;
 
@@ -428,10 +429,10 @@ int prtEnvrFcn(struct EnvrStrc* envr)
 
 
 
-int initGlbEnvr(vector<EnvrStrc*>& envr)
+int initGlbEnvr(vector<Envr*>& envr)
 {
 
-	envr.push_back(new EnvrStrc(EnvrEnm::TopLvl));
+	envr.push_back(new Envr(EnvrEnm::TopLvl));
 	envr[0]->typ = EnvrEnm::TopLvl;
 
 	addNtvFcn(envr[0], string("readInt"), rdIntFcn, 0);
@@ -461,15 +462,15 @@ int initGlbEnvr(vector<EnvrStrc*>& envr)
 	addNtvFcn(envr[0], string("ftell"), flTl, 1);
 	addNtvFcn(envr[0], string("fprint"), flPrt, 2);
 	addNtvFcn(envr[0], string("scat"), scat,2);
-	addNtvFcn(envr[0], string("strcat"), scat, 2);
+	addNtvFcn(envr[0], string("exe"), exe,1);
 
 	return 0;
 }
 
-int intlEnvr(struct EnvrStrc** envr)
+int intlEnvr(struct Envr** envr)
 {
 
-	*envr = new EnvrStrc;
+	*envr = new Envr;
 
 	return 0;
 }

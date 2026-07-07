@@ -8,16 +8,16 @@
 #include "dfn.h"
 #include "envr.h"
 
-extern int intlEnvr(struct EnvrStrc** envr);
+extern int intlEnvr(struct Envr** envr);
 
-FcnStrc* bldFcn(char* nm, struct PrmLstStrc* prmLst, struct Stmt* stmt);
-FcnStrc* bldFcn(char* nm, struct PrmLstStrc* prmLst);
+FcnStrc* bldFcn(char* nm, PrmLstStrc* prmLst, Stmt* stmt);
+FcnStrc* bldFcn(char* nm, PrmLstStrc* prmLst);
 ArgLstStrc* bldArgLst();
-int argLstAdd(struct ArgLstStrc* argLst, struct Exp* arg);
-int argLstAdd(struct ArgLstStrc* argLst, struct Exp* prm, struct Exp* arg);
+int argLstAdd(ArgLstStrc* argLst, Exp* arg);
+int argLstAdd(ArgLstStrc* argLst, Exp* prm, Exp* arg);
 struct PrmLstStrc* bldPrmLst();
-int prmLstAdd(struct PrmLstStrc* prmLst, struct Exp* prm);
-int prmLstAdd(struct PrmLstStrc* prmLst, struct Exp* prm, struct Exp* dft);
+int prmLstAdd(PrmLstStrc* prmLst, Exp* prm);
+int prmLstAdd(PrmLstStrc* prmLst, Exp* prm, struct Exp* dft);
 
 
 FcnStrc* bldFcn(char* nm, struct PrmLstStrc* prmLst, struct Stmt* stmt)

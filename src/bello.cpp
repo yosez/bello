@@ -19,11 +19,11 @@ using namespace std;
 #include "y.tab.c"
 
 extern int prsStt;
-struct EnvrStrc;
+struct Envr;
 
-extern std::vector<EnvrStrc*> envr;
+extern std::vector<Envr*> envr;
 
-extern int initGlbEnvr(vector<EnvrStrc*>& envr);
+extern int initGlbEnvr(vector<Envr*>& envr);
 
 extern int yyparse(void);
 

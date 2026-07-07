@@ -34,7 +34,7 @@ struct ClsStrc;
 struct ObjStrc;
 
 struct FcnStrc;
-struct EnvrStrc;
+struct Envr;
 
 struct ValStrc;
 
@@ -80,7 +80,7 @@ struct VarStmtStrc2;
 struct StmtStkItmStrc;
 
 ///
-typedef struct ValStrc* NtvFcnDfn(vector<EnvrStrc*>& envr, int prmCnt, vector <ValStrc*> prmArr);
+typedef struct ValStrc* NtvFcnDfn(vector<Envr*>& envr, int prmCnt, vector <ValStrc*> prmArr);
 
 
 int lstIndt = 0;
@@ -98,6 +98,7 @@ union ValUnn
 	ArrStrc* arr;
 	ObjStrc* obj;
 	void* ptr;
+	//void* nl;
 
 public:
 	ValUnn()
@@ -267,6 +268,9 @@ public:
 
 	Stmt(StmtEnm stmt): typ(stmt)
 	{};
+
+	virtual void mkPlm()
+	{};
 };
 
 struct StmtStkItmStrc
@@ -377,14 +381,14 @@ public:
 	ValEnm typ;
 	ValUnn v;
 
-	ValStrc(ValEnm typ, ValUnn v): typ(typ), v(v)
+	ValStrc(const ValEnm &typ, const ValUnn &v): typ(typ), v(v)
 	{};
 
 	ValStrc()
 	{
 	};
 
-	ValStrc(ValEnm typ): typ(typ)
+	ValStrc(const ValEnm &typ): typ(typ)
 	{};
 
 	//拷贝构造
@@ -1200,7 +1204,7 @@ struct WhlStmt : public Stmt
 
 struct DoWhlStmt : public Stmt
 {
-	//CndStrc* cnd;
+	CndStrc* cnd;
 	Stmt* exp;
 	Stmt* stmt;
 
@@ -1212,6 +1216,7 @@ struct DoWhlStmt : public Stmt
 
 };
 
+///TODO 可以携带最终计算值
 struct BrkStmt : public Stmt
 {
 	Exp* exp;
@@ -1358,7 +1363,7 @@ struct FcnStrc
 
 //变量环境结构体
 
-struct EnvrStrc
+struct Envr
 {
 
 	EnvrEnm typ;
@@ -1375,10 +1380,10 @@ struct EnvrStrc
 	vector<ClsStrc*> clsArr;
 
 public:
-	EnvrStrc()
+	Envr()
 	{
 	}
-	EnvrStrc(EnvrEnm typ)
+	Envr(EnvrEnm typ)
 	{
 		this->typ = typ;
 	}
@@ -1466,6 +1471,6 @@ struct NtvFcnStrc
 };
 
 
-vector<EnvrStrc*> envr;
+vector<Envr*> envr;
 
 #endif

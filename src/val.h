@@ -6,26 +6,20 @@
 #include <string.h>
 #include "dfn.h"
 
-// struct ValStrc;
-// enum class ValEnm :int;
-
 
 ValStrc* bldIntVal(int v)
 {
-	ValStrc* rslt = new ValStrc();
+	ValStrc* rslt = new ValStrc(ValEnm::Int, std::move(ValUnn(v)));
 
-	rslt->typ = ValEnm::Int;
-	rslt->v.int_ = v;
+	// rslt->typ = ValEnm::Int;
+	// rslt->v.int_ = v;
 
 	return rslt;
 }
 
-ValStrc* bldFltVal(float vl)
+ValStrc* bldFltVal(float v)
 {
-	ValStrc* rslt = new ValStrc();
-
-	rslt->typ = ValEnm::Flt;
-	rslt->v.flt = vl;
+	ValStrc* rslt = new ValStrc(ValEnm::Flt, std::move(ValUnn(v)));
 
 	return rslt;
 }
@@ -48,42 +42,32 @@ ValStrc* bldBlnVal(int vl)
 	return rslt;
 }
 
-ValStrc* bldStrVal(char* vl)
+ValStrc* bldStrVal(char* v)
 {
-	ValStrc* rslt = new ValStrc();
-
-	rslt->typ = ValEnm::Str;
-
-	rslt->v.str = new string(vl);
+	ValStrc* rslt = new ValStrc(ValEnm::Str, std::move(ValUnn(v)));
 
 	return rslt;
 }
 
+///TODO
 ValStrc* bldStrValByStr(string vl)
 {
-	ValStrc* rslt = new ValStrc;
-
-	rslt->typ = ValEnm::Str;
-	rslt->v.str = new string(vl);
+	ValStrc* rslt = new ValStrc(ValEnm::Str , std::move(ValUnn( &vl)));
 
 	return rslt;
 }
 
 ValStrc* bldArrVal(ArrStrc* arr)
 {
-	ValStrc* rslt = new ValStrc;
-
-	rslt->typ = ValEnm::Arr;
-	rslt->v.arr = arr;
+	ValStrc* rslt = new ValStrc(ValEnm::Arr, std::move(ValUnn(arr)));
 
 	return rslt;
 }
 
 ValStrc* bldNlVal()
 {
-	ValStrc* rslt = new ValStrc;
+	ValStrc* rslt = new ValStrc(ValEnm::Nl, std::move(ValUnn()));
 
-	rslt->typ = ValEnm::Nl;
 
 	return rslt;
 }

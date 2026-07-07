@@ -2,13 +2,14 @@
 
 
 ///TODO
-#ifndef EXPT_H
-#define EXPT_H
+#ifndef EX_H
+#define EX_H
 
 
 class ExBs
 {
-
+public:
+    string rsn{};
 };
 
 class ExSntx:public ExBs

@@ -47,6 +47,8 @@
 
     int lstStt=0,stt=0;
 
+    /*^[^ \t]*\n                  { return NO_INDENT; }*/
+
 %}
 
 %x STRING COMMENT COMMENT_2 
@@ -68,13 +70,14 @@
 
 
 <<EOF>>                     { return END_FILE; }
+
 ^"\t"+                       { 
                                 yylval.intVl = strlen(yytext); 
                                 //printf("yytext \\t: |%s|, %d\n", yytext, strlen(yytext));
                                 return INDENT; 
                             }
-^([ ]{4})+                   { 
-                                yylval.intVl = strlen(yytext)/4;
+^([ ]{2})+                   {
+                                yylval.intVl = strlen(yytext)/2;
                                 //printf("yytext [ ]: |%s|\n", yytext);
                                 return INDENT;
                             }
@@ -114,7 +117,7 @@
 "var"                       { return VAR; }
 "global"                    { return GLOBAL; }
 "if"                        { return IF; }
-"elif"                      { return ELSEIF; }
+"elif"                      { return ELIF; }
 "else"                      { return ELSE; }
 "for"                       { return FOR; }
 "do"                        { return DO; }
@@ -180,5 +183,7 @@
 
 
 %%
+
+
 
 #endif

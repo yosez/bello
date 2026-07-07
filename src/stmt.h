@@ -2,6 +2,12 @@
 
 #ifndef STMT_H
 #define STMT_H
+#include <iostream>
+#include <print>
+
+using std::cout;
+using std::endl;
+//using std::print;
 
 #include <stdio.h>
 #include <chrono>
@@ -15,13 +21,13 @@ extern int chkStmtAlwScndStmt(Stmt* stmt);
 extern int asnVrbCpy(struct VrbStrc* vrb, struct ValStrc* vl);
 extern Stmt* lstStmt;
 extern Exp* bldVrbExp(char* idtf);
-extern ValStrc* clcExp(vector<EnvrStrc*>& envr, struct Exp* exp);
-extern VrbStrc* getVrb(vector<EnvrStrc*>& envr, struct VrbExp* vrbExp);
-extern VrbStrc* addVrb(struct EnvrStrc* envr, struct VrbExp* vrbExp);
-extern VrbStrc* addVrbGlb(vector<EnvrStrc*>& envr, VrbExp* vrbExp);
+extern ValStrc* clcExp(vector<Envr*>& envr, struct Exp* exp);
+extern VrbStrc* getVrb(vector<Envr*>& envr, struct VrbExp* vrbExp);
+extern VrbStrc* addVrb(struct Envr* envr, struct VrbExp* vrbExp);
+extern VrbStrc* addVrbGlb(vector<Envr*>& envr, VrbExp* vrbExp);
 extern Exp* bldFcnExp(char* nm, struct ArgLstStrc* argLst);
-extern FcnStrc* getFcn(vector<EnvrStrc*> envr, struct FcnExpStrc* fcnExp);
-extern int addFcn(struct EnvrStrc* envr, struct FcnStrc* fcn);
+extern FcnStrc* getFcn(vector<Envr*> envr, struct FcnExpStrc* fcnExp);
+extern int addFcn(struct Envr* envr, struct FcnStrc* fcn);
 
 //语句系列函数，参数为语句的内容部分，如创建if语句结构体的bldIfStmt函数的参数exp为if的条件表达式，stmt参数为if的条件为真执行的语句块
 Stmt* bldExpStmt( Exp* exp);
@@ -55,23 +61,57 @@ Stmt *bldForInitStmt(Exp* exp);
 Stmt *bldForCdtnStmt(Exp * exp);
 Stmt *bldForItrStmt(Exp *exp);
 
+extern int pnStmt(vector<Envr*> &env, Stmt* stmt);
 
 
+StmtRsltStrc* exctStmt(struct Envr* glbEnvr, struct Envr* fcnEnvr, Stmt* stmt);
 
-StmtRsltStrc* exctStmt(struct EnvrStrc* glbEnvr, struct EnvrStrc* fcnEnvr, Stmt* stmt);
+
+//Auxilary
+int pnStmt(vector<Envr*> &env, Stmt* stmt)
+{
+	print("pnStmt\n");
+	switch (stmt->typ)
+	{
+		case StmtEnm::Blk:
+		{
+			std::print("stmt Block");
+			break;
+		}
+		case StmtEnm::If:
+		{
+			print("stmt if: ");
+
+			break;
+		}
+		case StmtEnm::Els:
+		{
+			print("stmt else:");
+		}
+		case StmtEnm::Whl:
+		{
+			print("stmt while: \n");
+		}
+		case StmtEnm::Brk:
+		{
+			print("stmt break: {}\n",
+				clcExp(env, dynamic_cast<BrkStmt*>(stmt)->exp)->v.int_);
+		}
+		case StmtEnm::Exp:
+		{
+			print("stmt exp: ");
+		}
+	}
+}
 
 Stmt* bldExpStmt(Exp* exp)
 {
-	struct ExpStmtStrc* rslt = new ExpStmtStrc(exp);
+	//ExpStmtStrc* rslt = new ExpStmtStrc(exp);
 
-	rslt->typ = StmtEnm::Exp;
-
-	rslt->exp = exp;
-
-	return rslt;
+	return new ExpStmtStrc(exp);
 }
 
-Stmt* bldIfStmt(struct Exp* exp)
+Stmt* bldIfStmt(Exp* exp)
 {
 	IfStmt* rslt = new IfStmt(exp, nullptr);
 
@@ -294,7 +334,7 @@ Stmt* bldClsStmt(ClsStrc* cls)
 }
 
 
-struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, Stmt* stmt)
+struct StmtRsltStrc* exctStmt(vector<Envr*>& envr, Stmt* stmt)
 {
 	struct StmtRsltStrc* rslt = new StmtRsltStrc;
 
@@ -414,7 +454,7 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, Stmt* stmt)
 		{
 			auto ifStmt = static_cast<IfStmt*>(stmt);
 
-			envr.push_back(new EnvrStrc(EnvrEnm::Stmt));
+			envr.push_back(new Envr(EnvrEnm::Stmt));
 
 			//printf("clcExp(envr, stmt->stmt.ifStmt->exp)->vl.intVl: %d\n", clcExp(envr, stmt->stmt.ifStmt->exp)->vl.intVl);
 
@@ -475,7 +515,7 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, Stmt* stmt)
 			}
 
 
-			envr.push_back(new EnvrStrc(EnvrEnm::Stmt));
+			envr.push_back(new Envr(EnvrEnm::Stmt));
 
 			rslt = exctStmt(envr, elsStmt->stmt);
 
@@ -524,7 +564,7 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, Stmt* stmt)
 
 
 			ValStrc* expRslt = nullptr;
-			envr.push_back(new EnvrStrc(EnvrEnm::Stmt));
+			envr.push_back(new Envr(EnvrEnm::Stmt));
 
 			if ((elifStmt->expRslt = clcExp(envr, elifStmt->exp)->v.int_) != 0)
 			{
@@ -564,7 +604,7 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, Stmt* stmt)
 			std::chrono::steady_clock::time_point tmStrt;
 			tmStrt = std::chrono::steady_clock::now();
 
-			envr.push_back(new EnvrStrc(EnvrEnm::Stmt));
+			envr.push_back(new Envr(EnvrEnm::Stmt));
 
 			auto forStmt = static_cast<ForStmt*>(stmt);
 
@@ -646,7 +686,7 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, Stmt* stmt)
 
 			auto whlStmt = static_cast<WhlStmt*>(stmt);
 
-			envr.push_back(new EnvrStrc(EnvrEnm::Stmt));
+			envr.push_back(new Envr(EnvrEnm::Stmt));
 
 			while (whlStmt->exp == nullptr || clcExp(envr, (whlStmt->exp))->v.int_ != 0)
 			{
@@ -765,7 +805,7 @@ struct StmtRsltStrc* exctStmt(vector<EnvrStrc*>& envr, Stmt* stmt)
 		{
 			auto stmtBlk = static_cast<StmtBlkStrc*>(stmt);
 
-			envr.push_back(new EnvrStrc(EnvrEnm::Blk));
+			envr.push_back(new Envr(EnvrEnm::Blk));
 
 			int i;
 

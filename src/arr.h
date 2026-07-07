@@ -11,7 +11,7 @@
 
 //�˲�������ı�������������ɾ��
 extern Exp* bldIntValExp(int int_);
-extern ValStrc* clcExp(vector<EnvrStrc*>& envr, struct Exp* exp);
+extern ValStrc* clcExp(vector<Envr*>& envr, struct Exp* exp);
 
 struct ElmtLstStrc* bldElmtLst()
 {
