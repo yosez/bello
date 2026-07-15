@@ -10,8 +10,8 @@
 
 extern int intlEnvr(struct Envr** envr);
 
-FcnStrc* bldFcn(char* nm, PrmLstStrc* prmLst, Stmt* stmt);
-FcnStrc* bldFcn(char* nm, PrmLstStrc* prmLst);
+Fcn* bldFn(char* nm, PrmLstStrc* prmLst, Stmt* stmt);
+Fcn* bldFn(char* nm, PrmLstStrc* prmLst);
 ArgLstStrc* bldArgLst();
 int argLstAdd(ArgLstStrc* argLst, Exp* arg);
 int argLstAdd(ArgLstStrc* argLst, Exp* prm, Exp* arg);
@@ -20,16 +20,16 @@ int prmLstAdd(PrmLstStrc* prmLst, Exp* prm);
 int prmLstAdd(PrmLstStrc* prmLst, Exp* prm, struct Exp* dft);
 
 
-FcnStrc* bldFcn(char* nm, struct PrmLstStrc* prmLst, struct Stmt* stmt)
+Fcn* bldFn(char* nm, PrmLstStrc* prmLst, Stmt* stmt)
 {
-	FcnStrc* rslt = new FcnStrc(nm, prmLst, stmt);
+	Fcn* rslt = new Fcn(nm, prmLst, stmt);
 
 	return rslt;
 }
 
-FcnStrc* bldFcn(char* nm, PrmLstStrc* prmLst)
+Fcn* bldFn(char* nm, PrmLstStrc* prmLst)
 {
-	FcnStrc* rslt = new FcnStrc(nm, prmLst, nullptr);
+	Fcn* rslt = new Fcn(nm, prmLst, nullptr);
 
 
 	return rslt;
@@ -83,7 +83,7 @@ PrmLstStrc* bldPrmLst()
 	return rslt;
 }
 
-int prmLstAdd(struct PrmLstStrc* prmLst, struct Exp* prm)
+int prmLstAdd(PrmLstStrc* prmLst, Exp* prm)
 {
 	prmLst->prmArr.push_back(static_cast<VrbExp*>(prm));
 	prmLst->expArr.push_back(nullptr);
@@ -91,7 +91,7 @@ int prmLstAdd(struct PrmLstStrc* prmLst, struct Exp* prm)
 	return 0;
 }
 
-int prmLstAdd(struct PrmLstStrc* prmLst, struct Exp* prm, struct Exp* dft)
+int prmLstAdd(PrmLstStrc* prmLst, Exp* prm, Exp* dft)
 {
 	prmLst->prmArr.push_back(static_cast<VrbExp*>(prm));
 	prmLst->expArr.push_back(dft);

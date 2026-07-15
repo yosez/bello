@@ -76,6 +76,7 @@
                                 //printf("yytext \\t: |%s|, %d\n", yytext, strlen(yytext));
                                 return INDENT; 
                             }
+^[^ \t]\.+                  { return NOINDENT; }
 ^([ ]{2})+                   {
                                 yylval.intVl = strlen(yytext)/2;
                                 //printf("yytext [ ]: |%s|\n", yytext);

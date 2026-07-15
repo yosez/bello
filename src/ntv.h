@@ -8,6 +8,8 @@
 #include "val.h"
 #include <functional>
 
+#include <print>
+
 
 //defination of native functions
 std::function<ValStrc* (vector<Envr*>&, int, vector<ValStrc*>)> ntvFmt;
@@ -35,6 +37,7 @@ ValStrc* flCls(vector<Envr*>& envr, int argCnt, vector <ValStrc*> argArr);
 ValStrc* flPrt(vector<Envr*>& envr, int argCnt, vector <ValStrc*> argArr);
 //2 calling names scat and strcat
 ValStrc* scat(vector<Envr*>& envr, int argCnt, vector <ValStrc*> argArr);
+ValStrc* ssub(vector<Envr*>& envr, int argCnt, vector <ValStrc*> argArr);
 ValStrc* exe(vector<Envr*>& envr, int argCnt, vector <ValStrc*> argArr);
 
 ValStrc* flScnInt(vector<Envr*>& envr, int argCnt, vector <ValStrc*> argArr);
@@ -381,17 +384,54 @@ ValStrc* exe(vector<Envr*>& envr, int argCnt, vector <ValStrc*> argArr)
 
 ValStrc* scat(vector<Envr*>& envr, int argCnt, vector <ValStrc*> argArr)
 {
-	ValStrc *op, *op2, *rslt;
+	string *op, *op2, *rslStr;
+	ValStrc *rsl;
 
 	//ValUnn
 
-	op = new ValStrc(ValEnm::Str,  ValUnn((argArr.at(0)->v.str)));  //clcExp(envr, argArr.at(0)->v.str+)
-	op2 = new ValStrc(ValEnm::Str,  ValUnn((argArr.at(1)->v.str)));  //clcExp(envr, argArr.at(0)->v.str+)
-	rslt = new ValStrc(*op + *op2);
-	//rslt = new ValStrc(*(argArr[0]) + *(argArr[1]));
-	return rslt;
+	op = argArr.at(0)->v.str;  //clcExp(envr, argArr.at(0)->v.str+)
+	op2 = argArr.at(1)->v.str;  //clcExp(envr, argArr.at(0)->v.str+)
+	print("{} {}", op->c_str(), op2->c_str());
+	rslStr = new string(string(op->c_str())+string(op2->c_str()));
+	//print("{}", rsl)*/
+	rsl = new ValStrc(ValEnm::Str, ValUnn(rslStr));
+
+	return rsl;
 }
 
+ValStrc* ssub(vector<Envr*>&envr, int argCnt, vector <ValStrc*> argArr)
+{
+	ValStrc *rsl;
+
+
+
+	string orn= string(argArr.at(0)->v.str->c_str());
+	string *rslStr = new string(orn.substr(argArr.at(1)->v.int_));
+
+	print("prm ssub: {} {}", argArr[0]->v.str->c_str(), argArr[1]->v.int_);
+
+	rsl = new ValStrc(ValEnm::Str, ValUnn(rslStr));
+
+	print("prm ssub #2\n");
+
+	return rsl;
+}
+
+// ValStrc* srev(vector<Envr*>&envr, int argCnt, vector <ValStrc*> argArr)
+// {
+// 	ValStrc *rsl;
+//
+// 	print("prm srev: {} ", argArr[0]->v.str->c_str());
+//
+// 	string orn= string(argArr.at(0)->v.str->c_str());
+// 	orn.();
+//
+// 	string *rev= new string(orn);
+//
+// 	rsl = new ValStrc(ValEnm::Str, ValUnn(rev));
+//
+// 	return rsl;
+// }
 
 ///TODO
 ValStrc* scpy(vector<Envr*>& envr, int argCnt, vector <ValStrc*> argArr)
@@ -400,7 +440,7 @@ ValStrc* scpy(vector<Envr*>& envr, int argCnt, vector <ValStrc*> argArr)
 
 	//ValUnn
 
-	op = new ValStrc(ValEnm::Str,  ValUnn((argArr.at(0)->v.str)));  //clcExp(envr, argArr.at(0)->v.str+)
+	op = new ValStrc(ValEnm::Str,  ValUnn(new string(argArr.at(0)->v.str->c_str())));  //clcExp(envr, argArr.at(0)->v.str+)
 	// op2 = new ValStrc(ValEnm::Str,  ValUnn((argArr.at(1)->v.str)));  //clcExp(envr, argArr.at(0)->v.str+)
 	// rslt = new ValStrc(*op + *op2);
 	return op;

@@ -22,25 +22,25 @@ public:
 
 class ExSntx:public ExBs
 {
-    ExSntx(string rsn, string arg, string arg2, string arg3): ExBs(rsn, arg, arg2, arg3){};
+    //ExSntx(string rsn, string arg, string arg2, string arg3): ExBs(rsn, arg, arg2, arg3){};
 };
 
 
 class ExLgc:public ExBs
 {
 public:
-    ExLgc(string rsn, string arg, string arg2, string arg3): ExBs(rsn, arg, arg2, arg3){};
+    //ExLgc(string rsn, string arg, string arg2, string arg3): ExBs(rsn, arg, arg2, arg3){};
 };
 
 class ExVrbNotFnd:public ExLgc
 {
 public:
-    ExVrbNotFnd(string vrb): ExLgc("Variable {} not found.\n", vrb, string{}, string{}){};
+    //ExVrbNotFnd(string vrb): ExLgc("Variable {} not found.\n", vrb, string{}, string{}){};
 };
 
 class ExVrbRdfn : public ExLgc
 {
-    ExVrbRdfn(string vrb): ExLgc("Variable {} cannot be redefined.\n", vrb, string{}, string{}){};
+    //ExVrbRdfn(string vrb): ExLgc("Variable {} cannot be redefined.\n", vrb, string{}, string{}){};
 };
 
 class ExWrgOprndTyp:public ExLgc
@@ -51,7 +51,7 @@ class ExWrgOprndTyp:public ExLgc
 class ExFcnNotFnd: public ExLgc
 {
 
-    ExFcnNotFnd(string fn): ExLgc("Function {} not found.\n", fn, string{}, string{}){};
+    //ExFcnNotFnd(string fn): ExLgc("Function {} not found.\n", fn, string{}, string{}){};
 
 };
 

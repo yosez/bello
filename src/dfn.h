@@ -33,7 +33,7 @@ struct VrbExp;
 struct ClsStrc;
 struct ObjStrc;
 
-struct FcnStrc;
+struct Fcn;
 struct Envr;
 
 struct ValStrc;
@@ -111,7 +111,7 @@ public:
 	explicit ValUnn(const float &flt):flt(flt)
 	{};
 
-	explicit ValUnn( string* str): str(str)
+	explicit ValUnn( string* str):str(str)
 	{};
 
 	explicit ValUnn(ArrStrc* arr): arr(arr)
@@ -123,17 +123,10 @@ public:
 	explicit ValUnn(void* ptr):ptr(ptr)
 	{};
 
-	// ValUnn(ValUnn &&val)
-	// {
-	// 	//memcpy(this, &val, sizeof(ValUnn));
-	// }
 
 	~ValUnn()
 	{
 	}
-
-	//平凡拷贝构造
-	//ValUnn(const ValUnn &val)=default;
 
 
 };
@@ -308,9 +301,9 @@ struct ClsStrc
 {
 	string* nm;
 	vector<VrbStrc*> vrb;
-	vector<FcnStrc*> fcn;
+	vector<Fcn*> fcn;
 	vector<VrbStrc*> shrVrb;
-	vector<FcnStrc*> shrFcn;
+	vector<Fcn*> shrFcn;
 
 	Stmt* dfn;
 };
@@ -321,14 +314,14 @@ struct ObjStrc
 {
 public:
 	vector<VrbStrc*> vrb;
-	vector<FcnStrc*> fcn;
+	vector<Fcn*> fcn;
 
 	ClsStrc* cls;
 
 	ObjStrc()
 	{};
 
-	ObjStrc(vector<VrbStrc *> vrb, vector<FcnStrc *> fcn, ClsStrc* cls): vrb(vrb), fcn(fcn), cls(cls)
+	ObjStrc(vector<VrbStrc *> vrb, vector<Fcn *> fcn, ClsStrc* cls): vrb(vrb), fcn(fcn), cls(cls)
 	{};
 };
 
@@ -1243,9 +1236,9 @@ struct CntnStmt : public Stmt
 
 struct FcnStmt : public Stmt
 {
-	FcnStrc* fcn;
+	Fcn* fcn;
 
-	FcnStmt(FcnStrc* fcn): Stmt(StmtEnm::DfnFcn), fcn(fcn)
+	FcnStmt(Fcn* fcn): Stmt(StmtEnm::DfnFcn), fcn(fcn)
 	{};
 };
 
@@ -1349,13 +1342,13 @@ struct StmtRsltStrc
 };
 
 //函数信息结构体
-struct FcnStrc
+struct Fcn
 {
 	string nm;
 	PrmLstStrc* prm;
 	Stmt* stmt;
 
-	FcnStrc(string nm, PrmLstStrc* prm, Stmt* stmt): nm(nm), prm(prm), stmt(stmt)
+	Fcn(string nm, PrmLstStrc* prm, Stmt* stmt): nm(nm), prm(prm), stmt(stmt)
 	{};
 
 };
@@ -1370,7 +1363,7 @@ struct Envr
 
 	vector<VrbStrc*> vrbArr;
 
-	vector<FcnStrc*> fcnArr;
+	vector<Fcn*> fcnArr;
 
 	vector<NtvFcnStrc*> ntvFcnArr;
 

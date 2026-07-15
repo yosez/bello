@@ -16,6 +16,11 @@ using std::endl;
 #include "exp.h"
 #include "vrb.h"
 
+class ExAlrdDfnAsVrb;
+class ExWrgDfnAsVrb;
+class ExWrgOprndTyp;
+
+
 extern int chkStmtAlwSubStmt(Stmt* stmt);
 extern int chkStmtAlwScndStmt(Stmt* stmt);
 extern int asnVrbCpy(struct VrbStrc* vrb, struct ValStrc* vl);
@@ -26,8 +31,8 @@ extern VrbStrc* getVrb(vector<Envr*>& envr, struct VrbExp* vrbExp);
 extern VrbStrc* addVrb(struct Envr* envr, struct VrbExp* vrbExp);
 extern VrbStrc* addVrbGlb(vector<Envr*>& envr, VrbExp* vrbExp);
 extern Exp* bldFcnExp(char* nm, struct ArgLstStrc* argLst);
-extern FcnStrc* getFcn(vector<Envr*> envr, struct FcnExpStrc* fcnExp);
-extern int addFcn(struct Envr* envr, struct FcnStrc* fcn);
+extern Fcn* getFcn(vector<Envr*> envr, struct FcnExpStrc* fcnExp);
+extern int addFcn(struct Envr* envr, struct Fcn* fcn);
 
 //语句系列函数，参数为语句的内容部分，如创建if语句结构体的bldIfStmt函数的参数exp为if的条件表达式，stmt参数为if的条件为真执行的语句块
 Stmt* bldExpStmt( Exp* exp);
@@ -43,7 +48,7 @@ Stmt* bldStmtBlk();
 Stmt* stmtBlkAdd(Stmt* stmtBlk, Stmt* stmt);
 Stmt* bldBrkStmt(Exp* exp);
 Stmt* bldCntnStmt(Exp* exp);
-Stmt* bldFcnStmt(FcnStrc* fcn);
+Stmt* bldFcnStmt(Fcn* fcn);
 Stmt* bldRtnStmt(Exp* exp);
 Stmt* bldVarStmt(AsnLstStrc* asnLst);
 Stmt* bldVarStmt(int typ, AsnLstStrc* asgnLst);
@@ -271,7 +276,7 @@ Stmt* bldCntnStmt(struct Exp* exp)
 	return rslt;
 }
 
-Stmt* bldFcnStmt(struct FcnStrc* fcn)
+Stmt* bldFcnStmt(struct Fcn* fcn)
 {
 	FcnStmt* rslt = new FcnStmt(fcn);
 
@@ -394,7 +399,7 @@ struct StmtRsltStrc* exctStmt(vector<Envr*>& envr, Stmt* stmt)
 				}
 				else
 				{
-					throw new ExVrbRdfn();
+					throw new ExVrbRdfn;
 				}
 
 				if (varStmt->asnLst->asgnArr[i]->exp->typ != ExpEnm::Nl)

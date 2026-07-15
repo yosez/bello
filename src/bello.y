@@ -13,9 +13,8 @@
     #include "vrb.h"
     #include "val.h"
     #include "exp.h"
-    #include "stmt.h"
     #include "arr.h"
-    #include "stmt.h"
+    #include "stm.h"
     #include "fn.h"
     #include "cls.h"
     #include "envr.h"
@@ -77,7 +76,7 @@
     struct VrbStrc *vrb;
     struct Exp *exp;
     struct Stmt *stmt;
-    struct FcnStrc *fcn;
+    struct Fcn *fcn;
     struct PrmLstStrc *prmLst;
     struct ArgLstStrc *argLst;
     struct VrbLstStrc *vrbLst;
@@ -91,7 +90,7 @@
 }
 
 %token NULL_STRING
-%token NO_INDENT
+%token NOINDENT
 %token LF
 %token END_FILE
 %token NEW
@@ -205,8 +204,9 @@ import_statement
 
 statement
 
-    : statement monostatement {printf("monostatement");} enclose_statement_stack build_single_statement_stack execute_single_statement LF
-    | statement foldable_statement build_statement_stack LF
+    : statement NOINDENT monostatement enclose_statement_stack build_single_statement_stack execute_single_statement LF
+    | statement NOINDENT foldable_statement build_statement_stack LF
+    | statement INDENT single_statement LF check_indent build_statement_stack
     ///TODO THINK 顶层语句非顶层语句分开处理
     ///TODO THINK
     //从命令行或源码输入顶层语句并执行，顶层语句情况
@@ -1090,33 +1090,33 @@ structure_statement
 /* FUNCTION_STATEMENT
     : FUNC IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN statement_block
     {
-        struct FcnStrc* fcn;
+        struct Fcn* fcn;
 
-        fcn=bldFcn($2, $4, $6);
+        fcn=bldFn($2, $4, $6);
 
         $$ = bldFcnStmt(fcn);
     }
     | FUNC IDENTIFER LEFT_PAREN RIGHT_PAREN statement_block
     {
-        struct FcnStrc *fcn;
+        struct Fcn *fcn;
 
-        fcn=bldFcn($2, bldPrmLst(), $5);
+        fcn=bldFn($2, bldPrmLst(), $5);
 
         $$ = bldFcnStmt(fcn);
     }
     | FUNC IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN single_statement
     {
-        struct FcnStrc* fcn;
+        struct Fcn* fcn;
 
-        fcn=bldFcn($2, $4, $6);
+        fcn=bldFn($2, $4, $6);
 
         $$ = bldFcnStmt(fcn);
     }
     | FUNC IDENTIFER LEFT_PAREN RIGHT_PAREN single_statement
     {
-        struct FcnStrc *fcn;
+        struct Fcn *fcn;
 
-        fcn=bldFcn($2, bldPrmLst(), $5);
+        fcn=bldFn($2, bldPrmLst(), $5);
 
         $$ = bldFcnStmt(fcn);
     } */
@@ -1124,17 +1124,17 @@ structure_statement
 function_statement
     : FUNC IDENTIFER LEFT_PAREN parameter_list RIGHT_PAREN 
     {
-        struct FcnStrc* fcn;
+        struct Fcn* fcn;
 
-        fcn=bldFcn($2, $4);
+        fcn=bldFn($2, $4);
 
         $$ = bldFcnStmt(fcn);
     }
     | FUNC IDENTIFER LEFT_PAREN RIGHT_PAREN
     {
-        struct FcnStrc *fcn;
+        struct Fcn *fcn;
 
-        fcn=bldFcn($2, bldPrmLst());
+        fcn=bldFn($2, bldPrmLst());
 
         $$ = bldFcnStmt(fcn);
     }
@@ -1148,18 +1148,18 @@ function_statement
             break;
         }
 
-        struct FcnStrc* fcn;
+        struct Fcn* fcn;
 
-        fcn=bldFcn($3, $5);
+        fcn=bldFn($3, $5);
 
         $$ = bldFcnStmt(fcn);
         
     }
     | SHARED FUNC IDENTIFER LEFT_PAREN RIGHT_PAREN
     {
-        struct FcnStrc *fcn;
+        struct Fcn *fcn;
 
-        fcn=bldFcn($3, bldPrmLst());
+        fcn=bldFn($3, bldPrmLst());
 
         $$ = bldFcnStmt(fcn);
     }

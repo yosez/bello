@@ -13,7 +13,7 @@
 #include "val.h"
 #include "envr.h"
 #include "arr.h"
-#include "stmt.h"
+#include "stm.h"
 #include "ex.h"
 #include "cls.h"
 #include "vrb.h"
@@ -30,13 +30,13 @@ extern NtvFcnStrc *getNtvFcn(Envr *envr, FcnExpStrc *fcn);
 
 extern NtvFcnStrc *getNtvFcn(vector<Envr *> envr, struct FcnExpStrc *fcn);
 
-extern FcnStrc *getFcn(vector<Envr *> envr, struct FcnExpStrc *fcnExp);
+extern Fcn *getFcn(vector<Envr *> envr, struct FcnExpStrc *fcnExp);
 
 extern VrbStrc *getVrb(vector<Envr *> &envr, struct VrbExp *vrbExp);
 
 extern VrbStrc *getVrb(vector<Envr *> &envr, struct LvlExpStrc *lvl);
 
-extern int addFcn(struct Envr *envr, struct FcnStrc *fcn);
+extern int addFcn(struct Envr *envr, struct Fcn *fcn);
 
 extern struct ClsStrc *getGlbCls(vector<Envr *> &envr, string nm);
 
@@ -133,7 +133,7 @@ ValStrc *clcUnrExp(vector<Envr *> &envr, struct UnrExpStrc *exp);
 
 ValStrc *clcFcnExp(vector<Envr *> &envr, struct FcnExpStrc *exp);
 
-ValStrc *clcFcnExp(vector<Envr *> &envr, struct FcnStrc *fcn, struct FcnExpStrc *exp);
+ValStrc *clcFcnExp(vector<Envr *> &envr, struct Fcn *fcn, struct FcnExpStrc *exp);
 
 ValStrc *clcArrExp(vector<Envr *> &envr, struct ArrExpStrc *exp);
 
@@ -431,18 +431,6 @@ ValStrc *clcBnrExpSub(vector<Envr *> &envr, struct BnrExpStrc *exp)
 
     return rslt;
 
-    // if (lftCnst->typ == ValEnm::Int && rghtCnst->typ == ValEnm::Int)
-    // {
-    // 	rslt = bldIntVal(lftCnst->v.int_ - rghtCnst->v.int_);
-    // }
-    // if (lftCnst->typ == ValEnm::Int && rghtCnst->typ == ValEnm::Flt)
-    // {
-    // 	rslt = bldFltVal(lftCnst->v.int_ - rghtCnst->v.flt);
-    // }
-    // if (lftCnst->typ == ValEnm::Flt && rghtCnst->typ == ValEnm::Int)
-    // {
-    // 	rslt = bldFltVal(lftCnst->v.flt - rghtCnst->v.int_);
-    // }
 
     if (rslt == nullptr)
     {
@@ -1594,7 +1582,7 @@ ValStrc *clcFcnExp(vector<Envr *> &envr, FcnExpStrc *exp)
 
     ntvFcn = getNtvFcn(envr, exp);
 
-    FcnStrc *fcn;
+    Fcn *fcn;
 
     fcn = getFcn(envr, exp);
 
@@ -1670,6 +1658,8 @@ ValStrc *clcFcnExp(vector<Envr *> &envr, FcnExpStrc *exp)
         printf("ntv fcn: %d\n", ntvFcn->prmCnt);
 #endif
         rslt = ntvFcn->fcn(envr, ntvFcn->prmCnt, argArr);
+
+        print("rslt ssub: {}\n", rslt->v.str->c_str());
     } else if (fcn != nullptr)
     {
         //在建立函数环境前，计算实参的各个值
@@ -1778,7 +1768,7 @@ ValStrc *clcFcnExp(vector<Envr *> &envr, FcnExpStrc *exp)
 /// <summary>
 /// 使用函数结构体以及函数表达式结构体计算函数表达式
 /// </summary>
-ValStrc *clcFcnExp(vector<Envr *> &envr, struct FcnStrc *fcn, struct FcnExpStrc *exp)
+ValStrc *clcFcnExp(vector<Envr *> &envr, struct Fcn *fcn, struct FcnExpStrc *exp)
 {
     ValStrc *rslt = new ValStrc;
 
@@ -2181,7 +2171,7 @@ ValStrc *clcLvlExp(vector<Envr *> &envr, struct LvlExpStrc *exp)
     }
 
     FcnExpStrc *fcnExp = nullptr;
-    FcnStrc *fcn = nullptr;
+    Fcn *fcn = nullptr;
 
     //如果是调用对象的函数
     if (exp->blnIvk)

@@ -40,7 +40,7 @@
       know about them.  */
    enum yytokentype {
      NULL_STRING = 258,
-     NO_INDENT = 259,
+     NOINDENT = 259,
      LF = 260,
      END_FILE = 261,
      NEW = 262,
@@ -122,7 +122,7 @@
 #endif
 /* Tokens.  */
 #define NULL_STRING 258
-#define NO_INDENT 259
+#define NOINDENT 259
 #define LF 260
 #define END_FILE 261
 #define NEW 262
@@ -206,7 +206,7 @@
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 70 "./bello.y"
+#line 69 "./bello.y"
 {
     int blnVl;
     int intVl;
@@ -217,7 +217,7 @@ typedef union YYSTYPE
     struct VrbStrc *vrb;
     struct Exp *exp;
     struct Stmt *stmt;
-    struct FcnStrc *fcn;
+    struct Fcn *fcn;
     struct PrmLstStrc *prmLst;
     struct ArgLstStrc *argLst;
     struct VrbLstStrc *vrbLst;

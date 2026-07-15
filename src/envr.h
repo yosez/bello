@@ -26,9 +26,9 @@ VrbStrc* getVrb(vector<Envr*>& envr, struct VrbExp* vrbExp);
 VrbStrc* getVrb(vector<Envr*>& envr, struct LvlExpStrc* lvl);
 int prtEnvrVrb(struct Envr* envr);
 
-int addFcn(struct Envr* envr, struct FcnStrc* fcn);
-FcnStrc* getFcn(vector<Envr*> envr, struct FcnExpStrc* fcnExp);
-FcnStrc* getEnvrFcn(struct Envr* envr, struct FcnExpStrc* fcnExp);
+int addFcn(struct Envr* envr, struct Fcn* fcn);
+Fcn* getFcn(vector<Envr*> envr, struct FcnExpStrc* fcnExp);
+Fcn* getEnvrFcn(struct Envr* envr, struct FcnExpStrc* fcnExp);
 
 ClsStrc* getEnvrCls(Envr* envr, string nm);
 ClsStrc* getGlbCls(vector<Envr*>& envr, string nm);
@@ -200,7 +200,7 @@ int prtEnvrVrb(struct Envr* envr)
 }
 
 
-int addFcn(struct Envr* envr, struct FcnStrc* fcn)
+int addFcn(struct Envr* envr, struct Fcn* fcn)
 {
 
 	envr->fcnArr.push_back(fcn);
@@ -208,7 +208,7 @@ int addFcn(struct Envr* envr, struct FcnStrc* fcn)
 	return 0;
 }
 
-struct FcnStrc* getEnvrFcn(struct Envr* envr, struct FcnExpStrc* fcnExp)
+struct Fcn* getEnvrFcn(struct Envr* envr, struct FcnExpStrc* fcnExp)
 {
 	int i;
 
@@ -225,9 +225,9 @@ struct FcnStrc* getEnvrFcn(struct Envr* envr, struct FcnExpStrc* fcnExp)
 }
 
 
-struct FcnStrc* getFcn(vector<Envr*> envr, struct FcnExpStrc* fcnExp)
+struct Fcn* getFcn(vector<Envr*> envr, struct FcnExpStrc* fcnExp)
 {
-	struct FcnStrc* fcn = nullptr;
+	struct Fcn* fcn = nullptr;
 
 	int lyr = envr.size() - 1;
 
@@ -461,7 +461,10 @@ int initGlbEnvr(vector<Envr*>& envr)
 	addNtvFcn(envr[0], string("fseek"), flSk, 3);
 	addNtvFcn(envr[0], string("ftell"), flTl, 1);
 	addNtvFcn(envr[0], string("fprint"), flPrt, 2);
+	//HINT  do all string function returns a value instead of operation inplace
 	addNtvFcn(envr[0], string("scat"), scat,2);
+	addNtvFcn(envr[0], string("ssub"), ssub, 2);
+	addNtvFcn(envr[0], string("srev"), srev, 1);
 	addNtvFcn(envr[0], string("exe"), exe,1);
 
 	return 0;

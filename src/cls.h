@@ -16,15 +16,15 @@ extern VrbStrc* cpyVrb(VrbStrc* vrb, string* nm);
 
 ClsStrc* bldCls(char* nm);
 int clsAddVrb(ClsStrc* cls, VrbStrc* vrb);
-int clsAddFcn(ClsStrc* cls, FcnStrc* fcn);
+int clsAddFcn(ClsStrc* cls, Fcn* fcn);
 int clsAddShrVrb(ClsStrc* cls, VrbStrc* vrb);
-int clsAddShrFcn(ClsStrc* cls, FcnStrc* fcn);
+int clsAddShrFcn(ClsStrc* cls, Fcn* fcn);
 
 VrbStrc* getObjVrb(VrbStrc* vrb, LvlExpStrc* lvl);
 VrbStrc* getObjVrbDrct(ObjStrc* obj, string nm);
 
-FcnStrc* getObjFcn(VrbStrc* vrb, LvlExpStrc* lvl);
-FcnStrc* getObjFcnDrct(ObjStrc* obj, string nm);
+Fcn* getObjFcn(VrbStrc* vrb, LvlExpStrc* lvl);
+Fcn* getObjFcnDrct(ObjStrc* obj, string nm);
 
 ValStrc* istObj(ClsStrc* cls);
 
@@ -46,7 +46,7 @@ int clsAddVrb(ClsStrc* cls, VrbStrc* vrb)
 	return 0;
 }
 
-int clsAddFcn(ClsStrc* cls, FcnStrc* fcn)
+int clsAddFcn(ClsStrc* cls, Fcn* fcn)
 {
 	cls->fcn.push_back(fcn);
 
@@ -60,7 +60,7 @@ int clsAddShrVrb(ClsStrc* cls, VrbStrc* vrb)
 	return 0;
 }
 
-int clsAddShrFcn(ClsStrc* cls, FcnStrc* fcn)
+int clsAddShrFcn(ClsStrc* cls, Fcn* fcn)
 {
 	cls->shrFcn.push_back(fcn);
 
@@ -135,10 +135,10 @@ VrbStrc* getObjVrb(VrbStrc* vrb, LvlExpStrc* lvl)
 /// <param name="vrb"></param>
 /// <param name="lvl"></param>
 /// <returns></returns>
-FcnStrc* getObjFcn(VrbStrc* vrb, LvlExpStrc* lvl)
+Fcn* getObjFcn(VrbStrc* vrb, LvlExpStrc* lvl)
 {
 
-	FcnStrc* rslt = nullptr;
+	Fcn* rslt = nullptr;
 
 	while (vrb->getTyp() == ValEnm::Obj && lvl->hasAtb == 1)
 	{
@@ -170,9 +170,9 @@ FcnStrc* getObjFcn(VrbStrc* vrb, LvlExpStrc* lvl)
 /// <param name="obj"></param>
 /// <param name="nm"></param>
 /// <returns></returns>
-FcnStrc* getObjFcnDrct(ObjStrc* obj, string nm)
+Fcn* getObjFcnDrct(ObjStrc* obj, string nm)
 {
-	FcnStrc* rslt = nullptr;
+	Fcn* rslt = nullptr;
 	for (int i = 0; i < obj->fcn.size(); i++)
 	{
 		printf("obj: vrb: %s\n", obj->fcn.at(i)->nm.c_str());
