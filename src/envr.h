@@ -464,7 +464,7 @@ int initGlbEnvr(vector<Envr*>& envr)
 	//HINT  do all string function returns a value instead of operation inplace
 	addNtvFcn(envr[0], string("scat"), scat,2);
 	addNtvFcn(envr[0], string("ssub"), ssub, 2);
-	addNtvFcn(envr[0], string("srev"), srev, 1);
+	//addNtvFcn(envr[0], string("srev"), srev, 1);
 	addNtvFcn(envr[0], string("exe"), exe,1);
 
 	return 0;

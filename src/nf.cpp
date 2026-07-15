@@ -3,8 +3,14 @@
 //
 #ifndef  INFO_CPP
 #define INFO_CPP
-#include <stdlib.h>
+#include <vector>
 
-void pnVrbInfo
+#include "dfn.h"
+using std::vector;
+
+ValStrc* vrbInf(vector<Envr*>&envr, int argCnt, vector <ValStrc*> argArr)
+{
+
+}
 
 #endif

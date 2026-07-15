@@ -5,14 +5,14 @@
 #include <stdio.h>
 #include <string.h>
 #include "dfn.h"
+#include <print>
+using std::print;
 
+extern ValStrc* bldStrVal(ValStrc* v);
 
 ValStrc* bldIntVal(int v)
 {
 	ValStrc* rslt = new ValStrc(ValEnm::Int, std::move(ValUnn(v)));
-
-	// rslt->typ = ValEnm::Int;
-	// rslt->v.int_ = v;
 
 	return rslt;
 }
@@ -102,22 +102,23 @@ int prtVal(ValStrc* v)
 	{
 		if (v->v.bln == 0)
 		{
-			printf("%s", "false");
+			print("%s", "false");
 		}
 		else
 		{
-			printf("%s", "true");
+			print("%s", "true");
 		}
 		break;
 	}
 	case ValEnm::Str:
 	{
-		printf("%s", v->v.str->c_str());
+
+		print("%s", v->v.str->c_str());
 		break;
 	}
 	case ValEnm::Nl:
 	{
-		printf("null");
+		print("(null)");
 		break;
 	}
 	case ValEnm::Arr:

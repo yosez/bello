@@ -120,6 +120,11 @@ public:
 	explicit ValUnn(ObjStrc *obj):obj(obj)
 	{};
 
+	explicit ValUnn(char* str)
+	{
+		this->str = new string(str);
+	};
+
 	explicit ValUnn(void* ptr):ptr(ptr)
 	{};
 
@@ -380,6 +385,11 @@ public:
 	ValStrc()
 	{
 	};
+
+	explicit ValStrc(char* v): typ(ValEnm::Str)
+	{
+		this->v = ValUnn(v);
+	}
 
 	ValStrc(const ValEnm &typ): typ(typ)
 	{};

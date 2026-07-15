@@ -205,11 +205,12 @@ Exp *bldStrValExp(char *strVl)
 
     val = bldStrVal(strVl);
 
+    std::print("{}\n", val->v.str->c_str());
+
     ValExpStrc *rslt = new ValExpStrc(val);
 
-    // rslt->typ = ExpEnm::Val;
-    //
-    // rslt->val = val;
+    std::print("{}\n", rslt->val->v.str->c_str());
+
 
     return rslt;
 }
@@ -1659,7 +1660,7 @@ ValStrc *clcFcnExp(vector<Envr *> &envr, FcnExpStrc *exp)
 #endif
         rslt = ntvFcn->fcn(envr, ntvFcn->prmCnt, argArr);
 
-        print("rslt ssub: {}\n", rslt->v.str->c_str());
+        //print("rslt ssub: {}\n", rslt->v.str->c_str());
     } else if (fcn != nullptr)
     {
         //在建立函数环境前，计算实参的各个值
