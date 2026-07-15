@@ -15,34 +15,29 @@
 
     using namespace std;
 
+    using std::string;
+
     extern void yyerror(const char *s,...);
     
-    char *str;
-    int strSz=0x100;
 
-    int strtStr()
+    string *str;
+
+
+
+    void bgnStr()
     {
-        strSz=10;
 
-        str=(char *)malloc(strSz);
-        memset(str,0,sizeof(str));
+        str= new string();
 
-        return 0;
-    }
-
-    int strAdd(const char* chr)
+        return;
+   }
+    void strApd(const char* chr)
     {
-        int lnth;
 
-        if (strlen(str)==strSz-1)
-        {
-            strSz*=2;
-            str=(char *)realloc(str,strSz);
-        }
+        str=new string((*str)+chr);
 
-        strcat(str,chr);
+        return;
 
-        return 0;
     }
 
     int lstStt=0,stt=0;
@@ -147,17 +142,17 @@
 "/*"                        { stt=YY_START; BEGIN COMMENT_2; }
 <COMMENT_2>"*/"             { BEGIN stt; }
 <COMMENT_2>(.|[\n])         {}
-"\""                        { strtStr(); stt=YY_START; BEGIN STRING; }
-<STRING>[^\x00-\x7F]+       { strAdd(yytext); }
-<STRING>[^\\\"\r\n\t\v\b\f] { strAdd(yytext); }
-<STRING>"\\n"               { strAdd("\n"); }
-<STRING>"\\r"               { strAdd("\r"); }
-<STRING>"\\t"               { strAdd("\t"); }
-<STRING>"\\v"               { strAdd("\v"); }
-<STRING>"\\b"               { strAdd("\b"); }
-<STRING>"\\f"               { strAdd("\f"); }
-<STRING>"\\\""              { strAdd("\""); }
-<STRING>"\\\\"              { strAdd("\\"); }
+"\""                        { bgnStr(); stt=YY_START; BEGIN STRING; }
+<STRING>[^\x00-\x7F]+       { strApd(yytext); }
+<STRING>[^\\\"\r\n\t\v\b\f] { strApd(yytext); }
+<STRING>"\\n"               { strApd("\n"); }
+<STRING>"\\r"               { strApd("\r"); }
+<STRING>"\\t"               { strApd("\t"); }
+<STRING>"\\v"               { strApd("\v"); }
+<STRING>"\\b"               { strApd("\b"); }
+<STRING>"\\f"               { strApd("\f"); }
+<STRING>"\\\""              { strApd("\""); }
+<STRING>"\\\\"              { strApd("\\"); }
 <STRING>"\""                { BEGIN stt; yylval.strVl=str; return STR_LTR; }
 <STRING>[\r\n]              { BEGIN stt; yyerror(NULL); }
 [a-zA-Z][a-zA-Z0-9]*       { 

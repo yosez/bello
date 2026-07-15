@@ -199,11 +199,14 @@ Exp *bldBlnValExp(int blnVl)
     return rslt;
 }
 
-Exp *bldStrValExp(char *strVl)
+
+Exp *bldStrValExp(string *strVl)
 {
     ValStrc *val;
+    string str{strVl->c_str()};
 
-    val = bldStrVal(strVl);
+    //val = new ValStrc(ValEnm::Str , std::move(ValUnn( strVl)));
+    val = new ValStrc(str);
 
     std::print("{}\n", val->v.str->c_str());
 

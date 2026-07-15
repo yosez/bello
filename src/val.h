@@ -57,6 +57,13 @@ ValStrc* bldStrValByStr(string vl)
 	return rslt;
 }
 
+ValStrc* bldStrValByStrPtr(string* vl)
+{
+	ValStrc* rslt = new ValStrc(ValEnm::Str , std::move(ValUnn( vl)));
+
+	return rslt;
+}
+
 ValStrc* bldArrVal(ArrStrc* arr)
 {
 	ValStrc* rslt = new ValStrc(ValEnm::Arr, std::move(ValUnn(arr)));

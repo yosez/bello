@@ -325,7 +325,7 @@ typedef union YYSTYPE
     int blnVl;
     int intVl;
     float fltVl;
-    char *strVl;
+    string *strVl;
     struct ObjStrc* objVl;
 
     struct VrbStrc *vrb;
@@ -2176,7 +2176,7 @@ yyreduce:
 
         printf("imp\n");
 
-      FILE* f = fopen((yyvsp[(2) - (2)].strVl), "r");
+      FILE* f = fopen(((yyvsp[(2) - (2)].strVl))->c_str(), "r");
 
       //创建buffer
       YY_BUFFER_STATE stt = YY_CURRENT_BUFFER;

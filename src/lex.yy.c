@@ -645,43 +645,38 @@ char *yytext;
 
     using namespace std;
 
+    using std::string;
+
     extern void yyerror(const char *s,...);
     
-    char *str;
-    int strSz=0x100;
 
-    int strtStr()
+    string *str;
+
+
+
+    void bgnStr()
     {
-        strSz=10;
 
-        str=(char *)malloc(strSz);
-        memset(str,0,sizeof(str));
+        str= new string();
 
-        return 0;
-    }
-
-    int strAdd(const char* chr)
+        return;
+   }
+    void strApd(const char* chr)
     {
-        int lnth;
 
-        if (strlen(str)==strSz-1)
-        {
-            strSz*=2;
-            str=(char *)realloc(str,strSz);
-        }
+        str=new string((*str)+chr);
 
-        strcat(str,chr);
+        return;
 
-        return 0;
     }
 
     int lstStt=0,stt=0;
 
     /*^[^ \t]*\n                  { return NO_INDENT; }*/
 
-#line 682 "lex.yy.c"
+#line 677 "lex.yy.c"
  
-#line 684 "lex.yy.c"
+#line 679 "lex.yy.c"
 
 #define INITIAL 0
 #define STRING 1
@@ -904,10 +899,10 @@ YY_DECL
 		}
 
 	{
-#line 56 "./bello.l"
+#line 51 "./bello.l"
 
 
-#line 910 "lex.yy.c"
+#line 905 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -968,7 +963,7 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 /* rule 1 can match eol */
 YY_RULE_SETUP
-#line 58 "./bello.l"
+#line 53 "./bello.l"
 { 
                                 return LF;
                                 //return NULL_STRING; 
@@ -977,7 +972,7 @@ YY_RULE_SETUP
 case 2:
 /* rule 2 can match eol */
 YY_RULE_SETUP
-#line 62 "./bello.l"
+#line 57 "./bello.l"
 { 
                                 return LF;
                                 //return NULL_STRING; 
@@ -986,7 +981,7 @@ YY_RULE_SETUP
 case 3:
 /* rule 3 can match eol */
 YY_RULE_SETUP
-#line 66 "./bello.l"
+#line 61 "./bello.l"
 { 
                                 return LF;
                                 //return NULL_STRING; 
@@ -996,12 +991,12 @@ case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(STRING):
 case YY_STATE_EOF(COMMENT):
 case YY_STATE_EOF(COMMENT_2):
-#line 72 "./bello.l"
+#line 67 "./bello.l"
 { return END_FILE; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 74 "./bello.l"
+#line 69 "./bello.l"
 { 
                                 yylval.intVl = strlen(yytext); 
                                 //printf("yytext \\t: |%s|, %d\n", yytext, strlen(yytext));
@@ -1011,12 +1006,12 @@ YY_RULE_SETUP
 case 5:
 /* rule 5 can match eol */
 YY_RULE_SETUP
-#line 79 "./bello.l"
+#line 74 "./bello.l"
 { return NOINDENT; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 80 "./bello.l"
+#line 75 "./bello.l"
 {
                                 yylval.intVl = strlen(yytext)/2;
                                 //printf("yytext [ ]: |%s|\n", yytext);
@@ -1026,400 +1021,400 @@ YY_RULE_SETUP
 case 7:
 /* rule 7 can match eol */
 YY_RULE_SETUP
-#line 85 "./bello.l"
+#line 80 "./bello.l"
 { return LF; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 86 "./bello.l"
+#line 81 "./bello.l"
 { return ADD_ASSIGN; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 87 "./bello.l"
+#line 82 "./bello.l"
 { return SUB_ASSIGN; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 88 "./bello.l"
+#line 83 "./bello.l"
 { return MUL_ASSIGN; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 89 "./bello.l"
+#line 84 "./bello.l"
 { return DIV_ASSIGN; }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 90 "./bello.l"
+#line 85 "./bello.l"
 { return MOD_ASSIGN; }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 91 "./bello.l"
+#line 86 "./bello.l"
 { return INCREMENT; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 92 "./bello.l"
+#line 87 "./bello.l"
 { return DECREMENT; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 93 "./bello.l"
+#line 88 "./bello.l"
 { return ADD; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 94 "./bello.l"
+#line 89 "./bello.l"
 { return SUB; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 95 "./bello.l"
+#line 90 "./bello.l"
 { return MUL; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 96 "./bello.l"
+#line 91 "./bello.l"
 { return DIV; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 97 "./bello.l"
+#line 92 "./bello.l"
 { return MOD; }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 98 "./bello.l"
+#line 93 "./bello.l"
 { return GE; }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 99 "./bello.l"
+#line 94 "./bello.l"
 { return GT; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 100 "./bello.l"
+#line 95 "./bello.l"
 { return LE; }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 101 "./bello.l"
+#line 96 "./bello.l"
 { return LT; }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 102 "./bello.l"
+#line 97 "./bello.l"
 { return EQ; }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 103 "./bello.l"
+#line 98 "./bello.l"
 { return NE; }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 104 "./bello.l"
+#line 99 "./bello.l"
 { return AND; }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 105 "./bello.l"
+#line 100 "./bello.l"
 { return OR; }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 106 "./bello.l"
+#line 101 "./bello.l"
 { return XOR; }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 107 "./bello.l"
+#line 102 "./bello.l"
 { return BIT_AND; }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 108 "./bello.l"
+#line 103 "./bello.l"
 { return BIT_OR; }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 109 "./bello.l"
+#line 104 "./bello.l"
 { return BIT_XOR; }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 110 "./bello.l"
+#line 105 "./bello.l"
 { return BIT_NOT; }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 111 "./bello.l"
+#line 106 "./bello.l"
 { return NOT; }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 112 "./bello.l"
+#line 107 "./bello.l"
 { return DOT; }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 113 "./bello.l"
+#line 108 "./bello.l"
 { return QM; }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 114 "./bello.l"
+#line 109 "./bello.l"
 { return AT; }
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 115 "./bello.l"
+#line 110 "./bello.l"
 { return SHORTCUT_PRINTLN; }
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 116 "./bello.l"
+#line 111 "./bello.l"
 { return NOP; }
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 117 "./bello.l"
+#line 112 "./bello.l"
 { return NEW; }
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 118 "./bello.l"
+#line 113 "./bello.l"
 { return VAR; }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 119 "./bello.l"
+#line 114 "./bello.l"
 { return GLOBAL; }
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 120 "./bello.l"
+#line 115 "./bello.l"
 { return IF; }
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 121 "./bello.l"
+#line 116 "./bello.l"
 { return ELIF; }
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 122 "./bello.l"
+#line 117 "./bello.l"
 { return ELSE; }
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 123 "./bello.l"
+#line 118 "./bello.l"
 { return FOR; }
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 124 "./bello.l"
+#line 119 "./bello.l"
 { return DO; }
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 125 "./bello.l"
+#line 120 "./bello.l"
 { return WHILE; }
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 126 "./bello.l"
+#line 121 "./bello.l"
 { return BREAK; }
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 127 "./bello.l"
+#line 122 "./bello.l"
 { return CONTINUE; }
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 128 "./bello.l"
+#line 123 "./bello.l"
 { return CLASS; }
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 129 "./bello.l"
+#line 124 "./bello.l"
 { return FUNC; }
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 130 "./bello.l"
+#line 125 "./bello.l"
 { return FUNC; }
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
-#line 131 "./bello.l"
+#line 126 "./bello.l"
 { return RETURN; }
 	YY_BREAK
 case 54:
 YY_RULE_SETUP
-#line 132 "./bello.l"
+#line 127 "./bello.l"
 { return NLL_LTR; }
 	YY_BREAK
 case 55:
 YY_RULE_SETUP
-#line 133 "./bello.l"
+#line 128 "./bello.l"
 { return CLASS; }
 	YY_BREAK
 case 56:
 YY_RULE_SETUP
-#line 134 "./bello.l"
+#line 129 "./bello.l"
 { return FUNC; }
 	YY_BREAK
 case 57:
 YY_RULE_SETUP
-#line 135 "./bello.l"
+#line 130 "./bello.l"
 { return SHARED; }
 	YY_BREAK
 case 58:
 YY_RULE_SETUP
-#line 136 "./bello.l"
+#line 131 "./bello.l"
 { return THIS; }
 	YY_BREAK
 case 59:
 YY_RULE_SETUP
-#line 137 "./bello.l"
+#line 132 "./bello.l"
 { return IMPORT; }
 	YY_BREAK
 case 60:
 YY_RULE_SETUP
-#line 138 "./bello.l"
+#line 133 "./bello.l"
 { return SPACE; }
 	YY_BREAK
 case 61:
 YY_RULE_SETUP
-#line 139 "./bello.l"
+#line 134 "./bello.l"
 { return PACKAGE; }
 	YY_BREAK
 case 62:
 YY_RULE_SETUP
-#line 140 "./bello.l"
+#line 135 "./bello.l"
 { yylval.intVl=atoi(yytext); return INT_LTR; }
 	YY_BREAK
 case 63:
 YY_RULE_SETUP
-#line 141 "./bello.l"
+#line 136 "./bello.l"
 { yylval.fltVl= (float)atof(yytext); return FLT_LTR; }
 	YY_BREAK
 case 64:
 YY_RULE_SETUP
-#line 142 "./bello.l"
+#line 137 "./bello.l"
 { yylval.blnVl=1; return BLN_LTR; }
 	YY_BREAK
 case 65:
 YY_RULE_SETUP
-#line 143 "./bello.l"
+#line 138 "./bello.l"
 { yylval.blnVl=0; return BLN_LTR; }
 	YY_BREAK
 case 66:
 YY_RULE_SETUP
-#line 144 "./bello.l"
+#line 139 "./bello.l"
 { stt=YY_START; BEGIN COMMENT; }
 	YY_BREAK
 case 67:
 /* rule 67 can match eol */
 YY_RULE_SETUP
-#line 145 "./bello.l"
+#line 140 "./bello.l"
 { BEGIN stt; }  
 	YY_BREAK
 case 68:
 YY_RULE_SETUP
-#line 146 "./bello.l"
+#line 141 "./bello.l"
 { return LF; }
 	YY_BREAK
 case 69:
 YY_RULE_SETUP
-#line 147 "./bello.l"
+#line 142 "./bello.l"
 { stt=YY_START; BEGIN COMMENT_2; }
 	YY_BREAK
 case 70:
 YY_RULE_SETUP
-#line 148 "./bello.l"
+#line 143 "./bello.l"
 { BEGIN stt; }
 	YY_BREAK
 case 71:
 /* rule 71 can match eol */
 YY_RULE_SETUP
-#line 149 "./bello.l"
+#line 144 "./bello.l"
 {}
 	YY_BREAK
 case 72:
 YY_RULE_SETUP
-#line 150 "./bello.l"
-{ strtStr(); stt=YY_START; BEGIN STRING; }
+#line 145 "./bello.l"
+{ bgnStr(); stt=YY_START; BEGIN STRING; }
 	YY_BREAK
 case 73:
 YY_RULE_SETUP
-#line 151 "./bello.l"
-{ strAdd(yytext); }
+#line 146 "./bello.l"
+{ strApd(yytext); }
 	YY_BREAK
 case 74:
 YY_RULE_SETUP
-#line 152 "./bello.l"
-{ strAdd(yytext); }
+#line 147 "./bello.l"
+{ strApd(yytext); }
 	YY_BREAK
 case 75:
 YY_RULE_SETUP
-#line 153 "./bello.l"
-{ strAdd("\n"); }
+#line 148 "./bello.l"
+{ strApd("\n"); }
 	YY_BREAK
 case 76:
 YY_RULE_SETUP
-#line 154 "./bello.l"
-{ strAdd("\r"); }
+#line 149 "./bello.l"
+{ strApd("\r"); }
 	YY_BREAK
 case 77:
 YY_RULE_SETUP
-#line 155 "./bello.l"
-{ strAdd("\t"); }
+#line 150 "./bello.l"
+{ strApd("\t"); }
 	YY_BREAK
 case 78:
 YY_RULE_SETUP
-#line 156 "./bello.l"
-{ strAdd("\v"); }
+#line 151 "./bello.l"
+{ strApd("\v"); }
 	YY_BREAK
 case 79:
 YY_RULE_SETUP
-#line 157 "./bello.l"
-{ strAdd("\b"); }
+#line 152 "./bello.l"
+{ strApd("\b"); }
 	YY_BREAK
 case 80:
 YY_RULE_SETUP
-#line 158 "./bello.l"
-{ strAdd("\f"); }
+#line 153 "./bello.l"
+{ strApd("\f"); }
 	YY_BREAK
 case 81:
 YY_RULE_SETUP
-#line 159 "./bello.l"
-{ strAdd("\""); }
+#line 154 "./bello.l"
+{ strApd("\""); }
 	YY_BREAK
 case 82:
 YY_RULE_SETUP
-#line 160 "./bello.l"
-{ strAdd("\\"); }
+#line 155 "./bello.l"
+{ strApd("\\"); }
 	YY_BREAK
 case 83:
 YY_RULE_SETUP
-#line 161 "./bello.l"
+#line 156 "./bello.l"
 { BEGIN stt; yylval.strVl=str; return STR_LTR; }
 	YY_BREAK
 case 84:
 /* rule 84 can match eol */
 YY_RULE_SETUP
-#line 162 "./bello.l"
+#line 157 "./bello.l"
 { BEGIN stt; yyerror(NULL); }
 	YY_BREAK
 case 85:
 YY_RULE_SETUP
-#line 163 "./bello.l"
+#line 158 "./bello.l"
 { 
                                 yylval.idtf=(char *)malloc(0x100);
                                 memset(yylval.idtf,0,sizeof(yylval.idtf));
@@ -1431,66 +1426,66 @@ YY_RULE_SETUP
 	YY_BREAK
 case 86:
 YY_RULE_SETUP
-#line 171 "./bello.l"
+#line 166 "./bello.l"
 { return LEFT_PAREN; }
 	YY_BREAK
 case 87:
 YY_RULE_SETUP
-#line 172 "./bello.l"
+#line 167 "./bello.l"
 { return RIGHT_PAREN; }
 	YY_BREAK
 case 88:
 YY_RULE_SETUP
-#line 173 "./bello.l"
+#line 168 "./bello.l"
 { return LEFT_QUAD; }
 	YY_BREAK
 case 89:
 YY_RULE_SETUP
-#line 174 "./bello.l"
+#line 169 "./bello.l"
 { return RIGHT_QUAD; }
 	YY_BREAK
 case 90:
 YY_RULE_SETUP
-#line 175 "./bello.l"
+#line 170 "./bello.l"
 { return LEFT_BRACE; }
 	YY_BREAK
 case 91:
 YY_RULE_SETUP
-#line 176 "./bello.l"
+#line 171 "./bello.l"
 { return RIGHT_BRACE; } 
 	YY_BREAK
 case 92:
 YY_RULE_SETUP
-#line 177 "./bello.l"
+#line 172 "./bello.l"
 { return ASSIGN; }
 	YY_BREAK
 case 93:
 YY_RULE_SETUP
-#line 178 "./bello.l"
+#line 173 "./bello.l"
 { return COMMA; }
 	YY_BREAK
 case 94:
 YY_RULE_SETUP
-#line 179 "./bello.l"
+#line 174 "./bello.l"
 { return SEMICOLON; }
 	YY_BREAK
 case 95:
 YY_RULE_SETUP
-#line 180 "./bello.l"
+#line 175 "./bello.l"
 { return COLON; }
 	YY_BREAK
 case 96:
 /* rule 96 can match eol */
 YY_RULE_SETUP
-#line 182 "./bello.l"
+#line 177 "./bello.l"
 {}
 	YY_BREAK
 case 97:
 YY_RULE_SETUP
-#line 186 "./bello.l"
+#line 181 "./bello.l"
 YY_FATAL_ERROR( "flex scanner jammed" );
 	YY_BREAK
-#line 1493 "lex.yy.c"
+#line 1488 "lex.yy.c"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -2496,7 +2491,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 186 "./bello.l"
+#line 181 "./bello.l"
 
 
 

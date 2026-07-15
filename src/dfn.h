@@ -111,8 +111,10 @@ public:
 	explicit ValUnn(const float &flt):flt(flt)
 	{};
 
-	explicit ValUnn( string* str):str(str)
-	{};
+	explicit ValUnn( string* str)
+	{
+		str = new string(str->c_str());
+	};
 
 	explicit ValUnn(ArrStrc* arr): arr(arr)
 	{};
@@ -128,6 +130,10 @@ public:
 	explicit ValUnn(void* ptr):ptr(ptr)
 	{};
 
+	explicit ValUnn(string s)
+	{
+		this->str =new string(s);
+	}
 
 	~ValUnn()
 	{
@@ -387,6 +393,16 @@ public:
 	};
 
 	explicit ValStrc(char* v): typ(ValEnm::Str)
+	{
+		this->v = ValUnn(v);
+	}
+
+	explicit ValStrc(string* v): typ(ValEnm::Str)
+	{
+		this->v = ValUnn(v);
+	}
+
+	explicit ValStrc(string v): typ(ValEnm::Str)
 	{
 		this->v = ValUnn(v);
 	}

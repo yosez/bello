@@ -70,7 +70,7 @@
     int blnVl;
     int intVl;
     float fltVl;
-    char *strVl;
+    string *strVl;
     struct ObjStrc* objVl;
 
     struct VrbStrc *vrb;
@@ -188,7 +188,7 @@ import_statement
 
         printf("imp\n");
 
-      FILE* f = fopen($2, "r");
+      FILE* f = fopen(($2)->c_str(), "r");
 
       //创建buffer
       YY_BUFFER_STATE stt = YY_CURRENT_BUFFER;

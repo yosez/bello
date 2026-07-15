@@ -211,7 +211,7 @@ typedef union YYSTYPE
     int blnVl;
     int intVl;
     float fltVl;
-    char *strVl;
+    string *strVl;
     struct ObjStrc* objVl;
 
     struct VrbStrc *vrb;

@@ -1,48 +1,16 @@
 # ninja log v7
-5	850	1783425913918602465	CMakeFiles/bello.dir/src/bello.cpp.o	ad7ce37e3d59ebb9
+3	911	1784119861880482825	CMakeFiles/bello.dir/src/bello.cpp.o	40fd81d2eb0acfa6
 870	906	1779330288944503737	/Users/yosezang/bello/bello V20.81 MDF/main/bello/bin/bello	d3a29e9cb7112d8f
 852	891	1783425914765790445	/Users/yosezang/bello/bello V20.81 EDT/main/bello/bin/bello	bd421c1ec4e5dcaf
-4	819	1783452433067092860	CMakeFiles/bello.dir/src/bello.cpp.o	40fd81d2eb0acfa6
-820	861	1783452433883027146	/Users/yosezang/bello/bello V21.16 EDT/main/bello/bin/bello	2506140b249298dd
-3	785	1783452449074718104	CMakeFiles/bello.dir/src/bello.cpp.o	40fd81d2eb0acfa6
-786	819	1783452449857566854	/Users/yosezang/bello/bello V21.16 EDT/main/bello/bin/bello	2506140b249298dd
-5	1528	1783594043630357736	CMakeFiles/bello.dir/src/bello.cpp.o	40fd81d2eb0acfa6
-1532	1648	1783594045157289406	/Users/yosezang/bello/bello V21.16 EDT/main/bello/bin/bello	2506140b249298dd
-3	810	1783594060803840980	CMakeFiles/bello.dir/src/bello.cpp.o	40fd81d2eb0acfa6
-813	845	1783594061613611924	/Users/yosezang/bello/bello V21.16 EDT/main/bello/bin/bello	2506140b249298dd
-4	893	1783594134106076800	CMakeFiles/bello.dir/src/bello.cpp.o	40fd81d2eb0acfa6
-895	932	1783594134996848251	/Users/yosezang/bello/bello V21.16 EDT/main/bello/bin/bello	2506140b249298dd
-3	850	1783594489380898126	CMakeFiles/bello.dir/src/bello.cpp.o	40fd81d2eb0acfa6
-851	886	1783594490228767551	/Users/yosezang/bello/bello V21.16 EDT/main/bello/bin/bello	2506140b249298dd
-3	797	1783595025331499395	CMakeFiles/bello.dir/src/bello.cpp.o	40fd81d2eb0acfa6
-798	830	1783595026125730087	/Users/yosezang/bello/bello V21.16 EDT/main/bello/bin/bello	2506140b249298dd
-4	804	1783599826350621454	CMakeFiles/bello.dir/src/bello.cpp.o	40fd81d2eb0acfa6
-808	843	1783599827155066276	/Users/yosezang/bello/bello V21.16 EDT/main/bello/bin/bello	2506140b249298dd
-4	945	1783599991047221121	CMakeFiles/bello.dir/src/bello.cpp.o	40fd81d2eb0acfa6
-948	987	1783599991991281630	/Users/yosezang/bello/bello V21.16 EDT/main/bello/bin/bello	2506140b249298dd
-4	811	1783695328160218230	CMakeFiles/bello.dir/src/bello.cpp.o	40fd81d2eb0acfa6
-812	856	1783695328968813473	/Users/yosezang/bello/bello V21.16 EDT/main/bello/bin/bello	2506140b249298dd
-3	874	1783695415017386142	CMakeFiles/bello.dir/src/bello.cpp.o	40fd81d2eb0acfa6
-877	930	1783695415890948609	/Users/yosezang/bello/bello V21.16 EDT/main/bello/bin/bello	2506140b249298dd
-3	789	1783695488397788474	CMakeFiles/bello.dir/src/bello.cpp.o	40fd81d2eb0acfa6
-790	821	1783695489185019479	/Users/yosezang/bello/bello V21.16 EDT/main/bello/bin/bello	2506140b249298dd
-3	856	1783695842498305131	CMakeFiles/bello.dir/src/bello.cpp.o	40fd81d2eb0acfa6
-857	892	1783695843352506688	/Users/yosezang/bello/bello V21.16 EDT/main/bello/bin/bello	2506140b249298dd
-3	797	1783696200831321062	CMakeFiles/bello.dir/src/bello.cpp.o	40fd81d2eb0acfa6
-798	829	1783696201626324406	/Users/yosezang/bello/bello V21.16 EDT/main/bello/bin/bello	2506140b249298dd
-3	799	1783696305288551775	CMakeFiles/bello.dir/src/bello.cpp.o	40fd81d2eb0acfa6
-800	831	1783696306084819131	/Users/yosezang/bello/bello V21.16 EDT/main/bello/bin/bello	2506140b249298dd
-4	807	1783696430620051769	CMakeFiles/bello.dir/src/bello.cpp.o	40fd81d2eb0acfa6
-808	839	1783696431423907272	/Users/yosezang/bello/bello V21.16 EDT/main/bello/bin/bello	2506140b249298dd
-3	810	1783696489662835119	CMakeFiles/bello.dir/src/bello.cpp.o	40fd81d2eb0acfa6
-811	842	1783696490470502489	/Users/yosezang/bello/bello V21.16 EDT/main/bello/bin/bello	2506140b249298dd
-5	893	1784063347701251842	CMakeFiles/bello.dir/src/bello.cpp.o	40fd81d2eb0acfa6
-895	1015	1784063348591607690	/Users/yosezang/bello/bello V21.16 EDT/main/bello/bin/bello	2506140b249298dd
-6	829	1784063597394322493	CMakeFiles/bello.dir/src/bello.cpp.o	40fd81d2eb0acfa6
-831	868	1784063598219624427	/Users/yosezang/bello/bello V21.16 EDT/main/bello/bin/bello	2506140b249298dd
-4	824	1784063668661541769	CMakeFiles/bello.dir/src/bello.cpp.o	40fd81d2eb0acfa6
-825	858	1784063669483460603	/Users/yosezang/bello/bello V21.16 EDT/main/bello/bin/bello	2506140b249298dd
-4	812	1784063675846688534	CMakeFiles/bello.dir/src/bello.cpp.o	40fd81d2eb0acfa6
-813	848	1784063676656066846	/Users/yosezang/bello/bello V21.16 EDT/main/bello/bin/bello	2506140b249298dd
-7	1500	1784119637150627846	CMakeFiles/bello.dir/src/bello.cpp.o	40fd81d2eb0acfa6
-1504	1622	1784119638651068667	/Users/yosezang/bello/bello V21.16 EDT/main/bello/bin/bello	2506140b249298dd
+914	951	1784119862790923121	/Users/yosezang/bello/bello V21.16 EDT/main/bello/bin/bello	2506140b249298dd
+5	874	1784127507100620058	CMakeFiles/bello.dir/src/bello.cpp.o	66fc2128ccd076d0
+4	884	1784127524324744426	CMakeFiles/bello.dir/src/bello.cpp.o	66fc2128ccd076d0
+3	842	1784127605359720981	CMakeFiles/bello.dir/src/bello.cpp.o	66fc2128ccd076d0
+4	832	1784128277158420616	CMakeFiles/bello.dir/src/bello.cpp.o	66fc2128ccd076d0
+832	870	1784128277986736814	/Users/yosezang/bello/bello V21.16 Restore string function EDT/main/bello/bin/bello	9b9d902da07543a5
+5	866	1784128763931735760	CMakeFiles/bello.dir/src/bello.cpp.o	66fc2128ccd076d0
+867	901	1784128764794088831	/Users/yosezang/bello/bello V21.16 Restore string function EDT/main/bello/bin/bello	9b9d902da07543a5
+7	822	1784129013741493288	CMakeFiles/bello.dir/src/bello.cpp.o	66fc2128ccd076d0
+823	861	1784129014557253959	/Users/yosezang/bello/bello V21.16 Restore string function EDT/main/bello/bin/bello	9b9d902da07543a5
+3	805	1784129108955239868	CMakeFiles/bello.dir/src/bello.cpp.o	66fc2128ccd076d0
+806	838	1784129109758259800	/Users/yosezang/bello/bello V21.16 Restore string function EDT/main/bello/bin/bello	9b9d902da07543a5
