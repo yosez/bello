@@ -109,18 +109,18 @@ int prtVal(ValStrc* v)
 	{
 		if (v->v.bln == 0)
 		{
-			print("%s", "false");
+			print("{}", "false");
 		}
 		else
 		{
-			print("%s", "true");
+			print("{}", "true");
 		}
 		break;
 	}
 	case ValEnm::Str:
 	{
 
-		print("%s", v->v.str->c_str());
+		print("{}", v->v.str->c_str());
 		break;
 	}
 	case ValEnm::Nl:
