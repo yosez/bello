@@ -42,7 +42,7 @@ rule CUSTOM_COMMAND
 # Rule for re-running cmake.
 
 rule RERUN_CMAKE
-  command = /Users/yosezang/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake --regenerate-during-build -S"/Users/yosezang/bello/bello V21.16 Restore string function EDT/main/bello" -B"/Users/yosezang/bello/bello V21.16 Restore string function EDT/main/bello/cmake-build-debug"
+  command = /Users/yosezang/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake --regenerate-during-build -S"/Users/yosezang/bello/bello V21.26 Replace char pointer to string EDT/main/bello" -B"/Users/yosezang/bello/bello V21.26 Replace char pointer to string EDT/main/bello/cmake-build-debug"
   description = Re-running CMake...
   generator = 1
 

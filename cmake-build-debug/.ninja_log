@@ -1,18 +1,12 @@
 # ninja log v7
-3	911	1784119861880482825	CMakeFiles/bello.dir/src/bello.cpp.o	40fd81d2eb0acfa6
+4	886	1784138623298006965	CMakeFiles/bello.dir/src/bello.cpp.o	99d83aab329770a6
 870	906	1779330288944503737	/Users/yosezang/bello/bello V20.81 MDF/main/bello/bin/bello	d3a29e9cb7112d8f
 852	891	1783425914765790445	/Users/yosezang/bello/bello V20.81 EDT/main/bello/bin/bello	bd421c1ec4e5dcaf
 914	951	1784119862790923121	/Users/yosezang/bello/bello V21.16 EDT/main/bello/bin/bello	2506140b249298dd
-5	874	1784127507100620058	CMakeFiles/bello.dir/src/bello.cpp.o	66fc2128ccd076d0
-4	884	1784127524324744426	CMakeFiles/bello.dir/src/bello.cpp.o	66fc2128ccd076d0
-3	842	1784127605359720981	CMakeFiles/bello.dir/src/bello.cpp.o	66fc2128ccd076d0
-4	832	1784128277158420616	CMakeFiles/bello.dir/src/bello.cpp.o	66fc2128ccd076d0
-832	870	1784128277986736814	/Users/yosezang/bello/bello V21.16 Restore string function EDT/main/bello/bin/bello	9b9d902da07543a5
-5	866	1784128763931735760	CMakeFiles/bello.dir/src/bello.cpp.o	66fc2128ccd076d0
-867	901	1784128764794088831	/Users/yosezang/bello/bello V21.16 Restore string function EDT/main/bello/bin/bello	9b9d902da07543a5
-7	822	1784129013741493288	CMakeFiles/bello.dir/src/bello.cpp.o	66fc2128ccd076d0
-823	861	1784129014557253959	/Users/yosezang/bello/bello V21.16 Restore string function EDT/main/bello/bin/bello	9b9d902da07543a5
-3	805	1784129108955239868	CMakeFiles/bello.dir/src/bello.cpp.o	66fc2128ccd076d0
-806	838	1784129109758259800	/Users/yosezang/bello/bello V21.16 Restore string function EDT/main/bello/bin/bello	9b9d902da07543a5
-7	803	1784129875706117788	CMakeFiles/bello.dir/src/bello.cpp.o	66fc2128ccd076d0
-804	838	1784129876502744792	/Users/yosezang/bello/bello V21.16 Restore string function EDT/main/bello/bin/bello	9b9d902da07543a5
+888	920	1784138624182335751	/Users/yosezang/bello/bello V21.26 Replace char pointer to string/main/bello/bin/bello	5e332cda96d8df75
+4	931	1784208189623232357	CMakeFiles/bello.dir/src/bello.cpp.o	44be5f0cc1e880c2
+934	970	1784208190553239309	/Users/yosezang/bello/bello V21.26 Replace char pointer to string EDT/main/bello/bin/bello	700779816ee93689
+4	851	1784208239422366193	CMakeFiles/bello.dir/src/bello.cpp.o	44be5f0cc1e880c2
+853	887	1784208240272038798	/Users/yosezang/bello/bello V21.26 Replace char pointer to string EDT/main/bello/bin/bello	700779816ee93689
+4	793	1784211488157370565	CMakeFiles/bello.dir/src/bello.cpp.o	44be5f0cc1e880c2
+5	902	1784211561176624383	CMakeFiles/bello.dir/src/bello.cpp.o	44be5f0cc1e880c2

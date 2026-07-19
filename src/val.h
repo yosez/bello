@@ -130,7 +130,7 @@ int prtVal(ValStrc* v)
 	}
 	case ValEnm::Arr:
 	{
-		printf("[");
+		print("[");
 		int i;
 		for (i = 0; i < v->v.arr->elmtArr.size(); i++)
 		{
@@ -138,11 +138,11 @@ int prtVal(ValStrc* v)
 
 			if (i != v->v.arr->elmtArr.size() - 1)
 			{
-				printf(", ");
+				print(", ");
 			}
 		}
 
-		printf("]");
+		print("]");
 
 		break;
 	}
@@ -184,7 +184,7 @@ int prtlnVal(ValStrc* v)
 		}
 		case ValEnm::Nl:
 		{
-			printf("null\n");
+			printf("(null)\n");
 			break;
 		}
 		case ValEnm::Arr:

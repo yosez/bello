@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
+#include <memory>
 
 #include "dfn.h"
 #include "val.h"
@@ -17,6 +18,9 @@
 #include "ex.h"
 #include "cls.h"
 #include "vrb.h"
+
+using std::shared_ptr;
+
 
 extern struct StmtRsltStrc *exctStmt(vector<Envr *> &envr, struct Stmt *stmt);
 
@@ -202,6 +206,7 @@ Exp *bldBlnValExp(int blnVl)
 
 Exp *bldStrValExp(string *strVl)
 {
+
     ValStrc *val;
     string str{strVl->c_str()};
 

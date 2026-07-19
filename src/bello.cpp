@@ -15,6 +15,7 @@ using namespace std;
 #include "envr.h"
 #include "val.h"
 
+
 #include "lex.yy.c"
 #include "y.tab.c"
 
@@ -41,9 +42,20 @@ extern int chkStmtAlwSubStmt(struct Stmt* stmt);
 
 extern int chkStmtAlwScndStmt(struct Stmt* stmt);
 
-extern struct Stmt* bldStmtBlk();
+extern Stmt* bldStmtBlk();
 
-extern struct Stmt* stmtBlkAdd(struct Stmt* stmtBlk, struct Stmt* stmt);
+extern Stmt* stmtBlkAdd(struct Stmt* stmtBlk, struct Stmt* stmt);
+extern void exctStk(vector<Envr*> envr, vector<StmtStkItmStrc*> stk);
+
+//执行语句站中的语句, stk中的语句使用envr环境中的从下往上的具体环境envr
+void exctStk(vector<Envr*> envr, vector<StmtStkItmStrc*> stk)
+{
+    for (int i=0;i<stmtStk.size();i++)
+    {
+        exctStmt(envr, stk.at(i)->stmt);
+        stk.erase(stk.begin());
+    }
+}
 
 //将之前缩进大于等于indt的语句折叠放入栈中
 void fldStmt(int indt=0)
@@ -120,28 +132,12 @@ void fldStmt(int indt=0)
                 auto elsStmt = static_cast<ElsStmt*>(stmtStk.back()->stmt);
                 elsStmt->stmt = blk;
 
-                /* stmtStk.pop_back();
-
-                auto ifStmtLst = static_cast<IfStmtStrc*>(stmtStk.back()->stmt);
-
-                ifStmtLst->els = elsStmt->stmt;
-
-                stmtStk.back()->blnScndStmt=1; */
-
                 break;
             }
             case StmtEnm::Elif:
             {
                 auto elifStmt = static_cast<ElifStmt*>(stmtStk.back()->stmt);
                 elifStmt->stmt = blk;
-
-                /* stmtStk.pop_back();
-
-                auto ifStmtLst = static_cast<IfStmtStrc*>(stmtStk.back()->stmt);
-
-                ifStmtLst->elif = blk;
-
-                stmtStk.back()->blnScndStmt=1; */
 
                 break;
             }

@@ -12,6 +12,7 @@
 #include "ntv.h"
 #include "vrb.h"
 #include "y.tab.h"
+#include "nf.hpp"
 
 extern VrbStrc* bldVrb(string nm);
 
@@ -44,15 +45,29 @@ int prtEnvrFcn(struct Envr* envr);
 int intlEnvr(struct Envr** envr);
 int initGlbEnvr(vector<Envr*>& envr);
 
-extern ValStrc* rdIntFcn(vector<Envr*>& envr, int argCnt, vector <ValStrc*> argArr);
-extern ValStrc* rdFltFcn(vector<Envr*>& envr, int argCnt, vector <ValStrc*> argArr);
-extern ValStrc* rdBlnFcn(vector<Envr*>& envr, int argCnt, vector <ValStrc*> argArr);
-extern ValStrc* rdFcn(vector<Envr*>& envr, int argCnt, vector <ValStrc*> argArr);
-extern ValStrc* rdlnFcn(vector<Envr*>& envr, int argCnt, vector <ValStrc*> argArr);
-extern ValStrc* prtFcn(vector<Envr*>& envr, int argCnt, vector <ValStrc*> argArr);
-extern ValStrc* prtlnFcn(vector<Envr*>& envr, int argCnt, vector <ValStrc*> argArr);
-extern ValStrc* newArrFcn(vector<Envr*>& envr, int argCnt, vector <ValStrc*> argArr);
-extern ValStrc* exe(vector<Envr*>& envr, int argCnt, vector<ValStrc*> argArr);
+ValStrc* rdIntFn(vector<Envr*>& envr, int argCnt, vector<ValStrc*> argArr);
+ValStrc* rdFltFn(vector<Envr*>& envr, int argCnt, vector <ValStrc*> argArr);
+ValStrc* rdBlnFn(vector<Envr*>& envr, int argCnt, vector <ValStrc*> argArr);
+ValStrc* rdFn(vector<Envr*>& envr, int argCnt, vector <ValStrc*> argArr);
+ValStrc* rdlnFn(vector<Envr*>& envr, int argCnt, vector <ValStrc*> argArr);
+ValStrc* pnFn(vector<Envr*>& envr, int argCnt, vector <ValStrc*> argArr);
+ValStrc* plnFn(vector<Envr*>& envr, int argCnt, vector <ValStrc*> argArr);
+
+ValStrc* newArrFn(vector<Envr*>& envr, int argCnt, vector <ValStrc*> argArr);
+ValStrc* flOpn(vector<Envr*>& envr, int argCnt, vector <ValStrc*> argArr);
+ValStrc* flSk(vector<Envr*>& envr, int argCnt, vector <ValStrc*> argArr);
+ValStrc* flScn(vector<Envr*>& envr, int argCnt, vector <ValStrc*> argArr);
+ValStrc* flWrt(vector<Envr*>& envr, int argCnt, vector <ValStrc*> argArr);
+ValStrc* flTl(vector<Envr*>& envr, int argCnt, vector <ValStrc*> argArr);
+ValStrc* flCls(vector<Envr*>& envr, int argCnt, vector <ValStrc*> argArr);
+ValStrc* flPrt(vector<Envr*>& envr, int argCnt, vector <ValStrc*> argArr);
+
+ValStrc* scat(vector<Envr*>& envr, int argCnt, vector <ValStrc*> argArr);
+ValStrc* ssub(vector<Envr*>& envr, int argCnt, vector <ValStrc*> argArr);
+ValStrc* exe(vector<Envr*>& envr, int argCnt, vector <ValStrc*> argArr);
+
+ValStrc* flScnInt(vector<Envr*>& envr, int argCnt, vector <ValStrc*> argArr);
+ValStrc* flScnDbl(vector<Envr*>& envr, int argCnt, vector <ValStrc*> argArr);
 
 extern VrbStrc* getObjVrb(VrbStrc* vrb, LvlExpStrc* lvl);
 
@@ -329,7 +344,7 @@ struct NtvFcnStrc* getNtvFcn(struct Envr* envr, struct FcnExpStrc* fcn)
 		}
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 int addCls(struct Envr* envr, struct ClsStrc* cls)
@@ -435,22 +450,17 @@ int initGlbEnvr(vector<Envr*>& envr)
 	envr.push_back(new Envr(EnvrEnm::TopLvl));
 	envr[0]->typ = EnvrEnm::TopLvl;
 
-	addNtvFcn(envr[0], string("readInt"), rdIntFcn, 0);
-	addNtvFcn(envr[0], string("readFloat"), rdFltFcn, 0);
-	addNtvFcn(envr[0], string("readBool"), rdBlnFcn, 0);
-	addNtvFcn(envr[0], string("read"), rdFcn, 0);
-	addNtvFcn(envr[0], string("readln"), rdlnFcn, 0);
-	addNtvFcn(envr[0], string("print"), prtFcn, INT_MAX);
+	addNtvFcn(envr[0], string("readInt"), rdIntFn, 0);
+	addNtvFcn(envr[0], string("readFloat"), rdFltFn, 0);
+	addNtvFcn(envr[0], string("readBool"), rdBlnFn, 0);
+	addNtvFcn(envr[0], string("read"), rdFn, 0);
+	addNtvFcn(envr[0], string("readln"), rdlnFn, 0);
+	//addNtvFcn(envr[0], string("print"), prtFcn, INT_MAX);
 
-	//PROMPT proving name pn for print
-	///TODO to allow more viariables
-	addNtvFcn(envr[0], string("pn"), prtFcn,INT_MAX);
+	addNtvFcn(envr[0], string("pn"), pnFn,INT_MAX);
 
-	addNtvFcn(envr[0], string("println"), prtlnFcn, INT_MAX);
-
-	//PROMPT proving name pln for println
-	///TODO to allow more viariables
-	addNtvFcn(envr[0], string("pln"), prtlnFcn, INT_MAX);
+	//addNtvFcn(envr[0], string("println"), plnFn, INT_MAX);
+	addNtvFcn(envr[0], string("pln"), plnFn, INT_MAX);
 
 	addNtvFcn(envr[0], string("newArray"), newArrFcn, 1);
 	/// primitive naming before class i/o version

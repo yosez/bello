@@ -1,4 +1,4 @@
-/Users/yosezang/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/Users/yosezang/Applications/CLion.app/Contents/bin/ninja/mac/aarch64/ninja -G Ninja -S "/Users/yosezang/bello/bello V21.16 Restore string function EDT/main/bello" -B "/Users/yosezang/bello/bello V21.16 Restore string function EDT/main/bello/cmake-build-debug"
+/Users/yosezang/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/Users/yosezang/Applications/CLion.app/Contents/bin/ninja/mac/aarch64/ninja -G Ninja -S "/Users/yosezang/bello/bello V21.26 Replace char pointer to string EDT/main/bello" -B "/Users/yosezang/bello/bello V21.26 Replace char pointer to string EDT/main/bello/cmake-build-debug"
 -- The C compiler identification is AppleClang 17.0.0.17000603
 -- The CXX compiler identification is AppleClang 17.0.0.17000603
 -- Detecting C compiler ABI info
@@ -12,6 +12,6 @@
 -- Detecting CXX compile features
 -- Detecting CXX compile features - done
 -- AppleClang
--- Configuring done (2.2s)
+-- Configuring done (2.9s)
 -- Generating done (0.0s)
--- Build files have been written to: /Users/yosezang/bello/bello V21.16 Restore string function EDT/main/bello/cmake-build-debug
+-- Build files have been written to: /Users/yosezang/bello/bello V21.26 Replace char pointer to string EDT/main/bello/cmake-build-debug

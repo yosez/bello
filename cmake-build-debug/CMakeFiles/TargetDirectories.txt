@@ -1,3 +1,3 @@
-/Users/yosezang/bello/bello V21.16 Restore string function EDT/main/bello/cmake-build-debug/CMakeFiles/bello.dir
-/Users/yosezang/bello/bello V21.16 Restore string function EDT/main/bello/cmake-build-debug/CMakeFiles/edit_cache.dir
-/Users/yosezang/bello/bello V21.16 Restore string function EDT/main/bello/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/yosezang/bello/bello V21.26 Replace char pointer to string EDT/main/bello/cmake-build-debug/CMakeFiles/bello.dir
+/Users/yosezang/bello/bello V21.26 Replace char pointer to string EDT/main/bello/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/yosezang/bello/bello V21.26 Replace char pointer to string EDT/main/bello/cmake-build-debug/CMakeFiles/rebuild_cache.dir

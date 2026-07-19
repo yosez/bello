@@ -50,17 +50,19 @@
 
     extern int pnStmt(vector<Envr*> &envr, Stmt* stmt);
 
+    extern void exctStk(vector<Envr*> &envr, vector<StmtStkItmStrc*> stk);
+
     //prsStt为1 从标准输入读取 prsStt为2 从源文件读取
     int prsStt;
 
-    void fldStmt(int indt);
-    void pshStmt(int indt, Stmt* stmt);
+    extern void fldStmt(int indt);
+    extern void pshStmt(int indt, Stmt* stmt);
     void prtStmtStk();
 
     //类定义语句的标志，0为不是类定义的状态，1为类定义的状态
     int blnDfnCls=0;
 
-    struct Stmt* lstStmt;
+    Stmt* lstStmt;
 
     int impFlg=1;
 %}
@@ -134,7 +136,7 @@
     lvalue_operation_expression self_operation_expression lvalue_expression
     shortcut_expression
 
-%type <stmt> single_statement expression_statement monostatement complex_statement
+%type <stmt> single_statement expression_statement monostatement mono_foldable_statement complex_statement
     statement_block block_list null_statement var_statement global_statement import_statement
 %type <stmt> if_statement else_statement elif_statement structure_statement for_statement single_statement_no_semicolon while_statement 
     do_while_statement break_statement continue_statement return_statement nop_statement foldable_statement successive_statement
@@ -205,8 +207,8 @@ import_statement
 statement
 
     : statement NOINDENT monostatement enclose_statement_stack build_single_statement_stack execute_single_statement LF
-    | statement NOINDENT foldable_statement build_statement_stack LF
-    | statement INDENT single_statement LF check_indent build_statement_stack
+    | statement NOINDENT foldable_statement build_foldable_statement_stack build_stack execute_statement LF
+    | statement INDENT mono_foldable_statement  build_indent_statement_stack check_indent build_statement_stack LF
     ///TODO THINK 顶层语句非顶层语句分开处理
     ///TODO THINK
     //从命令行或源码输入顶层语句并执行，顶层语句情况
@@ -218,6 +220,7 @@ statement
     //从源码输入文件结束
     | statement END_FILE close_execute_last_statement  { return 0; }//需要加上识别空语句，以处理输入结束的情况
     | error { yyerrok; }
+    |
     | END_FILE
     {
         yypop_buffer_state();
@@ -279,12 +282,61 @@ enclose_statement_stack
 
     }
 
-build_statement_stack
+build_foldable_statement_stack
+    :
+    {
+        int indt = 0;
+
+        Stmt* stmt=$<stmt>-1;
+
+        stmt->indt= indt;
+
+
+        //语句入栈
+        pshStmt(indt, stmt);
+
+        lstIndt = indt;
+    }
+
+
+build_indent_statement_stack
     : 
     {   
-        int indt = $<intVl>-3;
+        int indt = $<intVl>-2;
 
-        Stmt* stmt=$<stmt>-2;
+        Stmt* stmt=$<stmt>-1;
+
+        stmt->indt= indt;
+
+        //如果是当前句的indent == 上1句的indent + 1，则检查上1句是否有语句体，如上1句允许语句体，语句入栈
+        if (indt == lstIndt + 1 )
+        {
+            if (stmtStk.back()->alwSubStmt)
+            {
+                //语句入栈
+                pshStmt(indt, stmt);
+            }
+            else
+            {
+                yyerrok;
+            }
+        }
+        else if (indt == lstIndt || indt < lstIndt)
+        {
+            //语句入栈
+            pshStmt(indt, stmt);
+
+        }
+
+        lstIndt = indt;
+    }
+
+build_stack
+    :
+    {
+        int indt = $<intVl>-2;
+
+        Stmt* stmt=$<stmt>-1;
 
         stmt->indt= indt;
 
@@ -318,11 +370,12 @@ build_statement_stack
 
             //输入的句子入栈
             pshStmt(indt, stmt);
-            
+
         }
 
         lstIndt = indt;
     }
+
 
 build_single_statement_stack
     :
@@ -476,11 +529,22 @@ close_execute_last_statement
         }
     }
 
+execute_statement
+    :
+    {
+        //printf("alw sub stmt: %d\n", stmtStk.back()->alwSubStmt);
+
+        exctStk(envr, stmkStk);
+
+    }
+
 execute_single_statement
     : 
     { 
         //printf("alw sub stmt: %d\n", stmtStk.back()->alwSubStmt);
 
+        exctStk(envr, stmkStk);
+/*
         //只在无缩进且不允许第2主句的情况下执行语句
         if ($<intVl>-4 != 0 || stmtStk.back()->alwSubStmt == 1 || chkStmtAlwScndStmt(stmtStk.back()->stmt) )
         {
@@ -491,7 +555,7 @@ execute_single_statement
             exctStmt(envr, stmtStk.back()->stmt);
             stmtStk.pop_back();
         }
-  
+  */
     }
 
 monostatement
@@ -519,6 +583,7 @@ successive_statement
 
 single_statement
     : expression_statement { $$=$1; }
+    /*| assign_expression_statement { $$=$1; }*/
     | if_statement { $$=$1; }
     | else_statement { $$=$1; }
     | elif_statement { $$=$1; }
